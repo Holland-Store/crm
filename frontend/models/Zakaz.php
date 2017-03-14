@@ -60,18 +60,18 @@ class Zakaz extends \yii\db\ActiveRecord
     {
         return [
             'id_zakaz' => 'Id Zakaz',
-            'srok' => 'Srok',
-            'id_sotrud' => 'Id Sotrud',
-            'prioritet' => 'Prioritet',
-            'status' => 'Status',
-            'id_tovar' => 'Id Tovar',
-            'oplata' => 'Oplata',
-            'number' => 'Number',
-            'data' => 'Data',
-            'description' => 'Description',
-            'information' => 'Information',
-            'id_client' => 'Id Client',
-            'comment' => 'Comment',
+            'srok' => 'Срок',
+            'id_sotrud' => 'Сотрудник',
+            'prioritet' => 'Приоритет',
+            'status' => 'Статус',
+            'id_tovar' => 'Товар',
+            'oplata' => 'Сумма',
+            'number' => 'Количество',
+            'data' => 'Дата принятия',
+            'description' => 'Описание',
+            'information' => 'Дополнительная информация',
+            'id_client' => 'Клиент',
+            'comment' => 'Комментарий',
         ];
     }
 

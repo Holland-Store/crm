@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\ZakazSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Zakazs';
+$this->title = 'Заказ';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="zakaz-index">
@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Zakaz', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Создать заказ', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -25,18 +25,27 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id_zakaz',
-            'srok',
+             [
+                'attribute'=>'srok',
+                'format'=>['datetime', 'php:d.m.Y H:i']
+            ],
             'id_sotrud',
             'prioritet',
             'status',
-            // 'id_tovar',
-            // 'oplata',
-            // 'number',
-            // 'data',
-            // 'description',
-            // 'information',
-            // 'id_client',
-            // 'comment:ntext',
+            'id_tovar',
+            [
+                'attribute'=>'oplata',
+                'format'=>['decimal',2]
+            ],
+            'number',
+            [
+                'attribute'=>'data',
+                'format'=>['date', 'php:d.m.Y']
+            ],
+            'description',
+            'information',
+            'id_client',
+            'comment:ntext',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

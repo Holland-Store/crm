@@ -19,7 +19,7 @@ class ZakazSearch extends Zakaz
     {
         return [
             [['id_zakaz', 'id_sotrud', 'id_tovar', 'oplata', 'number', 'id_client'], 'integer'],
-            [['srok', 'prioritet', 'status', 'data', 'description', 'information', 'comment'], 'safe'],
+            [['srok', 'prioritet', 'status', 'data'], 'safe'],
         ];
     }
 
@@ -76,5 +76,9 @@ class ZakazSearch extends Zakaz
             ->andFilterWhere(['like', 'comment', $this->comment]);
 
         return $dataProvider;
+    }
+    public function attributeLabels()
+    {
+        return [];
     }
 }
