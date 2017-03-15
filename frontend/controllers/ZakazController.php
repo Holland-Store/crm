@@ -38,9 +38,13 @@ class ZakazController extends Controller
         $searchModel = new ZakazSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
+        $sotrud = Zakaz::findOne('id_sotrud');
+        $sotrud->idSotrud->fio;
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'sotrud' => $sotrud,
         ]);
     }
 

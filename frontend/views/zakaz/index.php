@@ -15,6 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
+
     <p>
         <?= Html::a('Создать заказ', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
@@ -29,7 +30,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute'=>'srok',
                 'format'=>['datetime', 'php:d.m.Y H:i']
             ],
-            'id_sotrud',
+            [
+                'attribute'=>'id_sotrud',
+            ],
             'prioritet',
             'status',
             'id_tovar',

@@ -59,7 +59,7 @@ class Zakaz extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id_zakaz' => 'Id Zakaz',
+            'id_zakaz' => '№ заказа',
             'srok' => 'Срок',
             'id_sotrud' => 'Сотрудник',
             'prioritet' => 'Приоритет',
@@ -80,7 +80,7 @@ class Zakaz extends \yii\db\ActiveRecord
      */
     public function getIdSotrud()
     {
-        return $this->hasOne(Otdel::className(), ['id_sotr' => 'id_sotrud']);
+        return $this->hasOne(Otdel::className(), ['id' => 'id_sotrud']);
     }
 
     /**
