@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-
+use dosamigos\datepicker\DatePicker;
 /* @var $this yii\web\View */
 /* @var $model app\models\Zakaz */
 /* @var $form yii\widgets\ActiveForm */
@@ -14,21 +14,44 @@ use yii\widgets\ActiveForm;
 
     <!-- <?= $form->field($model, 'id_zakaz')->textInput() ?> -->
 
-    <?= $form->field($model, 'srok')->textInput() ?>
+    <!-- <?= $form->field($model, 'srok')->textInput() ?> -->
+    <?= $form->field($model, 'srok')->widget(
+        DatePicker::className(), [
+            // inline too, not bad
+             'inline' => false, 
+             // modify template for custom rendering
+            // 'template' => '<div class="well well-sm" style="background-color: #fff; width:250px">{input}</div>',
+            'clientOptions' => [
+                'autoclose' => true,
+                'format' => 'dd.MM.yyyy'
+            ]
+    ]);?>
+
+    <?= $form->field($model, 'minut')->textInput() ?>
 
     <?= $form->field($model, 'id_sotrud')->textInput() ?>
 
     <?= $form->field($model, 'prioritet')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'status')->textInput(['maxlength' => true]) ?>
+    <!-- <?= $form->field($model, 'status')->textInput() ?> -->
 
-    <?= $form->field($model, 'id_tovar')->textInput() ?>
+    <!-- <?= $form->field($model, 'id_tovar')->textInput() ?> -->
 
     <?= $form->field($model, 'oplata')->textInput() ?>
 
-    <?= $form->field($model, 'number')->textInput() ?>
+    <?= $form->field($model, 'number')->textInput(['type'=>'number','min' => '0']) ?>
 
-    <?= $form->field($model, 'data')->textInput() ?>
+    <?= $form->field($model, 'data')->widget(
+        DatePicker::className(), [
+            // inline too, not bad
+             'inline' => false, 
+             // modify template for custom rendering
+            'clientOptions' => [
+                'autoclose' => true,
+                'format' => 'dd.MM.yyyy'
+            ]
+    ]);?>
+    <?= $form->field($model, 'img')->fileInput() ?>
 
     <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
 
@@ -39,7 +62,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'comment')->textarea(['rows' => 6]) ?>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? 'Создать' : 'Редактировать', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

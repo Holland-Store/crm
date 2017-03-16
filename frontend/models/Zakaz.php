@@ -3,6 +3,8 @@
 namespace app\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
+use app\models\Otdel;
 
 /**
  * This is the model class for table "zakaz".
@@ -41,12 +43,13 @@ class Zakaz extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_zakaz', 'srok', 'id_sotrud', 'prioritet', 'status', 'id_tovar', 'oplata', 'number', 'data', 'description', 'information', 'id_client', 'comment'], 'required'],
+            [['id_zakaz', 'srok', 'minut', 'id_sotrud', 'prioritet', 'status', 'id_tovar', 'oplata', 'number', 'data', 'description', 'information', 'img','id_client', 'comment'], 'required'],
             [['id_zakaz', 'id_sotrud', 'id_tovar', 'oplata', 'number', 'id_client'], 'integer'],
-            [['srok', 'data'], 'safe'],
+            [['srok', 'minut', 'data'], 'safe'],
             [['comment'], 'string'],
             [['prioritet', 'status'], 'string', 'max' => 36],
             [['description', 'information'], 'string', 'max' => 500],
+            [['img'],'string', 'max' => 50],
             [['id_sotrud'], 'exist', 'skipOnError' => true, 'targetClass' => Otdel::className(), 'targetAttribute' => ['id_sotrud' => 'id_sotr']],
             [['id_tovar'], 'exist', 'skipOnError' => true, 'targetClass' => Tovar::className(), 'targetAttribute' => ['id_tovar' => 'id']],
             [['id_client'], 'exist', 'skipOnError' => true, 'targetClass' => Client::className(), 'targetAttribute' => ['id_client' => 'id_client']],
@@ -61,6 +64,7 @@ class Zakaz extends \yii\db\ActiveRecord
         return [
             'id_zakaz' => '№ заказа',
             'srok' => 'Срок',
+            'minut' => 'Время выполнение срока',
             'id_sotrud' => 'Сотрудник',
             'prioritet' => 'Приоритет',
             'status' => 'Статус',
@@ -69,6 +73,7 @@ class Zakaz extends \yii\db\ActiveRecord
             'number' => 'Количество',
             'data' => 'Дата принятия',
             'description' => 'Описание',
+            'img' => 'Изображение',
             'information' => 'Дополнительная информация',
             'id_client' => 'Клиент',
             'comment' => 'Комментарий',
@@ -96,6 +101,34 @@ class Zakaz extends \yii\db\ActiveRecord
      */
     public function getIdClient()
     {
-        return $this->hasOne(Client::className(), ['id_client' => 'id_client']);
+        return $this->hasOne(Client::className(), ['id' => 'id_client']);
+    }
+
+    public static function getSotrudList()
+    {
+        $sotruds = Otdel::find()
+        ->select(['otdel.id','otdel.fio'])
+        ->join('JOIN','zakaz', 'zakaz.id_sotrud = otdel.id')
+        ->all();
+
+        return ArrayHelper::map($sotruds, 'id', 'fio');
+    }
+    public static function getTovarList()
+    {
+        $tovars = Tovar::find()
+        ->select(['tovar.id','tovar.name'])
+        ->join('JOIN','zakaz', 'zakaz.id_tovar = tovar.id')
+        ->all();
+
+        return ArrayHelper::map($tovars, 'id', 'name');
+    }
+    public static function getClientList()
+    {
+        $tovars = Client::find()
+        ->select(['client.id','client.fio'])
+        ->join('JOIN','zakaz', 'zakaz.id_client = client.id')
+        ->all();
+
+        return ArrayHelper::map($tovars, 'id', 'fio');
     }
 }

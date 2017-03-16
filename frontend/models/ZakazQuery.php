@@ -9,10 +9,6 @@ namespace app\models;
  */
 class ZakazQuery extends \yii\db\ActiveQuery
 {
-    $zakaz = Zakaz::find()
-    ->select('zakaz.*')
-    ->leftJoin('otdel', '`zakaz`.`id_sotrud` = `otdel`.`id`')
-    ->all();
     /*public function active()
     {
         return $this->andWhere('[[status]]=1');

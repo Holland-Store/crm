@@ -30,6 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id_zakaz',
             'srok',
+            'minut',
             'id_sotrud',
             'prioritet',
             'status',
@@ -39,6 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'data',
             'description',
             'information',
+            'img',
             'id_client',
             'comment:ntext',
         ],

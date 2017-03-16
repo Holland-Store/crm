@@ -2,6 +2,9 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use app\models\Otdel;
+use app\models\Zakaz;
+use dosamigos\datepicker\DatePicker;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\ZakazSearch */
@@ -15,7 +18,6 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-
     <p>
         <?= Html::a('Создать заказ', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
@@ -27,28 +29,55 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id_zakaz',
              [
-                'attribute'=>'srok',
-                'format'=>['datetime', 'php:d.m.Y H:i']
+                'attribute' => 'srok',
+                'format' => ['datetime', 'php:d.m.Y'],
+                'value' => 'srok',
+                'filter' => DatePicker::widget([
+                     'model' => $searchModel,
+                     'attribute' => 'srok',
+                    // inline too, not bad
+                     'inline' => false, 
+                     // modify template for custom rendering
+                    // 'template' => '<div class="well well-sm" style="background-color: #fff; width:250px">{input}</div>',
+                    'clientOptions' => [
+                    'autoclose' => true,
+                    'format' => 'yyyy.mm.dd'
+                ],
+                ]),
             ],
             [
-                'attribute'=>'id_sotrud',
+                'attribute' => 'minut',
+                'format' => ['datetime', 'php:H:i']
+            ],
+            [
+                'attribute' => 'id_sotrud',
+                'value' => 'idSotrud.fio',
+                'filter' => Zakaz::getSotrudList(),
             ],
             'prioritet',
             'status',
-            'id_tovar',
+            [
+                'attribute' => 'id_tovar',
+                'value' => 'idTovar.name',
+                'filter' => Zakaz::getTovarList(),
+            ],
             [
                 'attribute'=>'oplata',
-                'format'=>['decimal',2]
             ],
-            'number',
+            // 'number',
             [
                 'attribute'=>'data',
                 'format'=>['date', 'php:d.m.Y']
             ],
-            'description',
-            'information',
-            'id_client',
-            'comment:ntext',
+            // 'description',
+            // 'information',
+            // 'img',
+            [
+                'attribute' => 'id_client',
+                'value' => 'idClient.fio',
+                'filter' => Zakaz::getClientList(),
+            ],
+            // 'comment:ntext',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

@@ -19,7 +19,7 @@ class ZakazSearch extends Zakaz
     {
         return [
             [['id_zakaz', 'id_sotrud', 'id_tovar', 'oplata', 'number', 'id_client'], 'integer'],
-            [['srok', 'prioritet', 'status', 'data'], 'safe'],
+            [['srok', 'minut', 'prioritet', 'status', 'data'], 'safe'],
         ];
     }
 
@@ -64,16 +64,16 @@ class ZakazSearch extends Zakaz
             'id_sotrud' => $this->id_sotrud,
             'id_tovar' => $this->id_tovar,
             'oplata' => $this->oplata,
-            'number' => $this->number,
+            // 'number' => $this->number,
             'data' => $this->data,
             'id_client' => $this->id_client,
         ]);
 
         $query->andFilterWhere(['like', 'prioritet', $this->prioritet])
-            ->andFilterWhere(['like', 'status', $this->status])
-            ->andFilterWhere(['like', 'description', $this->description])
-            ->andFilterWhere(['like', 'information', $this->information])
-            ->andFilterWhere(['like', 'comment', $this->comment]);
+            ->andFilterWhere(['like', 'status', $this->status]);
+            // ->andFilterWhere(['like', 'description', $this->description])
+            // ->andFilterWhere(['like', 'information', $this->information])
+            // ->andFilterWhere(['like', 'comment', $this->comment]);
 
         return $dataProvider;
     }

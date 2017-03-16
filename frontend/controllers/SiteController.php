@@ -88,8 +88,10 @@ class SiteController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            // return $this->goBack();
-            return $this->redirect(['admin']);
+            $id_user = Yii::$app->user->identity->getId();
+            $session = Yii::$app->request->session;
+            $session ->set('id', $id);
+            return $this->redirect(['/zakaz/index', 'id'=> $user_id]);
         } else {
             return $this->render('login', [
                 'model' => $model,
@@ -212,7 +214,5 @@ class SiteController extends Controller
         ]);
     }
 
-    public function actionAdmin(){
-        return $this->render('admin');
-    }
+
 }
