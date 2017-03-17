@@ -5,6 +5,7 @@ use yii\grid\GridView;
 use app\models\Otdel;
 use app\models\Zakaz;
 use dosamigos\datepicker\DatePicker;
+use yii\bootstrap\Nav;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\ZakazSearch */
@@ -13,6 +14,28 @@ use dosamigos\datepicker\DatePicker;
 $this->title = 'Заказ';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+<div class="sidebar">
+        <ui class="nav nav-pills">
+        <?php if (!Yii::$app->user->isGuest && Yii::$app->authManager->getRolesByUser(Yii::$app->user->getId())['admin']->name == 'admin') {
+        ?>
+            <li>
+                <a href="index.php?r=zakaz%2Findex" >
+                    <span>Админ</span>
+                </a>
+            </li>
+            <?php } ?>
+            <li>
+                <a href="index.php?r=client%2Findex">
+                    <span>Клиент</span>
+                </a>
+            </li>
+            <li>
+                <a href="index.php?r=tovar%2Findex">
+                    <span>Товар</span>
+                </a>
+            </li>
+        </ui>
+</div>
 <div class="zakaz-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
@@ -49,11 +72,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'minut',
                 'format' => ['datetime', 'php:H:i']
             ],
-            [
-                'attribute' => 'id_sotrud',
-                'value' => 'idSotrud.fio',
-                'filter' => Zakaz::getSotrudList(),
-            ],
+            // [
+            //     'attribute' => 'id_sotrud',
+            //     'value' => 'idSotrud.fio',
+            //     'filter' => Zakaz::getSotrudList(),
+            // ],
             'prioritet',
             'status',
             [

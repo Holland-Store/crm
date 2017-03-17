@@ -43,7 +43,7 @@ class Zakaz extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_zakaz', 'srok', 'minut', 'id_sotrud', 'prioritet', 'status', 'id_tovar', 'oplata', 'number', 'data', 'description', 'information', 'img','id_client', 'comment'], 'required'],
+            [['id_zakaz', 'srok', 'minut', 'id_sotrud', 'prioritet', 'status', 'id_tovar', 'oplata', 'number', 'data', 'information', 'img','id_client', 'comment'], 'required'],
             [['id_zakaz', 'id_sotrud', 'id_tovar', 'oplata', 'number', 'id_client'], 'integer'],
             [['srok', 'minut', 'data'], 'safe'],
             [['comment'], 'string'],

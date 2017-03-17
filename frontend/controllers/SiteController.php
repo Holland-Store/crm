@@ -87,11 +87,10 @@ class SiteController extends Controller
         }
 
         $model = new LoginForm();
+        // if ($model->load(Yii::$app->request->post()) && $model->login()) {
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             $id_user = Yii::$app->user->identity->getId();
-            $session = Yii::$app->request->session;
-            $session ->set('id', $id);
-            return $this->redirect(['/zakaz/index', 'id'=> $user_id]);
+            return $this->redirect(['/zakaz/index', 'id'=> $id_user]);
         } else {
             return $this->render('login', [
                 'model' => $model,

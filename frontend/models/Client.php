@@ -7,7 +7,7 @@ use Yii;
 /**
  * This is the model class for table "client".
  *
- * @property integer $id_client
+ * @property integer $id
  * @property string $fio
  * @property string $phone
  *
@@ -29,9 +29,9 @@ class Client extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_client', 'fio', 'phone'], 'required'],
-            [['id_client'], 'integer'],
-            [['fio'], 'string', 'max' => 255],
+            [['fio', 'phone'], 'required'],
+            [['id'], 'integer'],
+            [['fio'], 'string', 'max' => 86],
             [['phone'], 'string', 'max' => 15],
         ];
     }
@@ -42,7 +42,7 @@ class Client extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id_client' => 'Id Client',
+            'id' => 'ID',
             'fio' => 'Fio',
             'phone' => 'Phone',
         ];
@@ -53,6 +53,6 @@ class Client extends \yii\db\ActiveRecord
      */
     public function getZakazs()
     {
-        return $this->hasMany(Zakaz::className(), ['id_client' => 'id_client']);
+        return $this->hasMany(Zakaz::className(), ['id_client' => 'id']);
     }
 }

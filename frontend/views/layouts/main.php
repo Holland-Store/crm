@@ -9,6 +9,7 @@ use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use common\widgets\Alert;
+use yii\helpers\Url;
 
 AppAsset::register($this);
 ?>
@@ -29,7 +30,8 @@ AppAsset::register($this);
     <?php
     NavBar::begin([
         'brandLabel' => 'Holland',
-        'brandUrl' => Yii::$app->homeUrl,
+        // 'brandUrl' => Yii::$app->homeUrl,
+        'brandUrl' => ['/zakaz/index'],
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
         ],

@@ -3,17 +3,16 @@
 namespace frontend\controllers;
 
 use Yii;
-use app\models\Zakaz;
-use app\models\ZakazSearch;
+use app\models\Client;
+use app\models\ClientSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
 
 /**
- * ZakazController implements the CRUD actions for Zakaz model.
+ * ClientController implements the CRUD actions for Client model.
  */
-class ZakazController extends Controller
+class ClientController extends Controller
 {
     /**
      * @inheritdoc
@@ -27,47 +26,16 @@ class ZakazController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
-            'access' => [
-                'class' => AccessControl::className(),
-                'only' => ['index', 'create', 'delete', 'update', 'view'],
-                'rules' => [
-                    [
-                        'actions' => ['index'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                    [
-                        'actions' => ['create'],
-                        'allow' => true,
-                        'roles' => ['shop'],
-                    ],
-                    [
-                        'actions' => ['delete'],
-                        'allow' => true,
-                        'roles' => ['admin'],
-                    ],
-                    [
-                        'actions' => ['update'],
-                        'allow' => true,
-                        'roles' => ['admin'],
-                    ],
-                    [
-                        'actions' => ['view'],
-                        'allow' => true,
-                        'roles' => ['admin']
-                    ],
-                ],
-            ],
         ];
     }
 
     /**
-     * Lists all Zakaz models.
+     * Lists all Client models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new ZakazSearch();
+        $searchModel = new ClientSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -77,7 +45,7 @@ class ZakazController extends Controller
     }
 
     /**
-     * Displays a single Zakaz model.
+     * Displays a single Client model.
      * @param integer $id
      * @return mixed
      */
@@ -89,16 +57,16 @@ class ZakazController extends Controller
     }
 
     /**
-     * Creates a new Zakaz model.
+     * Creates a new Client model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Zakaz();
+        $model = new Client();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id_zakaz]);
+            return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -107,7 +75,7 @@ class ZakazController extends Controller
     }
 
     /**
-     * Updates an existing Zakaz model.
+     * Updates an existing Client model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -117,7 +85,7 @@ class ZakazController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id_zakaz]);
+            return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -126,7 +94,7 @@ class ZakazController extends Controller
     }
 
     /**
-     * Deletes an existing Zakaz model.
+     * Deletes an existing Client model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -139,15 +107,15 @@ class ZakazController extends Controller
     }
 
     /**
-     * Finds the Zakaz model based on its primary key value.
+     * Finds the Client model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Zakaz the loaded model
+     * @return Client the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Zakaz::findOne($id)) !== null) {
+        if (($model = Client::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

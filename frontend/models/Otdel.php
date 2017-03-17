@@ -7,14 +7,14 @@ use Yii;
 /**
  * This is the model class for table "otdel".
  *
- * @property integer $id_sotr
+ * @property integer $id
  * @property string $fio
  * @property string $otdel
  * @property string $thePost
- * @property string $login
- * @property string $password
- * @property string $auth_key
- * @property string $accessToken
+ * @property integer $user_id
+ *
+ * @property User $user
+ * @property Zakaz[] $zakazs
  */
 class Otdel extends \yii\db\ActiveRecord
 {
@@ -32,11 +32,11 @@ class Otdel extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_sotr', 'fio', 'otdel', 'thePost', 'login', 'password', 'auth_key', 'accessToken'], 'required'],
-            [['id_sotr'], 'integer'],
+            [['id', 'fio', 'otdel', 'thePost', 'user_id'], 'required'],
+            [['id', 'user_id'], 'integer'],
             [['fio'], 'string', 'max' => 255],
-            [['otdel', 'thePost', 'login', 'auth_key', 'accessToken'], 'string', 'max' => 50],
-            [['password'], 'string', 'max' => 32],
+            [['otdel', 'thePost'], 'string', 'max' => 50],
+            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
 
@@ -46,14 +46,27 @@ class Otdel extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id_sotr' => 'Id Sotr',
+            'id' => 'ID',
             'fio' => 'Fio',
             'otdel' => 'Otdel',
             'thePost' => 'The Post',
-            'login' => 'Login',
-            'password' => 'Password',
-            'auth_key' => 'Auth Key',
-            'accessToken' => 'Access Token',
+            'user_id' => 'User ID',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getZakazs()
+    {
+        return $this->hasMany(Zakaz::className(), ['id_sotrud' => 'id']);
     }
 }
