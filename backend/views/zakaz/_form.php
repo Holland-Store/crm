@@ -3,9 +3,6 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use dosamigos\datepicker\DatePicker;
-use app\models\Tovar;
-use yii\helpers\ArrayHelper;
-use yii\widgets\MaskedInput;
 /* @var $this yii\web\View */
 /* @var $model app\models\Zakaz */
 /* @var $form yii\widgets\ActiveForm */
@@ -30,37 +27,21 @@ use yii\widgets\MaskedInput;
             ]
     ]);?>
 
-    <?= $form->field($model, 'minut')->widget(MaskedInput::className(),[
-        'mask' => '99:99'
-    ]) ?>
+    <?= $form->field($model, 'minut')->textInput() ?>
 
-    <!-- <?= $form->field($model, 'id_sotrud')->dropDownList([
-        'Админ' => 'Админ',
-        'Московский' => 'Московский',
+    <?= $form->field($model, 'id_sotrud')->dropDownList([
+        '1' => 'Админ',
+        '2' => 'Московский',
     ],
     [
         'prompt' => 'Выберите магазин',
-    ]) ?> -->
+    ]) ?>
 
    <!--  <?= $form->field($model, 'prioritet')->textInput(['maxlength' => true]) ?> -->
 
-    <?php if (Yii::$app->user->can('admin')) {
-        echo $form->field($model, 'status')->dropDownList([
-        'Новый' => 'Новый',
-        'В работе' => 'В работе',
-        'Дизайнер' => 'Дизайнер',
-        'Мастер' => 'Мастер',
-        'Исполнен' => 'Исполнен',
-        'Завершен' => 'Завершен'
-        ],
-        ['prompt' => 'Выберите товар']);
-        } ?>
+    <!-- <?= $form->field($model, 'status')->textInput() ?> -->
 
-    <? if (Yii::$app->user->can('admin')) {
-        echo $form->field($model, 'id_tovar')->dropDownList(
-            ArrayHelper::map(Tovar::find()->all(), 'id', 'name'),
-        ['prompt' => 'Выберите товар']);
-    } ?>
+    <!-- <?= $form->field($model, 'id_tovar')->textInput() ?> -->
 
     <?= $form->field($model, 'oplata')->textInput(['type' => 'number', 'min' => '0']) ?>
 
@@ -84,13 +65,7 @@ use yii\widgets\MaskedInput;
 
     <?= $form->field($model, 'name')->textInput() ?>
 
-    <?= $form->field($model, 'phone')->widget(MaskedInput::className(),[
-        'mask' => '7(999)999-99-99'
-    ]) ?>
-
-    <?= $form->field($model, 'email')->widget(MaskedInput::className(),[
-        'clientOptions' => ['alias' => 'email']
-    ]) ?>
+    <?= $form->field($model, 'phone')->textInput() ?>
 
     <?= $form->field($model, 'comment')->textarea(['rows' => 6]) ?>
 

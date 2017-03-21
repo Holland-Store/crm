@@ -6,7 +6,6 @@ use app\models\Otdel;
 use app\models\Zakaz;
 use dosamigos\datepicker\DatePicker;
 use yii\bootstrap\Nav;
-use yii\widgets\MaskedInput;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\ZakazSearch */
@@ -50,10 +49,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            [
-                'attribute' => 'id_zakaz',
-                'headerOptions' => ['width' => '20']
-            ],
+            'id_zakaz',
              [
                 'attribute' => 'srok',
                 'format' => ['datetime', 'php:d.m.Y'],
@@ -73,12 +69,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'attribute' => 'minut',
-                'format' => ['datetime', 'php:H:i'],
-                'filter' => MaskedInput::widget([
-                        'name' => 'minut',
-                        'mask' => '99:99',
-                    ]),
-                'headerOptions' => ['width' => '10']
+                'format' => ['datetime', 'php:H:i']
             ],
             // [
             //     'attribute' => 'id_sotrud',
@@ -98,16 +89,7 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'number',
             [
                 'attribute'=>'data',
-                'format'=> ['date', 'php:d.m.Y'],
-                'filter' => DatePicker::widget([
-                     'model' => $searchModel,
-                     'attribute' => 'data',
-                     'inline' => false, 
-                    'clientOptions' => [
-                    'autoclose' => true,
-                    'format' => 'yyyy.mm.dd'
-                    ],
-                ]),
+                'format'=>['date', 'php:d.m.Y']
             ],
             // 'description',
             // 'information',
@@ -117,10 +99,6 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'attribute' => 'phone',
-                'filter' => MaskedInput::widget([
-                        'name' => 'phone',
-                        'mask' => '7(999)999-99-99'
-                    ])
             ],
             // 'comment:ntext',
 

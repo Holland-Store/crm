@@ -1,20 +1,19 @@
 <?php
 
-namespace frontend\controllers;
+namespace backend\controllers;
 
 use Yii;
-use app\models\Tovar;
-use app\models\TovarSearch;
+use app\models\Client;
+use app\models\ClientSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 
-
 /**
- * TovarController implements the CRUD actions for Tovar model.
+ * ClientController implements the CRUD actions for Client model.
  */
-class TovarController extends Controller
+class ClientController extends Controller
 {
     /**
      * @inheritdoc
@@ -30,12 +29,12 @@ class TovarController extends Controller
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index', 'create', 'update', 'delete', 'view'],
+                // 'only' => ['index', 'create', 'update', 'delete', 'view'],
                 'rules' => [
                     [
-                    'allow' => true,
-                    'actions' => ['index', 'create', 'update', 'delete', 'view'],
-                    'roles' => ['@']
+                        'actions' => ['index', 'create', 'update', 'delete', 'view'],
+                        'allow' => true,
+                        'roles' => ['@'],
                     ],
                 ]
             ],
@@ -43,12 +42,12 @@ class TovarController extends Controller
     }
 
     /**
-     * Lists all Tovar models.
+     * Lists all Client models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new TovarSearch();
+        $searchModel = new ClientSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -58,7 +57,7 @@ class TovarController extends Controller
     }
 
     /**
-     * Displays a single Tovar model.
+     * Displays a single Client model.
      * @param integer $id
      * @return mixed
      */
@@ -70,13 +69,13 @@ class TovarController extends Controller
     }
 
     /**
-     * Creates a new Tovar model.
+     * Creates a new Client model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Tovar();
+        $model = new Client();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -88,7 +87,7 @@ class TovarController extends Controller
     }
 
     /**
-     * Updates an existing Tovar model.
+     * Updates an existing Client model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -107,7 +106,7 @@ class TovarController extends Controller
     }
 
     /**
-     * Deletes an existing Tovar model.
+     * Deletes an existing Client model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -120,15 +119,15 @@ class TovarController extends Controller
     }
 
     /**
-     * Finds the Tovar model based on its primary key value.
+     * Finds the Client model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Tovar the loaded model
+     * @return Client the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Tovar::findOne($id)) !== null) {
+        if (($model = Client::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

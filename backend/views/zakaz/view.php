@@ -43,7 +43,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'img',
             'name',
             'phone',
-            'email',
             'comment:ntext',
         ],
     ]) ?>

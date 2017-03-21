@@ -46,13 +46,12 @@ class Zakaz extends \yii\db\ActiveRecord
     {
         return [
             [['srok', 'minut', 'id_sotrud', 'oplata', 'number', 'data', 'description','name', 'phone'], 'required'],
-            [['id_zakaz', 'id_tovar', 'oplata', 'number'], 'integer'],
+            [['id_zakaz', 'id_sotrud', 'id_tovar', 'oplata', 'number'], 'integer'],
             [['srok', 'minut', 'data'], 'safe'],
             [['comment'], 'string'],
-            ['id_sotrud', 'default', 'value'=>Yii::$app->user->id],
             [['prioritet', 'status'], 'string', 'max' => 36],
             [['description', 'information'], 'string', 'max' => 500],
-            [['img', 'email'],'string', 'max' => 50],
+            [['img'],'string', 'max' => 50],
             [['id_sotrud'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['id_sotrud' => 'id']],
             [['id_tovar'], 'exist', 'skipOnError' => true, 'targetClass' => Tovar::className(), 'targetAttribute' => ['id_tovar' => 'id']],
             // [['id_client'], 'exist', 'skipOnError' => true, 'targetClass' => Client::className(), 'targetAttribute' => ['id_client' => 'id']],
@@ -67,7 +66,7 @@ class Zakaz extends \yii\db\ActiveRecord
         return [
             'id_zakaz' => '№ заказа',
             'srok' => 'Срок',
-            'minut' => 'Время',
+            'minut' => 'Время выполнение срока',
             'id_sotrud' => 'Магазин',
             'prioritet' => 'Приоритет',
             'status' => 'Статус',
@@ -80,7 +79,6 @@ class Zakaz extends \yii\db\ActiveRecord
             'information' => 'Дополнительная информация',
             'name' => 'Клиент',
             'phone' => 'Телефон',
-            'email' => 'Email',
             'comment' => 'Комментарий',
         ];
     }

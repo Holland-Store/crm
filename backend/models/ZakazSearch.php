@@ -18,8 +18,8 @@ class ZakazSearch extends Zakaz
     public function rules()
     {
         return [
-            [['id_zakaz', 'id_sotrud', 'id_tovar', 'oplata', 'number', 'phone'], 'integer'],
-            [['srok', 'minut', 'prioritet', 'status', 'data', 'name', 'email'], 'safe'],
+            [['id_zakaz', 'id_sotrud', 'id_tovar', 'oplata', 'number', 'name', 'phone'], 'integer'],
+            [['srok', 'minut', 'prioritet', 'status', 'data'], 'safe'],
         ];
     }
 
@@ -67,15 +67,13 @@ class ZakazSearch extends Zakaz
             // 'number' => $this->number,
             'data' => $this->data,
             'name' => $this->name,
-            'phone' => $this->phone,
-            'email' => $this->email
+            'phone' => $this->phone
         ]);
 
         $query->andFilterWhere(['like', 'prioritet', $this->prioritet])
             ->andFilterWhere(['like', 'status', $this->status])
             ->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'phone', $this->phone])
-            ->andFilterWhere(['like', 'email', $this->email]);
+            ->andFilterWhere(['like', 'phone', $this->phone]);
             // ->andFilterWhere(['like', 'description', $this->description])
             // ->andFilterWhere(['like', 'information', $this->information])
             // ->andFilterWhere(['like', 'comment', $this->comment]);
