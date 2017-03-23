@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use dosamigos\datepicker\DatePicker;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\ZakazSearch */
@@ -15,15 +16,24 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'id_zakaz') ?>
+    <!-- <?= $form->field($model, 'id_zakaz') ?> -->
 
-    <?= $form->field($model, 'srok') ?>
+    <?= $form->field($model, 'srok')->widget(
+        DatePicker::className(), [
+            'inline' => false, 
+            'clientOptions' => [
+                'autoclose' => true,
+                'format' => 'yyyy-mm-dd'
+            ]
+    ]);?>
 
     <?= $form->field($model, 'id_sotrud') ?>
 
     <?= $form->field($model, 'prioritet') ?>
 
     <?= $form->field($model, 'status') ?>
+
+    <?= $form->field($model, 'phone') ?>
 
     <?php // echo $form->field($model, 'id_tovar') ?>
 

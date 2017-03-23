@@ -36,7 +36,7 @@ use yii\widgets\MaskedInput;
 
     <!-- <?= $form->field($model, 'id_sotrud')->dropDownList([
         'Админ' => 'Админ',
-        'Московский' => 'Московский',
+        '2' => 'Московский',
     ],
     [
         'prompt' => 'Выберите магазин',
@@ -46,12 +46,15 @@ use yii\widgets\MaskedInput;
 
     <?php if (Yii::$app->user->can('admin')) {
         echo $form->field($model, 'status')->dropDownList([
-        'Новый' => 'Новый',
-        'В работе' => 'В работе',
-        'Дизайнер' => 'Дизайнер',
-        'Мастер' => 'Мастер',
-        'Исполнен' => 'Исполнен',
-        'Завершен' => 'Завершен'
+        '0' => 'Новый',
+        '1' => 'В работе',
+        '2' => 'Исполнен',
+        '3' => 'Принят',
+        '4' => 'Дизайнер',
+        '5' => 'Отклонен дизайнером',
+        '6' => 'Мастер',
+        '7' => 'Аутсорс',
+        '8' => 'Завершен',
         ],
         ['prompt' => 'Выберите товар']);
         } ?>
@@ -63,6 +66,8 @@ use yii\widgets\MaskedInput;
     } ?>
 
     <?= $form->field($model, 'oplata')->textInput(['type' => 'number', 'min' => '0']) ?>
+
+     <?= $form->field($model, 'fact_oplata')->textInput(['type' => 'number', 'min' => '0']) ?>
 
     <?= $form->field($model, 'number')->textInput(['type'=>'number','min' => '0']) ?>
 
@@ -85,7 +90,7 @@ use yii\widgets\MaskedInput;
     <?= $form->field($model, 'name')->textInput() ?>
 
     <?= $form->field($model, 'phone')->widget(MaskedInput::className(),[
-        'mask' => '7(999)999-99-99'
+        'mask' => '79999999999'
     ]) ?>
 
     <?= $form->field($model, 'email')->widget(MaskedInput::className(),[

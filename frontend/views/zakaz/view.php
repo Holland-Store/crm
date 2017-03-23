@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use app\models\Zakaz;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Zakaz */
@@ -31,10 +32,17 @@ $this->params['breadcrumbs'][] = $this->title;
             'id_zakaz',
             'srok',
             'minut',
-            'id_sotrud',
+            [
+                'attribute' => 'idSotrud.name',
+                'label' => 'Магазин',
+
+            ],
             'prioritet',
             'status',
-            'id_tovar',
+            [
+                'attribute' => 'idTovar.name',
+                'label' => 'Тип товара',
+            ],
             'oplata',
             'number',
             'data',

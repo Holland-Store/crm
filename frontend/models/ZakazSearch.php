@@ -7,6 +7,7 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\Zakaz;
 
+
 /**
  * ZakazSearch represents the model behind the search form about `app\models\Zakaz`.
  */
@@ -18,8 +19,8 @@ class ZakazSearch extends Zakaz
     public function rules()
     {
         return [
-            [['id_zakaz', 'id_sotrud', 'id_tovar', 'oplata', 'number', 'phone'], 'integer'],
-            [['srok', 'minut', 'prioritet', 'status', 'data', 'name', 'email'], 'safe'],
+            [['id_zakaz', 'id_sotrud', 'id_tovar', 'oplata', 'number', 'status'], 'integer'],
+            [['srok', 'prioritet', 'data', 'name', 'email', 'phone'], 'safe'],
         ];
     }
 
@@ -47,6 +48,9 @@ class ZakazSearch extends Zakaz
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => [
+                'defaultOrder' => ['srok' => SORT_DESC],
+            ]
         ]);
 
         $this->load($params);
@@ -64,11 +68,9 @@ class ZakazSearch extends Zakaz
             'id_sotrud' => $this->id_sotrud,
             'id_tovar' => $this->id_tovar,
             'oplata' => $this->oplata,
-            // 'number' => $this->number,
             'data' => $this->data,
             'name' => $this->name,
-            'phone' => $this->phone,
-            'email' => $this->email
+            'email' => $this->email,
         ]);
 
         $query->andFilterWhere(['like', 'prioritet', $this->prioritet])
@@ -84,6 +86,12 @@ class ZakazSearch extends Zakaz
     }
     public function attributeLabels()
     {
-        return [];
+        return [
+            'srok' => 'Срок',
+            'id_sotrud' => 'Магазин',
+            'prioritet' => 'Приоритет',
+            'status' => 'Этап',
+            'phone' => 'Телефон',
+        ];
     }
 }

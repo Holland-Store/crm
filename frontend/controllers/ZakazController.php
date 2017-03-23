@@ -69,10 +69,12 @@ class ZakazController extends Controller
     {
         $searchModel = new ZakazSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $seatchPhone = Yii::$app->request->get('PhoneSearch');
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'seatchPhone' => $seatchPhone,
         ]);
     }
 
@@ -83,8 +85,10 @@ class ZakazController extends Controller
      */
     public function actionView($id)
     {
+
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'user_name' => $user_name,
         ]);
     }
 

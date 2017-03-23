@@ -7,6 +7,7 @@ use yii\helpers\ArrayHelper;
 use app\models\User;
 use app\models\Tovar;
 use app\models\Client;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "zakaz".
@@ -29,8 +30,19 @@ use app\models\Client;
  * @property Tovar $idTovar
  * @property Client $idClient
  */
-class Zakaz extends \yii\db\ActiveRecord
+class Zakaz extends ActiveRecord
 {
+
+    const STATUS_NEW = 0;
+    const STATUS_WORK = 1;
+    const STATUS_EXECUTE = 2;
+    const STATUS_APOTED = 3;
+    const STATUS_DISAIN = 4;
+    const STATUS_REJECT_DISAIN = 5;
+    const STATUS_MASTER = 6;
+    const STATUS_AUTSORS = 7;
+    const STATUS_CLOSE = 8;
+
     /**
      * @inheritdoc
      */
@@ -45,14 +57,18 @@ class Zakaz extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['srok', 'minut', 'id_sotrud', 'oplata', 'number', 'data', 'description','name', 'phone'], 'required'],
-            [['id_zakaz', 'id_tovar', 'oplata', 'number'], 'integer'],
-            [['srok', 'minut', 'data'], 'safe'],
+            [['srok', 'minut', 'oplata', 'number', 'data', 'description','name', 'phone'], 'required'],
+            [['id_zakaz', 'id_tovar', 'oplata', 'fact_oplata', 'number', 'status'], 'integer'],
+            [['srok', 'minut', 'data', 'phone'], 'safe'],
             [['comment'], 'string'],
             ['id_sotrud', 'default', 'value'=>Yii::$app->user->id],
-            [['prioritet', 'status'], 'string', 'max' => 36],
+            [['prioritet'], 'string', 'max' => 36],
+
+            ['status', 'default', 'value' => self::STATUS_NEW],
+            // ['status', 'in', 'range' => array_keys(self::getStatusName())],
+
             [['description', 'information'], 'string', 'max' => 500],
-            [['img', 'email'],'string', 'max' => 50],
+            [['img', 'email', 'phone', 'name'],'string', 'max' => 50],
             [['id_sotrud'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['id_sotrud' => 'id']],
             [['id_tovar'], 'exist', 'skipOnError' => true, 'targetClass' => Tovar::className(), 'targetAttribute' => ['id_tovar' => 'id']],
             // [['id_client'], 'exist', 'skipOnError' => true, 'targetClass' => Client::className(), 'targetAttribute' => ['id_client' => 'id']],
@@ -65,14 +81,15 @@ class Zakaz extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id_zakaz' => '№ заказа',
+            'id_zakaz' => '№',
             'srok' => 'Срок',
             'minut' => 'Время',
             'id_sotrud' => 'Магазин',
             'prioritet' => 'Приоритет',
-            'status' => 'Статус',
-            'id_tovar' => 'Товар',
-            'oplata' => 'Сумма',
+            'status' => 'Этап',
+            'id_tovar' => 'Категория',
+            'oplata' => 'Всего',
+            'fact_oplata' => 'Оплачено',
             'number' => 'Количество',
             'data' => 'Дата принятия',
             'description' => 'Описание',
@@ -132,4 +149,20 @@ class Zakaz extends \yii\db\ActiveRecord
 
     //     return ArrayHelper::map($tovars, 'id', 'fio');
     // }
+    public static function getStatusArray(){
+        return [
+            self::STATUS_NEW => 'Новый',
+            self::STATUS_WORK => 'В работе',
+            self::STATUS_EXECUTE => 'Исполнен',
+            self::STATUS_APOTED => 'Принят',
+            self::STATUS_DISAIN => 'Дизайнер',
+            self::STATUS_REJECT_DISAIN => 'Отклонен дизайнером',
+            self::STATUS_MASTER => 'Мастер',
+            self::STATUS_AUTSORS => 'Аутсорс',
+            self::STATUS_CLOSE => 'Закрыт',
+        ];
+    }
+    public function getStatusName(){
+        return ArrayHelper::getValue(self::getStatusArray(), $this->status);
+    }
 }
