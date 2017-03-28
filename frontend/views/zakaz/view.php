@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use app\models\Zakaz;
+use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Zakaz */
@@ -14,9 +15,23 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="zakaz-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
-
     <p>
+        <?php $form = ActiveForm::begin(); ?>
+        <?php if (Yii::$app->user->can('master')): ?>
+        <?= $form->field($model, 'status')->hiddenInput(['value' => '7'])->label(false) ?>
+        <?= Html::submitButton('Выполнено', ['class' => 'btn btn-primary']) ?>
+        <?php endif ?>
+
+        <?php if (Yii::$app->user->can('disain')): ?>
+        <?= Html::button('Выполнено', ['class' => 'btn btn-primary']) ?>
+        <?php endif ?>
+        <?php ActiveForm::end(); ?>
+
+        <?php if (Yii::$app->user->can('admin')): ?>
         <?= Html::a('Редактировать', ['update', 'id' => $model->id_zakaz], ['class' => 'btn btn-primary']) ?>
+        <?php endif ?>
+        
+        <?php if (Yii::$app->user->can('admin')){ ?>           
         <?= Html::a('Удалить', ['delete', 'id' => $model->id_zakaz], [
             'class' => 'btn btn-danger',
             'data' => [
@@ -24,34 +39,57 @@ $this->params['breadcrumbs'][] = $this->title;
                 'method' => 'post',
             ],
         ]) ?>
+        <?php } ?>
     </p>
 
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
             'id_zakaz',
-            'srok',
-            'minut',
+            [
+                'attribute' => 'srok',
+                'visible' => Yii::$app->user->can('seeIspol'),
+            ],
+            [
+                'attribute' => 'minut',
+                'visible' => Yii::$app->user->can('admin'),
+            ],
             [
                 'attribute' => 'idSotrud.name',
                 'label' => 'Магазин',
-
+                'visible' => Yii::$app->user->can('admin'),
             ],
-            'prioritet',
-            'status',
+            [
+                'attribute' => 'prioritet',
+                'visible' => Yii::$app->user->can('admin'),
+            ],
+            [
+                'attribute' => 'status',
+                'visible' => Yii::$app->user->can('admin'),
+            ],
             [
                 'attribute' => 'idTovar.name',
                 'label' => 'Тип товара',
+                'visible' => Yii::$app->user->can('admin'),
             ],
-            'oplata',
+            [
+                'attribute' => 'oplata',
+                'visible' => Yii::$app->user->can('seeAdop'),
+            ],
             'number',
-            'data',
+            [
+                'attribute' => 'data',
+                'visible' => Yii::$app->user->can('seeAdop'),
+            ],
             'description',
             'information',
             'img',
             'name',
             'phone',
-            'email',
+            [
+                'attribute' => 'email',
+                'visible' => Yii::$app->user->can('admin'),
+            ],
             'comment:ntext',
         ],
     ]) ?>

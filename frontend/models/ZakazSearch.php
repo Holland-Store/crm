@@ -19,7 +19,7 @@ class ZakazSearch extends Zakaz
     public function rules()
     {
         return [
-            [['id_zakaz', 'id_sotrud', 'id_tovar', 'oplata', 'number', 'status'], 'integer'],
+            [['id_zakaz', 'id_sotrud', 'id_tovar', 'status'], 'integer'],
             [['srok', 'prioritet', 'data', 'name', 'email', 'phone'], 'safe'],
         ];
     }
@@ -40,9 +40,24 @@ class ZakazSearch extends Zakaz
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params, $role)
     {
         $query = Zakaz::find();
+
+        switch ($role) {
+            case 'master':
+                $query->andWhere(['status' => Zakaz::STATUS_MASTER, 'action' => 1]);
+                break;
+            case 'disain':
+                $query->andWhere(['status' => Zakaz::STATUS_DISAIN, 'action' => 1]);
+                break;
+            case 'shop':
+                $query->andWhere(['id_sotrud' => Yii::$app->user->id, 'action' => 1]);
+                break;
+            case 'admin':
+                $query->andWhere(['action' => 1]);
+                break;
+        }
 
         // add conditions that should always apply here
 
@@ -50,7 +65,7 @@ class ZakazSearch extends Zakaz
             'query' => $query,
             'sort' => [
                 'defaultOrder' => ['srok' => SORT_DESC],
-            ]
+            ],
         ]);
 
         $this->load($params);
@@ -78,9 +93,6 @@ class ZakazSearch extends Zakaz
             ->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'phone', $this->phone])
             ->andFilterWhere(['like', 'email', $this->email]);
-            // ->andFilterWhere(['like', 'description', $this->description])
-            // ->andFilterWhere(['like', 'information', $this->information])
-            // ->andFilterWhere(['like', 'comment', $this->comment]);
 
         return $dataProvider;
     }

@@ -34,14 +34,14 @@ class Zakaz extends ActiveRecord
 {
 
     const STATUS_NEW = 0;
-    const STATUS_WORK = 1;
-    const STATUS_EXECUTE = 2;
-    const STATUS_APOTED = 3;
-    const STATUS_DISAIN = 4;
-    const STATUS_REJECT_DISAIN = 5;
+    const STATUS_EXECUTE = 1;
+    const STATUS_ADOPTED = 2;
+    const STATUS_DISAIN = 3;
+    const STATUS_SUC_DISAIN = 4;
+    const STATUS_REJECT = 5;
     const STATUS_MASTER = 6;
-    const STATUS_AUTSORS = 7;
-    const STATUS_CLOSE = 8;
+    const STATUS_SUC_MASTER = 7;
+    const STATUS_AUTSORS = 8;
 
     /**
      * @inheritdoc
@@ -58,14 +58,12 @@ class Zakaz extends ActiveRecord
     {
         return [
             [['srok', 'minut', 'oplata', 'number', 'data', 'description','name', 'phone'], 'required'],
-            [['id_zakaz', 'id_tovar', 'oplata', 'fact_oplata', 'number', 'status'], 'integer'],
+            [['id_zakaz', 'id_tovar', 'oplata', 'fact_oplata', 'number', 'status', 'action', 'id_sotrud'], 'integer'],
             [['srok', 'minut', 'data', 'phone'], 'safe'],
             [['comment'], 'string'],
-            ['id_sotrud', 'default', 'value'=>Yii::$app->user->id],
             [['prioritet'], 'string', 'max' => 36],
 
             ['status', 'default', 'value' => self::STATUS_NEW],
-            // ['status', 'in', 'range' => array_keys(self::getStatusName())],
 
             [['description', 'information'], 'string', 'max' => 500],
             [['img', 'email', 'phone', 'name'],'string', 'max' => 50],
@@ -93,7 +91,7 @@ class Zakaz extends ActiveRecord
             'number' => 'Количество',
             'data' => 'Дата принятия',
             'description' => 'Описание',
-            'img' => 'Изображение',
+            'img' => 'Приложение',
             'information' => 'Дополнительная информация',
             'name' => 'Клиент',
             'phone' => 'Телефон',
@@ -152,17 +150,18 @@ class Zakaz extends ActiveRecord
     public static function getStatusArray(){
         return [
             self::STATUS_NEW => 'Новый',
-            self::STATUS_WORK => 'В работе',
             self::STATUS_EXECUTE => 'Исполнен',
             self::STATUS_APOTED => 'Принят',
             self::STATUS_DISAIN => 'Дизайнер',
-            self::STATUS_REJECT_DISAIN => 'Отклонен дизайнером',
+            self::STATUS_SUC_DISAIN => 'Готово дизайнером',
+            self::STATUS_REJECT => 'Отклонен',
             self::STATUS_MASTER => 'Мастер',
+            self::STATUS_SUC_MASTER => 'Готово мастером',
             self::STATUS_AUTSORS => 'Аутсорс',
-            self::STATUS_CLOSE => 'Закрыт',
         ];
     }
-    public function getStatusName(){
+    public function getStatusName()
+    {
         return ArrayHelper::getValue(self::getStatusArray(), $this->status);
     }
 }

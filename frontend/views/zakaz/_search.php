@@ -12,7 +12,6 @@ use dosamigos\datepicker\DatePicker;
 <div class="zakaz-search">
 
     <?php $form = ActiveForm::begin([
-        'action' => ['index'],
         'method' => 'get',
     ]); ?>
 
@@ -27,29 +26,17 @@ use dosamigos\datepicker\DatePicker;
             ]
     ]);?>
 
+    <?php if (Yii::$app->user->can('admin')): ?>
     <?= $form->field($model, 'id_sotrud') ?>
+    <?php endif ?>
 
     <?= $form->field($model, 'prioritet') ?>
 
+    <?php if (Yii::$app->user->can('admin')): ?>
     <?= $form->field($model, 'status') ?>
+    <?php endif ?>
 
     <?= $form->field($model, 'phone') ?>
-
-    <?php // echo $form->field($model, 'id_tovar') ?>
-
-    <?php // echo $form->field($model, 'oplata') ?>
-
-    <?php // echo $form->field($model, 'number') ?>
-
-    <?php // echo $form->field($model, 'data') ?>
-
-    <?php // echo $form->field($model, 'description') ?>
-
-    <?php // echo $form->field($model, 'information') ?>
-
-    <?php // echo $form->field($model, 'id_client') ?>
-
-    <?php // echo $form->field($model, 'comment') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

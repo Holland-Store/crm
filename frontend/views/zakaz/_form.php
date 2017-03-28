@@ -34,27 +34,19 @@ use yii\widgets\MaskedInput;
         'mask' => '99:99'
     ]) ?>
 
-    <!-- <?= $form->field($model, 'id_sotrud')->dropDownList([
-        'Админ' => 'Админ',
-        '2' => 'Московский',
-    ],
-    [
-        'prompt' => 'Выберите магазин',
-    ]) ?> -->
+    <?= $form->field($model, 'id_sotrud')->hiddenInput(['value' => Yii::$app->user->id])->label(false) ?>
 
    <!--  <?= $form->field($model, 'prioritet')->textInput(['maxlength' => true]) ?> -->
 
     <?php if (Yii::$app->user->can('admin')) {
         echo $form->field($model, 'status')->dropDownList([
         '0' => 'Новый',
-        '1' => 'В работе',
-        '2' => 'Исполнен',
-        '3' => 'Принят',
-        '4' => 'Дизайнер',
-        '5' => 'Отклонен дизайнером',
-        '6' => 'Мастер',
-        '7' => 'Аутсорс',
-        '8' => 'Завершен',
+        '1' => 'Исполнен',
+        '2' => 'Принят',
+        '3' => 'Дизайнер',
+        '4' => 'Отклонен дизайнером',
+        '5' => 'Мастер',
+        '6' => 'Аутсорс',
         ],
         ['prompt' => 'Выберите товар']);
         } ?>
@@ -90,7 +82,7 @@ use yii\widgets\MaskedInput;
     <?= $form->field($model, 'name')->textInput() ?>
 
     <?= $form->field($model, 'phone')->widget(MaskedInput::className(),[
-        'mask' => '79999999999'
+        'mask' => '89999999999'
     ]) ?>
 
     <?= $form->field($model, 'email')->widget(MaskedInput::className(),[
@@ -98,6 +90,13 @@ use yii\widgets\MaskedInput;
     ]) ?>
 
     <?= $form->field($model, 'comment')->textarea(['rows' => 6]) ?>
+
+    <?php if (Yii::$app->user->can('admin')) {
+      echo $form->field($model, 'action')->dropDownList([
+        '0' => 'Закрыть'
+    ],
+    ['prompt' => 'Укажите список при закрытие товара'])->label('Закрытие товара');  
+    } ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Создать' : 'Редактировать', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
