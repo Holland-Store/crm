@@ -16,16 +16,16 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
     <p>
-        <?php var_dump($model->status); ?>
-        <?php $form = ActiveForm::begin(); ?>
-        <?= Html::a('Выполнить', ['view', 'id' => $model->id_zakaz], [
+    <?php echo error_reporting(E_ALL); ?>
+        <!-- <?php $form = ActiveForm::begin(); ?> -->
+        <?= Html::a('Выполнить', ['check', 'id' => $model->id_zakaz], [
             'class' => 'btn btn-primary',
             'data' => [
-                'confirm' => 'Вы уверены, что хотите одобрить',
+                'confirm' => 'Вы уверены, что Вы выполнили работу',
                 'method' => 'post',
             ]
         ]) ?>
-       <?php ActiveForm::end(); ?>
+       <!-- <?php ActiveForm::end(); ?> -->
 
         <?php if (Yii::$app->user->can('disain')): ?>
         <?= Html::button('Выполнено', ['class' => 'btn btn-primary']) ?>
@@ -69,6 +69,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'attribute' => 'status',
+                'label' => 'Этап',
                 'visible' => Yii::$app->user->can('admin'),
             ],
             [

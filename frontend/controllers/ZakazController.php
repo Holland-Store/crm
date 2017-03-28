@@ -59,6 +59,11 @@ class ZakazController extends Controller
                         'roles' => ['admin', 'disain', 'master', 'program', 'shop'],
                     ],
                     [
+                        'actions' => ['check'],
+                        'allow' => true,
+                        'roles' => ['master', 'program'],
+                    ],
+                    [
                         'actions' => ['admin'],
                         'allow' => true,
                         'roles' => ['admin', 'program'],
@@ -104,8 +109,6 @@ class ZakazController extends Controller
         if ($model = $this->findModel($id)) {
             $model->status = 7;
             $model->save();
-        } else {
-            return $this->redirect(Yii::$app->request->referrer);
         }
 
         return $this->render('view', [
@@ -149,6 +152,13 @@ class ZakazController extends Controller
                 'model' => $model,
             ]);
         }
+    }
+    public function actionCheck($id)
+    {
+        if ($model = $this->findModel($id)) {
+            $model->status = 7;
+            $model->save();
+        } return $this->redirect(Yii::$app->request->referrer);
     }
 
     /**
