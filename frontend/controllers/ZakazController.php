@@ -101,16 +101,17 @@ class ZakazController extends Controller
      */
     public function actionView($id)
     {
-        $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id_zakaz]);
+        if ($model = $this->findModel($id)) {
+            $model->status = 7;
+            $model->save();
         } else {
-            return $this->render('view', [
+            return $this->redirect(Yii::$app->request->referrer);
+        }
+
+        return $this->render('view', [
             'model' => $this->findModel($id),
             'user_name' => $user_name,
-            ]);
-        }
+        ]);
     }
 
     /**

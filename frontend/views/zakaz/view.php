@@ -16,16 +16,20 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
     <p>
+        <?php var_dump($model->status); ?>
         <?php $form = ActiveForm::begin(); ?>
-        <?php if (Yii::$app->user->can('master')): ?>
-        <?= $form->field($model, 'status')->hiddenInput(['value' => '7'])->label(false) ?>
-        <?= Html::submitButton('Выполнено', ['class' => 'btn btn-primary']) ?>
-        <?php endif ?>
+        <?= Html::a('Выполнить', ['view', 'id' => $model->id_zakaz], [
+            'class' => 'btn btn-primary',
+            'data' => [
+                'confirm' => 'Вы уверены, что хотите одобрить',
+                'method' => 'post',
+            ]
+        ]) ?>
+       <?php ActiveForm::end(); ?>
 
         <?php if (Yii::$app->user->can('disain')): ?>
         <?= Html::button('Выполнено', ['class' => 'btn btn-primary']) ?>
-        <?php endif ?>
-        <?php ActiveForm::end(); ?>
+        <?php endif ?>  
 
         <?php if (Yii::$app->user->can('admin')): ?>
         <?= Html::a('Редактировать', ['update', 'id' => $model->id_zakaz], ['class' => 'btn btn-primary']) ?>
