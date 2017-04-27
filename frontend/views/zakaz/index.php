@@ -51,8 +51,6 @@ use yii\widgets\Pjax;
     </ul>
 </p>
 
-<?php var_dump(Yii::$app->authManager->getRolesByUser(Yii::$app->user->getId())) ?>
-
 
 <div class="alert alert-info col-xs-4"><h2>Тех поддержка:</h2><br><span class="glyphicon glyphicon-earphone"></span> 89503164233 <br>
 <span>@</span> holland.itkzn@gmail.com</div>

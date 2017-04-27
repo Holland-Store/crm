@@ -78,6 +78,8 @@ class ZakazSearch extends Zakaz
             ],
         ]);
 
+        $dataProvider->pagination = false;
+
         $this->load($params);
 
         if (!$this->validate()) {
@@ -98,11 +100,18 @@ class ZakazSearch extends Zakaz
             'email' => $this->email,
         ]);
 
+        if (Yii::$app->user->can('admin')) {
+            $query->orFilterWhere(['like', 'sotrud_name', $this->search])
+                ->orFilterWhere(['like', 'description', $this->search])
+                ->orFilterWhere(['like', 'information', $this->search])
+                ->orFilterWhere(['like', 'name', $this->search]);
+        } else {
         $query->andFilterWhere(['like', 'prioritet', $this->prioritet])
             ->andFilterWhere(['like', 'status', $this->status])
             ->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'phone', $this->phone])
             ->andFilterWhere(['like', 'email', $this->email]);
+        }
 
         return $dataProvider;
     }
@@ -115,6 +124,7 @@ class ZakazSearch extends Zakaz
             'status' => 'Этап',
             'phone' => 'Телефон',
             'data' => 'Дата принятия заказа',
+            'search' => 'Поиск',
         ];
     }
 }

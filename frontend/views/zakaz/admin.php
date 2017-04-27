@@ -5,6 +5,7 @@ use yii\grid\GridView;
 use app\models\Otdel;
 use app\models\Zakaz;
 use dosamigos\datepicker\DatePicker;
+use yii\widgets\ActiveForm;
 use yii\bootstrap\Nav;
 use yii\bootstrap\Modal;
 use yii\widgets\MaskedInput;
@@ -34,7 +35,12 @@ $this->title = 'Заказ';
         <?php //echo $this->render('_search', ['model' => $searchModel]);?>
         <?= Html::a('<span class="glyphicon glyphicon-refresh"></span>', ['zakaz/admin'], ['class' => 'btn btn-primary btn-lg pull-right']) ?>
     </p>
+
+    <?php echo $this->render('_searchadmin', ['model' => $searchModel]);?>
+
+
     <div class="col-xs-12">
+    
     <h3>Новые</h3>
     <?= GridView::widget([
         'dataProvider' => $dataProviderNew,

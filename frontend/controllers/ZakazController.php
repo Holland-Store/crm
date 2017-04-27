@@ -179,7 +179,7 @@ class ZakazController extends Controller
             'file' => $file,
         ]);
     }
-
+    
     /**
      * Creates a new Zakaz model.
      * If creation is successful, the browser will be redirected to the 'view' page.
@@ -259,7 +259,11 @@ class ZakazController extends Controller
         $model->action = 0;
         $model->save();
 
-        return $this->redirect(['shop']);
+        if (Yii::$app->user->can('shop')) {
+                return $this->redirect(['shop']);
+            } elseif (Yii::$app->user->can('admin')) {
+               return $this->redirect(['admin']);
+           }
     }
     public function actionRestore($id)
     {

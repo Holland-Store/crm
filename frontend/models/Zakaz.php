@@ -44,6 +44,7 @@ use yii\web\UploadeFile;
 class Zakaz extends ActiveRecord
 {
     public $file;
+    public $search;
 
     const STATUS_NEW = 0;
     const STATUS_EXECUTE = 1;
@@ -76,7 +77,7 @@ class Zakaz extends ActiveRecord
             [['srok', 'number', 'description', 'phone', 'sotrud_name'], 'required'],
             [['id_zakaz', 'id_tovar', 'oplata', 'fact_oplata', 'minut', 'number', 'status', 'action', 'id_sotrud', 'phone', 'id_shipping' ,'prioritet', 'statusDisain'], 'integer'],
             [['srok', 'data', 'data-start-disain'], 'safe'],
-            [['information', 'comment'], 'string'],
+            [['information', 'comment', 'search'], 'string'],
 
             ['status', 'default', 'value' => self::STATUS_NEW],
             ['id_sotrud', 'default', 'value' => Yii::$app->user->getId()],
@@ -122,6 +123,7 @@ class Zakaz extends ActiveRecord
             'email' => 'Email',
             'comment' => 'Комментарий',
             'id_shipping' => 'Доставка',
+            'search' => 'Search',
         ];
     }
 

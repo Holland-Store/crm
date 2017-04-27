@@ -88,10 +88,24 @@ class SiteController extends Controller
         }
 
         $model = new LoginForm();
-        // if ($model->load(Yii::$app->request->post()) && $model->login()) {
+
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             $id_user = Yii::$app->user->identity->getId();
-            return $this->redirect(['zakaz/index', 'id'=> $id_user]);
+
+            $routes = [
+            'shop' => ['zakaz/shop'],
+            'disain' => ['zakaz/disain'],
+            'master' => ['zakaz/master'],
+            'admin' => ['zakaz/admin'],
+            'courier' => ['courier/index'],
+            'program' => ['zakaz/program'],
+            ];
+
+            foreach ($routes as $key => $value) {
+                if (Yii::$app->user->can($key)) {
+                    return $this->redirect($value);
+                }
+            }
         } else {
             return $this->render('login', [
                 'model' => $model,
