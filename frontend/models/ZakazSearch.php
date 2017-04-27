@@ -13,6 +13,7 @@ use app\models\Zakaz;
  */
 class ZakazSearch extends Zakaz
 {
+    // public $search;
     /**
      * @inheritdoc
      */
@@ -20,7 +21,7 @@ class ZakazSearch extends Zakaz
     {
         return [
             [['id_zakaz', 'id_sotrud', 'id_tovar', 'status'], 'integer'],
-            [['srok', 'prioritet', 'data', 'name', 'email', 'phone'], 'safe'],
+            [['srok', 'prioritet', 'data', 'name', 'email', 'phone', 'search'], 'safe'],
         ];
     }
 
@@ -100,7 +101,7 @@ class ZakazSearch extends Zakaz
             'email' => $this->email,
         ]);
 
-        if (Yii::$app->user->can('admin')) {
+        if (isset($model->search)) {
             $query->orFilterWhere(['like', 'sotrud_name', $this->search])
                 ->orFilterWhere(['like', 'description', $this->search])
                 ->orFilterWhere(['like', 'information', $this->search])
