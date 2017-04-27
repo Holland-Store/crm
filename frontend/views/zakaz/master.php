@@ -8,6 +8,7 @@ use dosamigos\datepicker\DatePicker;
 use yii\bootstrap\Nav;
 use yii\bootstrap\Modal;
 use yii\grid\SetColumn;
+use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\ZakazSearch */
@@ -15,20 +16,18 @@ use yii\grid\SetColumn;
 
 $this->title = 'Мастер';
 ?>
+<?php Pjax::begin(); ?>
 <?php echo Nav::widget([
     'options' => ['class' => 'nav nav-pills'],
     'items' => [
     ['label' => 'Главная', 'url' => ['zakaz/index']],
-    ['label' => 'Администратор', 'url' => ['zakaz/admin'], 'visible' => Yii::$app->user->can('seeAdmin')],
-    ['label' => 'Дизайнер', 'url' => ['zakaz/disain'], 'visible' => Yii::$app->user->can('seeDisain')],
-    ['label' => 'Мастер', 'url' => ['zakaz/master'], 'visible' => Yii::$app->user->can('seeMaster')],
-    ['label' => 'Магазин', 'url' => ['zakaz/shop'], 'visible' => Yii::$app->user->can('seeShop')],
+    ['label' => 'Мастер', 'url' => ['zakaz/master'], 'visible' => Yii::$app->user->can('master')],
     ],
 ]); ?>
 <div class="zakaz-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <?php 
+    <!-- <?php 
     Modal::begin([
     		'toggleButton' => [
     			'tag' => 'button',
@@ -36,25 +35,31 @@ $this->title = 'Мастер';
     			'label' => 'Фильтр',
     		]
     	]);
-    echo $this->render('_search', ['model' => $searchModel]);
+    // echo $this->render('_search', ['model' => $searchModel]);
     Modal::end();
-    ?>
+    ?> -->
+
+    <p>
+    	<?= Html::a('<span class="glyphicon glyphicon-refresh"></span>', ['zakaz/master'], ['class' => 'btn btn-primary btn-lg pull-right']) ?>
+    </p>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        // 'filterModel' => $searchModel,
         'columns' => [
-            // ['class' => 'yii\grid\SerialColumn'],
-
             [
                 'attribute' => 'id_zakaz',
-                'headerOptions' => ['width' => '20']
+                'headerOptions' => ['width' => '20'],
+                'value' => 'prefics',
             ],
             [
-            'attribute' => 'description',
-            'headerOptions' => ['width' => '550'],
+                'attribute' => 'description',
+                'headerOptions' => ['width' => '550'],
+                'contentOptions'=>['style'=>'white-space: normal;'],
             ],
-            'prioritet',
+            [
+                'attribute' => 'prioritet',
+                'value' => 'prioritetName',
+            ],
              [
                 'attribute' => 'id_tovar',
                 'value' => 'idTovar.name',
@@ -68,10 +73,7 @@ $this->title = 'Мастер';
                 'filter' => DatePicker::widget([
                      'model' => $searchModel,
                      'attribute' => 'srok',
-                    // inline too, not bad
                      'inline' => false, 
-                     // modify template for custom rendering
-                    // 'template' => '<div class="well well-sm" style="background-color: #fff; width:250px">{input}</div>',
                     'clientOptions' => [
                     'autoclose' => true,
                     'format' => 'yyyy.mm.dd'
@@ -81,7 +83,6 @@ $this->title = 'Мастер';
             ],
             [
                 'attribute' => 'minut',
-                'format' => ['time', 'php:H:i'],
                 'headerOptions' => ['width' => '10'],
             ],
             'number',
@@ -99,4 +100,5 @@ $this->title = 'Мастер';
             ],
         ],
     ]); ?>
+    <?php Pjax::end(); ?>
 </div>

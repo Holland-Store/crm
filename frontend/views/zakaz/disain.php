@@ -9,6 +9,7 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\Modal;
 use yii\widgets\MaskedInput;
 use yii\grid\SetColumn;
+use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\ZakazSearch */
@@ -16,20 +17,19 @@ use yii\grid\SetColumn;
 
 $this->title = 'Дизайнер';
 ?>
+<?php Pjax::begin(); ?>
 <?php echo Nav::widget([
     'options' => ['class' => 'nav nav-pills'],
     'items' => [
     ['label' => 'Главная', 'url' => ['zakaz/index']],
-    ['label' => 'Администратор', 'url' => ['zakaz/admin'], 'visible' => Yii::$app->user->can('seeAdmin')],
     ['label' => 'Дизайнер', 'url' => ['zakaz/disain'], 'visible' => Yii::$app->user->can('seeDisain')],
-    ['label' => 'Мастер', 'url' => ['zakaz/master'], 'visible' => Yii::$app->user->can('seeMaster')],
-    ['label' => 'Магазин', 'url' => ['zakaz/shop'], 'visible' => Yii::$app->user->can('seeShop')],
+    ['label' => 'Готовые заказы', 'url' => ['zakaz/ready']],
     ],
 ]); ?>
 <div class="zakaz-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-   <?php 
+   <!-- <?php 
     Modal::begin([
     		'toggleButton' => [
     			'tag' => 'button',
@@ -37,32 +37,49 @@ $this->title = 'Дизайнер';
     			'label' => 'Фильтр',
     		]
     	]);
-    echo $this->render('_search', ['model' => $searchModel]);
+    // echo $this->render('_search', ['model' => $searchModel]);
     Modal::end();
-    ?>
+    ?> -->
+    <p>
+        <?= Html::a('<span class="glyphicon glyphicon-refresh"></span>', ['zakaz/disain'], ['class' => 'btn btn-primary btn-lg pull-right']) ?>
+    </p>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        // 'filterModel' => $searchModel,
         'columns' => [
-            // ['class' => 'yii\grid\SerialColumn'],
 
             [
                 'attribute' => 'id_zakaz',
-                'headerOptions' => ['width' => '20']
+                'headerOptions' => ['width' => '20'],
+                'value' => 'prefics',
             ],
             [
-            'attribute' => 'description',
-            'headerOptions' => ['width' => '550'],
+                'attribute' => 'statusDisain',
+                'class' => SetColumn::className(),
+                'format' => 'raw',
+                'name' => 'statusDisainName',
+                'cssCLasses' => [
+                    Zakaz::STATUS_DISAINER_NEW => 'primary',
+                    Zakaz::STATUS_DISAINER_WORK => 'success',
+                    Zakaz::STATUS_DISAINER_SOGLAS => 'info',
+                ],
+                'headerOptions' => ['width' => '50'],
             ],
-            'prioritet',
-             [
+            [
+                'attribute' => 'description',
+                'contentOptions' => ['style' => 'white-space: normal;'],
+            ],
+            [
+                'attribute' => 'prioritet',
+                'value' => 'prioritetName',
+            ],
+            [
                 'attribute' => 'id_tovar',
                 'value' => 'idTovar.name',
                 'filter' => Zakaz::getTovarList(),
                 'headerOptions' => ['width' => '100'],
             ],
-             [
+            [
                 'attribute' => 'srok',
                 'format' => ['datetime', 'php:d.m.Y'],
                 'value' => 'srok',
@@ -73,13 +90,12 @@ $this->title = 'Дизайнер';
                     'clientOptions' => [
                     'autoclose' => true,
                     'format' => 'yyyy.mm.dd'
-                ],
-                ]),
+               ],
+               ]),
                 'headerOptions' => ['width' => '70'],
             ],
             [
                 'attribute' => 'minut',
-                'format' => ['time', 'php:H:i'],
                 'headerOptions' => ['width' => '10'],
             ],
             'number',
@@ -97,4 +113,5 @@ $this->title = 'Дизайнер';
             ],
         ],
     ]); ?>
+    <?php Pjax::end(); ?>
 </div>

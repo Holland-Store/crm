@@ -4,6 +4,7 @@ namespace frontend\controllers;
 
 use Yii;
 use app\models\Zakaz;
+use app\models\Courier;
 use app\models\ZakazSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -12,7 +13,7 @@ use yii\filters\AccessControl;
 use app\rbac\AuthorRule;
 use console\controllers\RbacController;
 use yii\data\ActiveDataProvider;
-
+use yii\web\UploadedFile;
 /**
  * ZakazController implements the CRUD actions for Zakaz model.
  */
@@ -51,7 +52,7 @@ class ZakazController extends Controller
                     [
                         'actions' => ['update'],
                         'allow' => true,
-                        'roles' => ['admin', 'disain', 'master', 'program'],
+                        'roles' => ['admin', 'disain', 'master', 'program', 'shop'],
                     ],
                     [
                         'actions' => ['view'],
@@ -62,6 +63,16 @@ class ZakazController extends Controller
                         'actions' => ['check'],
                         'allow' => true,
                         'roles' => ['master', 'program'],
+                    ],
+                    [
+                        'actions' => ['close'],
+                        'allow' => ture,
+                        'roles' => ['admin', 'program', 'shop'],
+                    ],
+                    [
+                        'actions' => ['restore'],
+                        'allow' => ture,
+                        'roles' => ['admin', 'program'],
                     ],
                     [
                         'actions' => ['admin'],
@@ -82,6 +93,36 @@ class ZakazController extends Controller
                         'actions' => ['master'],
                         'allow' => true,
                         'roles' => ['master', 'program'],
+                    ],
+                    [
+                        'actions' => ['courier'],
+                        'allow' => true,
+                        'roles' => ['courier', 'program'],
+                    ],
+                    [
+                        'actions' => ['archive'],
+                        'allow' => true,
+                        'roles' => ['admin', 'program'],
+                    ],
+                    [
+                        'actions' => ['closezakaz'],
+                        'allow' => true,
+                        'roles' => ['shop', 'program'],
+                    ],
+                    [
+                        'actions' => ['ready'],
+                        'allow' => true,
+                        'roles' => ['disain', 'program'],
+                    ],
+                    [
+                        'actions' => ['adopted'],
+                        'allow' => true,
+                        'roles' => ['admin', 'program'],
+                    ],
+                    [
+                        'actions' => ['statusdisain'],
+                        'allow' => true,
+                        'roles' => ['disain', 'program'],
                     ],
                 ],
             ],
@@ -106,14 +147,36 @@ class ZakazController extends Controller
      */
     public function actionView($id)
     {
-        if ($model = $this->findModel($id)) {
-            $model->status = 7;
+        $model = $this->findModel($id);
+        $shipping = $model->idShipping;
+        $statusDisain = $model->statusDisain;
+        $status = $model->status;
+
+        $shipping = new Courier();
+        if ($shipping->load(Yii::$app->request->post()) && $shipping->save()) {
+            $model->id_shipping = $shipping->id;
             $model->save();
+            return $this->redirect(['view', 'id' => $model->id_zakaz]);
+        }
+
+        if ($model->load(Yii::$app->request->post())) {
+            $model->file = UploadedFile::getInstance($model, 'file');
+            if(isset($model->file))
+            {
+            $model->file->saveAs('maket/Maket_'.$model->id_zakaz.'.'.$model->file->extension);
+            $model->maket = 'Maket_'.$model->id_zakaz.'.'.$model->file->extension;
+            $model->status = 4;
+            }            
+            $model->save();
+
+            return $this->redirect(['view', 'id' => $model->id_zakaz]);
         }
 
         return $this->render('view', [
             'model' => $this->findModel($id),
             'user_name' => $user_name,
+            'shipping' => $shipping,
+            'file' => $file,
         ]);
     }
 
@@ -126,11 +189,23 @@ class ZakazController extends Controller
     {
         $model = new Zakaz();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->file = UploadedFile::getInstance($model, 'file');
+            if($model->upload()){
+            $model->img = time().'.'.$model->file->extension;
+            }
+            $model->save();
+
+            if (Yii::$app->user->can('shop')) {
+                return $this->redirect(['shop']);
+            } elseif (Yii::$app->user->can('admin')) {
+               return $this->redirect(['admin']);
+           }
+            // return $this->redirect(['view', 'id' => $model->id_zakaz]);
         } else {
             return $this->render('create', [
                 'model' => $model,
+                'url' => $url,
             ]);
         }
     }
@@ -145,8 +220,25 @@ class ZakazController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id_zakaz]);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->file = UploadedFile::getInstance($model, 'file');
+            if(isset($model->file))
+            {
+            $model->file->saveAs('attachment/'.$model->id_zakaz.'.'.$model->file->extension);
+            $model->img = $model->id_zakaz.'.'.$model->file->extension;
+            }
+            if ($model->status == 3) {
+                $model->data_start_disain = date('Y-m-d H:i:s');
+            }
+            
+            $model->save();
+
+            if (Yii::$app->user->can('shop')) {
+                return $this->redirect(['shop']);
+            } elseif (Yii::$app->user->can('admin')) {
+               return $this->redirect(['admin']);
+           }
+            // return $this->redirect(['view', 'id' => $model->id_zakaz]);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -155,10 +247,78 @@ class ZakazController extends Controller
     }
     public function actionCheck($id)
     {
-        if ($model = $this->findModel($id)) {
-            $model->status = 7;
-            $model->save();
-        } return $this->redirect(Yii::$app->request->referrer);
+        $model = $this->findModel($id);
+        $model->status = 7;
+        $model->save();
+        
+        return $this->redirect(['master']);
+    }
+    public function actionClose($id)
+    {
+        $model = $this->findModel($id);
+        $model->action = 0;
+        $model->save();
+
+        return $this->redirect(['shop']);
+    }
+    public function actionRestore($id)
+    {
+        $model = $this->findModel($id);
+        $model->action = 1;
+        $model->save();
+
+        return $this->redirect(['archive']);
+    }
+    public function actionAdopted($id)
+    {
+        $model = $this->findModel($id);
+        $model->status = 2;
+        $model->save();
+
+        return $this->redirect(['view', 'id' => $model->id_zakaz]);
+    }
+    public function actionArchive()
+    {
+        $searchModel = new ZakazSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, 'archive');
+
+        return $this->render('archive', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+    public function actionClosezakaz()
+    {
+        $searchModel = new ZakazSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, 'closeshop');
+
+        return $this->render('closezakaz', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+    public function actionReady()
+    {
+        $searchModel = new ZakazSearch();
+        $dataProvider = new ActiveDataProvider([
+                'query' => Zakaz::find()->andWhere(['status' => Zakaz::STATUS_SUC_DISAIN, 'action' => 1]),
+                'sort' => ['defaultOrder' => ['srok' => SORT_DESC]] 
+            ]);
+
+        return $this->render('ready', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            ]);
+    }
+
+    //Disain
+    public function actionStatusdisain($id)
+    {
+        $model = $this->findModel($id);
+        $model->statusDisain = 1;
+        $model->save();
+
+        return $this->redirect(['view', 'id' => $model->id_zakaz]);
     }
 
     /**
@@ -208,10 +368,27 @@ class ZakazController extends Controller
     {
         $searchModel = new ZakazSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, 'admin');
+        $image = $model->img;
+
+        $dataProviderNew = new ActiveDataProvider([
+            'query' => Zakaz::find()->andWhere(['status' => Zakaz::STATUS_NEW, 'action' => 1])
+            ]);
+        $dataProviderWork = new ActiveDataProvider([
+            'query' => Zakaz::find()->andWhere(['status' => [Zakaz::STATUS_ADOPTED, Zakaz::STATUS_REJECT, Zakaz::STATUS_SUC_MASTER, Zakaz::STATUS_SUC_DISAIN], 'action' => 1])
+            ]);
+        $dataProviderIspol = new ActiveDataProvider([
+            'query' => Zakaz::find()->andWhere(['status' => Zakaz::STATUS_EXECUTE, 'action' => 1])
+            ]);
+
+        // Yii::$app->authManager->getRolesByUser(Yii::$app->user->getId()));
 
         return $this->render('admin', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'dataProviderNew' => $dataProviderNew,
+            'dataProviderWork' => $dataProviderWork,
+            'dataProviderIspol' => $dataProviderIspol,
+            'image' => $image,
         ]);
     }
 
@@ -228,6 +405,15 @@ class ZakazController extends Controller
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+    protected function findShipping($id)
+    {
+        if (($shipping = Courier::findOne($id)) !== null) {
+            return $shipping;
+        } else {
+            throw new NotFoundHttpException("The requested page does not exist.");
+            
         }
     }
 }

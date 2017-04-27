@@ -47,15 +47,25 @@ class ZakazSearch extends Zakaz
         switch ($role) {
             case 'master':
                 $query->andWhere(['status' => Zakaz::STATUS_MASTER, 'action' => 1]);
+                $sort = ['srok' => SORT_ASC];
                 break;
             case 'disain':
                 $query->andWhere(['status' => Zakaz::STATUS_DISAIN, 'action' => 1]);
+                $sort = ['srok' => SORT_ASC];
                 break;
             case 'shop':
                 $query->andWhere(['id_sotrud' => Yii::$app->user->id, 'action' => 1]);
+                $sort = ['data' => SORT_DESC];
                 break;
             case 'admin':
-                $query->andWhere(['action' => 1]);
+                $query->andWhere(['status' => [Zakaz::STATUS_DISAIN, Zakaz::STATUS_MASTER, Zakaz::STATUS_AUTSORS], 'action' => 1]);
+                $sort = ['srok' => SORT_DESC];
+                break;
+            case 'archive':
+                $query->andWhere(['action' => 0]);
+                break;
+            case 'closeshop':
+                $query->andWhere(['id_sotrud' => Yii::$app->user->id, 'action' => 0]);
                 break;
         }
 
@@ -64,7 +74,7 @@ class ZakazSearch extends Zakaz
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'sort' => [
-                'defaultOrder' => ['srok' => SORT_DESC],
+                'defaultOrder' => $sort,
             ],
         ]);
 
@@ -84,7 +94,7 @@ class ZakazSearch extends Zakaz
             'id_tovar' => $this->id_tovar,
             'oplata' => $this->oplata,
             'data' => $this->data,
-            'name' => $this->name,
+            // 'name' => $this->name,
             'email' => $this->email,
         ]);
 
@@ -101,9 +111,10 @@ class ZakazSearch extends Zakaz
         return [
             'srok' => 'Срок',
             'id_sotrud' => 'Магазин',
-            'prioritet' => 'Приоритет',
+            'name' => 'Имя клиента',
             'status' => 'Этап',
             'phone' => 'Телефон',
+            'data' => 'Дата принятия заказа',
         ];
     }
 }
