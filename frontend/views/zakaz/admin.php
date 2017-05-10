@@ -38,6 +38,8 @@ $this->title = 'Заказ';
 
     <?php echo $this->render('_searchadmin', ['model' => $searchModel]);?>
 
+    <!-- <?php var_dump($searchModel) ?> -->
+
 
     <div class="col-xs-12">
     
@@ -124,6 +126,7 @@ $this->title = 'Заказ';
         'rowOptions' => function($model, $key, $index, $grid){
             if ($model->srok < date('Y-m-d')) {
                 return['style' => 'background: rgba(226, 0, 0, 0.48);'];
+
             }
         },
         'columns' => [

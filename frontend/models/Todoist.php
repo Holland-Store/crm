@@ -8,6 +8,7 @@ use Yii;
  * This is the model class for table "todoist".
  *
  * @property integer $id
+ * @property string $date
  * @property string $srok
  * @property integer $id_zakaz
  * @property integer $id_user
@@ -35,7 +36,7 @@ class Todoist extends \yii\db\ActiveRecord
     {
         return [
             [['srok', 'comment'], 'required'],
-            [['srok'], 'safe'],
+            [['srok', 'date'], 'safe'],
             [['id_zakaz', 'id_user', 'status', 'typ', 'activate'], 'integer'],
             [['comment'], 'string'],
             [['id_zakaz'], 'exist', 'skipOnError' => true, 'targetClass' => Zakaz::className(), 'targetAttribute' => ['id_zakaz' => 'id_zakaz']],
@@ -49,6 +50,7 @@ class Todoist extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+            'date' => 'Дата',
             'srok' => 'Срок',
             'id_zakaz' => 'Заказ',
             'id_user' => 'Назначение',

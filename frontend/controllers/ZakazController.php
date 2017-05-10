@@ -374,15 +374,9 @@ class ZakazController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, 'admin');
         $image = $model->img;
 
-        $dataProviderNew = new ActiveDataProvider([
-            'query' => Zakaz::find()->andWhere(['status' => Zakaz::STATUS_NEW, 'action' => 1])
-            ]);
-        $dataProviderWork = new ActiveDataProvider([
-            'query' => Zakaz::find()->andWhere(['status' => [Zakaz::STATUS_ADOPTED, Zakaz::STATUS_REJECT, Zakaz::STATUS_SUC_MASTER, Zakaz::STATUS_SUC_DISAIN], 'action' => 1])
-            ]);
-        $dataProviderIspol = new ActiveDataProvider([
-            'query' => Zakaz::find()->andWhere(['status' => Zakaz::STATUS_EXECUTE, 'action' => 1])
-            ]);
+        $dataProviderNew = $searchModel->search(Yii::$app->request->queryParams, 'adminNew');
+        $dataProviderWork = $searchModel->search(Yii::$app->request->queryParams, 'adminWork');
+        $dataProviderIspol = $searchModel->search(Yii::$app->request->queryParams, 'adminIspol');
 
         // Yii::$app->authManager->getRolesByUser(Yii::$app->user->getId()));
 

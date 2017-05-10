@@ -13,7 +13,7 @@ use app\models\User;
 
 <div class="zakaz-search">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['method' => 'get', 'action' => ['']]); ?>
 
     <?= $form->field($model, 'search')->textInput() ?>
     

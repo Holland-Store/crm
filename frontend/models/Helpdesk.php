@@ -13,6 +13,7 @@ use Yii;
  * @property integer $status
  * @property string $date
  * @property string $sotrud
+ * @property string $date_end
  */
 class Helpdesk extends \yii\db\ActiveRecord
 {
@@ -34,7 +35,7 @@ class Helpdesk extends \yii\db\ActiveRecord
             [['id_user', 'status'], 'integer'],
             ['id_user', 'default', 'value' => Yii::$app->user->getId()],
             [['commetnt'], 'string'],
-            [['date'], 'safe'],
+            [['date', 'date_end'], 'safe'],
             [['sotrud'], 'string', 'max' => 50],
             [['id_user'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['id_user' => 'id']],
         ];
@@ -52,6 +53,7 @@ class Helpdesk extends \yii\db\ActiveRecord
             'status' => 'Статсус',
             'date' => 'Дата',
             'sotrud' => 'Имя сотрудника',
+            'date_end' => 'Date_end',
         ];
     }
     /**

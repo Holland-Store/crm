@@ -13,6 +13,7 @@ use app\models\Zakaz;
  */
 class ZakazSearch extends Zakaz
 {
+    public $search;
     // public $search;
     /**
      * @inheritdoc
@@ -21,7 +22,7 @@ class ZakazSearch extends Zakaz
     {
         return [
             [['id_zakaz', 'id_sotrud', 'id_tovar', 'status'], 'integer'],
-            [['srok', 'prioritet', 'data', 'name', 'email', 'phone', 'search'], 'safe'],
+            [['srok', 'prioritet', 'data', 'name', 'email', 'phone', 'search', 'sotrud_name', 'description', 'information'], 'safe'],
         ];
     }
 
@@ -62,6 +63,18 @@ class ZakazSearch extends Zakaz
                 $query->andWhere(['status' => [Zakaz::STATUS_DISAIN, Zakaz::STATUS_MASTER, Zakaz::STATUS_AUTSORS], 'action' => 1]);
                 $sort = ['srok' => SORT_DESC];
                 break;
+            case 'adminNew':
+                $query->andWhere(['status' => Zakaz::STATUS_NEW, 'action' => 1]);
+                $sort = ['srok' => SORT_DESC];
+                break;
+            case 'adminWork':
+                $query->andWhere(['status' => [Zakaz::STATUS_ADOPTED, Zakaz::STATUS_REJECT, Zakaz::STATUS_SUC_MASTER, Zakaz::STATUS_SUC_DISAIN], 'action' => 1]);
+                $sort = ['srok' => SORT_DESC];
+                break;
+            case 'adminIspol':
+                $query->andWhere(['status' => Zakaz::STATUS_EXECUTE, 'action' => 1]);
+                $sort = ['srok' => SORT_DESC];
+                break;  
             case 'archive':
                 $query->andWhere(['action' => 0]);
                 break;
@@ -101,8 +114,8 @@ class ZakazSearch extends Zakaz
             'email' => $this->email,
         ]);
 
-        if (isset($model->search)) {
-            $query->orFilterWhere(['like', 'sotrud_name', $this->search])
+        if (isset($this->search)) {
+            $query->andFilterWhere(['like', 'sotrud_name', $this->search])
                 ->orFilterWhere(['like', 'description', $this->search])
                 ->orFilterWhere(['like', 'information', $this->search])
                 ->orFilterWhere(['like', 'name', $this->search]);

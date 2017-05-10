@@ -4,6 +4,9 @@ namespace frontend\controllers;
 
 use Yii;
 use app\models\Todoist;
+use app\models\Helpdesk;
+use app\models\Custom;
+use yii\base\Model;
 use app\models\TodoistSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -43,6 +46,20 @@ class TodoistController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
+    /**
+     * Lists all Todoist shop models.
+     * @return mixed
+     */
+    public function actionShop()
+    {
+        $searchModel = new TodoistSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('shop', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
 
     /**
      * Displays a single Todoist model.
@@ -70,6 +87,39 @@ class TodoistController extends Controller
         } else {
             return $this->render('create', [
                 'model' => $model,
+            ]);
+        }
+    }
+
+    /**
+     * Creates a new Todoist shop model.
+     * If creation is successful, the browser will be redirected to the 'shop' page.
+     * @return mixed
+     */
+    public function actionCreate_shop()
+    {
+        $model = new Todoist();
+        $helpdesk = new Helpdesk();
+        $models = [new Custom()];
+        $request = Yii::$app->getRequest();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['shop']);
+        } elseif ($helpdesk->load(Yii::$app->request->post()) && $helpdesk->save()) {
+            return $this->redirect(['shop']); 
+        } elseif (Model::loadMultiple($models, Yii::$app->request->post())) {
+            $data = Yii::$app->request->post('Custom', []);
+            foreach (array_keys($data) as $index) {
+                $models[$index] = new Custom();
+            }
+
+            return $this->redirect(['shop']);
+        }
+        else {
+            return $this->render('create_shop', [
+                'model' => $model,
+                'helpdesk' => $helpdesk,
+                'models' => $models,
             ]);
         }
     }

@@ -27,6 +27,7 @@ use yii\widgets\Pjax;
         ['label' => 'Help Desk', 'url' => ['helpdesk/index']],
         ['label' => 'Запросы на товар', 'url' => ['custom/index']],
     ]],
+    ['label' => 'Прочее', 'url' => ['todoist/shop']],
     ],
 ]); ?>
 

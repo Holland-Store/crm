@@ -13,11 +13,13 @@ use Yii;
  * @property integer $number
  * @property string $date
  * @property integer $action
+ * @property string $date_end
  *
  * @property User $idUser
  */
 class Custom extends \yii\db\ActiveRecord
 {
+    public $customs;
     /**
      * @inheritdoc
      */
@@ -36,7 +38,7 @@ class Custom extends \yii\db\ActiveRecord
             [['id_user', 'number', 'action'], 'integer'],
             ['id_user', 'default', 'value' => Yii::$app->user->getId()],
             [['tovar'], 'string', 'max' => 50],
-            [['date'], 'safe'],
+            [['date', 'date_end'], 'safe'],
             [['id_user'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['id_user' => 'id']],
         ];
     }
@@ -53,6 +55,8 @@ class Custom extends \yii\db\ActiveRecord
             'number' => 'Кол-во',
             'date' => 'Дата',
             'action' => 'Action',
+            'date_end' => 'Date_end,',
+            'customs'
         ];
     }
 
