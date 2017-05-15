@@ -254,6 +254,7 @@ class Zakaz extends ActiveRecord
     public function getUploadeFile()
     {
         $notification = new Notification();
+
         $this->file = UploadedFile::getInstance($this, 'file');//Выполнена работа дизайнером
         if(isset($this->file))
         {
@@ -262,6 +263,8 @@ class Zakaz extends ActiveRecord
             $this->status = 4;
             $notification->id_user = 5;//оформление уведомление выполение работы дизайнера
             $notification->name = 'Дизайнер выполнил работу №'.$this->id_zakaz.' '.$this->description;
+            $notification->id_zakaz = $this->id_zakaz;
+            $notification->category = 1;
             $notification->saveNotification;
         }
     }

@@ -67,7 +67,15 @@ AppAsset::register($this);
         <div class="notification-container hidden" id="notification-container">
         <?php foreach($this->params['notifications'] as $notification){
             // Действия с экземпляром модели Notification, например
-           echo Html::a($notification->name.'<br>', ['notification/view', 'id' => $notification->id_zakaz]);
+            if ($notification->category == 0) {
+                $notif = '<span class="glyphicon glyphicon-road"></span> '.$notification->name.'<br>';
+            } elseif ($notification->category == 1) {
+                $notif = '<span class="glyphicon glyphicon-ok"></span> '.$notification->name.'<br>';
+            } elseif ($notification->category == 2) {
+                $notif = '<span class="glyphicon glyphicon-file"></span> '.$notification->name.'<br>';
+            }
+
+           echo Html::a($notif.'<br>', ['notification/view', 'id' => $notification->id_zakaz]);            
         } 
         ?>
         <div class='notification-footer'>

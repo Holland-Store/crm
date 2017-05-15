@@ -161,6 +161,7 @@ class ZakazController extends Controller
             $notification->id_user = 7;//оформление уведомление доставки
             $notification->name = 'Доставка '.$model->description;
             $notification->id_zakaz = $model->id_zakaz;
+            $notification->category = 0;
             $notification->saveNotification;
             
             return $this->redirect(['view', 'id' => $model->id_zakaz]);
@@ -174,11 +175,13 @@ class ZakazController extends Controller
                 $notification->id_user = 3;//оформление уведомление дизайнеру
                 $notification->name = 'Новый заказ №'.$model->id_zakaz;
                 $notification->id_zakaz = $model->id_zakaz;
+                 $notification->category = 2;
                 $notification->saveNotification;
             } elseif ($model->status == 6) {
                 $notification->id_user = 6;//оформление уведомление мастеру
                 $notification->name = 'Новый заказ №'.$model->id_zakaz;
                 $notification->id_zakaz = $model->id_zakaz;
+                 $notification->category = 2;
                 $notification->saveNotification;
             }
 
@@ -268,6 +271,7 @@ class ZakazController extends Controller
         $model->status = 7;
         $notification->id_user = 5;//Уведомление, что мастер выполнил работу
         $notification->name = 'Мастер выполнил работу №'.$model->id_zakaz;
+        $notification->category = 1;
         $notification->saveNotification;
         $model->save();
         

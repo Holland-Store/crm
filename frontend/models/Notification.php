@@ -11,6 +11,7 @@ use Yii;
  * @property integer $id_user
  * @property string $name
  * @property integer $id_zakaz
+ * @property integer $category
  * @property integer $active
  *
  * @property Zakaz $idZakaz
@@ -18,6 +19,10 @@ use Yii;
  */
 class Notification extends \yii\db\ActiveRecord
 {
+    const CATEGORY_SHIPPING = 0;
+    const CATEGORY_SUCCESS = 1;
+    const CATEGORY_NEW = 2;
+
     /**
      * @inheritdoc
      */
@@ -32,7 +37,7 @@ class Notification extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_user', 'active'], 'integer'],
+            [['id_user', 'category','active'], 'integer'],
             [['name'], 'string', 'max' => 50],
             [['id_zakaz'], 'exist', 'skipOnError' => true, 'targetClass' => Zakaz::className(), 'targetAttribute' => ['id_zakaz' => 'id_zakaz']],
             [['id_user'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['id_user' => 'id']],
@@ -49,6 +54,7 @@ class Notification extends \yii\db\ActiveRecord
             'id_user' => 'Id User',
             'name' => 'Name',
             'id_zakaz' => 'Id Zakaz',
+            'category' => 'Category',
             'active' => 'Active',
         ];
     }
@@ -72,5 +78,17 @@ class Notification extends \yii\db\ActiveRecord
     {
         $this->active = true;
         $this->save();
+    }
+    public static function getCategoryArray()
+    {
+        return [
+            self::CATEGORY_SHIPPING => 'Доставка',
+            self::CATEGORY_SUCCESS => 'Выполнена работа',
+            self::CATEGORY_NEW => 'Новый заказ',
+        ];
+    }
+    public function getCategoryName()
+    {
+        return ArrayHelper::getValue(self::getCategoryArray(), $this->category);
     }
 }

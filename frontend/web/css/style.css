@@ -2,7 +2,7 @@
    position: absolute;
     width: 16%;
     top: 50px;
-    height: 161px;
+    height: 200px;
     float: left;
     margin-left: 69%;
     border: 1px solid #f1d0d0;
@@ -15,7 +15,4 @@
 }
 .notification-container .hidden{
     display: none;
-}
-.notification-container .notification-footer{
-	
 }
