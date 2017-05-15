@@ -4,20 +4,15 @@ namespace frontend\controllers;
 
 use Yii;
 use app\models\Courier;
-use app\models\Zakaz;
 use app\models\Notification;
-use app\models\CourierSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\AccessControl;
-// use console\controllers\RbacController;
 use yii\filters\VerbFilter;
-use yii\data\ActiveDataProvider;
-
 /**
  * CourierController implements the CRUD actions for Courier model.
  */
-class CourierController extends Controller
+class NotificationController extends Controller
 {
     /**
      * @inheritdoc

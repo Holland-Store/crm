@@ -6,9 +6,10 @@ use Yii;
 use yii\helpers\ArrayHelper;
 use app\models\User;
 use app\models\Tovar;
+use app\models\Notification;
 use app\models\Client;
 use yii\db\ActiveRecord;
-use yii\web\UploadeFile;
+use yii\web\UploadedFile;
 
 /**
  * This is the model class for table "zakaz".
@@ -30,6 +31,9 @@ use yii\web\UploadeFile;
  * @property string $information
  * @property string $img
  * @property string $maket
+ * @property integer $time
+ * @property integer $statusDisain
+ * @property string $data_start_disain
  * @property string $name
  * @property integer $phone
  * @property string $email
@@ -37,6 +41,7 @@ use yii\web\UploadeFile;
  * @property integer $id_shipping
  *
  * @property Courier[] $couriers
+ * @property Todoist[] $todoists
  * @property Tovar $idTovar
  * @property User $idSotrud
  * @property Courier $idShipping
@@ -75,7 +80,7 @@ class Zakaz extends ActiveRecord
     {
         return [
             [['srok', 'number', 'description', 'phone', 'sotrud_name'], 'required'],
-            [['id_zakaz', 'id_tovar', 'oplata', 'fact_oplata', 'minut', 'number', 'status', 'action', 'id_sotrud', 'phone', 'id_shipping' ,'prioritet', 'statusDisain'], 'integer'],
+            [['id_zakaz', 'id_tovar', 'oplata', 'fact_oplata', 'minut', 'time', 'number', 'status', 'action', 'id_sotrud', 'phone', 'id_shipping' ,'prioritet', 'statusDisain'], 'integer'],
             [['srok', 'data', 'data-start-disain'], 'safe'],
             [['information', 'comment', 'search'], 'string'],
 
@@ -113,6 +118,7 @@ class Zakaz extends ActiveRecord
             'data' => 'Дата принятия',
             'description' => 'Описание',
             'img' => 'Приложение',
+            'time' => 'Рекомендуемое время',
             'maket' => 'Макет дизайнера',
             'statusDisain' => 'Этап',
             'data_start_disain' => 'Дата начала',
@@ -244,5 +250,19 @@ class Zakaz extends ActiveRecord
     {
         $list = self::getPreficsList();
         return (isset($list[$this->id_sotrud])) ? $list[$this->id_sotrud].'-'.$this->id_zakaz : $this->id_zakaz;
+    }
+    public function getUploadeFile()
+    {
+        $notification = new Notification();
+        $this->file = UploadedFile::getInstance($this, 'file');//Выполнена работа дизайнером
+        if(isset($this->file))
+        {
+            $this->file->saveAs('maket/Maket_'.$this->id_zakaz.'.'.$this->file->extension);
+            $this->maket = 'Maket_'.$this->id_zakaz.'.'.$this->file->extension;
+            $this->status = 4;
+            $notification->id_user = 5;//оформление уведомление выполение работы дизайнера
+            $notification->name = 'Дизайнер выполнил работу №'.$this->id_zakaz.' '.$this->description;
+            $notification->saveNotification;
+        }
     }
 }

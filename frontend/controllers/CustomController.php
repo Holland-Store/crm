@@ -110,6 +110,7 @@ class CustomController extends Controller
     {
         $model = $this->findModel($id);
         $model->action = 1;
+        $model->date_end = date('Y-m-d H:i:s');
         $model->save();
 
         return $this->redirect(['index']);

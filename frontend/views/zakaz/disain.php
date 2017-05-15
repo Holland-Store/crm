@@ -100,6 +100,7 @@ $this->title = 'Дизайнер';
             ],
             'number',
             'img',
+            'time',
             [
             'class' => 'yii\grid\ActionColumn',
             'template' => '{view}',

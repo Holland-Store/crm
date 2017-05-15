@@ -1,8 +1,6 @@
-$(document).ready(function($){
-	$('#addCustom').click(function() {
-		var html = $(this).parent().html();
-		$(this).remove();
-		$("#customForm").append('<div>'+html+'</div>');
-		return false;
-    });
-});
+document.getElementById('notification').onclick = () => {
+	document.getElementById('notification-container').classList.toggle('hidden');
+}
+// documnet.getElementsByTagName('body').onclick = () => {
+// 	documnet.getElementById('notification-container').classList.toggle('hidden');
+// }

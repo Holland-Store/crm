@@ -1,0 +1,21 @@
+.notification-container{
+   position: absolute;
+    width: 16%;
+    top: 50px;
+    height: 161px;
+    float: left;
+    margin-left: 69%;
+    border: 1px solid #f1d0d0;
+    z-index: 1000;
+    background: #ffffff;
+    padding: 5px 0;
+    font-size: 14px;
+    text-align: left;
+    list-style: none;
+}
+.notification-container .hidden{
+    display: none;
+}
+.notification-container .notification-footer{
+	
+}

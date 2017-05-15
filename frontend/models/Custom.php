@@ -19,7 +19,6 @@ use Yii;
  */
 class Custom extends \yii\db\ActiveRecord
 {
-    public $customs;
     /**
      * @inheritdoc
      */
@@ -56,7 +55,6 @@ class Custom extends \yii\db\ActiveRecord
             'date' => 'Дата',
             'action' => 'Action',
             'date_end' => 'Date_end,',
-            'customs'
         ];
     }
 

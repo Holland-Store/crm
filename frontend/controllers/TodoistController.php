@@ -101,18 +101,19 @@ class TodoistController extends Controller
         $model = new Todoist();
         $helpdesk = new Helpdesk();
         $models = [new Custom()];
-        $request = Yii::$app->getRequest();
+        $data = Yii::$app->request->post('Custom', []);
+        foreach (array_keys($data) as $index) {
+            $models[$index] = new Custom();
+        }
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['shop']);
         } elseif ($helpdesk->load(Yii::$app->request->post()) && $helpdesk->save()) {
             return $this->redirect(['shop']); 
         } elseif (Model::loadMultiple($models, Yii::$app->request->post())) {
-            $data = Yii::$app->request->post('Custom', []);
-            foreach (array_keys($data) as $index) {
-                $models[$index] = new Custom();
+            foreach ($models as $custom) {
+                $custom->save();
             }
-
             return $this->redirect(['shop']);
         }
         else {

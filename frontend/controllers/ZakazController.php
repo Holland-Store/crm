@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use Yii;
 use app\models\Zakaz;
 use app\models\Courier;
+use app\models\Notification;
 use app\models\ZakazSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -148,32 +149,46 @@ class ZakazController extends Controller
     public function actionView($id)
     {
         $model = $this->findModel($id);
-        $shipping = $model->idShipping;
-        $statusDisain = $model->statusDisain;
-        $status = $model->status;
-
+        $notification = new Notification();
+        // $shipping = $model->idShipping;
+        // $this->view->params['notification'] = $notification;
         $shipping = new Courier();
-        if ($shipping->load(Yii::$app->request->post()) && $shipping->save()) {
-            $model->id_shipping = $shipping->id;
+        if ($shipping->load(Yii::$app->request->post())) {
+            $model->id_shipping = $shipping->id;//Оформление доставки
+            $shipping->save();
             $model->save();
+
+            $notification->id_user = 7;//оформление уведомление доставки
+            $notification->name = 'Доставка '.$model->description;
+            $notification->id_zakaz = $model->id_zakaz;
+            $notification->saveNotification;
+            
             return $this->redirect(['view', 'id' => $model->id_zakaz]);
         }
 
         if ($model->load(Yii::$app->request->post())) {
-            $model->file = UploadedFile::getInstance($model, 'file');
-            if(isset($model->file))
-            {
-            $model->file->saveAs('maket/Maket_'.$model->id_zakaz.'.'.$model->file->extension);
-            $model->maket = 'Maket_'.$model->id_zakaz.'.'.$model->file->extension;
-            $model->status = 4;
-            }            
-            $model->save();
+            $model->uploadeFile;//Выполнение рпбота дизайнером и оформление уведомление
+            $model->save();       
+            
+            if ($model->status == 3) {
+                $notification->id_user = 3;//оформление уведомление дизайнеру
+                $notification->name = 'Новый заказ №'.$model->id_zakaz;
+                $notification->id_zakaz = $model->id_zakaz;
+                $notification->saveNotification;
+            } elseif ($model->status == 6) {
+                $notification->id_user = 6;//оформление уведомление мастеру
+                $notification->name = 'Новый заказ №'.$model->id_zakaz;
+                $notification->id_zakaz = $model->id_zakaz;
+                $notification->saveNotification;
+            }
 
             return $this->redirect(['view', 'id' => $model->id_zakaz]);
         }
+        $this->view->params['notifications'] = Notification::find()->where(['id_user' => Yii::$app->user->getId(), 'active' => true])->all();
 
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'notification' => $notification,
             'user_name' => $user_name,
             'shipping' => $shipping,
             'file' => $file,
@@ -245,10 +260,15 @@ class ZakazController extends Controller
             ]);
         }
     }
-    public function actionCheck($id)
+    public function actionCheck($id)//Мастер выполнил свою работу
     {
         $model = $this->findModel($id);
+        $notification = new Notification();
+
         $model->status = 7;
+        $notification->id_user = 5;//Уведомление, что мастер выполнил работу
+        $notification->name = 'Мастер выполнил работу №'.$model->id_zakaz;
+        $notification->saveNotification;
         $model->save();
         
         return $this->redirect(['master']);

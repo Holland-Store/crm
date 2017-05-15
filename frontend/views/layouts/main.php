@@ -10,6 +10,7 @@ use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use common\widgets\Alert;
 use yii\helpers\Url;
+use app\models\Notification;
 
 AppAsset::register($this);
 ?>
@@ -30,7 +31,6 @@ AppAsset::register($this);
     <?php
     NavBar::begin([
         'brandLabel' => 'Holland',
-        // 'brandUrl' => Yii::$app->homeUrl,
         'brandUrl' => ['/zakaz/index'],
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
@@ -41,6 +41,9 @@ AppAsset::register($this);
     //     ['label' => 'About', 'url' => ['/site/about']],
     //     ['label' => 'Contact', 'url' => ['/site/contact']],
     // ];
+    if (!Yii::$app->user->isGuest) {
+        $menuItems[] = ['encode' => false, 'label' => '<span class="glyphicon glyphicon-bell"></span>', 'options' => ['id' => 'notification']];
+    }
     if (Yii::$app->user->isGuest) {
         // $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
         $menuItems[] = ['label' => 'Войти', 'url' => ['/site/login']];
@@ -60,6 +63,19 @@ AppAsset::register($this);
     ]);
     NavBar::end();
     ?>
+    <?php if (!Yii::$app->user->isGuest): ?>
+        <div class="notification-container hidden" id="notification-container">
+        <?php foreach($this->params['notifications'] as $notification){
+            // Действия с экземпляром модели Notification, например
+           echo Html::a($notification->name.'<br>', ['notification/view', 'id' => $notification->id_zakaz]);
+        } 
+        ?>
+        <div class='notification-footer'>
+        <?php echo Html::a('Прочитать все напоминание', ['#']) ?>
+        </div>
+        </div>
+    <?php endif ?>
+    
 
     <div class="container">
         <?= Breadcrumbs::widget([

@@ -82,7 +82,6 @@ $this->title = $model->id_zakaz;
         </div>
         <div class="col-xs-2">
         <?php if (Yii::$app->user->can('disain')): ?>
-
             
         <?php $form = ActiveForm::begin(); ?>
 
@@ -108,6 +107,8 @@ $this->title = $model->id_zakaz;
                 '1' => 'Исполнен',
                 ],
                 ['prompt' => 'Назначить'])->label(false);?>
+
+        <?= $form1->field($model, 'time')->textInput(['type' => 'number', 'min' => 0, 'max' => 60])?>
         <?= Html::submitButton('Назначить', ['class' => 'btn btn-primary btn-sm']) ?>
 
         <?php ActiveForm::end(); ?>
