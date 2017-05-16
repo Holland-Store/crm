@@ -258,13 +258,13 @@ class Zakaz extends ActiveRecord
         $this->file = UploadedFile::getInstance($this, 'file');//Выполнена работа дизайнером
         if(isset($this->file))
         {
+            $zakaz = $this->id_zakaz;
+            $description = $this->description;
+            
             $this->file->saveAs('maket/Maket_'.$this->id_zakaz.'.'.$this->file->extension);
             $this->maket = 'Maket_'.$this->id_zakaz.'.'.$this->file->extension;
             $this->status = 4;
-            $notification->id_user = 5;//оформление уведомление выполение работы дизайнера
-            $notification->name = 'Дизайнер выполнил работу №'.$this->id_zakaz.' '.$this->description;
-            $notification->id_zakaz = $this->id_zakaz;
-            $notification->category = 1;
+            $notification->getByIdNotification(5, $zakaz);
             $notification->saveNotification;
         }
     }

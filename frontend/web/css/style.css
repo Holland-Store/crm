@@ -16,3 +16,7 @@
 .notification-container .hidden{
     display: none;
 }
+.notification-content{
+    height: 169px;
+    overflow: auto;
+}

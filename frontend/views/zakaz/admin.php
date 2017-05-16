@@ -244,10 +244,10 @@ $this->title = 'Заказ';
                 'headerOptions' => ['width' => '50'],
             ],
             [
-            'attribute' => 'description',
-            'format' => 'text',
-            'options' => ['width' => '200'],
-            'contentOptions'=>['style'=>'white-space: normal;'],
+                'attribute' => 'description',
+                'format' => 'text',
+                'options' => ['width' => '200'],
+                'contentOptions'=>['style'=>'white-space: normal;'],
             ],
             //  [
             //     'attribute' => 'id_tovar',
@@ -321,8 +321,9 @@ $this->title = 'Заказ';
                 'value' => 'prefics',
             ],
             [
-            'attribute' => 'description',
-            'headerOptions' => ['width' => '200'],
+                'attribute' => 'description',
+                'headerOptions' => ['width' => '200'],
+                'contentOptions'=>['style'=>'white-space: normal;'],
             ],
             //  [
             //     'attribute' => 'id_tovar',

@@ -3,14 +3,15 @@
 namespace frontend\controllers;
 
 use Yii;
-use app\models\Courier;
 use app\models\Notification;
+use app\models\NotificationSearch;
 use yii\web\Controller;
-use yii\web\NotFoundHttpException;
 use yii\filters\AccessControl;
+use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+
 /**
- * CourierController implements the CRUD actions for Courier model.
+ * NotificationController implements the CRUD actions for Notification model.
  */
 class NotificationController extends Controller
 {
@@ -25,166 +26,90 @@ class NotificationController extends Controller
                 'actions' => [
                     'delete' => ['POST'],
                 ],
-           ],
-           'access' => [
+            ],
+            'access' => [
                 'class' => AccessControl::className(),
-                // 'only' => ['index'],
                 'rules' => [
-                   [
-                       'actions' => ['index'],
-                       'allow' => true,
-                       'roles' => ['courier', 'program'],
-                   ],
-                   [
-                    'actions' => ['ready'],
-                    'allow' => true,
-                    'roles' => ['courier', 'program'],
-                   ],
-                   [
-                    'actions' => ['make'],
-                    'allow' => true,
-                    'roles' => ['courier', 'program'],
-                   ],
-                   [
-                    'actions' => ['delivered'],
-                    'allow' => true,
-                    'roles' => ['courier', 'program'],
-                   ],
+                    [
+                        'actions' => ['index'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                    [
+                        'actions' => ['ready'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                    [
+                        'actions' => ['notification'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
                 ],
             ],
         ];
     }
 
     /**
-     * Lists all Courier models.
+     * Lists all Notification models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new CourierSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $notification = Notification::find()->where(['id_user' => Yii::$app->user->id, 'active' => true]);
+        $model = $notification->where(['id_user' => Yii::$app->user->id])->limit(50)->all();
+        $notification->count()>50 ? $notifications = "50+" : $notifications = $notification->count();
+
+        $this->view->params['notifications'] = $notification->all();
+        $this->view->params['count'] =  $notifications;
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
-     public function actionReady()
-    {
-        $courier = Courier::find();
-        $dataProvider = new ActiveDataProvider([
-            'query' => $courier->andWhere(['>', 'data_from', '0000-00-00 00:00:00']),
-            'pagination' => ['pageSize' => 50,]
-            ]);
-        
-        return $this->render('ready', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
-
-    /**
-     * Displays a single Courier model.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
-    }
-
-    /**
-     * Creates a new Courier model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
-    public function actionCreate()
-    {
-        $model = new Courier();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('create', [
                 'model' => $model,
             ]);
-        }
     }
 
+
     /**
-     * Updates an existing Courier model.
-     * If update is successful, the browser will be redirected to the 'view' page.
+     *  Read all an existing Notification model.
+     * If ready is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id)
+    public function actionReady($id)
     {
-        $model = $this->findModel($id);
+        $model = $this->findModel(['id_user' => $id]);
+        $model->getDb()->createCommand()->update('notification', ['active' => 0], ['id_user' => $id])->execute();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
-        }
+        return $this->redirect(['index']);
+
+
+        // return $this->render('ready');
     }
-
     /**
-     * Deletes an existing Courier model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
+     *  One notification an existing Notification model.
+     * If ready is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
+    public function actionNotification($id)
     {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
-    }
-    public function actionMake($id)//Курьер забрал заказ
-    {
-        $model = $this->findModel($id);
-        $notification = new Notification();
-
-        $model->data_to = date('Y-m-d H:i:s');
-        $model->status = 1;
-
-        $notification->id_user = 5;//Уведомление, что курьер забрал доставку
-        $notification->name = 'Курьер забрал заказ №'.$model->id_zakaz;
-        $notification->saveNotification;
-
+        $model = $this->findModel(['id_zakaz' => $id]);
+        $model->active = 0;
         $model->save();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['zakaz/view', 'id' => $id]);
     }
-    public function actionDelivered($id)//Курьер доставил заказ
-    {
-        $model = $this->findModel($id);
-        $notification = new Notification();
-        $model->data_from = date('Y-m-d H:i:s');
-        $model->status = 2;
 
-        $notification->id_user = 5;//Уведомление, что курьер доставил доставку
-        $notification->name = 'Курьер доставил заказ №'.$model->id_zakaz;
-        $notification->saveNotification;
-
-        $model->save();
-
-        return $this->redirect(['index']);
-    }
     /**
-     * Finds the Courier model based on its primary key value.
+     * Finds the Notification model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Courier the loaded model
+     * @return Notification the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Courier::findOne($id)) !== null) {
+        if (($model = Notification::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

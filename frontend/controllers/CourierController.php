@@ -108,6 +108,7 @@ class CourierController extends Controller
     public function actionCreate()
     {
         $model = new Courier();
+        $this->view->params['notifications'] = Notification::find()->where(['id_user' => Yii::$app->user->id, 'active' => true])->all();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -127,6 +128,7 @@ class CourierController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $this->view->params['notifications'] = Notification::find()->where(['id_user' => Yii::$app->user->id, 'active' => true])->all();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -153,6 +155,7 @@ class CourierController extends Controller
     {
         $model = $this->findModel($id);
         $notification = new Notification();
+        $this->view->params['notifications'] = Notification::find()->where(['id_user' => Yii::$app->user->id, 'active' => true])->all();
 
         $model->data_to = date('Y-m-d H:i:s');
         $model->status = 1;
@@ -171,6 +174,7 @@ class CourierController extends Controller
         $notification = new Notification();
         $model->data_from = date('Y-m-d H:i:s');
         $model->status = 2;
+        $this->view->params['notifications'] = Notification::find()->where(['id_user' => Yii::$app->user->id, 'active' => true])->all();
 
         $notification->id_user = 5;//Уведомление, что курьер доставил доставку
         $notification->name = 'Курьер доставил заказ №'.$model->id_zakaz;

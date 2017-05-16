@@ -91,4 +91,39 @@ class Notification extends \yii\db\ActiveRecord
     {
         return ArrayHelper::getValue(self::getCategoryArray(), $this->category);
     }
+    public function getByIdNotification($id, $zakaz)
+    {
+        switch ($id) {
+            case '7'://оформление уведомление доставки
+                $this->id_user = $id;
+                $this->name = 'Новый заказ №'.$zakaz;
+                $this->id_zakaz = $zakaz;
+                $this->category = 2;
+                break;
+            case '3'://оформление уведомление дизайнеру
+                $this->id_user = $id;
+                $this->name = 'Новый заказ №'.$zakaz;
+                $this->id_zakaz = $zakaz;
+                $this->category = 2;
+                break;
+            case '6'://оформление уведомление мастеру
+                $this->id_user = $id;
+                $this->name = 'Новый заказ №'.$zakaz;
+                $this->id_zakaz = $zakaz;
+                $this->category = 2;
+                break;
+            case '8'://Уведомление, что мастер выполнил работу
+                $this->id_user = 5;
+                $this->name = 'Мастер выполнил работу №'.$zakaz;
+                $this->id_zakaz = $zakaz;
+                $this->category = 1;
+                break;
+            case '5'://оформление уведомление выполение работы дизайнера
+                $this->id_user = $id;
+                $this->name = 'Дизайнер выполнил работу №'.$zakaz.' '.$description;
+                $this->id_zakaz = $zakaz;
+                $this->category = 1;
+                break;
+        }
+    }
 }

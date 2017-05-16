@@ -7,6 +7,7 @@ use app\models\Todoist;
 use app\models\Helpdesk;
 use app\models\Custom;
 use yii\base\Model;
+use app\models\Notification;
 use app\models\TodoistSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -40,6 +41,11 @@ class TodoistController extends Controller
     {
         $searchModel = new TodoistSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $notification = Notification::find()->where(['id_user' => Yii::$app->user->id, 'active' => true]);
+        $notification->count()>50 ? $notifications = "50+" : $notifications = $notification->count();
+
+        $this->view->params['notifications'] = $notification->all();
+        $this->view->params['count'] =  $notifications;
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -55,6 +61,12 @@ class TodoistController extends Controller
         $searchModel = new TodoistSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
+        $notification = Notification::find()->where(['id_user' => Yii::$app->user->id, 'active' => true]);
+        $notification->count()>50 ? $notifications = "50+" : $notifications = $notification->count();
+
+        $this->view->params['notifications'] = $notification->all();
+        $this->view->params['count'] =  $notifications;
+
         return $this->render('shop', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -68,6 +80,11 @@ class TodoistController extends Controller
      */
     public function actionView($id)
     {
+        $notification = Notification::find()->where(['id_user' => Yii::$app->user->id, 'active' => true]);
+        $notification->count()>50 ? $notifications = "50+" : $notifications = $notification->count();
+
+        $this->view->params['notifications'] = $notification->all();
+        $this->view->params['count'] =  $notifications;
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -81,6 +98,11 @@ class TodoistController extends Controller
     public function actionCreate()
     {
         $model = new Todoist();
+        $notification = Notification::find()->where(['id_user' => Yii::$app->user->id, 'active' => true]);
+        $notification->count()>50 ? $notifications = "50+" : $notifications = $notification->count();
+
+        $this->view->params['notifications'] = $notification->all();
+        $this->view->params['count'] =  $notifications;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index', 'id' => $model->id]);
@@ -101,6 +123,13 @@ class TodoistController extends Controller
         $model = new Todoist();
         $helpdesk = new Helpdesk();
         $models = [new Custom()];
+        $notification = Notification::find()->where(['id_user' => Yii::$app->user->id, 'active' => true]);
+
+        $notification->count()>50 ? $notifications = "50+" : $notifications = $notification->count();
+
+        $this->view->params['notifications'] = $notification->all();
+        $this->view->params['count'] =  $notifications;
+
         $data = Yii::$app->request->post('Custom', []);
         foreach (array_keys($data) as $index) {
             $models[$index] = new Custom();
@@ -134,6 +163,12 @@ class TodoistController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $notification = Notification::find()->where(['id_user' => Yii::$app->user->id, 'active' => true]);
+
+        $notification->count()>50 ? $notifications = "50+" : $notifications = $notification->count();
+
+        $this->view->params['notifications'] = $notification->all();
+        $this->view->params['count'] =  $notifications;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index', 'id' => $model->id]);
@@ -160,6 +195,13 @@ class TodoistController extends Controller
     public function actionCreatezakaz($id_zakaz)
     {
         $model = new Todoist();
+        
+         $notification = Notification::find()->where(['id_user' => Yii::$app->user->id, 'active' => true]);
+
+         $notification->count()>50 ? $notifications = "50+" : $notifications = $notification->count();
+
+        $this->view->params['notifications'] = $notification->all();
+        $this->view->params['count'] =  $notifications;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index', 'id' => $model->id]);

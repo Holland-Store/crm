@@ -28,6 +28,7 @@ AppAsset::register($this);
 <?php $this->beginBody() ?>
 
 <div class="wrap">
+<?php $counts = '<span class="glyphicon glyphicon-bell" style="font-size:21px"></span><span class="badge pull-right">'.$this->params['count'].'</span>'; ?>
     <?php
     NavBar::begin([
         'brandLabel' => 'Holland',
@@ -42,7 +43,7 @@ AppAsset::register($this);
     //     ['label' => 'Contact', 'url' => ['/site/contact']],
     // ];
     if (!Yii::$app->user->isGuest) {
-        $menuItems[] = ['encode' => false, 'label' => '<span class="glyphicon glyphicon-bell"></span>', 'options' => ['id' => 'notification']];
+        $menuItems[] = ['encode' => false, 'label' => $counts, 'options' => ['id' => 'notification']];
     }
     if (Yii::$app->user->isGuest) {
         // $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
@@ -65,25 +66,25 @@ AppAsset::register($this);
     ?>
     <?php if (!Yii::$app->user->isGuest): ?>
         <div class="notification-container hidden" id="notification-container">
-        <?php foreach($this->params['notifications'] as $notification){
-            // Действия с экземпляром модели Notification, например
-            if ($notification->category == 0) {
-                $notif = '<span class="glyphicon glyphicon-road"></span> '.$notification->name.'<br>';
-            } elseif ($notification->category == 1) {
-                $notif = '<span class="glyphicon glyphicon-ok"></span> '.$notification->name.'<br>';
-            } elseif ($notification->category == 2) {
-                $notif = '<span class="glyphicon glyphicon-file"></span> '.$notification->name.'<br>';
-            }
+            <div class="notification-content">
+                <?php foreach($this->params['notifications'] as $notification){
+                    if ($notification->category == 0) {
+                        $notif = '<span class="glyphicon glyphicon-road"></span> '.$notification->name.'<br>';
+                    } elseif ($notification->category == 1) {
+                        $notif = '<span class="glyphicon glyphicon-ok"></span> '.$notification->name.'<br>';
+                    } elseif ($notification->category == 2) {
+                        $notif = '<span class="glyphicon glyphicon-file"></span> '.$notification->name.'<br>';
+                    }
 
-           echo Html::a($notif.'<br>', ['notification/view', 'id' => $notification->id_zakaz]);            
-        } 
-        ?>
-        <div class='notification-footer'>
-        <?php echo Html::a('Прочитать все напоминание', ['#']) ?>
-        </div>
-        </div>
+                   echo Html::a($notif.'<br>', ['notification/notification', 'id' => $notification->id_zakaz]);            
+                } 
+                ?>
+            </div>
+            <div class='notification-footer'>
+            <?php echo Html::a('Прочитать все напоминание', ['notification/index']) ?>
+            </div>
+        </div>  
     <?php endif ?>
-    
 
     <div class="container">
         <?= Breadcrumbs::widget([
@@ -97,7 +98,7 @@ AppAsset::register($this);
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; Holland <?= date('Y'); ?> version 1.1</p>
+        <p class="pull-left">&copy; Holland <?= date('Y'); ?> <?= Html::a('version 2.0', ['zakaz/index']) ?></p>
 
         <!-- <p class="pull-right"><?= Yii::powered() ?></p> -->
     </div>

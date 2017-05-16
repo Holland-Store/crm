@@ -7,30 +7,28 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\NotificationSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Notifications';
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = 'Уведомление';
 ?>
 <div class="notification-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <p>
-        <?= Html::a('Create Notification', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+    <?= Html::a('Отметить все прочитаным', ['ready', 'id' => Yii::$app->user->id])  ?>
+    <br>
+    
+    <?php foreach ($model as $notification): ?>
+        <?php if ($notification->category == 0) {
+            $notif = '<span class="glyphicon glyphicon-road"></span> '.$notification->name.'<br>';
+        } elseif ($notification->category == 1) {
+            $notif = '<span class="glyphicon glyphicon-ok"></span> '.$notification->name.'<br>';
+        } elseif ($notification->category == 2) {
+            $notif = Html::a('<span class="glyphicon glyphicon-file"></span> '.$notification->name.'<br>');
+        } 
+         ?>
+    <?php 
+        echo Html::tag('p',Html::a($notif, ['notification', 'id' => $notification->id_zakaz]),['style'=>$notification->active == 1?'font-weight: bold;':'']);
+    ?>
 
-            'id',
-            'id_user',
-            'name',
-            'id_zakaz',
-            'active',
+    <?php endforeach ?>
 
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
 </div>

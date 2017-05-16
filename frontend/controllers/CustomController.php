@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use Yii;
 use app\models\Custom;
 use app\models\CustomSearch;
+use app\models\Notification;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -37,6 +38,11 @@ class CustomController extends Controller
     {
         $searchModel = new CustomSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $notification = Notification::find()->where(['id_user' => Yii::$app->user->id, 'active' => true]);
+        $notification->count()>50 ? $notifications = "50+" : $notifications = $notification->count();
+
+        $this->view->params['notifications'] = $notification->all();
+        $this->view->params['count'] =  $notifications;
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -108,6 +114,12 @@ class CustomController extends Controller
 
     public function actionClose($id)
     {
+        $notification = Notification::find()->where(['id_user' => Yii::$app->user->id, 'active' => true]);
+        $notification->count()>50 ? $notifications = "50+" : $notifications = $notification->count();
+
+        $this->view->params['notifications'] = $notification->all();
+        $this->view->params['count'] =  $notifications;
+        
         $model = $this->findModel($id);
         $model->action = 1;
         $model->date_end = date('Y-m-d H:i:s');

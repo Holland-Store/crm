@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use Yii;
 use app\models\Helpdesk;
 use app\models\HelpdeskSearch;
+use app\models\Notification;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -37,6 +38,13 @@ class HelpdeskController extends Controller
     {
         $searchModel = new HelpdeskSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $notification = Notification::find()->where(['id_user' => Yii::$app->user->id, 'active' => true]);
+
+        $notification->count()>50 ? $notifications = "50+" : $notifications = $notification->count();
+
+        $this->view->params['notifications'] = $notification->all();
+        $this->view->params['count'] =  $notifications;
+
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -51,6 +59,13 @@ class HelpdeskController extends Controller
      */
     public function actionView($id)
     {
+        $notification = Notification::find()->where(['id_user' => Yii::$app->user->id, 'active' => true]);
+
+        $notification->count()>50 ? $notifications = "50+" : $notifications = $notification->count();
+
+        $this->view->params['notifications'] = $notification->all();
+        $this->view->params['count'] =  $notifications;
+        
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -64,6 +79,12 @@ class HelpdeskController extends Controller
     public function actionCreate()
     {
         $model = new Helpdesk();
+        $notification = Notification::find()->where(['id_user' => Yii::$app->user->id, 'active' => true]);
+
+        $notification->count()>50 ? $notifications = "50+" : $notifications = $notification->count();
+
+        $this->view->params['notifications'] = $notification->all();
+        $this->view->params['count'] =  $notifications;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index', 'id' => $model->id]);
@@ -83,6 +104,12 @@ class HelpdeskController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $notification = Notification::find()->where(['id_user' => Yii::$app->user->id, 'active' => true]);
+
+        $notification->count()>50 ? $notifications = "50+" : $notifications = $notification->count();
+
+        $this->view->params['notifications'] = $notification->all();
+        $this->view->params['count'] =  $notifications;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index', 'id' => $model->id]);
