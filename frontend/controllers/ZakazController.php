@@ -171,17 +171,19 @@ class ZakazController extends Controller
         
         if($reminder->load(Yii::$app->request->post())){
             $reminder->getReminder($zakaz);
-            if($reminder->save()){
-                Yii::$app->session->setFlash('success', 'Напоминание было созана');
+            if($reminder->validate() && $reminder->save()){
+                Yii::$app->session->setFlash('success', 'Напоминание было создана');
             } else {
                 Yii::$app->session->setFlash('error', 'Извините. Напоминание не было создана');
             }
+            unset($reminder->srok);
+            return $this->redirect(['view', 'id' => $model->id_zakaz]);
         }
 
         if ($model->load(Yii::$app->request->post())) {
             $model->uploadeFile;//Выполнение работы дизайнером и оформление уведомление
             $model->validate();
-            $model->save();       
+            $model->save();
             
             if ($model->status == 3) {
                 $notification->getByIdNotification(3, $zakaz);

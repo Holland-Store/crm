@@ -151,7 +151,7 @@ $this->title = $model->id_zakaz;
        <div class="col-xs-3">
             <?php $formReminder = ActiveForm::begin(); ?>
             
-            <?= $form->field($reminder, 'srok')->textInput(['type' => 'datetime-local']) ?>
+            <?= $formReminder->field($reminder, 'srok')->textInput(['type' => 'datetime-local', 'required' => 'required']) ?>
             
             <?= Html::submitButton('Напомнить', ['class' => 'btn btn-primary btn-sm']) ?>
             
@@ -159,12 +159,6 @@ $this->title = $model->id_zakaz;
         </div>
        
         <div class="col-xs-12">
-           <?php if(Yii::$app->session->hasFlash('success')){
-            echo Yii::$app->session->getFlash('success');
-            } ?>
-            <?php if(Yii::$app->session->hasFlash('error')){
-                Yii::$app->session->getFlash('error');
-            } ?>
             <?php if($model->srok < date('Y-m-d') && $model->action == 1){
             echo Alert::widget(['options' => ['class' => 'alert-danger'],
             'body' => '<b>Заказ просрочен!</b>'

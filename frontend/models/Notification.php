@@ -38,6 +38,7 @@ class Notification extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['id_user'], 'required'],
             [['id_user', 'category','active'], 'integer'],
             [['name'], 'string', 'max' => 50],
             [['srok'], 'safe'],
