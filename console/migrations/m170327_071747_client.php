@@ -15,7 +15,7 @@ class m170327_071747_client extends Migration
 
     public function down()
     {
-
+        $this->dropTable('client');
     }
 
     /*

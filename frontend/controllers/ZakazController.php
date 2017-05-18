@@ -170,8 +170,12 @@ class ZakazController extends Controller
         }
         
         if($reminder->load(Yii::$app->request->post())){
-            $reminder->srok = strtotime(Yii::$app->request->post('srok'));
             $reminder->getReminder($zakaz);
+            if($reminder->save()){
+                Yii::$app->session->setFlash('success', 'Напоминание было созана');
+            } else {
+                Yii::$app->session->setFlash('error', 'Извините. Напоминание не было создана');
+            }
         }
 
         if ($model->load(Yii::$app->request->post())) {

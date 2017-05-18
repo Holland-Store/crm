@@ -68,12 +68,17 @@ AppAsset::register($this);
         <div class="notification-container hidden" id="notification-container">
             <div class="notification-content">
                 <?php foreach($this->params['notifications'] as $notification){
+                $date = date('Y-m-d H:i:s', time());
                     if ($notification->category == 0) {
                         $notif = '<span class="glyphicon glyphicon-road"></span> '.$notification->name.'<br>';
                     } elseif ($notification->category == 1) {
                         $notif = '<span class="glyphicon glyphicon-ok"></span> '.$notification->name.'<br>';
                     } elseif ($notification->category == 2) {
                         $notif = '<span class="glyphicon glyphicon-file"></span> '.$notification->name.'<br>';
+                    } elseif ($notification->category == 4 && $notification->srok <= $date){
+                        $notif = 'Напоминание о заказе №'.$notification->id_zakaz.' '.$notification->srok;
+                    } elseif ($notification->category == 4 && $notification->srok >= $date){
+                        $notif = '';
                     }
 
                    echo Html::a($notif.'<br>', ['notification/notification', 'id' => $notification->id_zakaz]);            
@@ -91,6 +96,7 @@ AppAsset::register($this);
             'homeLink' => ['label' => 'Главная', 'url' => ['zakaz/index']],
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
+
         <?= Alert::widget() ?>
         <?= $content ?>
     </div>

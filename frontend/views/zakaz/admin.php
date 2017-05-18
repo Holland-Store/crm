@@ -37,12 +37,7 @@ $this->title = 'Заказ';
     </p>
 
     <?php echo $this->render('_searchadmin', ['model' => $searchModel]);?>
-
-    <!-- <?php var_dump($searchModel) ?> -->
-
-
     <div class="col-xs-12">
-    
     <h3>Новые</h3>
     <?= GridView::widget([
         'dataProvider' => $dataProviderNew,

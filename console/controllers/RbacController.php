@@ -28,6 +28,10 @@ class RbacController extends Controller
         $seeDisain->description = 'Виднеется меню Дизайнера';
         $auth->add($seeDisain);
 
+        $seeCourier = $auth->createPermission('seeCourier');
+        $seeCourier->description = 'Виднеется меню Курьера';
+        $auth->add($seeCourier);
+
         $seeMaster = $auth->createPermission('seeMaster');
         $seeMaster->description = 'Виднеется меню Мастер';
         $auth->add($seeMaster);
@@ -55,7 +59,9 @@ class RbacController extends Controller
         $admin = $auth->createRole('admin');
         $auth->add($admin);
         $auth->addChild($admin, $seeAdmin);
+        $auth->addChild($admin, $seeDisain);
         $auth->addChild($admin, $seeAdop);
+        $auth->addChild($admin, $seeCourier);
 
         $shop = $auth->createRole('shop');
         $auth->add($shop);
@@ -73,17 +79,24 @@ class RbacController extends Controller
         $auth->addChild($disain, $seeDisain);
         $auth->addChild($disain, $seeIspol);
 
+        $courier = $auth->createRole('courier');
+        $auth->add($courier);
+        $auth->addChild($courier, $seeCourier);
+
         $prog = $auth->createRole('program');
         $auth->add($prog);
         $auth->addChild($prog, $admin);
         $auth->addChild($prog, $disain);
         $auth->addChild($prog, $master);
         $auth->addChild($prog, $shop);
+        $auth->addChild($prog, $courier);
 
+        $auth->assign($courier, 7);
         $auth->assign($admin, 5);
         $auth->assign($disain, 3);
         $auth->assign($master, 4);
         $auth->assign($shop, 2);
+        $auth->assign($shop, 6);
         $auth->assign($prog, 1);
     }
 }

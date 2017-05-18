@@ -8,9 +8,10 @@ class m170327_071607_zakaz extends Migration
     {
         $this->createTable('zakaz',[
                 'id_zakaz' => $this->primaryKey(),
-                'srok' => $this->data(),
+                'srok' => $this->date(),
                 'minut' => $this->time(),
                 'id_sotrud' => $this->integer(),
+                'sotrud_name' => $this->string(50),
                 'prioritet' => $this->string(36),
                 'status' => $this->integer(),
                 'action' => $this->integer(),
@@ -18,14 +19,18 @@ class m170327_071607_zakaz extends Migration
                 'oplata' => $this->integer(),
                 'fast_oplata' => $this->integer(),
                 'number' => $this->integer(),
-                'data' => $this->data(),
+                'data' => $this->date(),
                 'description' => $this->string(100),
                 'information' => $this->string(500),
-                'img' => $this->string(50),
+                'img' => $this->string(100),
+                'maket' => $this->string(50),
+                'statusDisain' => $this->integer(),
+                'data_start_disain' => $this->datetime(),
                 'name' => $this->string(50),
                 'phone' => $this->integer(11),
                 'email' => $this->string(50),
-                'comment' => $this->$text(),
+                'comment' => $this->text(),
+                'id_shipping' => $this->integer(),
             ]);
 
         $this->addForeignKey('zakaz_ibfk_2', 'zakaz', 'id_var', 'tovar', 'id', 'CASCADE');

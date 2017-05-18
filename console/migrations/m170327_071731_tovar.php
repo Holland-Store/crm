@@ -9,13 +9,12 @@ class m170327_071731_tovar extends Migration
         $this->createTable('tovar',[
                 'id' => $this->primaryKey(),
                 'name' => $this->string(50)->notNull(),
-                'price' => $this->integer(),
             ]);
     }
 
     public function down()
     {
-
+        $this->dropTable('tovar');
     }
 
     /*

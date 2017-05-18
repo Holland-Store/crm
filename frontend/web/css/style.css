@@ -1,5 +1,5 @@
 .notification-container{
-   position: absolute;
+   position: fixed;
     width: 16%;
     top: 50px;
     height: 200px;

@@ -17,15 +17,19 @@ $this->title = 'Уведомление';
     <br>
     
     <?php foreach ($model as $notification): ?>
+       <?php $date = date('Y-m-d H:i:s', time()) ?>
         <?php if ($notification->category == 0) {
             $notif = '<span class="glyphicon glyphicon-road"></span> '.$notification->name.'<br>';
         } elseif ($notification->category == 1) {
             $notif = '<span class="glyphicon glyphicon-ok"></span> '.$notification->name.'<br>';
         } elseif ($notification->category == 2) {
             $notif = '<span class="glyphicon glyphicon-file"></span> '.$notification->name.'<br>';
-        } elseif($notification->category == 4){
-            $notif = $model->name.' '.date('Y-m-d H:i:s', $model->srok);
+        } elseif($notification->category == 4 && $notification->srok <= $date){
+            $notif = 'Напоминание о заказе №'.$notification->id_zakaz.' '.$notification->srok;
+        } elseif($notification->category == 4 && $notification->srok >= $date){
+            $notif = '';
         }
+
         echo Html::tag('p',Html::a($notif, ['notification', 'id' => $notification->id_zakaz]),['style'=>$notification->active == 1?'font-weight: bold;':'']);
     ?>
 
