@@ -37,7 +37,7 @@ class Notification extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_user', 'category','active'], 'integer'],
+            [['id_user', 'category','active', 'srok'], 'integer'],
             [['name'], 'string', 'max' => 50],
             [['id_zakaz'], 'exist', 'skipOnError' => true, 'targetClass' => Zakaz::className(), 'targetAttribute' => ['id_zakaz' => 'id_zakaz']],
             [['id_user'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['id_user' => 'id']],
@@ -55,6 +55,7 @@ class Notification extends \yii\db\ActiveRecord
             'name' => 'Name',
             'id_zakaz' => 'Id Zakaz',
             'category' => 'Category',
+            'srok' => 'Напоминание',
             'active' => 'Active',
         ];
     }
@@ -125,5 +126,13 @@ class Notification extends \yii\db\ActiveRecord
                 $this->category = 1;
                 break;
         }
+    }
+    public function getReminder($id)
+    {
+        $this->id_user = 5;
+        $this->name = 'Создана напоминание';
+        $this->id_zakaz = $id;
+        $this->category = 4;
+        $this->saveNotification;
     }
 }

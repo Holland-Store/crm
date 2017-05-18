@@ -46,6 +46,8 @@ $this->title = 'Дизайнер';
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
+        'tableOptions' => ['class' => 'table table-bordered'],
+        'rowOptions' => ['class' => 'trTable'],
         'columns' => [
 
             [
@@ -101,17 +103,6 @@ $this->title = 'Дизайнер';
             'number',
             'img',
             'time',
-            [
-            'class' => 'yii\grid\ActionColumn',
-            'template' => '{view}',
-            'buttons' => [
-                'view' => function ($url,$model) {
-                    return Html::a(
-                    '<button class = "btn btn-primary">Открыть</button>', 
-                    $url);
-                },
-            ],
-            ],
         ],
     ]); ?>
     <?php Pjax::end(); ?>

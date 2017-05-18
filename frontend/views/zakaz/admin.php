@@ -46,8 +46,9 @@ $this->title = 'Заказ';
     <h3>Новые</h3>
     <?= GridView::widget([
         'dataProvider' => $dataProviderNew,
+        'tableOptions' => ['class' => 'table table-bordered'],
         'rowOptions' => function($model, $key, $index, $grid){
-            return['style' => 'font-weight: bold;'];
+            return['id' => 'trNew'];
         },
         'columns' => [
             [
@@ -59,13 +60,7 @@ $this->title = 'Заказ';
                 'attribute' => 'description',
                 'contentOptions'=>['style'=>'white-space: normal;'],
             ],
-            //  [
-            //     'attribute' => 'id_tovar',
-            //     'value' => 'idTovar.name',
-            //     'filter' => Zakaz::getTovarList(),
-            //     'headerOptions' => ['width' => '100'],
-            // ],
-             [
+            [
                 'attribute' => 'srok',
                 'format' => ['datetime', 'php:d.m.Y'],
                 'value' => 'srok',
@@ -107,26 +102,17 @@ $this->title = 'Заказ';
                 'attribute' => 'id_sotrud',
                 'value' => 'idSotrud.name',
             ],
-            [
-            'class' => 'yii\grid\ActionColumn',
-            'template' => '{view}',
-            'buttons' => [
-                'view' => function ($url,$model) {
-                    return Html::a(
-                    'Открыть', 
-                    ['adopted', 'id' => $model->id_zakaz], ['class' => 'btn btn-primary btn-sm']);
-                },
-            ],
-            ],
         ],
     ]); ?>  
     <h3>В работе</h3>
     <?= GridView::widget([
         'dataProvider' => $dataProviderWork,
+        'tableOptions' => ['class' => 'table table-bordered'],
         'rowOptions' => function($model, $key, $index, $grid){
             if ($model->srok < date('Y-m-d')) {
-                return['style' => 'background: rgba(226, 0, 0, 0.48);'];
-
+                return['class' => 'trTable trTablePass'];
+            } else {
+                return['class' => 'trTable'];
             }
         },
         'columns' => [
@@ -202,25 +188,17 @@ $this->title = 'Заказ';
                     return $model->idShipping->dostavkaName;
                 }
             ],
-            [
-            'class' => 'yii\grid\ActionColumn',
-            'template' => '{view}',
-            'buttons' => [
-                'view' => function ($url,$model) {
-                    return Html::a(
-                    'Открыть', 
-                    $url, ['class' => 'btn btn-primary btn-sm']);
-                },
-            ],
-            ],
         ],
     ]); ?>
     <h3>На исполнении</h3>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
+        'tableOptions' => ['class' => 'table table-bordered'],
         'rowOptions' => function($model, $key, $index, $grid){
             if ($model->srok < date('Y-m-d')) {
-                return['style' => 'background: rgba(226, 0, 0, 0.48);'];
+                return['class' => 'trTable trTablePass'];
+            } else {
+                return['class' => 'trTable'];
             }
         },
         'columns' => [
@@ -297,22 +275,14 @@ $this->title = 'Заказ';
                 'attribute' => 'id_sotrud',
                 'value' => 'idSotrud.name',
             ],
-            [
-            'class' => 'yii\grid\ActionColumn',
-            'template' => '{view}',
-            'buttons' => [
-                'view' => function ($url,$model) {
-                    return Html::a(
-                    'Открыть', 
-                    $url, ['class' => 'btn btn-primary btn-sm']);
-                },
-            ],
-            ],
         ],
     ]); ?>
+
     <h3>На закрытие</h3>
     <?= GridView::widget([
         'dataProvider' => $dataProviderIspol,
+        'tableOptions' => ['class' => 'table table-bordered'],
+        'rowOptions' => ['class' => 'trTable'],
         'columns' => [
 
             [
@@ -373,17 +343,6 @@ $this->title = 'Заказ';
             [
                 'attribute' => 'id_sotrud',
                 'value' => 'idSotrud.name',
-            ],
-            [
-            'class' => 'yii\grid\ActionColumn',
-            'template' => '{view}',
-            'buttons' => [
-                'view' => function ($url,$model) {
-                    return Html::a(
-                    'Открыть', 
-                    $url, ['class' => 'btn btn-primary btn-sm']);
-                },
-            ],
             ],
         ],
     ]); ?> 

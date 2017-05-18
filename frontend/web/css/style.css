@@ -20,3 +20,12 @@
     height: 169px;
     overflow: auto;
 }
+.table .trTablePass{
+    background: rgba(226, 0, 0, 0.48);
+}
+.table #trNew{
+    font-weight: bold;
+} 
+.table #trNew:hover,.table .trTable:hover{
+    background: #d8d8d8;
+}

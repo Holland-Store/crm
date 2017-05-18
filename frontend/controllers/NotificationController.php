@@ -56,12 +56,8 @@ class NotificationController extends Controller
      */
     public function actionIndex()
     {
-        $notification = Notification::find()->where(['id_user' => Yii::$app->user->id, 'active' => true]);
-        $model = $notification->where(['id_user' => Yii::$app->user->id])->limit(50)->all();
-        $notification->count()>50 ? $notifications = "50+" : $notifications = $notification->count();
-
-        $this->view->params['notifications'] = $notification->all();
-        $this->view->params['count'] =  $notifications;
+        $notification = $this->findNotification();
+        $model = Notification::find()->where(['id_user' => Yii::$app->user->id])->limit(50)->all();
 
         return $this->render('index', [
                 'model' => $model,
@@ -114,5 +110,19 @@ class NotificationController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }    
+    protected function findNotification()
+    {
+        $notification = Notification::find()->where(['id_user' => Yii::$app->user->id, 'active' => true]);
+        if($notification->count()>50){
+                $notifications = '50+';
+            } elseif ($notification->count()<1){
+                $notifications = '';
+            } else {
+                $notifications = $notification->count();
+            }
+
+        $this->view->params['notifications'] = $notification->all();
+        $this->view->params['count'] =  $notifications;
     }
 }

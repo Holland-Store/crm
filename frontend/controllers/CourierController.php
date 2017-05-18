@@ -67,6 +67,7 @@ class CourierController extends Controller
     public function actionIndex()
     {
         $searchModel = new CourierSearch();
+        $notification = $this->findNotification();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -198,5 +199,19 @@ class CourierController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+    protected function findNotification()
+    {
+        $notification = Notification::find()->where(['id_user' => Yii::$app->user->id, 'active' => true]);
+        if($notification->count()>50){
+                $notifications = '50+';
+            } elseif ($notification->count()<1){
+                $notifications = '';
+            } else {
+                $notifications = $notification->count();
+            }
+
+        $this->view->params['notifications'] = $notification->all();
+        $this->view->params['count'] =  $notifications;
     }
 }

@@ -22,13 +22,12 @@ $this->title = 'Уведомление';
         } elseif ($notification->category == 1) {
             $notif = '<span class="glyphicon glyphicon-ok"></span> '.$notification->name.'<br>';
         } elseif ($notification->category == 2) {
-            $notif = Html::a('<span class="glyphicon glyphicon-file"></span> '.$notification->name.'<br>');
-        } 
-         ?>
-    <?php 
+            $notif = '<span class="glyphicon glyphicon-file"></span> '.$notification->name.'<br>';
+        } elseif($notification->category == 4){
+            $notif = $model->name.' '.date('Y-m-d H:i:s', $model->srok);
+        }
         echo Html::tag('p',Html::a($notif, ['notification', 'id' => $notification->id_zakaz]),['style'=>$notification->active == 1?'font-weight: bold;':'']);
     ?>
 
     <?php endforeach ?>
-
 </div>

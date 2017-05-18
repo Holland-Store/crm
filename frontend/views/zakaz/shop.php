@@ -39,40 +39,19 @@ $this->title = 'Экран - ВСЕ ЗАКАЗЫ';
     <div class="col-xs-12">
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
+        'tableOptions' => ['class' => 'table table-bordered'],
+        'rowOptions' => ['class' => 'trTable'],
         'columns' => [
             [
                 'attribute' => 'id_zakaz',
                 'headerOptions' => ['width' => '20'],
                 'value' => 'prefics',
             ],
-            // [
-            //     'attribute' => 'status',
-            //     'class' => SetColumn::className(),
-            //     'format' => 'raw',
-            //     'name' => 'statusName',
-            //     'cssCLasses' => [
-            //         Zakaz::STATUS_NEW => 'primary',
-            //         Zakaz::STATUS_EXECUTE => 'success',
-            //         Zakaz::STATUS_ADOPTED => 'warning',
-            //         Zakaz::STATUS_DISAIN => 'info',
-            //         Zakaz::STATUS_SUC_DISAIN => 'success',
-            //         Zakaz::STATUS_REJECT => 'danger',
-            //         Zakaz::STATUS_MASTER => 'info',
-            //         Zakaz::STATUS_SUC_MASTER => 'success',
-            //         Zakaz::STATUS_AUTSORS => 'info',
-            //     ],
-            //     'headerOptions' => ['width' => '50'],
-            // ],
             [
                 'attribute' => 'description',
                 'headerOptions' => ['width' => '550'],
                 'contentOptions'=>['style'=>'white-space: normal;'],
             ],
-            // [
-            //     'attribute' => 'minut',
-            //     'format' => ['time', 'php:H:i'],
-            //     'headerOptions' => ['width' => '10'],
-            // ],
             [
                 'attribute' => 'fact_oplata',
                 'label' => 'Предоплата',
@@ -85,15 +64,6 @@ $this->title = 'Экран - ВСЕ ЗАКАЗЫ';
             },
                 'headerOptions' => ['width' => '100'],
                 'label' => 'К доплате',
-            ],
-            [
-            'class' => 'yii\grid\ActionColumn',
-            'template' => '{view}',
-            'buttons' => [
-                'view' => function ($url,$model) {
-                    return Html::a('<button class = "btn btn-primary">Открыть</button>', $url);
-                },
-            ],
             ],
         ],
     ]); ?>

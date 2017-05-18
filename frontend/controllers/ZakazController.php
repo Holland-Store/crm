@@ -136,11 +136,7 @@ class ZakazController extends Controller
      */
     public function actionIndex()
     {
-        $notification = Notification::find()->where(['id_user' => Yii::$app->user->id, 'active' => true]);
-        $notification->count()>50 ? $notifications = "50+" : $notifications = $notification->count();
-
-        $this->view->params['notifications'] = $notification->all();
-        $this->view->params['count'] =  $notifications;
+        $notification = $this->findNotification();
 
         return $this->render('index', [
             'model' => $model,
@@ -157,12 +153,10 @@ class ZakazController extends Controller
         $model = $this->findModel($id);
         $notification = new Notification();
         $shipping = new Courier();
+        $reminder = new Notification();
         $zakaz = $model->id_zakaz;
-        $notification = Notification::find()->where(['id_user' => Yii::$app->user->id, 'active' => true]);
-        $notification->count()>50 ? $notifications = "50+" : $notifications = $notification->count();
-
-        $this->view->params['notifications'] = $notification->all();
-        $this->view->params['count'] =  $notifications;
+        $notification = $this->findNotification();
+        
 
         if ($shipping->load(Yii::$app->request->post())) {
             $shipping->save();
@@ -173,6 +167,11 @@ class ZakazController extends Controller
             $notification->saveNotification;
             
             return $this->redirect(['view', 'id' => $model->id_zakaz]);
+        }
+        
+        if($reminder->load(Yii::$app->request->post())){
+            $reminder->srok = strtotime(Yii::$app->request->post('srok'));
+            $reminder->getReminder($zakaz);
         }
 
         if ($model->load(Yii::$app->request->post())) {
@@ -198,6 +197,7 @@ class ZakazController extends Controller
             'user_name' => $user_name,
             'shipping' => $shipping,
             'file' => $file,
+            'reminder' => $reminder,
         ]);
     }
     
@@ -209,11 +209,7 @@ class ZakazController extends Controller
     public function actionCreate()
     {
         $model = new Zakaz();
-        $notification = Notification::find()->where(['id_user' => Yii::$app->user->id, 'active' => true]);
-        $notification->count()>50 ? $notifications = "50+" : $notifications = $notification->count();
-
-        $this->view->params['notifications'] = $notification->all();
-        $this->view->params['count'] =  $notifications;
+        $notification = $this->findNotification();
 
         if ($model->load(Yii::$app->request->post())) {
             $model->file = UploadedFile::getInstance($model, 'file');
@@ -244,11 +240,7 @@ class ZakazController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $notification = Notification::find()->where(['id_user' => Yii::$app->user->id, 'active' => true]);
-        $notification->count()>50 ? $notifications = "50+" : $notifications = $notification->count();
-
-        $this->view->params['notifications'] = $notification->all();
-        $this->view->params['count'] =  $notifications;
+        $notification = $this->findNotification();
 
         if ($model->load(Yii::$app->request->post())) {
             $model->file = UploadedFile::getInstance($model, 'file');
@@ -278,11 +270,7 @@ class ZakazController extends Controller
     {
         $model = $this->findModel($id);
         $notification = new Notification();
-        $notification = Notification::find()->where(['id_user' => Yii::$app->user->id, 'active' => true]);
-        $notification->count()>50 ? $notifications = "50+" : $notifications = $notification->count();
-
-        $this->view->params['notifications'] = $notification->all();
-        $this->view->params['count'] =  $notifications;
+        $notification = $this->findNotification();
 
         $model->status = 7;
         $notification->getByIdNotification(8, $id);
@@ -307,11 +295,7 @@ class ZakazController extends Controller
     }
     public function actionRestore($id)
     {
-        $notification = Notification::find()->where(['id_user' => Yii::$app->user->id, 'active' => true]);
-        $notification->count()>50 ? $notifications = "50+" : $notifications = $notification->count();
-
-        $this->view->params['notifications'] = $notification->all();
-        $this->view->params['count'] =  $notifications;
+        $notification = $this->findNotification();
 
         $model = $this->findModel($id);
         $model->action = 1;
@@ -321,11 +305,7 @@ class ZakazController extends Controller
     }
     public function actionAdopted($id)
     {
-        $notification = Notification::find()->where(['id_user' => Yii::$app->user->id, 'active' => true]);
-        $notification->count()>50 ? $notifications = "50+" : $notifications = $notification->count();
-
-        $this->view->params['notifications'] = $notification->all();
-        $this->view->params['count'] =  $notifications;
+        $notification = $this->findNotification();
 
         $model = $this->findModel($id);
         $model->status = 2;
@@ -337,11 +317,7 @@ class ZakazController extends Controller
     {
         $searchModel = new ZakazSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, 'archive');
-        $notification = Notification::find()->where(['id_user' => Yii::$app->user->id, 'active' => true]);
-        $notification->count()>50 ? $notifications = "50+" : $notifications = $notification->count();
-
-        $this->view->params['notifications'] = $notification->all();
-        $this->view->params['count'] =  $notifications;
+        $notification = $this->findNotification();
 
         return $this->render('archive', [
             'searchModel' => $searchModel,
@@ -352,11 +328,7 @@ class ZakazController extends Controller
     {
         $searchModel = new ZakazSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, 'closeshop');
-        $notification = Notification::find()->where(['id_user' => Yii::$app->user->id, 'active' => true]);
-        $notification->count()>50 ? $notifications = "50+" : $notifications = $notification->count();
-
-        $this->view->params['notifications'] = $notification->all();
-        $this->view->params['count'] =  $notifications;
+        $notification = $this->findNotification();
 
         return $this->render('closezakaz', [
             'searchModel' => $searchModel,
@@ -370,11 +342,7 @@ class ZakazController extends Controller
                 'query' => Zakaz::find()->andWhere(['status' => Zakaz::STATUS_SUC_DISAIN, 'action' => 1]),
                 'sort' => ['defaultOrder' => ['srok' => SORT_DESC]] 
             ]);
-        $notification = Notification::find()->where(['id_user' => Yii::$app->user->id, 'active' => true]);
-        $notification->count()>50 ? $notifications = "50+" : $notifications = $notification->count();
-
-        $this->view->params['notifications'] = $notification->all();
-        $this->view->params['count'] =  $notifications;
+        $notification = $this->findNotification();
 
         return $this->render('ready', [
             'searchModel' => $searchModel,
@@ -385,11 +353,7 @@ class ZakazController extends Controller
     //Disain
     public function actionStatusdisain($id)
     {
-        $notification = Notification::find()->where(['id_user' => Yii::$app->user->id, 'active' => true]);
-        $notification->count()>50 ? $notifications = "50+" : $notifications = $notification->count();
-
-        $this->view->params['notifications'] = $notification->all();
-        $this->view->params['count'] =  $notifications;
+        $notification = $this->findNotification();
 
         $model = $this->findModel($id);
         $model->statusDisain = 1;
@@ -415,11 +379,7 @@ class ZakazController extends Controller
     {
         $searchModel = new ZakazSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, 'shop');
-        $notification = Notification::find()->where(['id_user' => Yii::$app->user->id, 'active' => true]);
-        $notification->count()>50 ? $notifications = "50+" : $notifications = $notification->count();
-
-        $this->view->params['notifications'] = $notification->all();
-        $this->view->params['count'] =  $notifications;
+        $notification = $this->findNotification();
 
         return $this->render('shop', [
             'searchModel' => $searchModel,
@@ -430,11 +390,7 @@ class ZakazController extends Controller
     {
         $searchModel = new ZakazSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, 'disain');
-        $notification = Notification::find()->where(['id_user' => Yii::$app->user->id, 'active' => true]);
-        $notification->count()>50 ? $notifications = "50+" : $notifications = $notification->count();
-
-        $this->view->params['notifications'] = $notification->all();
-        $this->view->params['count'] =  $notifications;
+        $notification = $this->findNotification();
 
         return $this->render('disain', [
             'searchModel' => $searchModel,
@@ -445,11 +401,7 @@ class ZakazController extends Controller
     {
         $searchModel = new ZakazSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, 'master');
-        $notification = Notification::find()->where(['id_user' => Yii::$app->user->id, 'active' => true]);
-        $notification->count()>50 ? $notifications = "50+" : $notifications = $notification->count();
-
-        $this->view->params['notifications'] = $notification->all();
-        $this->view->params['count'] =  $notifications;
+        $notification = $this->findNotification();
 
         return $this->render('master', [
             'searchModel' => $searchModel,
@@ -458,11 +410,7 @@ class ZakazController extends Controller
     }
     public function actionAdmin()
     {
-        $notification = Notification::find()->where(['id_user' => Yii::$app->user->id, 'active' => true]);
-        $notification->count()>50 ? $notifications = "50+" : $notifications = $notification->count();
-
-        $this->view->params['notifications'] = $notification->all();
-        $this->view->params['count'] =  $notifications;
+        $notification = $this->findNotification();
         
         $searchModel = new ZakazSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, 'admin');
@@ -505,5 +453,19 @@ class ZakazController extends Controller
             throw new NotFoundHttpException("The requested page does not exist.");
             
         }
+    }
+    protected function findNotification()
+    {
+        $notification = Notification::find()->where(['id_user' => Yii::$app->user->id, 'active' => true]);
+        if($notification->count()>50){
+                $notifications = '50+';
+            } elseif ($notification->count()<1){
+                $notifications = '';
+            } else {
+                $notifications = $notification->count();
+            }
+
+        $this->view->params['notifications'] = $notification->all();
+        $this->view->params['count'] =  $notifications;
     }
 }

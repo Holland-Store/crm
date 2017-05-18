@@ -4,10 +4,13 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 use app\models\Zakaz;
 use app\models\Courier;
+use app\models\Notification;
 use app\models\Todoist;
 use yii\widgets\ActiveForm;
 use yii\bootstrap\Modal;
 use yii\helpers\Url;
+use yii\bootstrap\Alert;
+use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Zakaz */
@@ -17,36 +20,38 @@ $this->title = $model->id_zakaz;
 // $this->params['breadcrumbs'][] = ['label' => 'Все закакзы', 'url' => ['index']];
 // $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="zakaz-view">
+    <div class="zakaz-view">
+        <?php Pjax::begin(); ?>
+        <h1>
+            <?= Html::encode($model->prefics.'. '.$model->description) ?>
+        </h1>
+        <div style="margin-bottom: 10px; height: 112px">
+            <div class="col-xs-5">
+                <?php if (Yii::$app->user->can('shop')): ?>
+                <?= Html::a('<span class = "glyphicon glyphicon-chevron-left"><span>', ['shop'], ['class' => 'btn btn-primary btn-sm']) ?>
+                    <?php endif ?>
+                    <?php if (Yii::$app->user->can('master')): ?>
+                    <?= Html::a('<span class = "glyphicon glyphicon-chevron-left"><span>', ['master'], ['class' => 'btn btn-primary btn-sm']) ?>
+                        <?php endif ?>
+                        <?php if (Yii::$app->user->can('disain')): ?>
+                        <?= Html::a('<span class = "glyphicon glyphicon-chevron-left"><span>', ['disain'], ['class' => 'btn btn-primary btn-sm']) ?>
+                            <?php endif ?>
+                            <?php if (Yii::$app->user->can('admin')): ?>
+                            <?= Html::a('<span class = "glyphicon glyphicon-chevron-left"><span>', ['admin'], ['class' => 'btn btn-primary btn-sm']) ?>
+                                <?php endif ?>
 
-    <h1><?= Html::encode($model->prefics.'. '.$model->description) ?></h1>
-    <div style="margin-bottom: 10px; height: 112px">
-        <div class="col-xs-5">
-        <?php if (Yii::$app->user->can('shop')): ?>
-        <?= Html::a('<span class = "glyphicon glyphicon-chevron-left"><span>', ['shop'], ['class' => 'btn btn-primary btn-sm']) ?>
-        <?php endif ?>
-        <?php if (Yii::$app->user->can('master')): ?>
-        <?= Html::a('<span class = "glyphicon glyphicon-chevron-left"><span>', ['master'], ['class' => 'btn btn-primary btn-sm']) ?>
-        <?php endif ?>
-        <?php if (Yii::$app->user->can('disain')): ?>
-        <?= Html::a('<span class = "glyphicon glyphicon-chevron-left"><span>', ['disain'], ['class' => 'btn btn-primary btn-sm']) ?>
-        <?php endif ?>
-        <?php if (Yii::$app->user->can('admin')): ?>
-        <?= Html::a('<span class = "glyphicon glyphicon-chevron-left"><span>', ['admin'], ['class' => 'btn btn-primary btn-sm']) ?> 
-        <?php endif ?>
-
-        <?php if (Yii::$app->user->can('master')): ?>
-        <?= Html::a('Готово', ['check', 'id' => $model->id_zakaz], [
+                                <?php if (Yii::$app->user->can('master')): ?>
+                                <?= Html::a('Готово', ['check', 'id' => $model->id_zakaz], [
             'class' => 'btn btn-success btn-sm',
             'data' => [
                 'confirm' => 'Вы уверены, что Вы выполнили работу?',
                 'method' => 'post',
             ]
         ]); ?>
-        <?php endif ?>
+                                    <?php endif ?>
 
-        <?php if (Yii::$app->user->can('admin')): ?>
-        <?php 
+                                    <?php if (Yii::$app->user->can('admin')): ?>
+                                    <?php
         Modal::begin([
             'header' => '<h2>Доставка<h2>',
             'size' => 'modal-lg',
@@ -64,13 +69,13 @@ $this->title = $model->id_zakaz;
             ]); 
 
         Modal::end(); ?>
-        <?php endif ?>
-        <?php if (Yii::$app->user->can('seeAdop')): ?>
-        <?= Html::a('Редактировать', ['update', 'id' => $model->id_zakaz], ['class' => 'btn btn-primary btn-sm']) ?>
-        <?php endif ?>
-        
-        
-        <!-- <?php if (Yii::$app->user->can('admin')){ ?>           
+                                    <?php endif ?>
+                                    <?php if (Yii::$app->user->can('seeAdop')): ?>
+                                    <?= Html::a('Редактировать', ['update', 'id' => $model->id_zakaz], ['class' => 'btn btn-primary btn-sm']) ?>
+                                        <?php endif ?>
+
+
+                                        <!-- <?php if (Yii::$app->user->can('admin')){ ?>
         <?= Html::a('Удалить', ['delete', 'id' => $model->id_zakaz], [
             'class' => 'btn btn-danger',
             'data' => [
@@ -79,28 +84,28 @@ $this->title = $model->id_zakaz;
             ],
         ]) ?>
         <?php } ?> -->
-        </div>
-        <div class="col-xs-2">
-        <?php if (Yii::$app->user->can('disain')): ?>
-            
-        <?php $form = ActiveForm::begin(); ?>
+            </div>
+            <div class="col-xs-2">
+                <?php if (Yii::$app->user->can('disain')): ?>
 
-        <?= $form->field($model, 'statusDisain')->dropDownList(
+                <?php $form = ActiveForm::begin(); ?>
+
+                <?= $form->field($model, 'statusDisain')->dropDownList(
             ['0' => 'Новый',
             '1' => 'В работу',
             '2' => 'Согласование'],
             ['prompt' => 'Выберите статус']
         )->label(false); ?>
 
-        <?= Html::submitButton('Установить статус', ['class' => 'btn btn-primary btn-sm']) ?>
+                    <?= Html::submitButton('Установить статус', ['class' => 'btn btn-primary btn-sm']) ?>
 
-        <?php ActiveForm::end(); ?>
-        <?php endif ?>
-        <?php if (Yii::$app->user->can('admin')): ?>
-            
-         <?php $form1 = ActiveForm::begin(); ?>
+                        <?php ActiveForm::end(); ?>
+                        <?php endif ?>
+                        <?php if (Yii::$app->user->can('admin')): ?>
 
-        <?= $form1->field($model, 'status')->dropDownList([
+                        <?php $form1 = ActiveForm::begin(); ?>
+
+                        <?= $form1->field($model, 'status')->dropDownList([
                 '3' => 'Дизайнер',
                 '6' => 'Мастер',
                 '8' => 'Аутсорс',
@@ -108,46 +113,63 @@ $this->title = $model->id_zakaz;
                 ],
                 ['prompt' => 'Назначить'])->label(false);?>
 
-        <?= $form1->field($model, 'time')->textInput(['type' => 'number', 'min' => 0, 'max' => 60])?>
-        <?= Html::submitButton('Назначить', ['class' => 'btn btn-primary btn-sm']) ?>
+                            <?= $form1->field($model, 'time')->textInput(['type' => 'number', 'min' => 0, 'max' => 60])?>
+                                <?= Html::submitButton('Назначить', ['class' => 'btn btn-primary btn-sm']) ?>
 
-        <?php ActiveForm::end(); ?>
-        <?php endif ?>
-        </div>
-        <div class="col-xs-5">
-        <?php if (Yii::$app->user->can('seeAdop')): ?>        
-        <?= Html::a('Поставить задачу', ['todoist/createzakaz', 'id_zakaz' => $model->id_zakaz], ['class' => 'btn btn-primary btn-sm', 'style' => 'margin-left: 185px;']) ?>
-        <?php endif ?>
+                                    <?php ActiveForm::end(); ?>
+                                    <?php endif ?>
+            </div>
+            <div class="col-xs-5">
+                <?php if (Yii::$app->user->can('seeAdop')): ?>
+                <?= Html::a('Поставить задачу', ['todoist/createzakaz', 'id_zakaz' => $model->id_zakaz], ['class' => 'btn btn-primary btn-sm', 'style' => 'margin-left: 185px;']) ?>
+                    <?php endif ?>
 
-        <?php if ($model->action == 0) { ?>
+                    <?php if ($model->action == 0) { ?>
 
-        <?= Html::a('Восстановить заказ', ['restore', 'id' => $model->id_zakaz], ['class' => 'btn btn-primary pull-right',
+                    <?= Html::a('Восстановить заказ', ['restore', 'id' => $model->id_zakaz], ['class' => 'btn btn-primary pull-right',
             'data' => [
                 'confirm' => 'Вы действительно хотите восстановить заказ?',
                 'method' => 'post',
             ],
-            ]) ?>  
-        <?php } ?>
+            ]) ?>
+                        <?php } ?>
 
-        <?php if (Yii::$app->user->can('seeAdop')): ?>
-            <?php if ($model->action == 1 && $model->status == 1): ?>
-                <?= Html::a('Закрыть  заказ', ['close', 'id' => $model->id_zakaz], [
+                        <?php if (Yii::$app->user->can('seeAdop')): ?>
+                        <?php if ($model->action == 1 && $model->status == 1): ?>
+                        <?= Html::a('Закрыть  заказ', ['close', 'id' => $model->id_zakaz], [
                     'class' => 'btn btn-primary pull-right',
                     'data' => [
                         'confirm' => 'Уверены, что заказ закрыт?',
                         'method' => 'post',
                     ]
                 ]);  ?>
-            <?php endif ?>
-        <?php endif ?>
+                            <?php endif ?>
+                            <?php endif ?>
+            </div>
         </div>
-    </div>
 
-    <div class="col-xs-12">
-    <?= DetailView::widget([
+       <div class="col-xs-3">
+            <?php $formReminder = ActiveForm::begin(); ?>
+            
+            <?= $form->field($reminder, 'srok')->textInput(['type' => 'datetime-local']) ?>
+            
+            <?= Html::submitButton('Напомнить', ['class' => 'btn btn-primary btn-sm']) ?>
+            
+            <?php ActiveForm::end(); ?>
+        </div>
+       
+        <div class="col-xs-12">
+            <?php if($model->status<date('Y-m-d') && $model->action == 1){
+            echo Alert::widget(['options' => ['class' => 'alert-danger'],
+            'body' => '<b>Заказ просрочен!</b>'
+           ]);
+        } ?>
+        </div>
+
+        <div class="col-xs-12">
+            <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            // 'id_zakaz',
             [
                 'attribute' => 'srok',
                 'visible' => Yii::$app->user->can('seeIspol'),
@@ -216,22 +238,23 @@ $this->title = $model->id_zakaz;
             // 'comment:ntext',
         ],
     ]) ?>
-    </div>
+        </div>
 
-    <?php if (Yii::$app->user->can('disain')) { ?>
-    <div class="col-xs-12">
-        <div class="col-xs-3">
-        <?php $form = ActiveForm::begin([
+        <?php if (Yii::$app->user->can('disain')) { ?>
+        <div class="col-xs-12">
+            <div class="col-xs-3">
+                <?php $form = ActiveForm::begin([
             'options' => 
             [
                 'class' => 'file',
                 'enctype' => 'multipart/form-data'
             ]
         ]); ?>
-        <?= $form->field($model, 'file')->fileinput(['class' => 'fileInput']) ?>
+                <?= $form->field($model, 'file')->fileinput(['class' => 'fileInput']) ?>
+            </div>
+            <?= Html::submitButton('Готово', ['class' => 'btn btn-success btn-lg col-xs-9']) ?>
+                <?php ActiveForm::end(); ?>
         </div>
-        <?= Html::submitButton('Готово', ['class' => 'btn btn-success btn-lg col-xs-9']) ?>
-        <?php ActiveForm::end(); ?>
+        <?php } ?>
+        <?php Pjax::end(); ?>
     </div>
-    <?php } ?>
-</div>
