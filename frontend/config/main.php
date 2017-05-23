@@ -52,7 +52,9 @@ return [
 				'custom' => 'custom/index',
 				'versia' => 'zakaz/index',
 				'create' => 'zakaz/create',
-				'updete/<id:\d+>' => 'zakaz/update'
+				'updete/<id:\d+>' => 'zakaz/update',
+				'login' => 'site/login',
+				'logout' => 'site/logout',
             ],
         ],
         'nodeSocket' => [
