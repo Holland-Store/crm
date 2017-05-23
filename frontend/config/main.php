@@ -41,6 +41,18 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+				'admin' => 'zakaz/admin',
+				'view/<id:\d+>' => 'zakaz/view',
+				'disain' => 'zakaz/disain',
+				'master' => 'zakaz/master',
+				'shop' => 'zakaz/shop',
+				'courier' => 'courier/index',
+				'todoist' => 'todoist/index',
+				'helpdesk' => 'helpdesk/index',
+				'custom' => 'custom/index',
+				'versia' => 'zakaz/index',
+				'create' => 'zakaz/create',
+				'updete/<id:\d+>' => 'zakaz/update'
             ],
         ],
         'nodeSocket' => [
