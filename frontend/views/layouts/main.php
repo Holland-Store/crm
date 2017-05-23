@@ -8,10 +8,12 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
+use YiiNodeSocket\Assets\NodeSocketAssets;
 use common\widgets\Alert;
 use yii\helpers\Url;
 use app\models\Notification;
 
+NodeSocketAssets::register($this);
 AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>

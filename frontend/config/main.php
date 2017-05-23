@@ -9,7 +9,7 @@ $params = array_merge(
 return [
     'id' => 'app-frontend',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log'],
+    'bootstrap' => ['log', 'nodeSocket','frontend\bootstraps\AppBootstrap'],
     'controllerNamespace' => 'frontend\controllers',
     'components' => [
         'request' => [
@@ -43,7 +43,19 @@ return [
             'rules' => [
             ],
         ],
-        
+        'nodeSocket' => [
+		    'class' => '\YiiNodeSocket\NodeSocket',
+//		    'dbOptions' => '',
+		    'host' => 'localhost',
+		    'allowedServerAddresses' => [
+		        "localhost",
+		        "127.0.0.1"
+		    ],
+		    'origin' => '*:*',
+		    'sessionVarName' => 'PHPSESSID',
+		    'port' => 3001,
+		    'socketLogFile' => '/var/log/node-socket.log',
+		],
     ],
     'params' => $params,
 ];
