@@ -15,6 +15,10 @@ class m170510_145528_custom extends Migration
                 'action' => $this->tynyint(4),
                 'date_end' => $this->datetime(),
             ]);
+
+		$this->createIndex('idx-custom-id_user', 'custom', 'id_user');
+
+		$this->addForeignKey('fk-custom-user', 'custom', 'id_user', 'user', 'id');
     }
 
     public function down()

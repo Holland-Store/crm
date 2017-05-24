@@ -10,6 +10,8 @@ class m170327_071731_tovar extends Migration
                 'id' => $this->primaryKey(),
                 'name' => $this->string(50)->notNull(),
             ]);
+
+		$this->createIndex('idx-tovar-name', 'tovar', 'name');
     }
 
     public function down()

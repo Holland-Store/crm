@@ -17,13 +17,14 @@ class m170327_071607_zakaz extends Migration
                 'action' => $this->integer(),
                 'id_tovar' => $this->integer(),
                 'oplata' => $this->integer(),
-                'fast_oplata' => $this->integer(),
+                'fact_oplata' => $this->integer(),
                 'number' => $this->integer(),
                 'data' => $this->date(),
                 'description' => $this->string(100),
                 'information' => $this->string(500),
                 'img' => $this->string(100),
                 'maket' => $this->string(50),
+				'time' => $this->integer(),
                 'statusDisain' => $this->integer(),
                 'data_start_disain' => $this->datetime(),
                 'name' => $this->string(50),
@@ -33,7 +34,11 @@ class m170327_071607_zakaz extends Migration
                 'id_shipping' => $this->integer(),
             ]);
 
-        $this->addForeignKey('zakaz_ibfk_2', 'zakaz', 'id_var', 'tovar', 'id', 'CASCADE');
+		$this->createIndex('idx-zakaz-id_sotrud', 'zakaz', 'id_sotrud');
+		$this->createIndex('idx-zakaz-id_tovar', 'zakaz', 'id_tovar');
+		$this->createIndex('idx-zakaz-id_shipping', 'zakaz', 'id_shipping');
+
+        $this->addForeignKey('zakaz_ibfk_2', 'zakaz', 'id_tovar', 'tovar', 'id', 'CASCADE');
         $this->addForeignKey('zakaz_ibfk_4', 'zakaz', 'id_sotrud', 'user', 'id', 'CASCADE');
     }
 

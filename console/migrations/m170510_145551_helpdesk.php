@@ -11,10 +11,14 @@ class m170510_145551_helpdesk extends Migration
                 'id_user' => $this->integer(),
                 'commetnt' => $this->string(),
                 'status' => $this->integer(),
-                'date' => $this->datetime(),
+                'date' => $this->timestamp(),
                 'sotrud' => $this->string(50),
                 'date_end' => $this->datetime(),
             ]);
+
+		$this->createIndex('idx-helpdesk-id_user', 'helpdesk', 'id_user');
+
+		$this->addForeignKey('fk-helpdesk-user', 'helpdesk', 'id_user', 'user', 'id');
     }
 
     public function down()
