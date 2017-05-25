@@ -38,7 +38,7 @@ $this->title = 'Help Desk';
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
     <p>
-       	<?php if(Yii::$app->user->can('admin') or Yii::$app->user->can('master') or Yii::$app->user->can('disain')):?>
+       	<?php if(!(Yii::$app->user->can('system') or Yii::$app->user->can('shop'))):?>
 		<?= Html::a('Создать заказ', ['create'], ['class' => 'btn btn-success']) ?>
        	<?php endif; ?>
     </p>
