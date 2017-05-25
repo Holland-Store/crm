@@ -91,6 +91,14 @@ class RbacController extends Controller
         $auth->addChild($prog, $shop);
         $auth->addChild($prog, $courier);
 
+		$zakup = $auth->createRole('zakup');
+		$auth->add($zakup);
+
+		$system = $auth->createRole('system');
+		$auth->add($system);
+
+		$auth->assign($zakup, 8);
+		$auth->assign($system, 9);
         $auth->assign($courier, 7);
         $auth->assign($admin, 5);
         $auth->assign($disain, 3);
