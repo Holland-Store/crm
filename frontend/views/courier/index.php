@@ -17,7 +17,6 @@ $this->title = 'Доставка';
 <?php echo Nav::widget([
     'options' => ['class' => 'nav nav-pills'],
     'items' => [
-    ['label' => 'Главная', 'url' => ['zakaz/index']],
     ['label' => 'Курьер', 'url' => ['courier/index']],
     ['label' => 'Готовые доставки', 'url' => ['courier/ready']],
     ],
@@ -43,6 +42,7 @@ $this->title = 'Доставка';
                 'attribute' => 'id_zakaz',
                 'format' => 'text',
                 'value' => 'idZakaz.description',
+				'contentOptions'=>['style'=>'white-space: normal;'],
                 'label' => 'Описание',
                 'filter' => false,
             ],

@@ -10,6 +10,7 @@ use yii\helpers\ArrayHelper;
  *
  * @property integer $id
  * @property integer $id_zakaz
+ * @property srting $date
  * @property string $to
  * @property string $data_to
  * @property string $from
@@ -43,13 +44,13 @@ class Courier extends \yii\db\ActiveRecord
         return [
             [['id_zakaz', 'to', 'from'], 'required'],
             [['id_zakaz', 'status'], 'integer'],
-            [['data_to', 'data_from'], 'safe'],
+            [['data_to', 'data_from', 'date'], 'safe'],
             [['commit'], 'string'],
             [['to', 'from'], 'string', 'max' => 50],
             [['id_zakaz'], 'exist', 'skipOnError' => true, 'targetClass' => Zakaz::className(), 'targetAttribute' => ['id_zakaz' => 'id_zakaz']],
         ];
     }
-    public function getStatusDostavka()
+    public static function getStatusDostavka()
     {
         return [
             self::DOSTAVKA => 'Доставка',
@@ -70,6 +71,7 @@ class Courier extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'id_zakaz' => 'Заказ',
+			'date' => 'Дата выполнение',
             'to' => 'Откуда',
             'data_to' => 'Data To',
             'from' => 'Куда',

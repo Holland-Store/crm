@@ -26,7 +26,8 @@ use dosamigos\datepicker\DatePicker;
 
     <?= $form->field($model, 'id_user')->dropDownList([
         '2' => 'Московский',
-        '6' => 'Пушкино'],
+        '6' => 'Пушкино',
+		'9' => 'Сибирский',],
         ['prompt' => 'Выберите кому назначить',
     ]) ?>
 

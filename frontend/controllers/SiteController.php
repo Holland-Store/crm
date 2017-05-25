@@ -99,6 +99,8 @@ class SiteController extends Controller
             'admin' => ['zakaz/admin'],
             'courier' => ['courier/index'],
             'program' => ['zakaz/program'],
+			'zakup' => ['custom/index'],
+			'system' => ['helpdesk/index'],
             ];
 
             foreach ($routes as $key => $value) {

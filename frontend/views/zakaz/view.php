@@ -148,7 +148,8 @@ $this->title = $model->id_zakaz;
             </div>
         </div>
 
-       <div class="col-xs-3">
+      <?php if(Yii::$app->user->can('admin')):?>
+       <div class="col-xs-3 reminder">
             <?php $formReminder = ActiveForm::begin(); ?>
             
             <?= $formReminder->field($reminder, 'srok')->textInput(['type' => 'datetime-local', 'required' => 'required']) ?>
@@ -157,6 +158,7 @@ $this->title = $model->id_zakaz;
             
             <?php ActiveForm::end(); ?>
         </div>
+        <?php endif; ?>
        
         <div class="col-xs-12">
             <?php if($model->srok < date('Y-m-d') && $model->action == 1){

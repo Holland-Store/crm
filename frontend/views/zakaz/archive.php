@@ -21,6 +21,10 @@ $this->title = 'Закрытые заказы';
     ['label' => 'Главная', 'url' => ['zakaz/index']],
     ['label' => 'Администратор', 'url' => ['zakaz/admin']],
     ['label' => 'Закрытые заказы', 'url' => ['zakaz/archive']],
+	['label' => 'Прочее', 'items' => [
+        ['label' => 'Задачник', 'url' => ['todoist/index'], 'visible' => Yii::$app->user->can('admin')],
+        ['label' => 'Help Desk', 'url' => ['helpdesk/index']],
+    ]],
     ],
 ]); ?>
  

@@ -25,8 +25,10 @@ use dosamigos\datepicker\DatePicker;
     <?= $form->field($model, 'id_zakaz')->hiddenInput(['value' => Yii::$app->request->get('id_zakaz')])->label(false) ?>
 
     <?= $form->field($model, 'id_user')->dropDownList([
-        '2' => 'Московский магазн',
-        '6' => 'Пушкино',
+        '2' => 'Московский',
+        '6' => 'Пушкина',
+		'9' => 'Сибирский',
+		'10' => 'Закупки'
         ]
     ) ?>
 

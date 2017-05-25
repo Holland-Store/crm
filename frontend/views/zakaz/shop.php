@@ -21,9 +21,14 @@ $this->title = 'Экран - ВСЕ ЗАКАЗЫ';
 <?php echo Nav::widget([
     'options' => ['class' => 'nav nav-pills'],
     'items' => [
-    ['label' => 'Главная', 'url' => ['zakaz/index']],
-    ['label' => 'Прием заказов', 'url' => ['zakaz/shop'], 'visible' => Yii::$app->user->can('seeShop')],
+    ['label' => 'Прием заказов', 'url' => ['zakaz/shop']],
     ['label' => 'Закрытые заказы', 'url' => ['zakaz/closezakaz']],
+	['label' => 'Прочее', 'items' => [
+		['label' => 'Задачи', 'url' => ['todoist/shop']],
+        ['label' => 'Help Desk', 'url' => ['helpdesk/index']],
+        ['label' => 'Запросы на товар', 'url' => ['custom/adop']],
+    ]],
+	['label' => 'Создать запрос', 'url' => ['todoist/create_shop']],
     ],
 ]); ?>
 <div class="zakaz-index">
@@ -33,8 +38,7 @@ $this->title = 'Экран - ВСЕ ЗАКАЗЫ';
     <p>
         <?php echo $this->render('_search', ['model' => $searchModel]);?>
         <?= Html::a('<span class="glyphicon glyphicon-refresh"></span>', ['zakaz/shop'], ['class' => 'btn btn-primary btn-lg pull-right', 'style' => 'margin-left:10px;']) ?>
-        <?= Html::a('Создать заказ', ['create'], ['class' => 'btn btn-success btn-lg pull-right',
-        'style' => '']) ?>
+        <?= Html::a('Создать заказ', ['create'], ['class' => 'btn btn-success btn-lg pull-right']) ?>
     </p>
     <div class="col-xs-12">
     <?= GridView::widget([

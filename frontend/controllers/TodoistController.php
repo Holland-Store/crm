@@ -12,6 +12,7 @@ use app\models\TodoistSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\data\ActiveDataProvider;
 
 /**
  * TodoistController implements the CRUD actions for Todoist model.
@@ -54,13 +55,13 @@ class TodoistController extends Controller
      */
     public function actionShop()
     {
-        $searchModel = new TodoistSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = new ActiveDataProvider([
+			'query' => Todoist::find()->where(['id_user' => Yii::$app->user->id, 'activate' => 0])
+		]);
 
         $notification = $this->findNotification();
 
         return $this->render('shop', [
-            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
@@ -179,6 +180,21 @@ class TodoistController extends Controller
         } else {
             return $this->render('createzakaz', ['model' => $model,]);
         }
+    }
+
+	/**
+     * Closse an existing Todoist model.
+     * If close is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionClose($id)
+    {
+        $model = $this->findModel($id);
+		$model->activate = 1;
+		$model->save();
+
+        return $this->redirect(['shop']);
     }
 
     /**

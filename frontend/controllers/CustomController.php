@@ -9,6 +9,9 @@ use app\models\Notification;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
+use yii\data\ActiveDataProvider;
+
 
 /**
  * CustomController implements the CRUD actions for Custom model.
@@ -27,6 +30,21 @@ class CustomController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+			'access' => [
+				'class' => AccessControl::className(),
+				'rules' => [
+					[
+					'actions' => ['index'],
+					'allow' => true,
+					'roles' => ['zakup'],
+					],
+					[
+					'actions' => ['adop'],
+					'allow' => true,
+					'roles' => ['seeAdop'],
+					],
+				],
+			],
         ];
     }
 
@@ -46,6 +64,22 @@ class CustomController extends Controller
         ]);
     }
 
+	/**
+     * Lists all Custom models.
+     * @return mixed
+     */
+    public function actionAdop()
+    {
+        $dataProvider = new ActiveDataProvider([
+			'query' => Custom::find()->where(['id_user' => Yii::$app->user->id])
+		]);
+        $notification = $this->findNotification();
+
+        return $this->render('adop', [
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
     /**
      * Displays a single Custom model.
      * @param integer $id
@@ -57,6 +91,8 @@ class CustomController extends Controller
             'model' => $this->findModel($id),
         ]);
     }
+
+
 
     /**
      * Creates a new Custom model.

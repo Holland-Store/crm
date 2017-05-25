@@ -29,3 +29,8 @@
 .table #trNew:hover,.table .trTable:hover{
     background: #d8d8d8;
 }
+.reminder{
+	position: relative;
+    top: -104px;
+    clear: both;
+}

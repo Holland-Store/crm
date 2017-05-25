@@ -15,7 +15,6 @@ $this->title = 'Задачник';
     <?php echo Nav::widget([
     'options' => ['class' => 'nav nav-pills'],
     'items' => [
-    ['label' => 'Главная', 'url' => ['zakaz/index']],
     ['label' => 'Администратор', 'url' => ['zakaz/admin'], 'visible' => Yii::$app->user->can('seeAdmin')],
     ['label' => 'Дизайнер', 'url' => ['zakaz/disain'], 'visible' => Yii::$app->user->can('seeDisain')],
     ['label' => 'Мастер', 'url' => ['zakaz/master'], 'visible' => Yii::$app->user->can('master')],
@@ -24,21 +23,17 @@ $this->title = 'Задачник';
     ['label' => 'Курьер', 'url' => ['courier/index'], 'visible' => Yii::$app->user->can('courier')],
     ['label' => 'Закрытые заказы', 'url' => ['zakaz/closezakaz'], 'visible' => Yii::$app->user->can('seeShop')],
     ['label' => 'Прочее', 'items' => [
-        ['label' => 'Задачник', 'url' => ['todoist/index']],
+		['label' => 'Задачи', 'url' => ['todoist/shop']],
         ['label' => 'Help Desk', 'url' => ['helpdesk/index']],
-        ['label' => 'Запросы на товар', 'url' => ['custom/index']],
+        ['label' => 'Запросы на товар', 'url' => ['custom/adop']],
     ]],
+	['label' => 'Создать запрос', 'url' => ['todoist/create_shop']],
     ],
 ]); ?>
 
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <p>
-        <?php if (Yii::$app->user->can('admin')): ?>
-            <?= Html::a('+', ['create_shop'], ['class' => 'btn btn-success']) ?>
-        <?php endif ?>
-    </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
@@ -52,7 +47,12 @@ $this->title = 'Задачник';
             // 'id_zakaz',
             'status',
             'typ',
-            'id_user',
+            [
+				'attribute' => 'id_user',
+				'value' => function($model){
+					return $model->idUser->name;
+				}
+			],
             'comment:ntext',
             [
                 'attribute' => 'zakaz',
@@ -65,9 +65,16 @@ $this->title = 'Задачник';
                 },
                 'label' => 'Заказ',
             ],
+			[
+				'attribute' => '',
+				'format' => 'raw',
+				'value' => function($model){
+						return Html::a('Выполнить', ['close', 'id' => $model->id]);
+				}
+			]
 
 
-            ['class' => 'yii\grid\ActionColumn'],
+//            ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
 </div>

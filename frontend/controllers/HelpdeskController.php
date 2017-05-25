@@ -9,6 +9,7 @@ use app\models\Notification;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * HelpdeskController implements the CRUD actions for Helpdesk model.
@@ -27,6 +28,31 @@ class HelpdeskController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+			'access' => [
+				'class' => AccessControl::className(),
+				'rules' => [
+					[
+					'actions' => ['index'],
+					'allow' => true,
+					'roles' => ['@'],
+					],
+					[
+					'actions' => ['create'],
+					'allow' => true,
+					'roles' => ['@'],
+					],
+					[
+					'actions' => ['view'],
+					'allow' => true,
+					'roles' => ['@'],
+					],
+					[
+						'actions' => ['close'],
+						'allow' => true,
+						'roles' => ['system'],
+					]
+				]
+			]
         ];
     }
 
@@ -111,6 +137,23 @@ class HelpdeskController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+
+	/**
+     * Close problem an existing Helpdesk model.
+     * If close is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionClose($id)
+    {
+		if ($model = $this->findModel($id)) {
+            $model->status = 1;
+			$model->endDate = date('Y-m-d H:m:s');
+            $model->save();
+        }
+
+		return $this->redirect(['index']);
     }
 
     /**

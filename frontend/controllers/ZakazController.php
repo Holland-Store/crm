@@ -152,7 +152,7 @@ class ZakazController extends Controller
     {
 		Yii::$app->nodeSocket;
         $model = $this->findModel($id);
-        $notification = new Notification();
+        $notifications = new Notification();
         $shipping = new Courier();
         $reminder = new Notification();
         $zakaz = $model->id_zakaz;
@@ -160,14 +160,15 @@ class ZakazController extends Controller
         
 
         if ($shipping->load(Yii::$app->request->post())) {
-            $shipping->save();
+			$shipping->save();
+//			$zakaz = $model->id_zakaz;
             $model->id_shipping = $shipping->id;//Оформление доставки
             $model->save();
 
-            $notification->getByIdNotification(7, $zakaz);
-            $notification->saveNotification;
+            $notifications->getByIdNotification(7, $zakaz);
+            $notifications->saveNotification;
             
-            return $this->redirect(['view', 'id' => $model->id_zakaz]);
+//            return $this->redirect(['view', 'id' => $model->id_zakaz]);
         }
         
         if($reminder->load(Yii::$app->request->post())){

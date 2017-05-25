@@ -17,7 +17,6 @@ $this->title = 'Готовые доставки';
 <?php echo Nav::widget([
     'options' => ['class' => 'nav nav-pills'],
     'items' => [
-    ['label' => 'Главная', 'url' => ['zakaz/index']],
     ['label' => 'Курьер', 'url' => ['courier/index']],
     ['label' => 'Готовые доставки', 'url' => ['courier/ready']],
     ],

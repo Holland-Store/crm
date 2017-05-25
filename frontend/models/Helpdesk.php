@@ -35,7 +35,7 @@ class Helpdesk extends \yii\db\ActiveRecord
             [['id_user', 'status'], 'integer'],
             ['id_user', 'default', 'value' => Yii::$app->user->getId()],
             [['commetnt'], 'string'],
-            [['date', 'date_end'], 'safe'],
+            [['date', 'endDate'], 'safe'],
             [['sotrud'], 'string', 'max' => 50],
             [['id_user'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['id_user' => 'id']],
         ];
@@ -53,7 +53,7 @@ class Helpdesk extends \yii\db\ActiveRecord
             'status' => 'Статсус',
             'date' => 'Дата',
             'sotrud' => 'Имя сотрудника',
-            'date_end' => 'Date_end',
+            'dateEnd' => 'Date_end',
         ];
     }
     /**

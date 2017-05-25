@@ -78,6 +78,7 @@ class CourierController extends Controller
      public function actionReady()
     {
         $courier = Courier::find();
+		$notification = $this->findNotification();
         $dataProvider = new ActiveDataProvider([
             'query' => $courier->andWhere(['>', 'data_from', '0000-00-00 00:00:00']),
             'pagination' => ['pageSize' => 50,]

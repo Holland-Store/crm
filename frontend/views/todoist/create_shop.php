@@ -22,13 +22,6 @@ $this->title = 'Создать задачу';
     <?php echo Tabs::widget([
     	'items' => [
     		[
-    			'label' => 'Задача',
-    			'content' => $this->render('_form-todoist', [
-						        'model' => $model,
-						    ]),
-    			'active' => true
-    		],
-    		[
     			'label' => 'Help Desk',
     			'content' => $this->render('_form-helpdesk', [
 						        'helpdesk' => $helpdesk,

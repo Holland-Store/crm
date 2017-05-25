@@ -55,6 +55,8 @@ return [
 				'updete/<id:\d+>' => 'zakaz/update',
 				'login' => 'site/login',
 				'logout' => 'site/logout',
+				'createzakaz/<id_zakaz:\d+>' => 'todoist/createzakaz',
+				'view-todoist/<id:\d+>' => 'todoist/view',
             ],
         ],
         'nodeSocket' => [

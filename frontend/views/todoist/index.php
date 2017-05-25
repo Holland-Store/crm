@@ -15,9 +15,8 @@ $this->title = 'Задачник';
     <?php echo Nav::widget([
     'options' => ['class' => 'nav nav-pills'],
     'items' => [
-    ['label' => 'Главная', 'url' => ['zakaz/index']],
     ['label' => 'Администратор', 'url' => ['zakaz/admin'], 'visible' => Yii::$app->user->can('seeAdmin')],
-    ['label' => 'Дизайнер', 'url' => ['zakaz/disain'], 'visible' => Yii::$app->user->can('seeDisain')],
+    ['label' => 'Дизайнер', 'url' => ['zakaz/disain'], 'visible' => Yii::$app->user->can('disain')],
     ['label' => 'Мастер', 'url' => ['zakaz/master'], 'visible' => Yii::$app->user->can('master')],
     ['label' => 'Прием заказов', 'url' => ['zakaz/shop'], 'visible' => Yii::$app->user->can('seeShop')],
     ['label' => 'Закрытые заказы', 'url' => ['zakaz/archive'], 'visible' => Yii::$app->user->can('seeAdmin')],
@@ -26,7 +25,6 @@ $this->title = 'Задачник';
     ['label' => 'Прочее', 'items' => [
         ['label' => 'Задачник', 'url' => ['todoist/index']],
         ['label' => 'Help Desk', 'url' => ['helpdesk/index']],
-        ['label' => 'Запросы на товар', 'url' => ['custom/index']],
     ]],
     ],
 ]); ?>
@@ -52,7 +50,12 @@ $this->title = 'Задачник';
             // 'id_zakaz',
             'status',
             'typ',
-            'id_user',
+            [
+				'attribute' => 'id_user',
+				'value' => function($model){
+					return $model->idUser->name;
+				}
+			],
             'comment:ntext',
             [
                 'attribute' => 'zakaz',

@@ -20,8 +20,8 @@ $this->title = 'Мастер';
 <?php echo Nav::widget([
     'options' => ['class' => 'nav nav-pills'],
     'items' => [
-    ['label' => 'Главная', 'url' => ['zakaz/index']],
-    ['label' => 'Мастер', 'url' => ['zakaz/master'], 'visible' => Yii::$app->user->can('master')],
+    ['label' => 'Мастер', 'url' => ['zakaz/master']],
+	['label' => 'Help Desk', 'url' => ['helpdesk/index']],
     ],
 ]); ?>
 <div class="zakaz-index">

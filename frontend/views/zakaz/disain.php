@@ -21,9 +21,9 @@ $this->title = 'Дизайнер';
 <?php echo Nav::widget([
     'options' => ['class' => 'nav nav-pills'],
     'items' => [
-    ['label' => 'Главная', 'url' => ['zakaz/index']],
     ['label' => 'Дизайнер', 'url' => ['zakaz/disain'], 'visible' => Yii::$app->user->can('seeDisain')],
     ['label' => 'Готовые заказы', 'url' => ['zakaz/ready']],
+	['label' => 'Help Desk', 'url' => ['helpdesk/index']],
     ],
 ]); ?>
 <div class="zakaz-index">

@@ -42,7 +42,11 @@ class CustomSearch extends Custom
     public function search($params)
     {
         $query = Custom::find();
-        $query->andWhere(['action' => '0']);
+		if(Yii::$app->user->can('zakup')){
+			$query->andWhere(['action' => '0']);
+		} else {
+			$query->andWhere(['action' => 0, 'id_user' => Yii::$app->user->id]);
+		}
 
         // add conditions that should always apply here
 

@@ -25,6 +25,10 @@ $this->title = 'Заказ';
     ['label' => 'Главная', 'url' => ['zakaz/index']],
     ['label' => 'Администратор', 'url' => ['zakaz/admin']],
     ['label' => 'Закрытые заказы', 'url' => ['zakaz/archive']],
+	['label' => 'Прочее', 'items' => [
+        ['label' => 'Задачник', 'url' => ['todoist/index']],
+        ['label' => 'Help Desk', 'url' => ['helpdesk/index']],
+    ]],
     ],
 ]); ?>
  
