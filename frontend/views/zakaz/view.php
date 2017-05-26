@@ -167,6 +167,13 @@ $this->title = $model->id_zakaz;
            ]);
         } ?>
         </div>
+        <div class="col-xs-12">
+        	<?php if($model->action == 0){
+        		echo Alert::widget(['options' => ['class' => 'alert-warning'],
+								  'body' => '<b>Заказ закрыт!</b><br> Внимание, если Вы хотите воставноить заказ, нажмите на кнопку "Восстановить заказ"'
+			   ]);
+        	} ?>
+        </div>
 
         <div class="col-xs-12">
             <?= DetailView::widget([
