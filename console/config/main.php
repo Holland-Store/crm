@@ -16,7 +16,7 @@ return [
             'class' => 'yii\console\controllers\FixtureController',
             'namespace' => 'common\fixtures',
           ],
-        'nodeSocket' => '\YiiNodeSocket\NodeSocketCommand',
+//        'nodeSocket' => '\YiiNodeSocket\NodeSocketCommand',
     ],
     'components' => [
         'log' => [
@@ -27,14 +27,14 @@ return [
                 ],
             ],
         ],
-        'nodeSocket' => [
-            'class' => '\YiiNodeSocket\NodeSocket',
-		    'host' => 'localhost',
-		    'allowedServerAddresses' => [
-		        "localhost",
-		        "127.0.0.1"
-		    ],
-        ],
+//        'nodeSocket' => [
+//            'class' => '\YiiNodeSocket\NodeSocket',
+//		    'host' => 'localhost',
+//		    'allowedServerAddresses' => [
+//		        "localhost",
+//		        "127.0.0.1"
+//		    ],
+//        ],
     ],
     'params' => $params,
 ];
