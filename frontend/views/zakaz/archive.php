@@ -18,7 +18,6 @@ $this->title = 'Закрытые заказы';
 <?= Nav::widget([
     'options' => ['class' => 'nav nav-pills'],
     'items' => [
-    ['label' => 'Главная', 'url' => ['zakaz/index']],
     ['label' => 'Администратор', 'url' => ['zakaz/admin']],
     ['label' => 'Закрытые заказы', 'url' => ['zakaz/archive']],
 	['label' => 'Прочее', 'items' => [
