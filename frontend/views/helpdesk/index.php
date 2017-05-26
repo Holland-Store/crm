@@ -52,10 +52,20 @@ $this->title = 'Help Desk';
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'id_user',
-            'commetnt:ntext',
+            [
+				'attribute' => 'id_user',
+				'value' => 'idUser.name',
+			],
+            [
+				'attribute' => 'commetnt',
+				'format' => 'text',
+				'contentOptions'=>['style'=>'white-space: normal;'],
+			],
 //            'status',
-            'date',
+            [
+				'attribute' => 'date',
+				'format' => ['date', 'd.MM.Y H:i']
+			],
             'sotrud',
 			[
                 'attribute' => '',
