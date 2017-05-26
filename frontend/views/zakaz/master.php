@@ -44,6 +44,9 @@ $this->title = 'Мастер';
     	<?= Html::a('<span class="glyphicon glyphicon-refresh"></span>', ['zakaz/master'], ['class' => 'btn btn-primary btn-lg pull-right']) ?>
     </p>
 
+    <?php Pjax::end(); ?>
+    <?php Pjax::begin(['id' => 'pjax-container']) ?>
+
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'tableOptions' => ['class' => 'table table-bordered'],

@@ -22,7 +22,6 @@ $this->title = 'Заказ';
 <?= Nav::widget([
     'options' => ['class' => 'nav nav-pills'],
     'items' => [
-    ['label' => 'Главная', 'url' => ['zakaz/index']],
     ['label' => 'Администратор', 'url' => ['zakaz/admin']],
     ['label' => 'Закрытые заказы', 'url' => ['zakaz/archive']],
 	['label' => 'Прочее', 'items' => [
@@ -41,7 +40,9 @@ $this->title = 'Заказ';
     </p>
 
     <?php echo $this->render('_searchadmin', ['model' => $searchModel]);?>
+    <?php Pjax::end(); ?>
     <div class="col-xs-12">
+    <?php Pjax::begin(['id' => 'pjax-container']) ?>
     <h3>Новые</h3>
     <?= GridView::widget([
         'dataProvider' => $dataProviderNew,

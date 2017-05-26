@@ -44,6 +44,8 @@ $this->title = 'Дизайнер';
     <p>
         <?= Html::a('<span class="glyphicon glyphicon-refresh"></span>', ['zakaz/disain'], ['class' => 'btn btn-primary btn-lg pull-right']) ?>
     </p>
+    <?php Pjax::end(); ?>
+    <?php Pjax::begin(['id' => 'pjax-container']) ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,

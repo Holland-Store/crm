@@ -10,4 +10,7 @@ $(document).ready(function(){
 		var key = $(this).data('key');
 		document.location.href = "http://crm/frontend/web/zakaz/adopted?id="+key;
 	});
+	setInterval(function(){
+		$.pjax.reload('#pjax-container')
+	}, 30000);
 });
