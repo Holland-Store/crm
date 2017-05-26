@@ -28,6 +28,10 @@ class RbacController extends Controller
         $seeDisain->description = 'Виднеется меню Дизайнера';
         $auth->add($seeDisain);
 
+		$seeAllIspol = $auth->createPremission('seeAllIspol');
+		$seeAllIspol->descriptio = 'Виднеются всем кроме Админу';
+		$auth->add($seeAllIspol);
+
         $seeCourier = $auth->createPermission('seeCourier');
         $seeCourier->description = 'Виднеется меню Курьера';
         $auth->add($seeCourier);
@@ -73,11 +77,13 @@ class RbacController extends Controller
         $auth->add($master);
         $auth->addChild($master, $seeMaster);
         $auth->addChild($master, $seeIspol);
+		$auth->addChild($master, $seeAllIspol);
 
         $disain = $auth->createRole('disain');
         $auth->add($disain);
         $auth->addChild($disain, $seeDisain);
         $auth->addChild($disain, $seeIspol);
+		$auth->addChild($disain, $seeAllIspol);
 
         $courier = $auth->createRole('courier');
         $auth->add($courier);
@@ -90,12 +96,16 @@ class RbacController extends Controller
         $auth->addChild($prog, $master);
         $auth->addChild($prog, $shop);
         $auth->addChild($prog, $courier);
+		$auth->addChild($rogram, $zakup);
+		$auth->addChild(program, $system);
 
 		$zakup = $auth->createRole('zakup');
 		$auth->add($zakup);
+		$auth->addChild($zakup, $seeAllIspol);
 
 		$system = $auth->createRole('system');
 		$auth->add($system);
+		$auth->addChild($system, $seeAllIspol);
 
 		$auth->assign($zakup, 8);
 		$auth->assign($system, 9);
