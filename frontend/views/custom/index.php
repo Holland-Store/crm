@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\bootstrap\Nav;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\CustomSearch */
@@ -13,6 +14,15 @@ $this->title = 'Запросы';
 
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+
+    <?php echo Nav::widget([
+		'options' => ['class' => 'nav nav-pills'],
+		'items' => [
+			['label' => 'Задачи', 'url' => ['todoist/shop']],
+			['label' => 'Help Desk', 'url' => ['helpdesk/index']],
+			['label' => 'Запросы на товар', 'url' => ['custom/index']],
+		],
+		]); ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,

@@ -10,8 +10,7 @@ use yii\bootstrap\Nav;
 
 $this->title = 'Запросы';?>
 <div class="custom-index">
-    <?php
-	echo Nav::widget([
+    <?php echo Nav::widget([
 		'options' => ['class' => 'nav nav-pills'],
 		'items' => [
 		['label' => 'Администратор', 'url' => ['zakaz/admin'], 'visible' => Yii::$app->user->can('seeAdmin')],

@@ -120,7 +120,7 @@ $this->title = $model->id_zakaz;
                                     <?php endif ?>
             </div>
             <div class="col-xs-5">
-                <?php if (Yii::$app->user->can('seeAdop')): ?>
+                <?php if (Yii::$app->user->can('admin')): ?>
                 <?= Html::a('Поставить задачу', ['todoist/createzakaz', 'id_zakaz' => $model->id_zakaz], ['class' => 'btn btn-primary btn-sm', 'style' => 'margin-left: 185px;']) ?>
                     <?php endif ?>
 

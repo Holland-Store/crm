@@ -23,6 +23,7 @@ $this->title = 'Дизайнер';
     'items' => [
     ['label' => 'Дизайнер', 'url' => ['zakaz/disain'], 'visible' => Yii::$app->user->can('seeDisain')],
     ['label' => 'Готовые заказы', 'url' => ['zakaz/ready']],
+	['label' => 'Задачник', 'url' => ['todoist/shop']],
 	['label' => 'Help Desk', 'url' => ['helpdesk/index']],
     ],
 ]); ?>

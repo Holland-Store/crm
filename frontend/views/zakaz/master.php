@@ -21,6 +21,7 @@ $this->title = 'Мастер';
     'options' => ['class' => 'nav nav-pills'],
     'items' => [
     ['label' => 'Мастер', 'url' => ['zakaz/master']],
+	['label' => 'Задачник', 'url' => ['todoist/shop']],
 	['label' => 'Help Desk', 'url' => ['helpdesk/index']],
     ],
 ]); ?>

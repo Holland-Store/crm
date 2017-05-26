@@ -36,7 +36,7 @@ class CustomController extends Controller
 					[
 					'actions' => ['index'],
 					'allow' => true,
-					'roles' => ['zakup'],
+					'roles' => ['zakup', 'program'],
 					],
 					[
 					'actions' => ['adop'],

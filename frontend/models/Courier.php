@@ -42,7 +42,7 @@ class Courier extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_zakaz', 'to', 'from'], 'required'],
+            [['id_zakaz', 'to', 'from', 'date'], 'required'],
             [['id_zakaz', 'status'], 'integer'],
             [['data_to', 'data_from', 'date'], 'safe'],
             [['commit'], 'string'],

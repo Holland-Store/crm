@@ -13,6 +13,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\data\ActiveDataProvider;
+use yii\filters\AccessControl;
 
 /**
  * TodoistController implements the CRUD actions for Todoist model.
@@ -31,6 +32,36 @@ class TodoistController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+			'access' => [
+				'class' => AccessControl::className(),
+				'rules' => [
+					[
+					'actions' => ['index'],
+					'allow' => true,
+					'roles' => ['admin', 'program'],
+					],
+					[
+					'actions' => ['shop'],
+					'allow' => true,
+					'roles' => ['shop', 'zakup', 'master', 'disain', 'program'],
+					],
+					[
+					'actions' => ['close'],
+					'allow' => true,
+					'roles' => ['shop', 'zakup', 'disain', 'master'],
+					],
+					[
+					'actions' => ['createzakaz'],
+					'allow' => true,
+					'roles' => ['admin'],
+					],
+					[
+					'actions' => ['create_shop'],
+					'allow' => true,
+					'roles' => ['shop'],
+					],
+				],
+			],
         ];
     }
 

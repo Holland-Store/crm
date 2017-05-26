@@ -30,7 +30,9 @@ $this->title = 'Help Desk';
 			['label' => 'Запросы на товар', 'url' => ['custom/adop'], 'visible' => Yii::$app->user->can('shop')],
 		], 'visible' => Yii::$app->user->can('seeAdop')],
 		['label' => 'Создать запрос', 'url' => ['todoist/create_shop'], 'visible' =>Yii::$app->user->can('shop')],
+		['label' => 'Задачник', 'url' => ['todoist/shop'], 'visible' =>Yii::$app->user->can('seeAllIspol')],
 		['label' => 'Запросы на товар', 'url' => ['custom/index'], 'visible' => Yii::$app->user->can('zakup')],
+		['label' => 'Help Desk', 'url' => ['helpdesk/index'], 'visible' => Yii::$app->user->can('zakup')],
 		['label' => 'Help Desk', 'url' => ['helpdesk/index'], 'visible' => Yii::$app->user->can('seeIspol')],
 		],
 	]); ?>

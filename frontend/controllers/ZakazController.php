@@ -150,7 +150,6 @@ class ZakazController extends Controller
      */
     public function actionView($id)
     {
-		Yii::$app->nodeSocket;
         $model = $this->findModel($id);
         $notifications = new Notification();
         $shipping = new Courier();

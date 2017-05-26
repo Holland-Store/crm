@@ -37,16 +37,6 @@ class HelpdeskController extends Controller
 					'roles' => ['@'],
 					],
 					[
-					'actions' => ['create'],
-					'allow' => true,
-					'roles' => ['@'],
-					],
-					[
-					'actions' => ['view'],
-					'allow' => true,
-					'roles' => ['@'],
-					],
-					[
 						'actions' => ['close'],
 						'allow' => true,
 						'roles' => ['system'],
