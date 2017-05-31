@@ -60,6 +60,10 @@ class RbacController extends Controller
         $seeAdop->description = 'Видит магазин и админ';
         $auth->add($seeAdop);
 
+        $todoist = $auth->createPermission('todoist');
+        $todoist->description = 'Видят задачник';
+        $auth->add($todoist);        
+
         $admin = $auth->createRole('admin');
         $auth->add($admin);
         $auth->addChild($admin, $seeAdmin);
@@ -78,12 +82,14 @@ class RbacController extends Controller
         $auth->addChild($master, $seeMaster);
         $auth->addChild($master, $seeIspol);
 		$auth->addChild($master, $seeAllIspol);
+        $auth->addChild($master, $todoist);
 
         $disain = $auth->createRole('disain');
         $auth->add($disain);
         $auth->addChild($disain, $seeDisain);
         $auth->addChild($disain, $seeIspol);
 		$auth->addChild($disain, $seeAllIspol);
+        $auth->addChild($disain, $todoist);
 
         $courier = $auth->createRole('courier');
         $auth->add($courier);
@@ -97,11 +103,12 @@ class RbacController extends Controller
         $auth->addChild($prog, $shop);
         $auth->addChild($prog, $courier);
 		$auth->addChild($rogram, $zakup);
-		$auth->addChild(program, $system);
+		$auth->addChild($program, $system);
 
 		$zakup = $auth->createRole('zakup');
 		$auth->add($zakup);
 		$auth->addChild($zakup, $seeAllIspol);
+        $auth->addChild($zakup, $todoist);
 
 		$system = $auth->createRole('system');
 		$auth->add($system);
