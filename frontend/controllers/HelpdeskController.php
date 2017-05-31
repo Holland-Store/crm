@@ -32,10 +32,15 @@ class HelpdeskController extends Controller
 				'class' => AccessControl::className(),
 				'rules' => [
 					[
-					'actions' => ['index'],
-					'allow' => true,
-					'roles' => ['@'],
+    					'actions' => ['index'],
+    					'allow' => true,
+    					'roles' => ['@'],
 					],
+                    [
+                        'actions' => ['create'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
 					[
 						'actions' => ['close'],
 						'allow' => true,

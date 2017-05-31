@@ -38,6 +38,11 @@ class CustomController extends Controller
 					'allow' => true,
 					'roles' => ['zakup', 'program'],
 					],
+                    [
+                    'actions' => ['close'],
+                    'allow' => true,
+                    'roles' => ['zakup', 'program'],
+                    ],
 					[
 					'actions' => ['adop'],
 					'allow' => true,

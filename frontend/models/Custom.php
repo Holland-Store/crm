@@ -36,6 +36,7 @@ class Custom extends \yii\db\ActiveRecord
             [['tovar'], 'required'],
             [['id_user', 'number', 'action'], 'integer'],
             ['id_user', 'default', 'value' => Yii::$app->user->getId()],
+            ['action', 'default', 'value' => 0],
             [['tovar'], 'string', 'max' => 50],
             [['date', 'date_end'], 'safe'],
             [['id_user'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['id_user' => 'id']],

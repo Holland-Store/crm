@@ -36,29 +36,39 @@ class TodoistController extends Controller
 				'class' => AccessControl::className(),
 				'rules' => [
 					[
-					'actions' => ['index'],
-					'allow' => true,
-					'roles' => ['admin', 'program'],
+    					'actions' => ['index'],
+    					'allow' => true,
+    					'roles' => ['admin', 'program'],
 					],
 					[
-					'actions' => ['shop'],
-					'allow' => true,
-					'roles' => ['shop', 'zakup', 'master', 'disain', 'program'],
+    					'actions' => ['shop'],
+    					'allow' => true,
+    					'roles' => ['shop', 'zakup', 'master', 'disain', 'program'],
 					],
 					[
-					'actions' => ['close'],
-					'allow' => true,
-					'roles' => ['shop', 'zakup', 'disain', 'master'],
+    					'actions' => ['close'],
+    					'allow' => true,
+    					'roles' => ['shop', 'zakup', 'disain', 'master'],
+					],
+                    [
+                        'actions' => ['closetodoist'],
+                        'allow' => true,
+                        'roles' => ['admin', 'program'],
+                    ],
+                    [
+                        'actions' => ['create'],
+                        'allow' => true,
+                        'roles' => ['admin', 'program'],
+                    ],
+					[
+    					'actions' => ['createzakaz'],
+    					'allow' => true,
+    					'roles' => ['admin'],
 					],
 					[
-					'actions' => ['createzakaz'],
-					'allow' => true,
-					'roles' => ['admin'],
-					],
-					[
-					'actions' => ['create_shop'],
-					'allow' => true,
-					'roles' => ['shop'],
+    					'actions' => ['create_shop'],
+    					'allow' => true,
+    					'roles' => ['shop'],
 					],
 				],
 			],
@@ -72,10 +82,25 @@ class TodoistController extends Controller
     public function actionIndex()
     {
         $searchModel = new TodoistSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, 'admin');
         $notification = $this->findNotification();
 
         return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+    /**
+     * Close all Todoist models.
+     * @return mixed
+     */
+    public function actionClosetodoist()
+    {
+        $searchModel = new TodoistSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, 'close');
+        $notification = $this->findNotification();
+
+        return $this->render('closetodoist', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);

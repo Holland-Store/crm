@@ -8,7 +8,7 @@ use yii\bootstrap\Nav;
 /* @var $searchModel app\models\TodoistSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Задачник';
+$this->title = 'Выполненые задачи';
 ?>
 <div class="todoist-index">
 
@@ -24,8 +24,12 @@ $this->title = 'Задачник';
                 'attribute' => 'srok',
                 'format' => ['date', 'php:d.m.Y'],
             ],
-            // 'id_zakaz',
-            'status',
+            [
+                'attribute' => 'activate',
+                'value' => function($model){
+                    return $model->todoistName;
+                }
+            ],
             'typ',
             [
 				'attribute' => 'id_user',
@@ -40,18 +44,11 @@ $this->title = 'Задачник';
                 'value' => function($model){
                     if ($model->id_zakaz != null) {
                         return Html::a($model->idZakaz->prefics, ['zakaz/view', 'id' => $model->id_zakaz]);
-                    } 
+                    }
                     return '';
                 },
                 'label' => 'Заказ',
             ],
-			[
-				'attribute' => '',
-				'format' => 'raw',
-				'value' => function($model){
-						return Html::a('Выполнить', ['close', 'id' => $model->id]);
-				}
-			]
 
 
 //            ['class' => 'yii\grid\ActionColumn'],

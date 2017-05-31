@@ -41,7 +41,8 @@ class HelpdeskSearch extends Helpdesk
      */
     public function search($params)
     {
-        Yii::$app->user->can('system') ? $query = Helpdesk::find()->where(['status' => 0]) : $query = Helpdesk::find()->where(['id_user' => Yii::$app->user->id, 'status' => 0]);
+        $query = Helpdesk::find();
+        Yii::$app->user->can('system') ? $query = $query->where(['status' => 0]) : $query = $query->where(['id_user' => Yii::$app->user->id, 'status' => 0]);
 
         // add conditions that should always apply here
 

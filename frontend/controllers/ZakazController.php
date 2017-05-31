@@ -160,7 +160,6 @@ class ZakazController extends Controller
 
         if ($shipping->load(Yii::$app->request->post())) {
 			$shipping->save();
-//			$zakaz = $model->id_zakaz;
             $model->id_shipping = $shipping->id;//Оформление доставки
             $model->save();
 
@@ -187,11 +186,11 @@ class ZakazController extends Controller
             $model->save();
             
             if ($model->status == 3) {
-                $notification->getByIdNotification(3, $zakaz);
-                $notification->saveNotification;
+                $notifications->getByIdNotification(4, $model->id_zakaz);
+                $notifications->saveNotification;
             } elseif ($model->status == 6) {
-                $notification->getByIdNotification(6, $zakaz);
-                $notification->saveNotification;
+                $notifications->getByIdNotification(3, $model->id_zakaz);
+                $notifications->saveNotification;
             }
 
             return $this->redirect(['view', 'id' => $model->id_zakaz]);
@@ -277,7 +276,7 @@ class ZakazController extends Controller
     {
         $model = $this->findModel($id);
         $notification = new Notification();
-        $notification = $this->findNotification();
+        $notifications = $this->findNotification();
 
         $model->status = 7;
         $notification->getByIdNotification(8, $id);
@@ -463,7 +462,8 @@ class ZakazController extends Controller
     }
     protected function findNotification()
     {
-        $notification = Notification::find()->where(['id_user' => Yii::$app->user->id, 'active' => true]);
+        $notifModel = Notification::find();
+        $notification = $notifModel->where(['id_user' => Yii::$app->user->id, 'active' => true]);
         if($notification->count()>50){
                 $notifications = '50+';
             } elseif ($notification->count()<1){

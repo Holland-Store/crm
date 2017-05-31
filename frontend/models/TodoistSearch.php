@@ -39,9 +39,17 @@ class TodoistSearch extends Todoist
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params, $index)
     {
         $query = Todoist::find();
+        switch ($index) {
+            case 'close':
+                $query = $query->where(['activate' => 0]);
+                break;
+            case 'admin':
+                $query = $query->where(['activate' => 1]);
+                break;
+        }
 
         // add conditions that should always apply here
 

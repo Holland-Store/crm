@@ -104,13 +104,13 @@ class Notification extends \yii\db\ActiveRecord
                 $this->id_zakaz = $zakaz;
                 $this->category = 2;
                 break;
-            case '3'://оформление уведомление дизайнеру
+            case '4'://оформление уведомление дизайнеру
                 $this->id_user = $id;
                 $this->name = 'Новый заказ №'.$zakaz;
                 $this->id_zakaz = $zakaz;
                 $this->category = 2;
                 break;
-            case '6'://оформление уведомление мастеру
+            case '3'://оформление уведомление мастеру
                 $this->id_user = $id;
                 $this->name = 'Новый заказ №'.$zakaz;
                 $this->id_zakaz = $zakaz;

@@ -14,20 +14,6 @@ use yii\grid\SetColumn;
 
 $this->title = 'Закрытые заказы';
 ?>
-
-<?= Nav::widget([
-    'options' => ['class' => 'nav nav-pills'],
-    'items' => [
-    ['label' => 'Прием заказов', 'url' => ['zakaz/shop']],
-    ['label' => 'Закрытые заказы', 'url' => ['zakaz/closezakaz']],
-	['label' => 'Прочее', 'items' => [
-		['label' => 'Задачи', 'url' => ['todoist/shop']],
-        ['label' => 'Help Desk', 'url' => ['helpdesk/index']],
-        ['label' => 'Запросы на товар', 'url' => ['custom/adop']],
-    ]],
-	['label' => 'Создать запрос', 'url' => ['todoist/create_shop']],
-    ],
-]); ?>
  
 <div class="zakaz-index">
     <h1><?= Html::encode($this->title) ?></h1>

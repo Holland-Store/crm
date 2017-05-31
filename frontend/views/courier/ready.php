@@ -14,13 +14,7 @@ use yii\widgets\Pjax;
 $this->title = 'Готовые доставки';
 ?>
 <?php Pjax::begin(); ?>  
-<?php echo Nav::widget([
-    'options' => ['class' => 'nav nav-pills'],
-    'items' => [
-    ['label' => 'Курьер', 'url' => ['courier/index']],
-    ['label' => 'Готовые доставки', 'url' => ['courier/ready']],
-    ],
-]); ?>
+
 <div class="courier-index">
 
     <h1><?= Html::encode($this->title) ?></h1>

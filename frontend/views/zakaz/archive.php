@@ -14,18 +14,6 @@ use yii\grid\SetColumn;
 
 $this->title = 'Закрытые заказы';
 ?>
-
-<?= Nav::widget([
-    'options' => ['class' => 'nav nav-pills'],
-    'items' => [
-    ['label' => 'Администратор', 'url' => ['zakaz/admin']],
-    ['label' => 'Закрытые заказы', 'url' => ['zakaz/archive']],
-	['label' => 'Прочее', 'items' => [
-        ['label' => 'Задачник', 'url' => ['todoist/index'], 'visible' => Yii::$app->user->can('admin')],
-        ['label' => 'Help Desk', 'url' => ['helpdesk/index']],
-    ]],
-    ],
-]); ?>
  
 <div class="zakaz-index">
     <h1><?= Html::encode($this->title) ?></h1>

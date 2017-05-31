@@ -34,6 +34,7 @@ class Helpdesk extends \yii\db\ActiveRecord
             [['commetnt'], 'required'],
             [['id_user', 'status'], 'integer'],
             ['id_user', 'default', 'value' => Yii::$app->user->getId()],
+            ['status', 'default', 'value' => 0],
             [['commetnt'], 'string'],
             [['date', 'endDate'], 'safe'],
             [['sotrud'], 'string', 'max' => 50],

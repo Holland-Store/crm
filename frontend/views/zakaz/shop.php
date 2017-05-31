@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
+use kartik\grid\GridView;
 use app\models\Otdel;
 use app\models\Zakaz;
 use dosamigos\datepicker\DatePicker;
@@ -9,6 +9,7 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\Modal;
 // use yii\grid\SetColumn;
 use yii\widgets\Pjax;
+
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\ZakazSearch */
@@ -18,19 +19,6 @@ $this->title = 'Экран - ВСЕ ЗАКАЗЫ';
 ?>
 <?php Pjax::begin(); ?>
 
-<?php echo Nav::widget([
-    'options' => ['class' => 'nav nav-pills'],
-    'items' => [
-    ['label' => 'Прием заказов', 'url' => ['zakaz/shop']],
-    ['label' => 'Закрытые заказы', 'url' => ['zakaz/closezakaz']],
-	['label' => 'Прочее', 'items' => [
-		['label' => 'Задачи', 'url' => ['todoist/shop']],
-        ['label' => 'Help Desk', 'url' => ['helpdesk/index']],
-        ['label' => 'Запросы на товар', 'url' => ['custom/adop']],
-    ]],
-	['label' => 'Создать запрос', 'url' => ['todoist/create_shop']],
-    ],
-]); ?>
 <div class="zakaz-index">
 
     <h1><?= Html::encode($this->title) ?></h1>

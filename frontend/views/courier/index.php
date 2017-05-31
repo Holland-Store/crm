@@ -13,14 +13,7 @@ use yii\widgets\Pjax;
 
 $this->title = 'Доставка';
 ?>
-<?php Pjax::begin(); ?>  
-<?php echo Nav::widget([
-    'options' => ['class' => 'nav nav-pills'],
-    'items' => [
-    ['label' => 'Курьер', 'url' => ['courier/index']],
-    ['label' => 'Готовые доставки', 'url' => ['courier/ready']],
-    ],
-]); ?>
+<?php Pjax::begin(); ?>
 <div class="courier-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
@@ -46,6 +39,10 @@ $this->title = 'Доставка';
                 'label' => 'Описание',
                 'filter' => false,
             ],
+			[
+				'attribute' => 'date',
+				'format' => ['date', 'd.m.Y'],
+			],
             'to',
             'from',
             'commit',

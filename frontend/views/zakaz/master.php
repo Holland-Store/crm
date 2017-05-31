@@ -16,15 +16,8 @@ use yii\widgets\Pjax;
 
 $this->title = 'Мастер';
 ?>
-<?php Pjax::begin(); ?>
-<?php echo Nav::widget([
-    'options' => ['class' => 'nav nav-pills'],
-    'items' => [
-    ['label' => 'Мастер', 'url' => ['zakaz/master']],
-	['label' => 'Задачник', 'url' => ['todoist/shop']],
-	['label' => 'Help Desk', 'url' => ['helpdesk/index']],
-    ],
-]); ?>
+<?php Pjax::begin(['id' => 'pjax-container']); ?>
+
 <div class="zakaz-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
@@ -43,9 +36,6 @@ $this->title = 'Мастер';
     <p>
     	<?= Html::a('<span class="glyphicon glyphicon-refresh"></span>', ['zakaz/master'], ['class' => 'btn btn-primary btn-lg pull-right']) ?>
     </p>
-
-    <?php Pjax::end(); ?>
-    <?php Pjax::begin(['id' => 'pjax-container']) ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,

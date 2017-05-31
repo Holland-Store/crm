@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "todoist".
@@ -59,10 +60,10 @@ class Todoist extends \yii\db\ActiveRecord
             'srok' => 'Срок',
             'id_zakaz' => 'Заказ',
             'id_user' => 'Назначение',
-            'status' => 'Статус',
+            'status' => 'Status',
             'typ' => 'Тип',
             'comment' => 'Доп.указание',
-            'activate' => 'Activate',
+            'activate' => 'Статус',
         ];
     }
 
@@ -95,4 +96,15 @@ class Todoist extends \yii\db\ActiveRecord
 	{
 		return ArrayHelper::getValue(self::getIdUser(), $this->id_user);
 	}
+    public static function getTodoistArray()
+    {
+        return [
+            '0' => 'Выполнен',
+            '1' => 'Активный',
+        ];
+    }
+    public function getTodoistName()
+    {
+        return ArrayHelper::getValue(self::getTodoistArray(), $this->activate);
+    }
 }

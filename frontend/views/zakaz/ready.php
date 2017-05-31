@@ -15,15 +15,7 @@ use yii\widgets\Pjax;
 $this->title = 'Готовые макеты';
 ?>
 <?php Pjax::begin(); ?>
-<?php echo Nav::widget([
-    'options' => ['class' => 'nav nav-pills'],
-    'items' => [
-    ['label' => 'Дизайнер', 'url' => ['zakaz/disain'], 'visible' => Yii::$app->user->can('seeDisain')],
-    ['label' => 'Готовые заказы', 'url' => ['zakaz/ready']],
-	['label' => 'Задачник', 'url' => ['todoist/shop']],
-	['label' => 'Help Desk', 'url' => ['helpdesk/index']],
-    ],
-]); ?>
+
 <div class="zakaz-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
