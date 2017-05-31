@@ -83,8 +83,23 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
+        $routes = [
+            'shop' => ['zakaz/shop'],
+            'disain' => ['zakaz/disain'],
+            'master' => ['zakaz/master'],
+            'admin' => ['zakaz/admin'],
+            'courier' => ['courier/index'],
+            'program' => ['zakaz/program'],
+            'zakup' => ['custom/index'],
+            'system' => ['helpdesk/index'],
+            ];
+
         if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
+            foreach ($routes as $key => $value) {
+                if (Yii::$app->user->can($key)) {
+                    return $this->redirect($value);
+                }
+            }
         }
 
         $model = new LoginForm();
@@ -92,16 +107,6 @@ class SiteController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             $id_user = Yii::$app->user->identity->getId();
 
-            $routes = [
-            'shop' => ['zakaz/shop'],
-            'disain' => ['zakaz/disain'],
-            'master' => ['zakaz/master'],
-            'admin' => ['zakaz/admin'],
-            'courier' => ['courier/index'],
-            'program' => ['zakaz/program'],
-			'zakup' => ['custom/index'],
-			'system' => ['helpdesk/index'],
-            ];
 
             foreach ($routes as $key => $value) {
                 if (Yii::$app->user->can($key)) {
