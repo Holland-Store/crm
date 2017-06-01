@@ -178,8 +178,7 @@ class CourierController extends Controller
         $model->status = 2;
         $this->view->params['notifications'] = Notification::find()->where(['id_user' => Yii::$app->user->id, 'active' => true])->all();
 
-        $notification->id_user = 5;//Уведомление, что курьер доставил доставку
-        $notification->name = 'Курьер доставил заказ №'.$model->id_zakaz;
+        $notification->findNotification(8, $model->id_zakaz);//Уведомление, что курьер доставил доставку
         $notification->saveNotification;
 
         $model->save();
