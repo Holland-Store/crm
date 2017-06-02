@@ -99,8 +99,8 @@ class Todoist extends \yii\db\ActiveRecord
     public static function getTodoistArray()
     {
         return [
-            '0' => 'Выполнен',
-            '1' => 'Активный',
+            '0' => 'Активный',
+            '1' => 'Выполнен',
         ];
     }
     public function getTodoistName()
