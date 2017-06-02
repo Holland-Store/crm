@@ -52,7 +52,7 @@ $this->title = 'Экран - ВСЕ ЗАКАЗЫ';
             [
                 'attribute' => 'closePayment',
                 'value' => function($model){
-                return $model->fact_oplata == null ? $model->oplata - $model->fact_oplata: '0';
+                return $model->fact_oplata == null ? '0' : $model->oplata - $model->fact_oplata;
             },
                 'headerOptions' => ['width' => '100'],
                 'label' => 'К доплате',

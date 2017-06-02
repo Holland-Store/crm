@@ -49,7 +49,7 @@ $this->title = 'Задачник';
 				'attribute' => '',
 				'format' => 'raw',
 				'value' => function($model){
-						return Html::a('Выполнить', ['close', 'id' => $model->id]);
+						return Html::a('Готово', ['close', 'id' => $model->id]);
 				}
 			]
 
