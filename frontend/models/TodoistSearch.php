@@ -44,10 +44,10 @@ class TodoistSearch extends Todoist
         $query = Todoist::find();
         switch ($index) {
             case 'close':
-                $query = $query->where(['activate' => 0]);
+                $query = $query->where(['activate' => 1]);
                 break;
             case 'admin':
-                $query = $query->where(['activate' => 1]);
+                $query = $query->where(['activate' => 0]);
                 break;
         }
 
