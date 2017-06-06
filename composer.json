@@ -24,7 +24,8 @@
         "ratacibernetica/yii2-node-socket": "^1.0",
         "kartik-v/yii2-grid": "@dev",
         "kartik-v/yii2-mpdf": "^1.0",
-        "kartik-v/yii2-detail-view": "*"
+        "kartik-v/yii2-detail-view": "*",
+        "kartik-v/yii2-label-inplace": "^1.2"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
