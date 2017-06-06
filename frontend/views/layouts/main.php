@@ -30,26 +30,43 @@ AppAsset::register($this);
 <div class="wrap">
 <?php $counts = '<span class="glyphicon glyphicon-bell" style="font-size:21px"></span><span class="badge pull-right">'.$this->params['count'].'</span>'; ?>
     <?php
-    NavBar::begin([
-        'brandLabel' => 'Holland',
-        'brandUrl' => ['/zakaz/index'],
-        'options' => [
-            'class' => 'navbar-inverse navbar-fixed-top',
-        ],
-    ]);
-    // $menuItems = [
-    //     ['label' => 'Home', 'url' => ['/site/index']],
-    //     ['label' => 'About', 'url' => ['/site/about']],
-    //     ['label' => 'Contact', 'url' => ['/site/contact']],
-    // ];
-    if (!Yii::$app->user->isGuest) {
-        $menuItems[] = ['encode' => false, 'label' => $counts, 'options' => ['id' => 'notification']];
-    }
+    // NavBar::begin([
+    //     'brandLabel' => 'Holland',
+    //     'brandUrl' => ['/zakaz/index'],
+    //     'options' => [
+    //         'class' => 'navbar-inverse navbar-fixed-top',
+    //     ],
+    // ]);
+    // // $menuItems = [
+    // //     ['label' => 'Home', 'url' => ['/site/index']],
+    // //     ['label' => 'About', 'url' => ['/site/about']],
+    // //     ['label' => 'Contact', 'url' => ['/site/contact']],
+    // // ];
+    // if (!Yii::$app->user->isGuest) {
+    //     $menuItems[] = ['encode' => false, 'label' => $counts, 'options' => ['id' => 'notification']];
+    // }
+    // if (Yii::$app->user->isGuest) {
+    //     $menuItems[] = ['label' => 'Войти', 'url' => ['/site/login']];
+    // } else {
+    //     $menuItems[] = '<li>'
+    //         . Html::beginForm(['/site/logout'], 'post')
+    //         . Html::submitButton(
+    //             'Выйти (' . Yii::$app->user->identity->username . ')',
+    //             ['class' => 'btn btn-link logout']
+    //         )
+    //         . Html::endForm()
+    //         . '</li>';
+    // }
+    // echo Nav::widget([
+    //     'options' => ['class' => 'navbar-nav navbar-right'],
+    //     'items' => $menuItems,
+    // ]);
+    // NavBar::end();
+    
     if (Yii::$app->user->isGuest) {
-        // $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
-        $menuItems[] = ['label' => 'Войти', 'url' => ['/site/login']];
+        echo '';
     } else {
-        $menuItems[] = '<li>'
+        echo '<li>'
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(
                 'Выйти (' . Yii::$app->user->identity->username . ')',
@@ -58,11 +75,6 @@ AppAsset::register($this);
             . Html::endForm()
             . '</li>';
     }
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav navbar-right'],
-        'items' => $menuItems,
-    ]);
-    NavBar::end();
     ?>
     <?php if (!Yii::$app->user->isGuest): ?>
         <div class="notification-container hidden" id="notification-container">
@@ -81,7 +93,7 @@ AppAsset::register($this);
                         $notif = '';
                     }
 
-                   echo Html::a($notif.'<br>', ['notification/notification', 'id' => $notification->id_zakaz]);            
+                   echo Html::a($notif.'<br>', ['notification/notification', 'id' => $notification->id_zakaz], ['id' => $notification->id_zakaz, 'class' => 'zakaz', 'data-key' => $notification->id_zakaz]);            
                 } 
                 ?>
             </div>
@@ -115,7 +127,11 @@ AppAsset::register($this);
                 ['label' => 'Help Desk', 'url' => ['helpdesk/index']],
                 ['label' => 'Запросы на товар', 'url' => ['custom/adop'], 'visible' => Yii::$app->user->can('shop')],
             ], 'visible' => Yii::$app->user->can('seeAdop')],
-            ['label' => 'Создать запрос', 'url' => ['todoist/create_shop'], 'visible' =>Yii::$app->user->can('shop')],
+            ['label' => 'Создать запрос', 'url' => ['todoist/create_shop'], 'visible' =>Yii::$app->user->can('shop'), 'items' => [
+                ['label' => 'Helpdesk', 'url' => ['todoist/create_shop'], 'visible' => Yii::$app->user->can('shop')],
+                ['label' => 'Запрос на товар', 'url' => ['todoist/create_shop'], 'visible' => Yii::$app->user->can('shop')],
+            ],
+            ],
             ['label' => 'Запросы на товар', 'url' => ['custom/index'], 'visible' => Yii::$app->user->can('zakup')],
             ['label' => 'Задачник', 'url' => ['todoist/shop'], 'visible' => Yii::$app->user->can('todoist')],
             ['label' => 'Help Desk', 'url' => ['helpdesk/index'], 'visible' => Yii::$app->user->can('todoist')],
