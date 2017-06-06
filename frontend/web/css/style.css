@@ -67,77 +67,100 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   display: block;
 }
 
-/* line 34, ../sass/style.scss */
+/* line 5, ../sass/login.scss */
+body {
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
+  font-size: 11px;
+}
+
+/* line 10, ../sass/login.scss */
+.formLogin {
+  margin-top: 22%;
+  margin-left: 32%;
+}
+/* line 13, ../sass/login.scss */
+.formLogin input {
+  border-radius: 26px;
+  font-size: 11px;
+  height: 26px;
+}
+
+/* line 19, ../sass/login.scss */
+.has-error .help-block {
+  color: rgba(171, 100, 24, 0.99);
+}
+
+/* line 35, ../sass/style.scss */
 .border-left {
   width: 10px;
   border-radius: 19px 0px 0px 19px;
   border: none;
 }
 
-/* line 39, ../sass/style.scss */
+/* line 40, ../sass/style.scss */
 .border-right {
   width: 90px;
   border-radius: 0px 19px 18px 0px;
   border: none;
 }
 
-/* line 45, ../sass/style.scss */
+/* line 46, ../sass/style.scss */
 .tr10 {
   width: 10px;
 }
 
-/* line 46, ../sass/style.scss */
+/* line 47, ../sass/style.scss */
 .tr20 {
   width: 20px;
 }
 
-/* line 47, ../sass/style.scss */
+/* line 48, ../sass/style.scss */
 .tr50 {
   width: 50px;
 }
 
-/* line 48, ../sass/style.scss */
+/* line 49, ../sass/style.scss */
 .tr70 {
   width: 70px;
 }
 
-/* line 49, ../sass/style.scss */
+/* line 50, ../sass/style.scss */
 .tr90 {
   width: 90px;
 }
 
-/* line 51, ../sass/style.scss */
+/* line 52, ../sass/style.scss */
 .header {
   display: none;
 }
 
-/* line 52, ../sass/style.scss */
+/* line 53, ../sass/style.scss */
 .trBorder {
   border: none;
 }
 
-/* line 53, ../sass/style.scss */
+/* line 54, ../sass/style.scss */
 .position {
   position: relative;
 }
 
-/* line 54, ../sass/style.scss */
+/* line 55, ../sass/style.scss */
 .bold {
   font-weight: 700;
 }
 
-/* line 55, ../sass/style.scss */
+/* line 56, ../sass/style.scss */
 .italic {
   font-weight: 100;
 }
 
-/* line 57, ../sass/style.scss */
+/* line 58, ../sass/style.scss */
 body {
   background: #302927;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
 }
 
-/* line 61, ../sass/style.scss */
+/* line 62, ../sass/style.scss */
 .notification-container {
   position: fixed;
   width: 16%;
@@ -154,28 +177,28 @@ body {
   list-style: none;
 }
 
-/* line 76, ../sass/style.scss */
+/* line 77, ../sass/style.scss */
 .notification-container .hidden {
   display: none;
 }
 
-/* line 79, ../sass/style.scss */
+/* line 80, ../sass/style.scss */
 .notification-content {
   height: 169px;
   overflow: auto;
 }
 
-/* line 83, ../sass/style.scss */
+/* line 84, ../sass/style.scss */
 .table .trTablePass {
   background: #802c2c;
 }
 
-/* line 86, ../sass/style.scss */
+/* line 87, ../sass/style.scss */
 .table thead {
   background: #302927;
 }
 
-/* line 89, ../sass/style.scss */
+/* line 90, ../sass/style.scss */
 .table #trNew {
   font-weight: bold;
 }
@@ -183,42 +206,42 @@ body {
 /*.table #trNew:hover,.table .trTable:hover{
     background: #d8d8d8;
 }*/
-/* line 95, ../sass/style.scss */
+/* line 96, ../sass/style.scss */
 .reminder {
   position: relative;
   top: -104px;
   clear: both;
 }
 
-/* line 100, ../sass/style.scss */
+/* line 101, ../sass/style.scss */
 .grid-view td {
   white-space: inherit;
 }
 
-/* line 104, ../sass/style.scss */
+/* line 105, ../sass/style.scss */
 .fa-red {
   color: #CC0000;
   font-size: 10px;
 }
 
-/* line 108, ../sass/style.scss */
+/* line 109, ../sass/style.scss */
 .fa-ping {
   color: #FF9999;
   font-size: 10px;
 }
 
-/* line 112, ../sass/style.scss */
+/* line 113, ../sass/style.scss */
 table {
   color: #ccc6c6;
 }
 
-/* line 115, ../sass/style.scss */
+/* line 116, ../sass/style.scss */
 .titleCaption, .titleTable, .title {
   color: #736a50;
   position: relative;
 }
 
-/* line 119, ../sass/style.scss */
+/* line 120, ../sass/style.scss */
 .titleTable {
   font-size: 24px;
   margin-top: 41px;
@@ -226,64 +249,64 @@ table {
   margin-left: 15px;
 }
 
-/* line 126, ../sass/style.scss */
+/* line 127, ../sass/style.scss */
 thead {
   border: 1px solid #302927;
 }
 
-/* line 129, ../sass/style.scss */
+/* line 130, ../sass/style.scss */
 thead a {
   color: #302927;
 }
 
-/* line 132, ../sass/style.scss */
+/* line 133, ../sass/style.scss */
 .table-bordered > thead > tr > th {
   border: none;
   /*border-bottom: 1px solid #fff;*/
 }
 
-/* line 136, ../sass/style.scss */
+/* line 137, ../sass/style.scss */
 .table tbody > tr {
   border: 1px solid #302927;
 }
 
-/* line 139, ../sass/style.scss */
+/* line 140, ../sass/style.scss */
 .table-bordered tbody > tr > td {
   border: none;
   border-bottom: 1px solid #423836;
 }
 
-/* line 143, ../sass/style.scss */
+/* line 144, ../sass/style.scss */
 .table .textTr {
   color: rgba(204, 198, 198, 0.6);
 }
 
-/* line 146, ../sass/style.scss */
+/* line 147, ../sass/style.scss */
 .tableSize {
   font-size: 11px;
 }
 
-/* line 149, ../sass/style.scss */
+/* line 150, ../sass/style.scss */
 .headerTable {
   display: none;
 }
 
-/* line 152, ../sass/style.scss */
+/* line 153, ../sass/style.scss */
 .title {
   font-size: 26px;
 }
 
-/* line 156, ../sass/style.scss */
+/* line 157, ../sass/style.scss */
 .summary {
   display: none;
 }
 
-/* line 159, ../sass/style.scss */
+/* line 160, ../sass/style.scss */
 .borderSrok {
   border-bottom: 1px solid #000;
 }
 
-/* line 162, ../sass/style.scss */
+/* line 163, ../sass/style.scss */
 .table-hover > tbody > tr:hover {
   background: #3c3432;
 }
