@@ -23,7 +23,12 @@ $this->title = 'Запросы';?>
 				'attribute' => 'date',
 				'format' => ['datetime', 'dd.MM.Y H:m'],
 			],
-            'id_user',
+            [
+                'attribute' => 'id_user',
+                'value' => function($model){
+                    return $model->idUser->name;
+                }
+            ],
             'tovar',
             'number',
         ],
