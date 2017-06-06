@@ -1,5 +1,6 @@
 <?php
 
+use yii\helpers\StringHelper;
 use yii\helpers\Html;
 use kartik\grid\GridView;
 use app\models\Otdel;
@@ -12,6 +13,7 @@ use yii\widgets\MaskedInput;
 use yii\grid\SetColumn;
 use yii\widgets\Pjax;
 
+
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\ZakazSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -21,88 +23,29 @@ $this->title = 'Заказ';
 <?php Pjax::begin(['id' => 'pjax-container']); ?>
  
 <div class="zakaz-index">
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1 class="title"><?= Html::encode($this->title) ?></h1>
     <p>
         <?= Html::a('Создать заказ', ['create'], ['class' => 'btn btn-success']) ?>
         <?php //echo $this->render('_search', ['model' => $searchModel]);?>
-        <?= Html::a('<span class="glyphicon glyphicon-refresh"></span>', ['zakaz/admin'], ['class' => 'btn btn-primary btn-lg pull-right']) ?>
     </p>
-
+    
     <?php echo $this->render('_searchadmin', ['model' => $searchModel]);?>
     <div class="col-xs-12">
-    <h3>Новые</h3>
-    <?= GridView::widget([
-        'dataProvider' => $dataProviderNew,
-        'tableOptions' => ['class' => 'table table-bordered'],
-        'rowOptions' => function($model, $key, $index, $grid){
-            return['id' => 'trNew'];
-        },
-        'columns' => [
-            [
-                'attribute' => 'id_zakaz',
-                'headerOptions' => ['width' => '20'],
-                'value' => 'prefics',
-            ],
-            [
-                'attribute' => 'description',
-                'contentOptions'=>['style'=>'white-space: normal;'],
-            ],
-            [
-                'attribute' => 'srok',
-                'format' => ['datetime', 'php:d.m.Y'],
-                'value' => 'srok',
-                'filter' => DatePicker::widget([
-                     'model' => $searchModel,
-                     'attribute' => 'srok',
-                     'inline' => false, 
-                    'clientOptions' => [
-                    'autoclose' => true,
-                    'format' => 'yyyy.mm.dd'
-                ],
-                ]),
-                'headerOptions' => ['width' => '70'],
-            ],
-            [
-                'attribute' => 'minut',
-                'headerOptions' => ['width' => '10'],
-            ],
-            [
-                'attribute' => 'fact_oplata',
-                'headerOptions' => ['width' => '50'],
-            ],
-            [
-                'attribute' => 'oplata',
-                'headerOptions' => ['width' => '50'],
-            ],
-            [
-                'attribute' => 'img',
-                'format' => 'raw',
-                
-            ],
-            [
-                'attribute' => 'id_shipping',
-                'value' => function($model){   
-                    return $model->idShipping->dostavkaName;
-                }
-            ],
-            [
-                'attribute' => 'id_sotrud',
-                'value' => 'idSotrud.name',
-            ],
-        ],
-    ]); ?>  
+     
     <h3 class="titleTable">В работе</h3>
     <?= GridView::widget([
         'dataProvider' => $dataProviderWork,
         'floatHeader' => true,
-        'headerRowOptions' => ['style' => 'font-size: 11px;'],
+        'headerRowOptions' => ['class' => 'headerTable'],
         'pjax' => true,
-        'tableOptions' 	=> ['class' => 'table table-bordered', 'style' => 'font-size:11px;'],
+        'tableOptions' 	=> ['class' => 'table table-bordered tableSize'],
         'rowOptions' => function($model, $key, $index, $grid){
-            if ($model->srok < date('Y-m-d')) {
-                return['class' => 'trTable trTablePass'];
+            if ($model->srok < date('Y-m-d') && $model->status >0 ) {
+                return ['class' => 'trTable trTablePass italic trSrok'];
+            } elseif ($model->srok < date('Y-m-d') && $model->status == 0) {
+                return['class' => 'trTable trTablePass bold trSrok'];
             } else {
-                return['class' => 'trTable'];
+                return ['class' => 'trTable'];
             }
         },
 		'striped' => false,
@@ -110,7 +53,10 @@ $this->title = 'Заказ';
         'columns' => [
 			[
 				'class'=>'kartik\grid\ExpandRowColumn',
-				'width'=>'1px',
+                'contentOptions' => function($model, $key, $index, $grid){
+                    return ['id' => $model->id_zakaz, 'class' => 'border-left', 'style' => 'border:none'];
+                },                
+				'width'=>'10px',
 				'value' => function ($model, $key, $index) {
 					return GridView::ROW_COLLAPSED;
 				},
@@ -124,15 +70,14 @@ $this->title = 'Заказ';
 			],
             [
                 'attribute' => 'id_zakaz',
-                'headerOptions' => ['width' => '50'],
                 'value' => 'prefics',
                 'hAlign' => GridView::ALIGN_RIGHT,
-                'contentOptions' => ['class' => 'textTr'],
+                'contentOptions' => ['class' => 'textTr tr50'],
             ],
             [
                 'attribute' => '',
                 'format' => 'raw',
-                'headerOptions' => ['width' => '20'],
+                'contentOptions' => ['class' => 'tr20'],
                 'value' => function($model){
                     if ($model->prioritet == 2) {
                         return '<i class="fa fa-circle fa-red" aria-hidden="true"></i>';
@@ -148,18 +93,19 @@ $this->title = 'Заказ';
                 'attribute' => 'srok',
                 'format' => ['datetime', 'php:d M H:i'],
                 'value' => 'srok',
-                'headerOptions' => ['width' => '90'],
                 'hAlign' => GridView::ALIGN_RIGHT,
-                'contentOptions' => ['class' => 'textTr'],
+                'contentOptions' => ['class' => 'textTr tr90'],
             ],
             [
                 'attribute' => 'minut',
-                'headerOptions' => ['width' => '10'],
                 'hAlign' => GridView::ALIGN_RIGHT,
-                'contentOptions' => ['class' => 'textTr'],
+                'contentOptions' => ['class' => 'textTr tr10'],
             ],
             [
                 'attribute' => 'description',
+                'value' => function($model){
+                    return StringHelper::truncate($model->description, 100);
+                }
             ],
             [
                 'attribute' => 'oplata',
@@ -168,7 +114,7 @@ $this->title = 'Заказ';
                     return $model->oplata.' р.';
                 },
                 'hAlign' => GridView::ALIGN_RIGHT,
-                'contentOptions' => ['class' => 'textTr'],
+                'contentOptions' => ['class' => 'textTr tr70'],
             ],
             [
                 'attribute' => 'status',
@@ -177,36 +123,104 @@ $this->title = 'Заказ';
                 'format' => 'raw',
                 'name' => 'statusName',
                 'cssCLasses' => [
+                    Zakaz::STATUS_NEW => 'primary',
                     Zakaz::STATUS_EXECUTE => 'success',
                     Zakaz::STATUS_ADOPTED => 'warning',
                     Zakaz::STATUS_REJECT => 'danger',
                     Zakaz::STATUS_SUC_DISAIN => 'success',
                     Zakaz::STATUS_SUC_MASTER => 'success',
                 ],
-                'headerOptions' => ['width' => '70'],
+                'contentOptions' => ['class' => 'border-right'],
             ],
         ],
     ]); ?>
-    <h3>На исполнении</h3>
+
+    <h3 class="titleTable">На исполнении</h3>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'tableOptions' => ['class' => 'table table-bordered'],
+        'floatHeader' => true,
+        'headerRowOptions' => ['class' => 'headerTable'],
+        'pjax' => true,
+        'tableOptions'  => ['class' => 'table table-bordered tableSize'],
+        'striped' => false,
+        'hover'=>true,
         'rowOptions' => function($model, $key, $index, $grid){
             if ($model->srok < date('Y-m-d')) {
                 return['class' => 'trTable trTablePass'];
             } else {
-                return['class' => 'trTable'];
+                return['class' => 'trTable srok'];
             }
         },
         'columns' => [
             [
+                'class'=>'kartik\grid\ExpandRowColumn',
+                'contentOptions' => function($model, $key, $index, $grid){
+                    return ['id' => $model->id_zakaz, 'class' => 'border-left', 'style' => 'border:none'];
+                }, 
+                'width'=>'10px',
+                'value' => function ($model, $key, $index) {
+                    return GridView::ROW_COLLAPSED;
+                },
+                'detail'=>function ($model, $key, $index, $column) {
+                    return Yii::$app->controller->renderPartial('_zakaz', ['model'=>$model]);
+                },
+                'enableRowClick' => true,
+                'expandOneOnly' => true,
+                'expandIcon' => ' ',
+                'collapseIcon' => ' ',
+            ],
+            [
                 'attribute' => 'id_zakaz',
-                'headerOptions' => ['width' => '20'],
                 'value' => 'prefics',
+                'hAlign' => GridView::ALIGN_RIGHT,
+                'contentOptions' => ['class' => 'textTr tr50'],
+            ],
+            [
+                'attribute' => '',
+                'format' => 'raw',
+                'contentOptions' => ['class' => 'tr20'],
+                'value' => function($model){
+                    if ($model->prioritet == 2) {
+                        return '<i class="fa fa-circle fa-red" aria-hidden="true"></i>';
+                    } elseif ($model->prioritet == 1) {
+                        return '<i class="fa fa-circle fa-ping" aria-hidden="true"></i>';
+                    } else {
+                        return '';
+                    }
+
+                }
+            ],
+            [
+                'attribute' => 'srok',
+                'format' => ['datetime', 'php:d M H:i'],
+                'value' => 'srok',
+                'hAlign' => GridView::ALIGN_RIGHT,
+                'contentOptions' => ['class' => 'textTr tr90'],
+            ],
+            [
+                'attribute' => 'minut',
+                'hAlign' => GridView::ALIGN_RIGHT,
+                'contentOptions' => ['class' => 'textTr tr10'],
+            ],
+            [
+                'attribute' => 'description',
+                'value' => function($model){
+                    return StringHelper::truncate($model->description, 100);
+                }
+            ],
+            [
+                'attribute' => 'oplata',
+                'headerOptions' => ['width' => '70'],
+                'value' => function($model){
+                    return $model->oplata.' р.';
+                },
+                'hAlign' => GridView::ALIGN_RIGHT,
+                'contentOptions' => ['class' => 'textTr tr70'],
             ],
             [
                 'attribute' => 'status',
                 'class' => SetColumn::className(),
+                'label' => 'Отв-ный',
                 'format' => 'raw',
                 'name' => 'statusName',
                 'cssCLasses' => [
@@ -216,130 +230,85 @@ $this->title = 'Заказ';
                     Zakaz::STATUS_SUC_MASTER => 'success',
                     Zakaz::STATUS_AUTSORS => 'info',
                 ],
-                'headerOptions' => ['width' => '50'],
-            ],
-            [
-                'attribute' => 'description',
-                'format' => 'text',
-                'options' => ['width' => '200'],
-                'contentOptions'=>['style'=>'white-space: normal;'],
-            ],
-            //  [
-            //     'attribute' => 'id_tovar',
-            //     'value' => 'idTovar.name',
-            //     'filter' => Zakaz::getTovarList(),
-            //     'headerOptions' => ['width' => '100'],
-            // ],
-             [
-                'attribute' => 'srok',
-                'format' => ['datetime', 'php:d.m.Y'],
-                'value' => 'srok',
-                'filter' => DatePicker::widget([
-                     'model' => $searchModel,
-                     'attribute' => 'srok',
-                    // inline too, not bad
-                     'inline' => false, 
-                    'clientOptions' => [
-                    'autoclose' => true,
-                    'format' => 'yyyy.mm.dd'
-                ],
-                ]),
-                'headerOptions' => ['width' => '70'],
-            ],
-            [
-                'attribute' => 'minut',
-                'headerOptions' => ['width' => '10'],
-            ],
-            [
-                'attribute' => 'fact_oplata',
-                'headerOptions' => ['width' => '50'],
-            ],
-            [
-                'attribute' => 'oplata',
-                'headerOptions' => ['width' => '50'],
-            ],
-            [
-                'attribute' => 'img',
-                'format' => 'raw',
-            ],
-            [
-                'attribute' => 'id_shipping',
-                'value' => function($model){   
-                    return $model->idShipping->dostavkaName;
-                }
-            ],
-            [
-                'attribute' => 'id_sotrud',
-                'value' => 'idSotrud.name',
+                'contentOptions' => ['class' => 'border-right'],
             ],
         ],
     ]); ?>
 
-    <h3>На закрытие</h3>
+    <h3 class="titleTable">На закрытие</h3>
     <?= GridView::widget([
         'dataProvider' => $dataProviderIspol,
-        'tableOptions' => ['class' => 'table table-bordered'],
-        'rowOptions' => ['class' => 'trTable'],
+        'floatHeader' => true,
+        'headerRowOptions' => ['class' => 'headerTable'],
+        'pjax' => true,
+        'striped' => false,
+        'hover'=>true,
+        'tableOptions' => ['class' => 'table table-bordered tableSize'],
+        'rowOptions' => ['class' => 'trTable srok'],
         'columns' => [
-
+            [
+                'class'=>'kartik\grid\ExpandRowColumn',
+                'contentOptions' => function($model, $key, $index, $grid){
+                    return ['id' => $model->id_zakaz, 'class' => 'border-left', 'style' => 'border:none'];
+                }, 
+                'width'=>'10px',
+                'value' => function ($model, $key, $index) {
+                    return GridView::ROW_COLLAPSED;
+                },
+                'detail'=>function ($model, $key, $index, $column) {
+                    return Yii::$app->controller->renderPartial('_zakaz', ['model'=>$model]);
+                },
+                'enableRowClick' => true,
+                'expandOneOnly' => true,
+                'expandIcon' => ' ',
+                'collapseIcon' => ' ',
+            ],
             [
                 'attribute' => 'id_zakaz',
-                'headerOptions' => ['width' => '20'],
                 'value' => 'prefics',
+                'hAlign' => GridView::ALIGN_RIGHT,
+                'contentOptions' => ['class' => 'textTr tr50'],
             ],
             [
-                'attribute' => 'description',
-                'headerOptions' => ['width' => '200'],
-                'contentOptions'=>['style'=>'white-space: normal;'],
-            ],
-            //  [
-            //     'attribute' => 'id_tovar',
-            //     'value' => 'idTovar.name',
-            //     'filter' => Zakaz::getTovarList(),
-            //     'headerOptions' => ['width' => '100'],
-            // ],
-             [
-                'attribute' => 'srok',
-                'format' => ['datetime', 'php:d.m.Y'],
-                'value' => 'srok',
-                'filter' => DatePicker::widget([
-                     'model' => $searchModel,
-                     'attribute' => 'srok',
-                    // inline too, not bad
-                     'inline' => false, 
-                    'clientOptions' => [
-                    'autoclose' => true,
-                    'format' => 'yyyy.mm.dd'
-                ],
-                ]),
-                'headerOptions' => ['width' => '70'],
-            ],
-            [
-                'attribute' => 'minut',
-                'headerOptions' => ['width' => '10'],
-            ],
-            [
-                'attribute' => 'fact_oplata',
-                'headerOptions' => ['width' => '50'],
-            ],
-            [
-                'attribute' => 'oplata',
-                'headerOptions' => ['width' => '50'],
-            ],
-            [
-                'attribute' => 'img',
+                'attribute' => '',
                 'format' => 'raw',
-                
-            ],
-            [
-                'attribute' => 'id_shipping',
-                'value' => function($model){   
-                    return $model->idShipping->dostavkaName;
+                'contentOptions' => ['class' => 'tr50'],
+                'value' => function($model){
+                    if ($model->prioritet == 2) {
+                        return '<i class="fa fa-circle fa-red" aria-hidden="true"></i>';
+                    } elseif ($model->prioritet == 1) {
+                        return '<i class="fa fa-circle fa-ping" aria-hidden="true"></i>';
+                    } else {
+                        return '';
+                    }
+
                 }
             ],
             [
-                'attribute' => 'id_sotrud',
-                'value' => 'idSotrud.name',
+                'attribute' => 'srok',
+                'format' => ['datetime', 'php:d M H:i'],
+                'value' => 'srok',
+                'hAlign' => GridView::ALIGN_RIGHT,
+                'contentOptions' => ['class' => 'textTr','class' => 'tr90'],
+            ],
+            [
+                'attribute' => 'minut',
+                'hAlign' => GridView::ALIGN_RIGHT,
+                'contentOptions' => ['class' => 'textTr tr10'],
+            ],
+            [
+                'attribute' => 'description',
+                'value' => function($model){
+                    return StringHelper::truncate($model->description, 100);
+                }
+            ],
+            [
+                'attribute' => 'oplata',
+                'value' => function($model){
+                    return $model->oplata.' р.';
+                },
+                'hAlign' => GridView::ALIGN_RIGHT,
+                'contentOptions' => ['class' => 'textTr border-right'],
             ],
         ],
     ]); ?> 
