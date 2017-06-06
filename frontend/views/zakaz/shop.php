@@ -1,5 +1,6 @@
 <?php
 
+use yii\helpers\StringHelper;
 use yii\helpers\Html;
 use kartik\grid\GridView;
 use app\models\Otdel;
@@ -31,30 +32,79 @@ $this->title = 'Экран - ВСЕ ЗАКАЗЫ';
     <div class="col-xs-12">
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'tableOptions' => ['class' => 'table table-bordered'],
-        'rowOptions' => ['class' => 'trTable'],
+        'floatHeader' =>true,
+        'tableOptions' => ['class' => 'table table-bordered tableSize'],
+        'headerRowOptions' => ['style' => 'display:none'],
+        'pjax' => true,
+        'rowOptions' => ['class' => 'trTabl srok    '],
+        'striped' => false,
+        'hover' => true,
         'columns' => [
             [
+                'class'=>'kartik\grid\ExpandRowColumn',
+                'contentOptions' => function($model, $key, $index, $grid){
+                    return ['id' => $model->id_zakaz, 'style' => 'border-radius: 19px 0px 0px 19px;width:10px;'];
+                },                
+                'width'=>'10px',
+                'value' => function ($model, $key, $index) {
+                    return GridView::ROW_COLLAPSED;
+                },
+                'detail'=>function ($model, $key, $index, $column) {
+                    return Yii::$app->controller->renderPartial('_zakaz', ['model'=>$model]);
+                },
+                'enableRowClick' => true,
+                'expandOneOnly' => true,
+                'expandIcon' => ' ',
+                'collapseIcon' => ' ',
+            ],
+            [
                 'attribute' => 'id_zakaz',
-                'headerOptions' => ['width' => '20'],
                 'value' => 'prefics',
+                'hAlign' => GridView::ALIGN_RIGHT,
+                'contentOptions' => ['class' => 'textTr', 'style' => 'width:50px;'],
+            ],
+            [
+                'attribute' => 'status',
+                'contentOptions' => ['style' => 'width:90px;'],
+                'value' => function($model){
+                    return $model->status == 1 ? 'Исполнен' : 'В работе';
+                },
+            ],
+            [
+                'attribute' => 'srok',
+                'format' => ['datetime', 'php:d M H:i'],
+                'value' => 'srok',
+                'headerOptions' => ['width' => '90'],
+                'hAlign' => GridView::ALIGN_RIGHT,
+                'contentOptions' => ['class' => 'textTr', 'style' => 'width:90px;'],
+            ],
+            [
+                'attribute' => 'minut',
+                'headerOptions' => ['width' => '10'],
+                'hAlign' => GridView::ALIGN_RIGHT,
+                'contentOptions' => ['class' => 'textTr', 'style' => 'width:10px;'],
             ],
             [
                 'attribute' => 'description',
-                'headerOptions' => ['width' => '550'],
-                'contentOptions'=>['style'=>'white-space: normal;'],
+                'value' => function($model){
+                    return StringHelper::truncate($model->description, 100);
+                }
             ],
             [
-                'attribute' => 'fact_oplata',
-                'label' => 'Предоплата',
-                'headerOptions' => ['width' => '50'],
+                'attribute' => 'oplata',
+                'headerOptions' => ['width' => '70'],
+                'value' => function($model){
+                    return $model->oplata.' р.';
+                },
+                'hAlign' => GridView::ALIGN_RIGHT,
+                'contentOptions' => ['class' => 'textTr', 'style' => '70px;'],
             ],
             [
                 'attribute' => 'closePayment',
                 'value' => function($model){
                 return $model->fact_oplata == null ? $model->oplata - $model->fact_oplata: '0';
             },
-                'headerOptions' => ['width' => '100'],
+                'contentOptions' => ['style' => 'border-radius: 0px 19px 18px 0px;width:70px;'],
                 'label' => 'К доплате',
             ],
         ],
