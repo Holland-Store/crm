@@ -68,7 +68,7 @@ class ZakazSearch extends Zakaz
                 $sort = ['srok' => SORT_DESC];
                 break;
             case 'adminWork':
-                $query->andWhere(['status' => [Zakaz::STATUS_ADOPTED, Zakaz::STATUS_REJECT, Zakaz::STATUS_SUC_MASTER, Zakaz::STATUS_SUC_DISAIN], 'action' => 1]);
+                $query->andWhere(['status' => [Zakaz::STATUS_NEW, Zakaz::STATUS_ADOPTED, Zakaz::STATUS_REJECT, Zakaz::STATUS_SUC_MASTER, Zakaz::STATUS_SUC_DISAIN], 'action' => 1]);
                 $sort = ['srok' => SORT_DESC];
                 break;
             case 'adminIspol':
