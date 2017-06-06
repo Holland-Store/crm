@@ -1,0 +1,85 @@
+body{
+    background: #302927;
+}
+.notification-container{
+   position: fixed;
+    width: 16%;
+    top: 50px;
+    height: 200px;
+    float: left;
+    margin-left: 69%;
+    border: 1px solid #f1d0d0;
+    z-index: 1000;
+    background: #ffffff;
+    padding: 5px 0;
+    font-size: 14px;
+    text-align: left;
+    list-style: none;
+}
+.notification-container .hidden{
+    display: none;
+}
+.notification-content{
+    height: 169px;
+    overflow: auto;
+}
+.table .trTablePass{
+    background: #802c2c;
+}
+.table thead{
+    background: #302927;
+}
+.table #trNew{
+    font-weight: bold;
+} 
+/*.table #trNew:hover,.table .trTable:hover{
+    background: #d8d8d8;
+}*/
+.reminder{
+	position: relative;
+    top: -104px;
+    clear: both;
+}
+.grid-view td {
+    white-space: inherit;
+}
+
+.fa-red{
+    color: #CC0000;
+    font-size: 10px;
+}
+.fa-ping{
+    color: #FF9999;
+    font-size: 10px;
+}
+table{
+    color: #ccc6c6;
+}
+.titleTable{
+    color: #736a50;
+    position: relative;
+    top: 30px;
+}
+thead{
+    border: 1px solid #302927;
+}
+thead a{
+    color: #302927;
+}
+.table-bordered > thead > tr > th{
+    border: none;
+    /*border-bottom: 1px solid #fff;*/
+}
+.table tbody > tr{
+    border: 1px solid #302927;
+}
+.table tbody > tr > td{
+    border: none;
+    border-bottom: 1px solid #423836;
+}
+.table .textTr{
+    color: rgba(204, 198, 198, 0.6);
+}
+.tableSize{
+    font-size:11px;
+}
