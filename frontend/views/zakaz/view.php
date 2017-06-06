@@ -221,12 +221,12 @@ $this->title = $model->id_zakaz;
             [
                 'attribute' => 'img',
                 'format' => 'raw',
-                'value' => $model->img == null ? null : Html::a($model->img, '@web/attachment/'.$model->img, ['download' => true])
+                'value' => $model->img == null ? null : Html::a($model->img, '@web/attachment/'.$model->img, ['download' => true, 'data-pjax' => 0])
             ],
             [
                 'attribute' => 'maket',
                 'format' => 'raw',
-                'value' => $model->maket == null ? null : Html::a($model->maket, '@web/maket/'.$model->maket, ['download' => true]),
+                'value' => $model->maket == null ? null : Html::a($model->maket, '@web/maket/'.$model->maket, ['download' => true, 'data-pjax' => 0]),
                 'visible' => $model->maket != null
             ],
             [
