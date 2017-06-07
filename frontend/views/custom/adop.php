@@ -31,6 +31,10 @@ $this->title = 'Запросы';?>
             ],
             'tovar',
             'number',
+            [
+                'attribute' => 'action',
+                'value' => function($model){return $model->action == 1 ? 'Привезен' : 'В процессе';},
+            ],
         ],
     ]); ?>
 </div>
