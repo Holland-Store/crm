@@ -66,14 +66,12 @@ AppAsset::register($this);
     if (Yii::$app->user->isGuest) {
         echo '';
     } else {
-        echo '<li>'
-            . Html::beginForm(['/site/logout'], 'post')
+        echo Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(
                 'Выйти (' . Yii::$app->user->identity->username . ')',
                 ['class' => 'btn btn-link logout']
             )
-            . Html::endForm()
-            . '</li>';
+            . Html::endForm();
     }
     ?>
     <?php if (!Yii::$app->user->isGuest): ?>
@@ -102,6 +100,13 @@ AppAsset::register($this);
             </div>
         </div>  
     <?php endif ?>
+
+<?php if (Yii::$app->user->isGuest): ?>
+    <div class="headerLogin">
+        <h1>HOLLAND <span>CRM 3.0</span></h1>
+        <p>Управление заказами</p>
+    </div>
+<?php endif ?>
 
     <div class="container">
         <?= Breadcrumbs::widget([
@@ -142,13 +147,22 @@ AppAsset::register($this);
     </div>
 </div>
 
-<footer class="footer">
+<!-- <footer class="footer">
     <div class="container">
         <p class="pull-left">&copy; Holland <?= date('Y'); ?> <?= Html::a('version 2.0', ['zakaz/index']) ?></p>
 
         <!-- <p class="pull-right"><?= Yii::powered() ?></p> -->
-    </div>
-</footer>
+    <!--</div>
+</footer> -->
+<?php if (Yii::$app->user->isGuest): ?>
+    <footer>
+        <div class="footerLogin">
+            <img src="img/logo.png" title="Logo">
+            <div>Сеть магазинов</div>
+            <div>&copy Holland <?php echo date('Y') ?></div>
+        </div>
+    </footer>
+<?php endif ?>
 
 <?php $this->endBody() ?>
 </body>
