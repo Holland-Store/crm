@@ -18,6 +18,8 @@ $this->title = 'Закрытые заказы';
 <div class="zakaz-index">
     <h1><?= Html::encode($this->title) ?></h1>
 
+    <?php echo $this->render('_search', ['model' => $searchModel]); ?>
+
     <div class="col-xs-12">
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
