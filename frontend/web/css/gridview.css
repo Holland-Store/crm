@@ -5,74 +5,74 @@
   border: none;
 }
 
-/* line 32, ../sass/gridview.scss */
+/* line 33, ../sass/gridview.scss */
 .border-right {
   width: 90px;
   border-radius: 0px 19px 18px 0px;
   border: none;
 }
 
-/* line 38, ../sass/gridview.scss */
+/* line 39, ../sass/gridview.scss */
 .tr10 {
   width: 10px;
 }
 
-/* line 39, ../sass/gridview.scss */
+/* line 40, ../sass/gridview.scss */
 .tr20 {
   width: 20px;
 }
 
-/* line 40, ../sass/gridview.scss */
+/* line 41, ../sass/gridview.scss */
 .tr50 {
   width: 50px;
 }
 
-/* line 41, ../sass/gridview.scss */
+/* line 42, ../sass/gridview.scss */
 .tr70 {
   width: 70px;
 }
 
-/* line 42, ../sass/gridview.scss */
+/* line 43, ../sass/gridview.scss */
 .tr90 {
   width: 90px;
 }
 
-/* line 44, ../sass/gridview.scss */
+/* line 45, ../sass/gridview.scss */
 .header {
   display: none;
 }
 
-/* line 45, ../sass/gridview.scss */
+/* line 46, ../sass/gridview.scss */
 .trBorder {
   border: none;
 }
 
-/* line 46, ../sass/gridview.scss */
+/* line 47, ../sass/gridview.scss */
 .position {
   position: relative;
 }
 
-/* line 47, ../sass/gridview.scss */
+/* line 48, ../sass/gridview.scss */
 .bold {
   font-weight: 700;
 }
 
-/* line 48, ../sass/gridview.scss */
+/* line 49, ../sass/gridview.scss */
 .italic {
   font-weight: 100;
 }
 
-/* line 49, ../sass/gridview.scss */
+/* line 50, ../sass/gridview.scss */
 .table .trTablePass {
   background: #802c2c;
 }
 
-/* line 52, ../sass/gridview.scss */
+/* line 53, ../sass/gridview.scss */
 .table thead {
   background: #302927;
 }
 
-/* line 55, ../sass/gridview.scss */
+/* line 56, ../sass/gridview.scss */
 .table #trNew {
   font-weight: bold;
 }
@@ -80,42 +80,42 @@
 /*.table #trNew:hover,.table .trTable:hover{
     background: #d8d8d8;
 }*/
-/* line 61, ../sass/gridview.scss */
+/* line 62, ../sass/gridview.scss */
 .reminder {
   position: relative;
   top: -104px;
   clear: both;
 }
 
-/* line 66, ../sass/gridview.scss */
+/* line 67, ../sass/gridview.scss */
 .grid-view td {
   white-space: inherit;
 }
 
-/* line 70, ../sass/gridview.scss */
+/* line 71, ../sass/gridview.scss */
 .fa-red {
   color: #CC0000;
   font-size: 10px;
 }
 
-/* line 74, ../sass/gridview.scss */
+/* line 75, ../sass/gridview.scss */
 .fa-ping {
   color: #FF9999;
   font-size: 10px;
 }
 
-/* line 78, ../sass/gridview.scss */
+/* line 79, ../sass/gridview.scss */
 table {
   color: #ccc6c6;
 }
 
-/* line 81, ../sass/gridview.scss */
+/* line 82, ../sass/gridview.scss */
 .titleCaption, .titleTable, .title {
   color: #736a50;
   position: relative;
 }
 
-/* line 85, ../sass/gridview.scss */
+/* line 86, ../sass/gridview.scss */
 .titleTable {
   font-size: 24px;
   margin-top: 41px;
@@ -123,64 +123,68 @@ table {
   margin-left: 15px;
 }
 
-/* line 92, ../sass/gridview.scss */
+/* line 93, ../sass/gridview.scss */
 thead {
   border: 1px solid #302927;
 }
 
-/* line 96, ../sass/gridview.scss */
+/* line 97, ../sass/gridview.scss */
 thead a {
   color: #302927;
 }
 
-/* line 99, ../sass/gridview.scss */
+/* line 100, ../sass/gridview.scss */
 .table-bordered > thead > tr > th {
   border: none;
   /*border-bottom: 1px solid #fff;*/
 }
 
-/* line 103, ../sass/gridview.scss */
+/* line 104, ../sass/gridview.scss */
 .table tbody > tr {
   border: 1px solid #302927;
 }
 
-/* line 106, ../sass/gridview.scss */
+/* line 107, ../sass/gridview.scss */
 .table-bordered tbody > tr > td {
   border: none;
   border-bottom: 1px solid #423836;
 }
 
-/* line 110, ../sass/gridview.scss */
+/* line 111, ../sass/gridview.scss */
 .table .textTr {
   color: rgba(204, 198, 198, 0.6);
 }
 
-/* line 113, ../sass/gridview.scss */
+/* line 114, ../sass/gridview.scss */
 .tableSize {
   font-size: 11px;
 }
 
-/* line 116, ../sass/gridview.scss */
+/* line 117, ../sass/gridview.scss */
 .headerTable {
   display: none;
 }
 
-/* line 119, ../sass/gridview.scss */
+/* line 120, ../sass/gridview.scss */
 .title {
   font-size: 26px;
 }
 
-/* line 123, ../sass/gridview.scss */
+/* line 124, ../sass/gridview.scss */
 .summary {
   display: none;
 }
 
-/* line 126, ../sass/gridview.scss */
+/* line 127, ../sass/gridview.scss */
 .borderSrok {
   border-bottom: 1px solid #000;
 }
 
-/* line 129, ../sass/gridview.scss */
-.table-hover > tbody > tr:hover {
+/* line 132, ../sass/gridview.scss */
+.table-bordered > tbody .trSrok:hover {
+  background: #3c3432;
+}
+/* line 137, ../sass/gridview.scss */
+.table-bordered > tbody .trNormal:hover {
   background: #3c3432;
 }

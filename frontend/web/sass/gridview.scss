@@ -29,6 +29,7 @@ $border-right: 0px 19px 18px 0px;
     border-radius: $border-left;
     border: $border;
 }
+
 .border-right {
     width: $width90;
     border-radius: $border-right;
@@ -126,6 +127,15 @@ thead a{
 .borderSrok{
     @include border-bottom(#000);
 }
-.table-hover > tbody > tr:hover{
-    background: #3c3432;
+.table-bordered > tbody {
+    .trSrok{
+        &:hover{
+            background: #3c3432;
+        }
+    }
+    .trNormal{
+        &:hover{
+            background: #3c3432;
+        }
+    }
 }
