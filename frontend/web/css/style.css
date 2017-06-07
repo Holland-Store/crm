@@ -67,100 +67,271 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   display: block;
 }
 
-/* line 5, ../sass/login.scss */
+/* line 18, ../sass/login.scss */
 body {
   font-family: "Helvetica Neue", Helvetica, sans-serif;
-  font-size: 11px;
+  color: rgba(204, 198, 198, 0.6);
 }
 
-/* line 10, ../sass/login.scss */
-.formLogin {
+/* line 24, ../sass/login.scss */
+.site-login .formLogin {
   margin-top: 22%;
-  margin-left: 32%;
+  margin-left: 37%;
 }
-/* line 13, ../sass/login.scss */
-.formLogin input {
+/* line 27, ../sass/login.scss */
+.site-login .formLogin .inputForm {
+  outline: 0;
+  width: 75%;
+  padding-left: 3%;
+}
+/* line 32, ../sass/login.scss */
+.site-login .formLogin input {
   border-radius: 26px;
   font-size: 11px;
   height: 26px;
 }
-
-/* line 19, ../sass/login.scss */
-.has-error .help-block {
+/* line 37, ../sass/login.scss */
+.site-login .formLogin p {
+  width: 193px;
+  padding-left: 10px;
+  padding-top: 3px;
+  font-size: 11px;
+}
+/* line 43, ../sass/login.scss */
+.site-login .formLogin label {
+  color: rgba(204, 198, 198, 0.6);
+  font-size: 11px;
+  line-height: 33px;
+  position: relative;
+  top: -20px;
+  left: 79px;
+}
+/* line 51, ../sass/login.scss */
+.site-login .formLogin button {
+  width: 193px;
+  border-radius: 26px;
+  font-size: 11px;
+  height: 30px;
+  font-size: 11px;
+  color: #999265;
+  background: #3a3331;
+  outline: 0;
+  position: relative;
+  top: -33px;
+  border: none;
+}
+/* line 63, ../sass/login.scss */
+.site-login .formLogin button:hover {
+  background: #191412;
+}
+/* line 69, ../sass/login.scss */
+.site-login .has-error .help-block {
   color: rgba(171, 100, 24, 0.99);
 }
+/* line 73, ../sass/login.scss */
+.site-login .titleLogin {
+  text-align: center;
+  position: relative;
+  top: 213px;
+  left: -41px;
+  font-size: 27px;
+  font-weight: bold;
+}
 
-/* line 35, ../sass/style.scss */
+/* line 27, ../sass/gridview.scss */
 .border-left {
   width: 10px;
   border-radius: 19px 0px 0px 19px;
   border: none;
 }
 
-/* line 40, ../sass/style.scss */
+/* line 32, ../sass/gridview.scss */
 .border-right {
   width: 90px;
   border-radius: 0px 19px 18px 0px;
   border: none;
 }
 
-/* line 46, ../sass/style.scss */
+/* line 38, ../sass/gridview.scss */
 .tr10 {
   width: 10px;
 }
 
-/* line 47, ../sass/style.scss */
+/* line 39, ../sass/gridview.scss */
 .tr20 {
   width: 20px;
 }
 
-/* line 48, ../sass/style.scss */
+/* line 40, ../sass/gridview.scss */
 .tr50 {
   width: 50px;
 }
 
-/* line 49, ../sass/style.scss */
+/* line 41, ../sass/gridview.scss */
 .tr70 {
   width: 70px;
 }
 
-/* line 50, ../sass/style.scss */
+/* line 42, ../sass/gridview.scss */
 .tr90 {
   width: 90px;
 }
 
-/* line 52, ../sass/style.scss */
+/* line 44, ../sass/gridview.scss */
 .header {
   display: none;
 }
 
-/* line 53, ../sass/style.scss */
+/* line 45, ../sass/gridview.scss */
 .trBorder {
   border: none;
 }
 
-/* line 54, ../sass/style.scss */
+/* line 46, ../sass/gridview.scss */
 .position {
   position: relative;
 }
 
-/* line 55, ../sass/style.scss */
+/* line 47, ../sass/gridview.scss */
 .bold {
   font-weight: 700;
 }
 
-/* line 56, ../sass/style.scss */
+/* line 48, ../sass/gridview.scss */
 .italic {
   font-weight: 100;
 }
 
-/* line 58, ../sass/style.scss */
+/* line 49, ../sass/gridview.scss */
+.table .trTablePass {
+  background: #802c2c;
+}
+
+/* line 52, ../sass/gridview.scss */
+.table thead {
+  background: #302927;
+}
+
+/* line 55, ../sass/gridview.scss */
+.table #trNew {
+  font-weight: bold;
+}
+
+/*.table #trNew:hover,.table .trTable:hover{
+    background: #d8d8d8;
+}*/
+/* line 61, ../sass/gridview.scss */
+.reminder {
+  position: relative;
+  top: -104px;
+  clear: both;
+}
+
+/* line 66, ../sass/gridview.scss */
+.grid-view td {
+  white-space: inherit;
+}
+
+/* line 70, ../sass/gridview.scss */
+.fa-red {
+  color: #CC0000;
+  font-size: 10px;
+}
+
+/* line 74, ../sass/gridview.scss */
+.fa-ping {
+  color: #FF9999;
+  font-size: 10px;
+}
+
+/* line 78, ../sass/gridview.scss */
+table {
+  color: #ccc6c6;
+}
+
+/* line 81, ../sass/gridview.scss */
+.titleCaption, .titleTable, .title {
+  color: #736a50;
+  position: relative;
+}
+
+/* line 85, ../sass/gridview.scss */
+.titleTable {
+  font-size: 24px;
+  margin-top: 41px;
+  margin-bottom: 8px;
+  margin-left: 15px;
+}
+
+/* line 92, ../sass/gridview.scss */
+thead {
+  border: 1px solid #302927;
+}
+
+/* line 96, ../sass/gridview.scss */
+thead a {
+  color: #302927;
+}
+
+/* line 99, ../sass/gridview.scss */
+.table-bordered > thead > tr > th {
+  border: none;
+  /*border-bottom: 1px solid #fff;*/
+}
+
+/* line 103, ../sass/gridview.scss */
+.table tbody > tr {
+  border: 1px solid #302927;
+}
+
+/* line 106, ../sass/gridview.scss */
+.table-bordered tbody > tr > td {
+  border: none;
+  border-bottom: 1px solid #423836;
+}
+
+/* line 110, ../sass/gridview.scss */
+.table .textTr {
+  color: rgba(204, 198, 198, 0.6);
+}
+
+/* line 113, ../sass/gridview.scss */
+.tableSize {
+  font-size: 11px;
+}
+
+/* line 116, ../sass/gridview.scss */
+.headerTable {
+  display: none;
+}
+
+/* line 119, ../sass/gridview.scss */
+.title {
+  font-size: 26px;
+}
+
+/* line 123, ../sass/gridview.scss */
+.summary {
+  display: none;
+}
+
+/* line 126, ../sass/gridview.scss */
+.borderSrok {
+  border-bottom: 1px solid #000;
+}
+
+/* line 129, ../sass/gridview.scss */
+.table-hover > tbody > tr:hover {
+  background: #3c3432;
+}
+
+/* line 20, ../sass/style.scss */
 body {
   background: #302927;
   font-family: "Helvetica Neue", Helvetica, sans-serif;
 }
 
-/* line 62, ../sass/style.scss */
+/* line 24, ../sass/style.scss */
 .notification-container {
   position: fixed;
   width: 16%;
@@ -177,136 +348,13 @@ body {
   list-style: none;
 }
 
-/* line 77, ../sass/style.scss */
+/* line 39, ../sass/style.scss */
 .notification-container .hidden {
   display: none;
 }
 
-/* line 80, ../sass/style.scss */
+/* line 42, ../sass/style.scss */
 .notification-content {
   height: 169px;
   overflow: auto;
-}
-
-/* line 84, ../sass/style.scss */
-.table .trTablePass {
-  background: #802c2c;
-}
-
-/* line 87, ../sass/style.scss */
-.table thead {
-  background: #302927;
-}
-
-/* line 90, ../sass/style.scss */
-.table #trNew {
-  font-weight: bold;
-}
-
-/*.table #trNew:hover,.table .trTable:hover{
-    background: #d8d8d8;
-}*/
-/* line 96, ../sass/style.scss */
-.reminder {
-  position: relative;
-  top: -104px;
-  clear: both;
-}
-
-/* line 101, ../sass/style.scss */
-.grid-view td {
-  white-space: inherit;
-}
-
-/* line 105, ../sass/style.scss */
-.fa-red {
-  color: #CC0000;
-  font-size: 10px;
-}
-
-/* line 109, ../sass/style.scss */
-.fa-ping {
-  color: #FF9999;
-  font-size: 10px;
-}
-
-/* line 113, ../sass/style.scss */
-table {
-  color: #ccc6c6;
-}
-
-/* line 116, ../sass/style.scss */
-.titleCaption, .titleTable, .title {
-  color: #736a50;
-  position: relative;
-}
-
-/* line 120, ../sass/style.scss */
-.titleTable {
-  font-size: 24px;
-  margin-top: 41px;
-  margin-bottom: 8px;
-  margin-left: 15px;
-}
-
-/* line 127, ../sass/style.scss */
-thead {
-  border: 1px solid #302927;
-}
-
-/* line 130, ../sass/style.scss */
-thead a {
-  color: #302927;
-}
-
-/* line 133, ../sass/style.scss */
-.table-bordered > thead > tr > th {
-  border: none;
-  /*border-bottom: 1px solid #fff;*/
-}
-
-/* line 137, ../sass/style.scss */
-.table tbody > tr {
-  border: 1px solid #302927;
-}
-
-/* line 140, ../sass/style.scss */
-.table-bordered tbody > tr > td {
-  border: none;
-  border-bottom: 1px solid #423836;
-}
-
-/* line 144, ../sass/style.scss */
-.table .textTr {
-  color: rgba(204, 198, 198, 0.6);
-}
-
-/* line 147, ../sass/style.scss */
-.tableSize {
-  font-size: 11px;
-}
-
-/* line 150, ../sass/style.scss */
-.headerTable {
-  display: none;
-}
-
-/* line 153, ../sass/style.scss */
-.title {
-  font-size: 26px;
-}
-
-/* line 157, ../sass/style.scss */
-.summary {
-  display: none;
-}
-
-/* line 160, ../sass/style.scss */
-.borderSrok {
-  border-bottom: 1px solid #000;
-}
-
-/* line 163, ../sass/style.scss */
-.table-hover > tbody > tr:hover {
-  background: #3c3432;
 }
