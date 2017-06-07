@@ -19,7 +19,7 @@ use app\models\User;
 
     <!-- <?= $form->field($model, 'id_zakaz') ?> -->
 
-    <?php if (Yii::$app->user->can('admin')): ?>
+    <!-- <?php if (Yii::$app->user->can('admin')): ?>
     <div class="col-xs-2">
         <?= $form->field($model, 'srok')->widget(
             DatePicker::className(), [
@@ -38,19 +38,21 @@ use app\models\User;
                 ]
         ]);?>
     </div>
-    <?php endif ?>
+    <?php endif ?> -->
     
     <?php if (Yii::$app->user->can('admin')): ?>
     <div class="col-xs-2">
         <?= $form->field($model, 'id_sotrud')->dropDownList([
                 '2' => 'Московский',
                 '5' => 'Админ',
+                '6' => 'Пушкина',
+                '9' => 'Сибирский',
             ],
             ['prompt' => 'Выберите магазин']
         ) ?>
-        <?= $form->field($model, 'status')->dropDownList(
-            ArrayHelper::map(User::find()->all(), 'id', 'name'),
-        ['prompt' => 'Выберите этап',]); ?>
+        <?php //$form->field($model, 'status')->dropDownList(
+            //ArrayHelper::map(User::find()->all(), 'id', 'name'),
+        //['prompt' => 'Выберите этап',]); ?>
         
     </div>
     <?php endif ?>
