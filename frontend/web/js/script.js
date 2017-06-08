@@ -1,6 +1,6 @@
-document.getElementById('notification').onclick = () => {
-	document.getElementById('notification-container').classList.toggle('hidden');
-}
+// document.getElementById('notification').onclick = () => {
+// 	document.getElementById('notification-container').classList.toggle('hidden');
+// }
 $(document).ready(function(){
 //	$('body').on('click', '.trTable', function(){
 //		var key = $(this).data('key');
