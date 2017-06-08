@@ -58,7 +58,7 @@ class ZakazController extends Controller
                     [
                         'actions' => ['view'],
                         'allow' => true,
-                        'roles' => ['admin', 'disain', 'master', 'program', 'shop'],
+                        'roles' => ['admin', 'disain', 'master', 'program', 'shop', 'zakup'],
                     ],
                     [
                         'actions' => ['check'],
@@ -124,6 +124,11 @@ class ZakazController extends Controller
                         'actions' => ['statusdisain'],
                         'allow' => true,
                         'roles' => ['disain', 'program'],
+                    ],
+                    [
+                        'actions' => ['zakazedit'],
+                        'allow' => true,
+                        'roles' => ['program'],
                     ],
                 ],
             ],
@@ -434,6 +439,10 @@ class ZakazController extends Controller
             'dataProviderIspol' => $dataProviderIspol,
             'image' => $image,
         ]);
+    }
+    public function actionZakazedit($id){
+        $models = $this->findModel($id);
+        return $this->renderPartial('_zakazedit', ['model' => $models]);
     }
 
     /**
