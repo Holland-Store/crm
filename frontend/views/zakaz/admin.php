@@ -10,6 +10,7 @@ use yii\widgets\ActiveForm;
 use yii\bootstrap\Nav;
 use yii\bootstrap\Modal;
 use yii\widgets\MaskedInput;
+use yii\helpers\Url;
 use yii\grid\SetColumn;
 use yii\widgets\Pjax;
 
@@ -22,6 +23,15 @@ $this->title = 'Заказ';
 ?>
 <?php Pjax::begin(['id' => 'pjax-container']); ?>
  
+<?php $this->registerJs('$("#edit").on("click", function(){
+        $.ajax({
+            url: "'.Url::toRoute(['zakaz/zakazedit', 'id' => '38']).'",
+            success: function(html){
+                $(".view-zakaz").html(html);
+            }
+        })
+    });') ?>
+
 <div class="zakaz-index">
     <h1 class="title"><?= Html::encode($this->title) ?></h1>
     <p>
@@ -45,11 +55,10 @@ $this->title = 'Заказ';
             } elseif ($model->srok < date('Y-m-d') && $model->status == 0) {
                 return['class' => 'trTable trTablePass bold trSrok'];
             } else {
-                return ['class' => 'trTable'];
+                return ['class' => 'trTable trNormal'];
             }
         },
 		'striped' => false,
-		'hover'=>true,
         'columns' => [
 			[
 				'class'=>'kartik\grid\ExpandRowColumn',
@@ -61,7 +70,7 @@ $this->title = 'Заказ';
 					return GridView::ROW_COLLAPSED;
 				},
 				'detail'=>function ($model, $key, $index, $column) {
-					return Yii::$app->controller->renderPartial('_zakaz', ['model'=>$model]);
+					return Yii::$app->controller->renderPartial('_zakazold', ['model'=>$model]);
 				},
 				'enableRowClick' => true,
                 'expandOneOnly' => true,
@@ -143,12 +152,11 @@ $this->title = 'Заказ';
         'pjax' => true,
         'tableOptions'  => ['class' => 'table table-bordered tableSize'],
         'striped' => false,
-        'hover'=>true,
         'rowOptions' => function($model, $key, $index, $grid){
             if ($model->srok < date('Y-m-d')) {
-                return['class' => 'trTable trTablePass'];
+                return['class' => 'trTable trTablePass trNormal'];
             } else {
-                return['class' => 'trTable srok'];
+                return['class' => 'trTable srok trNormal'];
             }
         },
         'columns' => [
@@ -242,9 +250,8 @@ $this->title = 'Заказ';
         'headerRowOptions' => ['class' => 'headerTable'],
         'pjax' => true,
         'striped' => false,
-        'hover'=>true,
         'tableOptions' => ['class' => 'table table-bordered tableSize'],
-        'rowOptions' => ['class' => 'trTable srok'],
+        'rowOptions' => ['class' => 'trTable srok trNormal'],
         'columns' => [
             [
                 'class'=>'kartik\grid\ExpandRowColumn',
