@@ -1,13 +1,14 @@
 <?php
 use yii\helpers\Html;
 use kartik\detail\DetailView;
+use kartik\money\MaskMoney;
+use yii\widgets\InputWidget;
 use yii\i18n\Formatter;
 
 ?>
 
 <?= DetailView::widget([
 	'model' => $model,
-	'mode' => 'view',
 	'condensed' => true,
 	'rowOptions' => ['style' => 'font-size: 11px;'],
 	'panel' => [
@@ -28,12 +29,16 @@ use yii\i18n\Formatter;
 					'attribute' => 'number',
 					'labelColOptions' => ['style' => 'width:10%;color:black'],
 					'valueColOptions' => ['style' => 'width:5%;color:black'],
+					'type' => DetailView::INPUT_HTML5_INPUT,
+					'inputType' => 'number',
+					'options' => ['min' => 0],
 				],
 				[
 					'attribute' => 'data',
 					'format' => ['date', 'd.MM.Y'],
 					'labelColOptions' => ['style' => 'width:10%;color:black'],
 					'valueColOptions' => ['style' => 'width:5%;color:black'],
+					'displayOnly'=>true,
 				],
 				[
 					'attribute' => 'information',
@@ -59,6 +64,7 @@ use yii\i18n\Formatter;
 					'value' => $model->img == null ? '' : Html::a($model->img, '@web/attachment/'.$model->img, ['download' => true, 'data-pjax' => 0]),
 					'labelColOptions' => ['style' => 'width:10%;color:black'],
 					'valueColOptions' => ['style' => 'width:5%;color:black'],
+					'type' => DetailView::INPUT_FILE,
 				],
 			],
 			[
@@ -90,6 +96,8 @@ use yii\i18n\Formatter;
 					'attribute' => 'email',
 					'labelColOptions' => ['style' => 'width:5%;color:black'],
 					'valueColOptions' => ['style' => 'color:black'],
+					'type' => DetailView::INPUT_HTML5_INPUT,
+					'inputType' => 'email',
 				],
 			],
 		],
@@ -114,6 +122,10 @@ use yii\i18n\Formatter;
 					'label' => 'Предоплата',
 					'labelColOptions' => ['style' => 'width:5%;color:black'],
 					'valueColOptions' => ['style' => 'color:black'],
+					'value' => $model->fact_oplata == null ? '' : $model->fact_oplata.' руб.',
+					'type' => DetailView::INPUT_HTML5_INPUT,
+					'inputType' => 'number',
+					'options' => ['min' => 0],
 				],
 				[
 					'attribute' => 'fact_oplata',
@@ -121,6 +133,9 @@ use yii\i18n\Formatter;
 					'value' => $model->oplata != null ? $model->oplata - $model->fact_oplata.' рублей' : '',
 					'labelColOptions' => ['style' => 'width:5%;color:black'],
 					'valueColOptions' => ['style' => 'color:black'],
+					'type' => DetailView::INPUT_HTML5_INPUT,
+					'inputType' => 'number',
+					'options' => ['min' => 0],
 				],
 			],
 		],
@@ -134,17 +149,6 @@ use yii\i18n\Formatter;
 		[
 			'attribute' => control,
 			'columns' => [
-				// [
-				// 	'attribute' => 'srok',
-				// 	'format' => ['date','d.MM.Y'],
-				// 	// 'formatter' => [
-				// 	// 	'class' => 'yii\i18n\Formatter',
-				// 	// 	'dateFormat' => 'php:d.m.Y',
-				// 	// 	],
-				// 	'labelColOptions' => ['style' => 'width:5%;color:black'],
-				// 	'valueColOptions' => ['style' => 'color:black'],
-
-				// ],
 				[
 					'attribute' => 'id_tovar',
 					'labelColOptions' => ['style' => 'width:5%;color:black'],
@@ -169,6 +173,7 @@ use yii\i18n\Formatter;
 			'value' => $model->idShipping->dostavkaName,
 			'labelColOptions' => ['style' => 'width:5%;color:black'],
 			'valueColOptions' => ['style' => 'color:black'],
+			'displayOnly'=>true,
 		],
 	],
 ])  ?>

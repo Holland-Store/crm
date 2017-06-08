@@ -1,92 +1,58 @@
 <?php
 use yii\helpers\Html;
-use kartik\detail\DetailView;
+use yii\widgets\DetailView;
 
 ?>
-<div style="font-size: 11px; width: 100%;">
-	<div class="col-lg-3">
-		<?= DetailView::widget([
+<div class="view-zakaz" style="color: black">
+	<div class="col-lg-2">
+		<?= Detailview::widget([
 			'model' => $model,
+			'template' => '<tr style="color:black"><td{contentOptions}>{value}</td></tr></tr>',
 			'attributes' => [
 				[
 					'attribute' => 'data',
-					'format' => ['date', 'd.MM.Y'],
+					'format' => ['date','d.MM.Y H:i'],
 				],
 				[
-					'attribute' => 'prioritetName',
-					'label' => 'Приоритет',
+					'attribute' => 'id_sotrud',
+					'value' => $model->idSotrud->name
 				],
+				'name',
+				'phone',
+				'email',
 			],
 		]) ?>
 	</div>
-	<div class="col-lg-5">
-		<?php //echo $model->information; ?>
-		<?= DetailView::widget([
+	<div class="col-lg-7">
+		<?= Detailview::widget([
 			'model' => $model,
-			'panel'=>[
-		        'type'=>DetailView::TYPE_INFO,
-		    ],
+			'template' => '<tr style="color:black"><td{contentOptions}>{value}</td></tr></tr>',
 			'attributes' => [
-				[
-					'attribute' => 'information',
-					'value' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-						quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-						consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-						cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-						proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-				],
+				'information',
+				'number',
+				'id_tovar',
 			],
 		]) ?>
 	</div>
-	<div class="col-xs-4">
-		<?= DetailView::widget([
+	<div class="col-lg-3">
+		<?= Detailview::widget([
 			'model' => $model,
+			'template' => '<tr style="color:black"><td{contentOptions}>{value}</td></tr></tr>',
 			'attributes' => [
+				'statusName',
 				[
-					'attribute' => 'srok',
-					'format' => ['date','d.MM.Y'],
-					'labelColOptions' => ['style' => 'width:20%'],
-					'valueColOptions' => ['style' => 'width:20%'],
+					'attribute' => 'id_shipping',
+					'value' => $model->idShipping->dostavkaName,
 				],
-				[
-					'attribute' => 'minut',
-					'labelColOptions' => ['style' => 'width:20%'],
-					'valueColOptions' => ['style' => 'width:20%'],
-				],
-				[
-					'attribute' => 'statusName',
-					'label' => 'Этап',
-					'labelColOptions' => ['style' => 'width:20%'],
-					'valueColOptions' => ['style' => 'width:20%'],
-				],
-				[
-					'attribute' => 'oplata',
-					'labelColOptions' => ['style' => 'width:20%'],
-					'valueColOptions' => ['style' => 'width:20%'],
-				],
-				[
-					'attribute' => oplata,
-					'columns' => [
-						[
-							'attribute' => 'oplata',
-							'valueColOptions' => ['style' => 'width:30%']
-						],
-						[
-							'attribute' => 'fact_oplata',
-							'valueColOptions' => ['style' => 'width:30%'],
-							'value' => $model->fact_oplata == null ? '': $model->fact_oplata,
-						],
-						[
-							'attribute' => 'fact_oplata',
-							'label' => 'К доплате',
-							'value' => $model->oplata - $model->fact_oplata,
-							'valueColOptions' => ['style' => 'width:30%'],
-						],
-					],
-				],
+				'img',
+				'maket',
 			],
 		]) ?>
-
 	</div>
+</div>
+<div class="footer-view-zakaz">
+	<?= Html::a('Задача', ['todoist/index', 'id' => $model->id_zakaz]) ?>
+	<?= Html::a('Запрос', ['custom/index']) ?>
+	<?= Html::a('Доставка', ['courier/create']) ?>
+	<?= Html::button('Редактировать', ['id' => 'edit']) ?>
 </div>
