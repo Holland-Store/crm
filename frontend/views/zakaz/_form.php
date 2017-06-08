@@ -33,7 +33,6 @@ use yii\widgets\MaskedInput;
         </div>
         <div class="col-lg-5">
             <?= $form->field($model, 'file')->fileInput() ?>
-            <?php  ?>
             <div class="form-group field-zakaz-file">
             <?php if ($model->img == null) {
                 $fileImg = 'Нет выбранных файлов';
