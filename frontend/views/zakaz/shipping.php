@@ -10,16 +10,9 @@ use dosamigos\datepicker\DatePicker;
 <div class="zakaz-shippingForm">
 	<?php $f = ActiveForm::begin(); ?>
 
-	<?= $f->field($shipping, 'id_zakaz')->hiddenInput(['value' => $model->id_zakaz])->label(false) ?>
+	<?= $f->field($shipping, 'id_zakaz')->hiddenInput(['value' => $model])->label(false) ?>
 
-	<?= $f->field($shipping, 'date')->widget(
-		DatePicker::className(), [
-			'inline' => false,
-			'clientOptions' => [
-				'autoclose' => true,
-				'format' => 'yyyy-mm-dd'
-			]
-		])->label('Дата выполение доставки') ?>
+	<?= $f->field($shipping, 'date')->textInput(['type' => 'date'])->label('Дата выполение доставки') ?>
 
 	<?= $f->field($shipping, 'to')->textInput() ?>
 
