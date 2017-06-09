@@ -2,14 +2,15 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use yii\helpers\Url;
-
+use yii\bootstrap\Modal;
+use app\models\Courier;
 ?>
 
-<?php $this->registerJs('$("#edit").on("click", function(){
+<?php $this->registerJs('$("body").on("click", "#edit", function(){
            var key = $(this).data("key");
-           console.log(key);
         $.ajax({
-            url: "'.Url::toRoute(["zakaz/zakazedit", 'id' => '38']).'",
+            url: "'.Url::toRoute(['zakaz/zakazedit']).'?id="+key,
+            timeout: 10000,
             success: function(html){
                 $(".view-zakaz").html(html);
             }
@@ -31,7 +32,10 @@ use yii\helpers\Url;
 					'value' => $model->idSotrud->name
 				],
 				'name',
-				'phone',
+				[
+                    'attribute' => 'phone',
+                    'value' => '8'.$model->phone,
+				],
 				'email',
 			],
 		]) ?>
@@ -63,9 +67,22 @@ use yii\helpers\Url;
 		]) ?>
 	</div>
     <div class="footer-view-zakaz">
-        <?= Html::a('Задача', ['todoist/index', 'id' => $model->id_zakaz]) ?>
-        <?= Html::a('Запрос', ['custom/index']) ?>
-        <?= Html::a('Доставка', ['courier/create']) ?>
-        <?= Html::button('Редактировать', ['id' => 'edit', 'data-key' => $model->id_zakaz]) ?>
+        <?= Html::a('Задача', ['todoist/createzakaz', 'id_zakaz' => $model->id_zakaz]) ?>
+        <?= Html::a('Запрос', ['todoist/create_shop']) ?>
+        <?php Modal::begin([
+            'header' => '<h2>Создание доставки</h2>',
+            'toggleButton' => [
+                'tag' => 'a',
+                'label' => 'Доставка',
+            ]
+        ]);
+        $shipping = new Courier();
+        echo $this->render('shipping', [
+           'shipping' => $shipping,
+            'model' => $model->id_zakaz,
+        ]);
+
+        Modal::end(); ?>
+        <?= Html::submitButton('Редактировать', ['id' => 'edit', 'data-key' => $model->id_zakaz]) ?>
     </div>
 </div>
