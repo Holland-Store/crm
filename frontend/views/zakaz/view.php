@@ -98,7 +98,6 @@ $this->title = $model->id_zakaz;
         )->label(false); ?>
 
                     <?= Html::submitButton('Установить статус', ['class' => 'btn btn-primary btn-sm']) ?>
-
                         <?php ActiveForm::end(); ?>
                         <?php endif ?>
                         <?php if (Yii::$app->user->can('admin')): ?>

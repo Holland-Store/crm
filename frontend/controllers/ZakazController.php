@@ -141,6 +141,7 @@ class ZakazController extends Controller
      */
     public function actionIndex()
     {
+        $model = new Zakaz();
         $notification = $this->findNotification();
 
         return $this->render('index', [
@@ -422,7 +423,8 @@ class ZakazController extends Controller
     public function actionAdmin()
     {
         $notification = $this->findNotification();
-        
+        $model = new Zakaz();
+
         $searchModel = new ZakazSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, 'admin');
         $image = $model->img;
@@ -440,9 +442,17 @@ class ZakazController extends Controller
             'image' => $image,
         ]);
     }
+    /** @var TYPE_NAME $id */
+    /** @var TYPE_NAME $models */
+    /** @lang text */
     public function actionZakazedit($id){
-        $models = $this->findModel($id);
-        return $this->renderPartial('_zakazedit', ['model' => $models]);
+
+        $model = $this->findModel($id);
+//        if($models->load(Yii::$app->request->post()) && $models->save()){
+//            return $this->redirect(['admin']);
+//        } else {
+        return $this->renderAjax('_zakazedit', ['model' => $model]);
+//        }
     }
 
     /**
