@@ -10,7 +10,7 @@ use yii\widgets\ActiveForm;
 use yii\bootstrap\Nav;
 use yii\bootstrap\Modal;
 use yii\widgets\MaskedInput;
-use yii\helpers\Url;
+
 use yii\grid\SetColumn;
 use yii\widgets\Pjax;
 
@@ -22,15 +22,6 @@ use yii\widgets\Pjax;
 $this->title = 'Заказ';
 ?>
 <?php Pjax::begin(['id' => 'pjax-container']); ?>
- 
-<?php $this->registerJs('$("#edit").on("click", function(){
-        $.ajax({
-            url: "'.Url::toRoute(['zakaz/zakazedit', 'id' => '38']).'",
-            success: function(html){
-                $(".view-zakaz").html(html);
-            }
-        })
-    });') ?>
 
 <div class="zakaz-index">
     <h1 class="title"><?= Html::encode($this->title) ?></h1>
@@ -43,7 +34,9 @@ $this->title = 'Заказ';
     <div class="col-xs-12">
      
     <h3 class="titleTable">В работе</h3>
-    <?= GridView::widget([
+        <?=
+        /** @var TYPE_NAME $dataProviderWork */
+        GridView::widget([
         'dataProvider' => $dataProviderWork,
         'floatHeader' => true,
         'headerRowOptions' => ['class' => 'headerTable'],
