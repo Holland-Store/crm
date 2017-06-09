@@ -1,8 +1,21 @@
 <?php
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use yii\helpers\Url;
 
 ?>
+
+<?php $this->registerJs('$("#edit").on("click", function(){
+           var key = $(this).data("key");
+           console.log(key);
+        $.ajax({
+            url: "'.Url::toRoute(["zakaz/zakazedit", 'id' => '38']).'",
+            success: function(html){
+                $(".view-zakaz").html(html);
+            }
+        })
+    });') ?>
+
 <div class="view-zakaz" style="color: black">
 	<div class="col-lg-2">
 		<?= Detailview::widget([
@@ -49,10 +62,10 @@ use yii\widgets\DetailView;
 			],
 		]) ?>
 	</div>
-</div>
-<div class="footer-view-zakaz">
-	<?= Html::a('Задача', ['todoist/index', 'id' => $model->id_zakaz]) ?>
-	<?= Html::a('Запрос', ['custom/index']) ?>
-	<?= Html::a('Доставка', ['courier/create']) ?>
-	<?= Html::button('Редактировать', ['id' => 'edit']) ?>
+    <div class="footer-view-zakaz">
+        <?= Html::a('Задача', ['todoist/index', 'id' => $model->id_zakaz]) ?>
+        <?= Html::a('Запрос', ['custom/index']) ?>
+        <?= Html::a('Доставка', ['courier/create']) ?>
+        <?= Html::button('Редактировать', ['id' => 'edit', 'data-key' => $model->id_zakaz]) ?>
+    </div>
 </div>
