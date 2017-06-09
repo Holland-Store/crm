@@ -73,17 +73,6 @@ $this->title = $model->id_zakaz;
                                     <?php if (Yii::$app->user->can('seeAdop')): ?>
                                     <?= Html::a('Редактировать', ['update', 'id' => $model->id_zakaz], ['class' => 'btn btn-primary btn-sm']) ?>
                                         <?php endif ?>
-
-
-                                        <!-- <?php if (Yii::$app->user->can('admin')){ ?>
-        <?= Html::a('Удалить', ['delete', 'id' => $model->id_zakaz], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Вы действительно хотите удалить заказ?',
-                'method' => 'post',
-            ],
-        ]) ?>
-        <?php } ?> -->
             </div>
             <div class="col-xs-2">
                 <?php if (Yii::$app->user->can('disain')): ?>
