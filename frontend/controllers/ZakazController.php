@@ -130,6 +130,11 @@ class ZakazController extends Controller
                         'allow' => true,
                         'roles' => ['program'],
                     ],
+                    [
+                        'actions' => ['zakazold'],
+                        'allow' => true,
+                        'roles' => ['program'],
+                    ],
                 ],
             ],
         ];
@@ -206,9 +211,9 @@ class ZakazController extends Controller
         return $this->render('view', [
             'model' => $this->findModel($id),
             'notification' => $notification,
-            'user_name' => $user_name,
+//            'user_name' => $user_name,
             'shipping' => $shipping,
-            'file' => $file,
+//            'file' => $file,
             'reminder' => $reminder,
         ]);
     }
@@ -420,10 +425,33 @@ class ZakazController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
+
+    /**
+     * @return string|\yii\web\Response
+     * windows Admin
+     */
     public function actionAdmin()
     {
         $notification = $this->findNotification();
+        $notifications = new Notification();
         $model = new Zakaz();
+        $shipping = new Courier();
+
+        if ($shipping->load(Yii::$app->request->post()))
+        {
+            $shipping->save();//сохранение доставка
+            if (!$shipping->save()){
+                Yii::warning($shipping->getErrors());
+            }
+            $model = Zakaz::findOne($shipping->id_zakaz);//Определяю заказ
+            $model->id_shipping = $shipping->id;//Оформление доставку в таблице заказа
+            $model->save();
+
+            $notifications->getByIdNotification(7, $shipping->id_zakaz);//оформление уведомлений
+            $notifications->saveNotification;
+
+            return $this->redirect(['admin', '#' => $model->id_zakaz]);
+        }
 
         $searchModel = new ZakazSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, 'admin');
@@ -440,19 +468,30 @@ class ZakazController extends Controller
             'dataProviderWork' => $dataProviderWork,
             'dataProviderIspol' => $dataProviderIspol,
             'image' => $image,
+            'notification' => $notification,
         ]);
     }
     /** @var TYPE_NAME $id */
     /** @var TYPE_NAME $models */
-    /** @lang text */
     public function actionZakazedit($id){
 
+        $models = $this->findModel($id);
+
+        if($models->load(Yii::$app->request->post()) && $models->save()){
+            return $this->redirect(['admin', '#' => $models->id_zakaz]);
+        } else {
+        return $this->renderAjax('_zakazedit', ['models' => $models]);
+        }
+    }
+
+    /**
+     * @param $id
+     * @return string
+     */
+    public function actionZakazold($id){
         $model = $this->findModel($id);
-//        if($models->load(Yii::$app->request->post()) && $models->save()){
-//            return $this->redirect(['admin']);
-//        } else {
-        return $this->renderAjax('_zakazedit', ['model' => $model]);
-//        }
+
+            return $this->renderPartial('_zakazold', ['model' => $model]);
     }
 
     /**
