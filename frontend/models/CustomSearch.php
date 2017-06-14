@@ -52,6 +52,11 @@ class CustomSearch extends Custom
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => [
+                'defaultOrder' => [
+                    'date' => SORT_DESC,
+                ]
+            ],
         ]);
 
         $this->load($params);
