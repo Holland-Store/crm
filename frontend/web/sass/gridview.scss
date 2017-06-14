@@ -33,14 +33,26 @@ $bacgrountTr: #802c2c;
 @mixin border($color) {
     border: 1px solid $color;
 }
-.wrap{
-    img{
-        width: 97px;
-        position: $position;
-        top: 20px;
-        left: 64px;
-    }
+
+.table > thead > tr > td.info,
+.table > tbody > tr > td.info,
+.table > tfoot > tr > td.info,
+.table > thead > tr > th.info,
+.table > tbody > tr > th.info,
+.table > tfoot > tr > th.info,
+.table > thead > tr.info > td,
+.table > tbody > tr.info > td,
+.table > tfoot > tr.info > td,
+.table > thead > tr.info > th,
+.table > tbody > tr.info > th,
+.table > tfoot > tr.info > th {
+    background: $colButtonHover;
+    border-radius: 0px 0px 15px 15px;
+    position: $position;
+    top: -14px;
+    z-index: -1;
 }
+
 .container{
     font-size: $font-size;
 }
@@ -148,7 +160,6 @@ $bacgrountTr: #802c2c;
     .table #trNew{
         font-weight: bold;
     } 
-
     .reminder{
         position: relative;
         top: -104px;
@@ -180,6 +191,7 @@ $bacgrountTr: #802c2c;
     .table-bordered > thead > tr > th{
         border: $border;
     }
+
     .table {
         tbody > tr{
             border: 1px solid #302927;
@@ -188,9 +200,23 @@ $bacgrountTr: #802c2c;
             color: rgba(204, 198, 198, 0.6);
         }
     }
-    .table-bordered tbody > tr > td{
-        border: $border;
-        @include border-bottom(#423836);
+    .table-bordered tbody {
+        tr{
+            td{
+                border: $border;
+                border-bottom: none;
+            }
+            .zakaz-view-kartik{
+                border-bottom: none;
+                color: rgba(204, 198, 198, 0.6);
+            }
+            .trInform{
+                background: $colorH3;
+                height: 113px;
+                border-radius: 8px;
+                overflow: hidden;
+            }
+        }
     }
     .tableSize{
         font-size: $font-size;
@@ -206,6 +232,9 @@ $bacgrountTr: #802c2c;
         @include border-bottom(#000);
     }
     .table-bordered > tbody {
+        .trTable{
+            @include border-bottom(#423836);
+        }
         .trSrok{
             &:hover{
                 background: #3c3432;
@@ -216,6 +245,12 @@ $bacgrountTr: #802c2c;
                 background: #3c3432;
             }
         }
+    }
+    .detail-view{
+        background-color: $colButtonHover;
+    }
+    .footer-view-zakaz{
+        margin-top: 15px;
     }
 }
 .footerNav{

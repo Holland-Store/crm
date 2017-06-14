@@ -1,0 +1,67 @@
+/* line 10, ../sass/button.scss */
+.buttonAdd {
+  border-radius: 20px;
+  border-radius: 68px;
+  width: 74px;
+  height: 74px;
+  line-height: 2px;
+  font-size: 46px;
+  box-shadow: 5px 6px 20px 0px rgba(2, 2, 2, 0.48);
+  color: #fff;
+  background: #a90329;
+  background: -moz-radial-gradient(center, ellipse cover, #a90329 34%, #8f0222 67%, #6d0019 98%);
+  background: -webkit-radial-gradient(center, ellipse cover, #a90329 34%, #8f0222 67%, #6d0019 98%);
+  background: radial-gradient(ellipse at right top, #9e1818 34%, #791010 67%, #882828 98%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a90329', endColorstr='#6d0019',GradientType=1 );
+  border: 5px solid rgba(72, 26, 26, 0.51);
+}
+/* line 26, ../sass/button.scss */
+.buttonAdd:hover .buttonAdd:focus {
+  background: #791010;
+  color: #fff;
+}
+/* line 30, ../sass/button.scss */
+.buttonAdd .caret {
+  display: none;
+}
+
+/* line 34, ../sass/button.scss */
+.btn-group {
+  position: fixed;
+  top: 85%;
+  z-index: 1;
+  float: right;
+  left: 86%;
+}
+/* line 40, ../sass/button.scss */
+.btn-group .dropdown-menu {
+  top: -103px;
+  left: -27px;
+  font-size: 11px;
+  background: #302927;
+  min-width: 92px;
+  border: 2px solid rgba(204, 198, 198, 0.6);
+  border-radius: 9px;
+}
+/* line 48, ../sass/button.scss */
+.btn-group .dropdown-menu .divider {
+  margin: 0px 0px 0px 10px;
+  background: rgba(255, 255, 255, 0.07);
+  width: 64px;
+}
+/* line 53, ../sass/button.scss */
+.btn-group .dropdown-menu .dropdown-header {
+  padding: 0.4px 0;
+}
+/* line 56, ../sass/button.scss */
+.btn-group .dropdown-menu a {
+  color: rgba(204, 198, 198, 0.6);
+}
+/* line 58, ../sass/button.scss */
+.btn-group .dropdown-menu a:hover {
+  border-radius: 12px;
+  margin: 0px 8px 0px 7px;
+  padding: 3px 0px 3px 13px;
+  background-color: #191412;
+  color: #736a50;
+}
