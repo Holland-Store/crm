@@ -54,7 +54,7 @@ class CustomController extends Controller
     }
 
     /**
-     * Lists all Custom models.
+     * Lists all Custom models for role zakup.
      * @return mixed
      */
     public function actionIndex()
@@ -70,14 +70,19 @@ class CustomController extends Controller
     }
 
 	/**
-     * Lists all Custom models.
+     * Lists all Custom models for shop.
      * @return mixed
      */
     public function actionAdop()
     {
         $dataProvider = new ActiveDataProvider([
-			'query' => Custom::find()->where(['id_user' => Yii::$app->user->id])
-		]);
+			'query' => Custom::find()->where(['id_user' => Yii::$app->user->id]),
+            'sort' => [
+                'defaultOrder' => [
+                    'date' => SORT_DESC,
+                ]
+		    ],
+        ]);
         $notification = $this->findNotification();
 
         return $this->render('adop', [
@@ -176,6 +181,11 @@ class CustomController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
+    /**
+     * Проверяет активные уведомлеине у пользователя.
+     * Если кол-во уведомлении больше 50, то выводит 50+
+     */
     protected function findNotification()
     {
         $notification = Notification::find()->where(['id_user' => Yii::$app->user->id, 'active' => true]);
