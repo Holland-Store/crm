@@ -47,15 +47,16 @@ body {
   border-radius: 26px;
   font-size: 11px;
   height: 26px;
+  color: #000;
 }
-/* line 62, ../sass/login.scss */
+/* line 63, ../sass/login.scss */
 .site-login .formLogin p {
   width: 193px;
   padding-left: 10px;
   padding-top: 3px;
   font-size: 11px;
 }
-/* line 68, ../sass/login.scss */
+/* line 69, ../sass/login.scss */
 .site-login .formLogin label {
   color: rgba(204, 198, 198, 0.6);
   font-size: 11px;
@@ -64,7 +65,7 @@ body {
   top: -20px;
   left: 79px;
 }
-/* line 76, ../sass/login.scss */
+/* line 77, ../sass/login.scss */
 .site-login .formLogin button {
   width: 204px;
   border-radius: 26px;
@@ -79,15 +80,15 @@ body {
   left: -5px;
   border: none;
 }
-/* line 89, ../sass/login.scss */
+/* line 90, ../sass/login.scss */
 .site-login .formLogin button:hover {
   background: #191412;
 }
-/* line 95, ../sass/login.scss */
+/* line 96, ../sass/login.scss */
 .site-login .has-error .help-block {
   color: rgba(171, 100, 24, 0.99);
 }
-/* line 99, ../sass/login.scss */
+/* line 100, ../sass/login.scss */
 .site-login .titleLogin {
   text-align: center;
   position: relative;
@@ -97,7 +98,7 @@ body {
   font-weight: bold;
 }
 
-/* line 108, ../sass/login.scss */
+/* line 109, ../sass/login.scss */
 .footerLogin {
   position: relative;
   top: -45px;
@@ -105,12 +106,12 @@ body {
   left: -22px;
   line-height: 14px;
 }
-/* line 114, ../sass/login.scss */
+/* line 115, ../sass/login.scss */
 .footerLogin img {
   width: 49px;
   height: 46px;
 }
-/* line 118, ../sass/login.scss */
+/* line 119, ../sass/login.scss */
 .footerLogin div {
   font-size: 11px;
 }

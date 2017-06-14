@@ -8,18 +8,97 @@
 @import "gridview";
 
 $display: none;
+$bodyBackground: #302927;
 
 @mixin border-bottom($color) {
     border-bottom: 1px solid $color;
+}
+@mixin border-right($color) {
+    border-right: 1px solid $color;
 }
 @mixin border($color) {
     border: 1px solid $color;
 }
 
-
 body{
-    background: #302927;
+    background: $bodyBackground;
     font-family: "Helvetica Neue", Helvetica, sans-serif;
+}
+.logout{
+    float: right;
+    font-size: $font-size;
+    background: $colorButton;
+    border-radius: $border-radius;
+    color: $colorH3;
+    position: relative;
+    left: -74px;
+    top: -30px;
+    height: 30px;
+    span{
+        padding-left: 9px;
+        font-size: 12px;
+    }
+    .exit{
+        color: $bacgrountTr;
+    }
+    &:hover{
+        color: $colorText;
+        text-decoration: $text-decoration;
+        background: $colButtonHover;
+    }
+}
+.wrap{
+    .headerNav{
+        margin-top: -26px;
+        margin-left: 426px;
+        font-size: $font-size;
+        background: $colorButton;
+        border-radius: $border-radius;
+        color: $colorH3;
+        width: 286px;
+        li{
+            a{
+                color: $colorText;
+                 &:hover{
+                    color: $colorH3;
+                }
+            }
+        }
+
+    }
+    .nav-pills > li.active > a{
+        background-color: $colorH3;
+        color: $bodyBackground;
+    }
+}
+.buttonAdd{
+    border-radius: 20px;
+    border-radius: 68px;
+    width: 74px;
+    height: 74px;
+    line-height: 2px;
+    font-size: 46px;
+    .caret{
+        display: none;
+    }
+}
+.btn-group{
+    position: fixed;
+    top: 85%;
+    z-index: 1;
+    float: right;
+    left: 86%;
+    .dropdown-menu{
+        top: -125px;
+        left: -86px;
+    }
+}
+.titleMain{
+    font-size: 27px;
+    font-weight: 700;
+    color: rgba(204, 198, 198, 0.6);
+    margin-top: -6px;
+    margin-left: 181px;
 }
 .notification-container{
    position: fixed;

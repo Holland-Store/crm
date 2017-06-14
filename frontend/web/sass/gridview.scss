@@ -2,6 +2,7 @@ $font-size: 11px;
 $fontCaption: 24px;
 $border: none;
 $position: relative;
+$text-decoration: none;
 
 $display: none;
 
@@ -16,6 +17,15 @@ $width90:90px;
 
 $border-left: 19px 0px 0px 19px;
 $border-right: 0px 19px 18px 0px;
+$colorH3: #736a50;
+
+//Кнопка архив
+$colorText: rgba(204, 198, 198, 0.6);
+$colTextButton: rgb(153, 146, 101);
+$colorButton: #3a3331;
+$colButtonHover: #191412;
+$border-radius: 26px;
+$bacgrountTr: #802c2c;
 
 @mixin border-bottom($color) {
     border-bottom: 1px solid $color;
@@ -23,119 +33,213 @@ $border-right: 0px 19px 18px 0px;
 @mixin border($color) {
     border: 1px solid $color;
 }
-
-.border-left {
-    width: $width10;
-    border-radius: $border-left;
-    border: $border;
+.wrap{
+    img{
+        width: 97px;
+        position: $position;
+        top: 20px;
+        left: 64px;
+    }
 }
-
-.border-right {
-    width: $width90;
-    border-radius: $border-right;
-    border: $border;
-}
-
-.tr10 {width: $width10;}
-.tr20 {width: $width20;}
-.tr50 {width: $width50;}
-.tr70 {width: $width70;}
-.tr90 {width: $width90;}
-
-.header {display: $display;}
-.trBorder {border: $border;}
-.position {position: $position;}
-.bold {font-weight: $bold;}
-.italic {font-weight: $italic;}
-.table .trTablePass{
-    background: #802c2c;
-}
-.table thead{
-    background: #302927;
-}
-.table #trNew{
-    font-weight: bold;
-} 
-/*.table #trNew:hover,.table .trTable:hover{
-    background: #d8d8d8;
-}*/
-.reminder{
-	position: relative;
-    top: -104px;
-    clear: both;
-}
-.grid-view td {
-    white-space: inherit;
-}
-
-.fa-red{
-    color: #CC0000;
-    font-size: 10px;
-}
-.fa-ping{
-    color: #FF9999;
-    font-size: 10px;
-}
-table{
-    color: #ccc6c6;
-}
-.titleCaption{
-    color: #736a50;
-    position: relative;
-}
-.titleTable{
-    @extend .titleCaption;
-    font-size: $fontCaption;
-    margin-top: 41px;
-    margin-bottom: 8px;
-    margin-left: 15px;
-}
-thead{
-    @include border(#302927);
-}
-
-thead a{
-    color: #302927;
-}
-.table-bordered > thead > tr > th{
-    border: $border;
-    /*border-bottom: 1px solid #fff;*/
-}
-.table tbody > tr{
-    border: 1px solid #302927;
-}
-.table-bordered tbody > tr > td{
-    border: $border;
-    @include border-bottom(#423836);
-}
-.table .textTr{
-    color: rgba(204, 198, 198, 0.6);
-}
-.tableSize{
+.container{
     font-size: $font-size;
 }
-.headerTable{
-    display: $display;
-}
-.title{
-    @extend .titleCaption;
-    font-size: 26px;
-}
-.summary{
-    display: $display;
-}
-.borderSrok{
-    @include border-bottom(#000);
-}
-.table-bordered > tbody {
-    .trSrok{
-        &:hover{
-            background: #3c3432;
-        }
-    }
-    .trNormal{
-        &:hover{
-            background: #3c3432;
-        }
+.form-control{
+    &:focus{
+        outline: none;
+        -webkit-box-shadow: none;
+        box-shadow: none;
     }
 }
+.button{
+    outline: none;
+    color: $colTextButton;
+    background: #302927;
+}
+.zakaz-index{
+    .nav-pills: 37px;   
+    .titleCaption{
+        color: $colorH3;
+        position: relative;
+    }
+    .titleTable{
+        @extend .titleCaption;
+        font-size: $fontCaption;
+        margin-top: 41px;
+        margin-bottom: 8px;
+        margin-left: 15px;
+        float: left;
+        &:nth-of-type(3){
+            float: none;
+        }
+    }
+    .zakazSearch{
+        height: 73px;
+        float: right;
+        .zakaz-search{
+            input{
+                position: $position;
+                top: 40px;
+                left: -56px;
+                height: 30px;
+                border-radius: 16px 0px 0px 19px;
+                background: #302927;
+                font-size: $font-size;
+                @include border($colorText);
+                &:focus{
+                    background: $colorText;
+                    color: #302927;
+                    border: none;
+                }
+            }
+            button{
+                @extend .button;
+                margin-top: -5px;
+                height: 30px;
+                padding: 0px 23px 0px 13px;
+                margin-left: 98px;
+                border-radius: 0px 16px 16px 0px;
+                color: $colorText;
+                background: $colorButton;
+                @include border($colorText);
+                border-left: 1px solid $colorButton;
+                &:hover{
+                    background: $bacgrountTr;
+                    border-bottom: 1px solid $bacgrountTr;
+                    border-top: 1px solid $bacgrountTr;
+                    border-right: 1px solid $bacgrountTr;
+                    color: #fff;
+                }
+            }
+
+        }
+    }
+    .border-left {
+        width: $width10;
+        border-radius: $border-left;
+        border: $border;
+    }
+
+    .border-right {
+        width: $width90;
+        border-radius: $border-right;
+        border: $border;
+    }
+
+    .tr10 {width: $width10;}
+    .tr20 {width: $width20;}
+    .tr25 {width: $width20 + 5;}
+    .tr50 {width: $width50;}
+    .tr70 {width: $width70;}
+    .tr90 {width: $width90;}
+    .tr180 {width: $width90 + 47;}
+
+    .header {display: $display;}
+    .trBorder {border: $border;}
+    .position {position: $position;}
+    .bold {font-weight: $bold;}
+    .italic {font-weight: $italic;}
+    .table .trTablePass{
+        background: $bacgrountTr;
+    }
+    .table thead{
+        background: #302927;
+    }
+    .table #trNew{
+        font-weight: bold;
+    } 
+
+    .reminder{
+        position: relative;
+        top: -104px;
+        clear: both;
+    }
+    .grid-view td {
+        white-space: inherit;
+    }
+
+    .fa-red{
+        color: #CC0000;
+        font-size: 10px;
+    }
+    .fa-ping{
+        color: #FF9999;
+        font-size: 10px;
+    }
+    table{
+        color: #ccc6c6;
+    }
+
+    thead{
+        @include border(#302927);
+    }
+
+    thead a{
+        color: #302927;
+    }
+    .table-bordered > thead > tr > th{
+        border: $border;
+    }
+    .table {
+        tbody > tr{
+            border: 1px solid #302927;
+        }
+        .textTr{
+            color: rgba(204, 198, 198, 0.6);
+        }
+    }
+    .table-bordered tbody > tr > td{
+        border: $border;
+        @include border-bottom(#423836);
+    }
+    .tableSize{
+        font-size: $font-size;
+    }
+    .headerTable{
+        display: $display;
+    }
+
+    .summary{
+        display: $display;
+    }
+    .borderSrok{
+        @include border-bottom(#000);
+    }
+    .table-bordered > tbody {
+        .trSrok{
+            &:hover{
+                background: #3c3432;
+            }
+        }
+        .trNormal{
+            &:hover{
+                background: #3c3432;
+            }
+        }
+    }
+}
+.footerNav{
+    margin-top: 27px;
+    font-size: 24px;
+    a{
+        width: 135px;
+        border-radius: $border-radius;
+        font-size: 18px;
+        color: $colorH3;
+        background: $colorButton;
+        outline: 0;
+        position: $position;
+        text-align: center;
+        top: 40px;
+        left: 15px;
+        line-height: 12px;
+        border: $border;        
+    }
+}
+.nav > li > a:hover, .nav > li > a:focus{
+    background: $colButtonHover;
+}
+.nav-pills > li > a{
+    border-radius: $border-radius;
+}
+
