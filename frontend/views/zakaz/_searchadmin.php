@@ -15,11 +15,9 @@ use app\models\User;
 
     <?php $form = ActiveForm::begin(['method' => 'get', 'action' => ['']]); ?>
 
-    <?= $form->field($model, 'search')->textInput() ?>
+    <?= $form->field($model, 'search')->textInput(['class' => 'form-control'])->label(false) ?>
     
-    <div class="form-group col-xs-3" style="margin-top: 24px;">
-        <?= Html::submitButton('Найти', ['class' => 'btn btn-primary']) ?>
-    </div>
+    <?= Html::submitButton('Найти') ?>
 
     <?php ActiveForm::end(); ?>
 
