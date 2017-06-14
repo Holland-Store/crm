@@ -10,7 +10,7 @@ use yii\widgets\ActiveForm;
 use yii\bootstrap\Nav;
 use yii\bootstrap\Modal;
 use yii\widgets\MaskedInput;
-
+use yii\bootstrap\ButtonDropdown;
 use yii\grid\SetColumn;
 use yii\widgets\Pjax;
 
@@ -19,21 +19,67 @@ use yii\widgets\Pjax;
 /* @var $searchModel app\models\ZakazSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Заказ';
+$this->title = 'Вce заказы';
 ?>
 <?php Pjax::begin(['id' => 'pjax-container']); ?>
 
 <div class="zakaz-index">
-    <h1 class="title"><?= Html::encode($this->title) ?></h1>
     <p>
-        <?= Html::a('Создать заказ', ['create'], ['class' => 'btn btn-success']) ?>
+        <?php //Html::a('+', ['create'], ['class' => 'btn btn-success']) ?>
+        <?php echo ButtonDropdown::widget([
+        'label' => '+',
+        'options' => [
+            'class' => 'btn buttonAdd',
+        ],
+        'dropdown' => [
+            'items' => [
+                [
+                    'label' => 'Заказ',
+                    'url' => '#',
+                ],
+                [
+                    'label' => '',
+                    'options' => [
+                        'role' => 'presentation',
+                        'class' => 'divider'
+                    ]
+                ],
+                [
+                    'label' => 'Закупки',
+                    'url' => '#'
+                ],
+                [
+                    'label' => '',
+                    'options' => [
+                        'role' => 'presentation',
+                        'class' => 'divider'
+                    ]
+                ],
+                [
+                    'label' => 'Поломки',
+                    'url' => '#'
+                ],
+                [
+                    'label' => '',
+                    'options' => [
+                        'role' => 'presentation',
+                        'class' => 'divider'
+                    ]
+                ],
+                [
+                    'label' => 'Задачи',
+                    'url' => '#'
+                ],
+            ]
+        ]
+    ]); ?>
         <?php //echo $this->render('_search', ['model' => $searchModel]);?>
     </p>
-    
-    <?php echo $this->render('_searchadmin', ['model' => $searchModel]);?>
     <div class="col-xs-12">
-     
     <h3 class="titleTable">В работе</h3>
+    <div class="col-lg-2 zakazSearch">
+        <?php echo $this->render('_searchadmin', ['model' => $searchModel]);?>
+    </div>
         <?=
         /** @var TYPE_NAME $dataProviderWork */
         GridView::widget([
@@ -63,7 +109,7 @@ $this->title = 'Заказ';
 					return GridView::ROW_COLLAPSED;
 				},
 				'detail'=>function ($model, $key, $index, $column) {
-					return Yii::$app->controller->renderPartial('_zakazold', ['model'=>$model]);
+					return Yii::$app->controller->renderPartial('_zakazold', ['model'=> $model]);
 				},
 				'enableRowClick' => true,
                 'expandOneOnly' => true,
@@ -272,7 +318,7 @@ $this->title = 'Заказ';
             [
                 'attribute' => '',
                 'format' => 'raw',
-                'contentOptions' => ['class' => 'tr50'],
+                'contentOptions' => ['class' => 'tr20'],
                 'value' => function($model){
                     if ($model->prioritet == 2) {
                         return '<i class="fa fa-circle fa-red" aria-hidden="true"></i>';
@@ -307,8 +353,8 @@ $this->title = 'Заказ';
                 'value' => function($model){
                     return $model->oplata.' р.';
                 },
-                'hAlign' => GridView::ALIGN_RIGHT,
-                'contentOptions' => ['class' => 'textTr border-right'],
+                'hAlign' => GridView::ALIGN_LEFT,
+                'contentOptions' => ['class' => 'textTr border-right tr180'],
             ],
         ],
     ]); ?> 
