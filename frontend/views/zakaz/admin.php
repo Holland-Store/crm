@@ -35,7 +35,7 @@ $this->title = 'Вce заказы';
             'items' => [
                 [
                     'label' => 'Заказ',
-                    'url' => '#',
+                    'url' => 'zakaz/create',
                 ],
                 [
                     'label' => '',
@@ -46,7 +46,7 @@ $this->title = 'Вce заказы';
                 ],
                 [
                     'label' => 'Закупки',
-                    'url' => '#'
+                    'url' => 'custom/create'
                 ],
                 [
                     'label' => '',
@@ -57,7 +57,7 @@ $this->title = 'Вce заказы';
                 ],
                 [
                     'label' => 'Поломки',
-                    'url' => '#'
+                    'url' => 'helpdesk/create'
                 ],
                 [
                     'label' => '',
@@ -68,7 +68,7 @@ $this->title = 'Вce заказы';
                 ],
                 [
                     'label' => 'Задачи',
-                    'url' => '#'
+                    'url' => 'todoist/create'
                 ],
             ]
         ]
