@@ -211,9 +211,7 @@ class ZakazController extends Controller
         return $this->render('view', [
             'model' => $this->findModel($id),
             'notification' => $notification,
-//            'user_name' => $user_name,
             'shipping' => $shipping,
-//            'file' => $file,
             'reminder' => $reminder,
         ]);
     }
@@ -228,12 +226,14 @@ class ZakazController extends Controller
         $model = new Zakaz();
         $notification = $this->findNotification();
 
-        if ($model->load(Yii::$app->request->post())) {
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $model->file = UploadedFile::getInstance($model, 'file');
             if($model->upload()){
             $model->img = time().'.'.$model->file->extension;
             }
-            $model->save();
+            if (!$model->save()){
+                print_r($model->getErrors());
+            } $model->save();
 
             if (Yii::$app->user->can('shop')) {
                 return $this->redirect(['shop']);
@@ -243,7 +243,6 @@ class ZakazController extends Controller
         } else {
             return $this->render('create', [
                 'model' => $model,
-                'url' => $url,
             ]);
         }
     }
@@ -269,8 +268,12 @@ class ZakazController extends Controller
             if ($model->status == 3) {
                 $model->data_start_disain = date('Y-m-d H:i:s');
             }
-            
-            $model->save();
+            $model->validate();
+            if (!$model->save()){
+                print_r($model->getErrors());
+            } else {
+                $model->save();
+            }
 
             if (Yii::$app->user->can('shop')) {
                 return $this->redirect(['shop']);
@@ -471,8 +474,7 @@ class ZakazController extends Controller
             'notification' => $notification,
         ]);
     }
-    /** @var TYPE_NAME $id */
-    /** @var TYPE_NAME $models */
+
     public function actionZakazedit($id){
 
         $models = $this->findModel($id);

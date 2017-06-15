@@ -112,8 +112,12 @@ class CourierController extends Controller
         $model = new Courier();
         $this->view->params['notifications'] = Notification::find()->where(['id_user' => Yii::$app->user->id, 'active' => true])->all();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            if ($model->save()){
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                print_r($model->getErrors());
+            }
         } else {
             return $this->render('create', [
                 'model' => $model,
