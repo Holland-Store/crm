@@ -6,11 +6,14 @@ use Yii;
 use app\models\Custom;
 use app\models\CustomSearch;
 use app\models\Notification;
+use yii\base\Model;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\data\ActiveDataProvider;
+use yii\web\Response;
+use yii\widgets\ActiveForm;
 
 
 /**
@@ -34,19 +37,24 @@ class CustomController extends Controller
 				'class' => AccessControl::className(),
 				'rules' => [
 					[
-					'actions' => ['index'],
-					'allow' => true,
-					'roles' => ['zakup', 'program'],
+                        'actions' => ['index'],
+                        'allow' => true,
+                        'roles' => ['zakup', 'program'],
 					],
                     [
-                    'actions' => ['close'],
-                    'allow' => true,
-                    'roles' => ['zakup', 'program'],
+                        'actions' => ['create'],
+                        'allow' => true,
+                        'roles' => ['shop', 'program'],
+                    ],
+                    [
+                        'actions' => ['close'],
+                        'allow' => true,
+                        'roles' => ['zakup', 'program'],
                     ],
 					[
-					'actions' => ['adop'],
-					'allow' => true,
-					'roles' => ['seeAdop'],
+                        'actions' => ['adop'],
+                        'allow' => true,
+                        'roles' => ['seeAdop'],
 					],
 				],
 			],
@@ -106,21 +114,42 @@ class CustomController extends Controller
 
     /**
      * Creates a new Custom model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
+     * If creation is successful, the browser will be redirected to the 'shop' page.
+     * Class TabularInputAction
+     * @param unclead\multipleinput\examples\actions
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Custom();
+        $notification = $this->findNotification();
+        $models = [new Custom()];
+        $request = Yii::$app->getRequest();
+        if ($request->isPost && $request->post('ajax') !== null){
+            $data = Yii::$app->request->post('Custom', []);
+            foreach (array_keys($data) as $index) {
+                $models[$index] = new Custom();
+            }
+            Model::loadMultiple($models, Yii::$app->request->post());
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            $result = ActiveForm::validateMultiple($models);
+            return $result;
+        }
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index', 'id' => $model->id]);
+        if(Model::loadMultiple($models, Yii::$app->request->post())) {
+            foreach ($models as $custom) {
+                if ($custom->save()){
+                    return $this->redirect(Yii::$app->request->referrer);
+                } else{
+                   print_r($custom->getErrors());
+                }
+            }
         } else {
             return $this->render('create', [
-                'model' => $model,
+               'models' => $models,
             ]);
         }
     }
+
 
     /**
      * Updates an existing Custom model.
