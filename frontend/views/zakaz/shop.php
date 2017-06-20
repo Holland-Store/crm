@@ -3,12 +3,6 @@
 use yii\helpers\StringHelper;
 use yii\helpers\Html;
 use kartik\grid\GridView;
-use app\models\Otdel;
-use app\models\Zakaz;
-use dosamigos\datepicker\DatePicker;
-use yii\bootstrap\Nav;
-use yii\bootstrap\Modal;
-// use yii\grid\SetColumn;
 use yii\widgets\Pjax;
 
 
