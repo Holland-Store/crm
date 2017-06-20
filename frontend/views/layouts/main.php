@@ -50,6 +50,7 @@ AppAsset::register($this);
     ['label' => 'Задачи', 'url' => ['todoist/index'], 'visible' => Yii::$app->user->can('admin')],
     ['label' => 'Поломки', 'url' => ['helpdesk/index'], 'visible' => !Yii::$app->user->isGuest],
     ['label' => 'Закупки', 'url' => ['custom/adop'], 'visible' => Yii::$app->user->can('seeAdop')],
+    ['label' => 'Доставки', 'url' => ['courier/shipping'], 'visible' => Yii::$app->user->can('admin')],
     // ['label' => 'Выполненые задачи', 'url' => ['todoist/closetodoist'], 'visible' => Yii::$app->user->can('admin')],
     // ['label' => 'Прочее', 'items' => [
     //     ['label' => 'Задачник', 'url' => ['todoist/index'], 'visible' => Yii::$app->user->can('admin')],
