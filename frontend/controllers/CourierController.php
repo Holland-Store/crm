@@ -41,19 +41,29 @@ class CourierController extends Controller
                        'roles' => ['courier', 'program'],
                    ],
                    [
-                    'actions' => ['ready'],
-                    'allow' => true,
-                    'roles' => ['courier', 'program'],
+                        'actions' => ['ready'],
+                        'allow' => true,
+                        'roles' => ['courier', 'program'],
                    ],
                    [
-                    'actions' => ['make'],
-                    'allow' => true,
-                    'roles' => ['courier', 'program'],
+                        'actions' => ['make'],
+                        'allow' => true,
+                        'roles' => ['courier', 'program'],
                    ],
                    [
-                    'actions' => ['delivered'],
-                    'allow' => true,
-                    'roles' => ['courier', 'program'],
+                        'actions' => ['delivered'],
+                        'allow' => true,
+                        'roles' => ['courier', 'program'],
+                   ],
+                   [
+                        'actions' => ['shipping'],
+                        'allow' => true,
+                        'roles' => ['admin', 'program'],
+                   ],
+                   [
+                        'actions' => ['deletes'],
+                        'allow' => true,
+                        'roles' => ['admin', 'program'],
                    ],
                 ],
             ],
@@ -75,7 +85,7 @@ class CourierController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
-     public function actionReady()
+    public function actionReady()
     {
         $courier = Courier::find();
 		$notification = $this->findNotification();
@@ -85,9 +95,30 @@ class CourierController extends Controller
             ]);
         
         return $this->render('ready', [
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+    /** View for admin scans all active shipping */
+    public function actionShipping()
+    {
+        $courier = Courier::find();
+        $searchModel = new CourierSearch();
+        $dataProvider = new ActiveDataProvider([
+            'query' => $courier->andWhere(['>', 'data_from', '0000-00-00 00:00:00']),
+            'pagination' => ['pageSize' => 50,]
+        ]);
+        $notification = $this->findNotification();//Уведомление
+
+        return $this->render('shipping', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
+    }
+    public function actionDeletes($id)
+    {
+        $this->findModel($id)->delete();
+
+        return $this->redirect(['shipping']);
     }
 
     /**
