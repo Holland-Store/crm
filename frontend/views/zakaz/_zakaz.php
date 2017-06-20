@@ -1,179 +1,96 @@
 <?php
 use yii\helpers\Html;
-use kartik\detail\DetailView;
-use kartik\money\MaskMoney;
-use yii\widgets\InputWidget;
-use yii\i18n\Formatter;
-
+use yii\widgets\DetailView;
+use yii\helpers\Url;
+use yii\bootstrap\Modal;
+use app\models\Courier;
 ?>
 
-<?= DetailView::widget([
-	'model' => $model,
-	'condensed' => true,
-	'rowOptions' => ['style' => 'font-size: 11px;'],
-	'panel' => [
-		'heading' => $model->description,
-        'type' => DetailView::TYPE_PRIMARY,
-    ],
-	'attributes' => [
-		[
-					'group' => true,
-					'label' => 'Информация о заказе',
-					'rowOptions' => ['class' => 'info'],
-					'groupOptions' => ['style' => 'color:black']
-		],
-		[
-			'attribute' => information,
-			'columns' => [
-				[
-					'attribute' => 'number',
-					'labelColOptions' => ['style' => 'width:10%;color:black'],
-					'valueColOptions' => ['style' => 'width:5%;color:black'],
-					'type' => DetailView::INPUT_HTML5_INPUT,
-					'inputType' => 'number',
-					'options' => ['min' => 0],
-				],
+<?php $this->registerJs('$("body").on("click", "#edit", function(){
+           var key = $(this).data("key");
+        $.ajax({
+            url: "'.Url::toRoute(['zakaz/zakazedit']).'?id="+key,
+            timeout: 10000,
+            success: function(html){
+                $(".view-zakaz").html(html);
+            }
+        })
+    });') ?>
+
+<div class="view-zakaz" style="color: black">
+	<div class="col-lg-2">
+		<?= Detailview::widget([
+			'model' => $model,
+			// 'striped' => false,
+			'options' => ['class' => 'table detail-view'],
+			'template' => '<tr style="color:black;border: none;"><td{contentOptions} class="zakaz-view-kartik">{value}</td></tr></tr>',
+			'attributes' => [
 				[
 					'attribute' => 'data',
-					'format' => ['date', 'd.MM.Y'],
-					'labelColOptions' => ['style' => 'width:10%;color:black'],
-					'valueColOptions' => ['style' => 'width:5%;color:black'],
-					'displayOnly'=>true,
+					'format' => ['date','d.MM.Y H:i'],
 				],
+				[
+					'attribute' => 'id_sotrud',
+					'value' => $model->idSotrud->name
+				],
+				'name',
+				[
+                    'attribute' => 'phone',
+                    'value' => '8'.$model->phone,
+				],
+				'email',
+			],
+		]) ?>
+	</div>
+	<div class="col-lg-7">
+		<?= Detailview::widget([
+			'model' => $model,
+			'options' => ['class' => 'table detail-view'],
+			'template' => '<tr style="color:black;border: none;"><td{contentOptions} class="zakaz-view-kartik">{value}</td></tr></tr>',
+			'attributes' => [
 				[
 					'attribute' => 'information',
-					'format' => 'text',
-					'value' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-						quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-						consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-						cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-						proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-					'labelColOptions' => ['style' => 'color:black'],
-					'valueColOptions' => ['style' => 'color:black'],
+					'value' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eum dolore ex dignissimos hic unde facilis saepe veniam nulla blanditiis minus aperiam, soluta aspernatur, praesentium, possimus voluptate cum minima nisi corporis numquam sint sit. Quod harum architecto saepe iste maxime sequi nesciunt rem, libero soluta voluptas provident quas. Officiis provident rerum, doloremque vel accusantium dolores deleniti quod sequi itaque ex rem mollitia, molestias eum. Illum sequi ea quod earum delectus, dolor dolore quae nulla totam consequuntur, esse quibusdam. Repudiandae, nobis magnam similique quia ea aperiam tenetur dolorem minima? Similique officiis voluptatibus nesciunt veniam ab distinctio doloribus. Quo facere, aliquam unde officiis adipisci illo dolorem repudiandae fuga architecto nesciunt. Quae obcaecati, sapiente officia repellendus, iure numquam recusandae quam rem quis odit consequatur eaque nihil delectus iste, aliquid repudiandae amet culpa ut. Soluta inventore laborum aut, officia aliquam, non amet voluptatem quos, ab quasi illum? Sit provident fugit beatae suscipit sapiente quam doloremque, ipsam illum cum debitis corporis laboriosam adipisci ex perferendis dignissimos, reiciendis cupiditate id sed, voluptatibus harum velit temporibus sint delectus. Quibusdam unde nostrum inventore aut aliquid? Doloremque labore officiis sapiente quam atque quos totam assumenda laborum officia, accusamus, natus quibusdam id quaerat soluta animi porro dolores ea. Laborum odio ratione reiciendis, ducimus ex porro, quaerat iure ut distinctio tenetur libero eaque blanditiis odit nobis ipsum? Reiciendis quod dolorum excepturi aut ex id placeat ullam assumenda necessitatibus distinctio nihil ab totam nobis laboriosam vero laborum, earum qui. Deserunt odio fugit porro accusantium dicta sapiente, impedit iusto nesciunt, cumque consequatur ab vero reiciendis! Ab unde, voluptas soluta rem in quam alias, illum magnam neque tenetur ducimus exercitationem, a temporibus incidunt earum iste molestias dolores! Voluptatum nemo quis id eius, alias nisi blanditiis nulla, voluptatem, corrupti libero ipsum? Ullam ut rerum, adipisci quasi repellat porro, accusantium voluptas provident eum dolores quidem placeat excepturi inventore esse recusandae hic enim obcaecati voluptate, unde at voluptatem. Natus ab nulla totam culpa nam voluptatibus officiis, numquam optio similique alias officia eveniet. Dolorum illo accusamus consectetur vero possimus eveniet vel a maiores, odit, quod expedita rerum, consequatur laborum. Atque maxime quisquam optio est asperiores quis, accusantium deleniti, delectus aliquid sapiente ipsam libero repellendus repudiandae et pariatur blanditiis consequuntur distinctio, eaque facilis. Rem temporibus ad doloribus a velit saepe quaerat maxime cupiditate nemo adipisci enim vel ex officiis non, labore dolorem tempore quibusdam, aperiam odit voluptatibus architecto nihil illum numquam natus, corporis. Reiciendis impedit praesentium ipsa, dolore voluptates dolorum iste, quos sapiente asperiores voluptas quam ad quod rem incidunt aliquam non, optio vitae quibusdam. Numquam error, blanditiis eius rem commodi voluptatibus quas, atque eligendi exercitationem amet, officia repellat incidunt in hic harum. Odit quidem esse ratione et cupiditate error in nulla itaque repudiandae consequatur qui magnam enim exercitationem temporibus placeat saepe, ex, perferendis, eveniet facere nostrum ut nisi. Numquam nostrum nihil quo soluta voluptates neque consequatur deleniti necessitatibus consectetur nobis cum ad accusantium dolorum quae placeat voluptate asperiores iusto aut perspiciatis delectus, amet, dolorem et esse libero. Aperiam perferendis nesciunt necessitatibus accusamus ea, aliquid porro, error numquam rem sapiente!',
+					'contentOptions' => ['class' => 'trInform']
 				],
-				// [
-				// 	'attribute' => 'srok',
-				// 	'format' => ['date','d.MM.Y'],
-				// 	'labelColOptions' => ['style' => 'width:5%; color:black'],
-				// 	'valueColOptions' => ['style' => 'width:5%; color:black'],
-				// ],
-				[
-					'attribute' => 'img',
-					'format' => 'raw',
-					'value' => $model->img == null ? '' : Html::a($model->img, '@web/attachment/'.$model->img, ['download' => true, 'data-pjax' => 0]),
-					'labelColOptions' => ['style' => 'width:10%;color:black'],
-					'valueColOptions' => ['style' => 'width:5%;color:black'],
-					'type' => DetailView::INPUT_FILE,
-				],
+				'number',
+				'id_tovar',
 			],
-			[
-				'attribute' => prioritetName,
+		]) ?>
+	</div>
+	<div class="col-lg-3">
+		<?= Detailview::widget([
+			'model' => $model,
+			'options' => ['class' => 'table detail-view'],
+			'template' => '<tr style="color:black;border: none;"><td{contentOptions} class="zakaz-view-kartik">{value}</td></tr></tr>',
+			'attributes' => [
+				'statusName',
+				[
+					'attribute' => 'id_shipping',
+					'value' => $model->idShipping->dostavkaName,
+				],
+				'img',
+				'maket',
 			],
-		],
-		[
-			'group' => true,
-			'label' => 'Клиент',
-					'rowOptions' => ['class' => 'info'],
-					'groupOptions' => ['style' => 'color:black'],
+		]) ?>
+	</div>
+    <div class="footer-view-zakaz">
+        <?= Html::a('Задача', ['todoist/createzakaz', 'id_zakaz' => $model->id_zakaz]) ?>
+        <?= Html::a('Запрос', ['todoist/create_shop']) ?>
+        <?php Modal::begin([
+            'header' => '<h2>Создание доставки</h2>',
+            'toggleButton' => [
+                'tag' => 'a',
+                'label' => 'Доставка',
+            ]
+        ]);
+        $shipping = new Courier();
+        echo $this->render('shipping', [
+           'shipping' => $shipping,
+            'model' => $model->id_zakaz,
+        ]);
 
-		],
-		[
-			'attribute' => client,
-			'columns' => [
-				[
-					'attribute' => 'name',
-					'labelColOptions' => ['style' => 'width:5%;color:black'],
-					'valueColOptions' => ['style' => 'color:black'],
-
-				],
-				[
-					'attribute' => 'phone',
-					'labelColOptions' => ['style' => 'width:5%;color:black'],
-					'valueColOptions' => ['style' => 'color:black'],
-				],
-				[
-					'attribute' => 'email',
-					'labelColOptions' => ['style' => 'width:5%;color:black'],
-					'valueColOptions' => ['style' => 'color:black'],
-					'type' => DetailView::INPUT_HTML5_INPUT,
-					'inputType' => 'email',
-				],
-			],
-		],
-		[
-			'group' => true,
-			'label' => 'Оплата',
-					'rowOptions' => ['class' => 'info'],
-					'groupOptions' => ['style' => 'color:black'],
-
-		],
-		[
-			'attribute' => oplate,
-			'columns' => [
-				// [
-				// 	'attribute' => 'oplata',
-				// 	'labelColOptions' => ['style' => 'width:5%;color:black'],
-				// 	'valueColOptions' => ['style' => 'color:black'],
-
-				// ],
-				[
-					'attribute' => 'fact_oplata',
-					'label' => 'Предоплата',
-					'labelColOptions' => ['style' => 'width:5%;color:black'],
-					'valueColOptions' => ['style' => 'color:black'],
-					'value' => $model->fact_oplata == null ? '' : $model->fact_oplata.' руб.',
-					'type' => DetailView::INPUT_HTML5_INPUT,
-					'inputType' => 'number',
-					'options' => ['min' => 0],
-				],
-				[
-					'attribute' => 'fact_oplata',
-					'label' => 'К доплате',
-					'value' => $model->oplata != null ? $model->oplata - $model->fact_oplata.' рублей' : '',
-					'labelColOptions' => ['style' => 'width:5%;color:black'],
-					'valueColOptions' => ['style' => 'color:black'],
-					'type' => DetailView::INPUT_HTML5_INPUT,
-					'inputType' => 'number',
-					'options' => ['min' => 0],
-				],
-			],
-		],
-		[
-			'group' => true,
-			'label' => 'Управление',
-					'rowOptions' => ['class' => 'info'],
-					'groupOptions' => ['style' => 'color:black'],
-
-		],
-		[
-			'attribute' => control,
-			'columns' => [
-				[
-					'attribute' => 'id_tovar',
-					'labelColOptions' => ['style' => 'width:5%;color:black'],
-					'valueColOptions' => ['style' => 'color:black'],
-				],
-				[
-					'attribute' => 'statusName',
-					'label' => 'Этап',
-					'labelColOptions' => ['style' => 'width:5%;color:black'],
-					'valueColOptions' => ['style' => 'color:black'],
-				],
-				[
-					'attribute' => 'sotrud_name',
-					'labelColOptions' => ['style' => 'width:5%;color:black'],
-					'valueColOptions' => ['style' => 'color:black'],
-				],
-			],
-		],
-		[
-			'attribute' => 'id_shipping',
-			'label' => 'Доставка',
-			'value' => $model->idShipping->dostavkaName,
-			'labelColOptions' => ['style' => 'width:5%;color:black'],
-			'valueColOptions' => ['style' => 'color:black'],
-			'displayOnly'=>true,
-		],
-	],
-])  ?>
+        Modal::end(); ?>
+        <?= Html::submitButton('Редактировать', ['id' => 'edit', 'data-key' => $model->id_zakaz]) ?>
+    </div>
+</div>
