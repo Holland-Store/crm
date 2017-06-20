@@ -27,15 +27,16 @@
         "kartik-v/yii2-label-inplace": "^1.2",
         "kartik-v/yii2-money": "^1.2",
         "codeception/specify": "*",
-        "codeception/verify": "*"
+        "codeception/verify": "*",
+        "codeception/codeception": "2.3.3",
+        "kartik-v/yii2-widget-fileinput": "@dev"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
         "yiisoft/yii2-gii": "~2.0.0",
         "yiisoft/yii2-faker": "~2.0.0",
         "codeception/base": "^2.2.3",
-        "ext-xsl": "*",
-        "codeception/codeception": "^2.3"
+        "ext-xsl": "*"
     },
     "config": {
         "process-timeout": 1800
