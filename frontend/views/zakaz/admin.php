@@ -1,15 +1,8 @@
 <?php
 
 use yii\helpers\StringHelper;
-use yii\helpers\Html;
 use kartik\grid\GridView;
-use app\models\Otdel;
 use app\models\Zakaz;
-use dosamigos\datepicker\DatePicker;
-use yii\widgets\ActiveForm;
-use yii\bootstrap\Nav;
-use yii\bootstrap\Modal;
-use yii\widgets\MaskedInput;
 use yii\bootstrap\ButtonDropdown;
 use yii\grid\SetColumn;
 use yii\widgets\Pjax;
@@ -81,7 +74,6 @@ $this->title = 'Вce заказы';
         <?php echo $this->render('_searchadmin', ['model' => $searchModel]);?>
     </div>
         <?=
-        /** @var TYPE_NAME $dataProviderWork */
         GridView::widget([
         'dataProvider' => $dataProviderWork,
         'floatHeader' => true,
@@ -101,7 +93,7 @@ $this->title = 'Вce заказы';
         'columns' => [
 			[
 				'class'=>'kartik\grid\ExpandRowColumn',
-                'contentOptions' => function($model, $key, $index, $grid){
+                'contentOptions' => function($model, $index, $grid){
                     return ['id' => $model->id_zakaz, 'class' => 'border-left', 'style' => 'border:none'];
                 },                
 				'width'=>'10px',
@@ -109,7 +101,7 @@ $this->title = 'Вce заказы';
 					return GridView::ROW_COLLAPSED;
 				},
 				'detail'=>function ($model, $key, $index, $column) {
-					return Yii::$app->controller->renderPartial('_zakazold', ['model'=> $model]);
+					return Yii::$app->controller->renderPartial('_zakaz', ['model'=> $model]);
 				},
 				'enableRowClick' => true,
                 'expandOneOnly' => true,
