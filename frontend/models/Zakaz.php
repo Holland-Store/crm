@@ -229,10 +229,15 @@ class Zakaz extends ActiveRecord
     {
         return ArrayHelper::getValue(self::getStatusDisainArray(), $this->statusDisain);
     }
-    public function upload()
+
+    /**
+     * @param $id
+     * @return bool
+     */
+    public function upload($id)
     {
-        if($this->file){
-        $this->file->saveAs('attachment/'.time().'.'.$this->file->extension);
+        if($this->validate()){
+            $this->file->saveAs('attachment/'.$id.'.'.$this->file->extension);
         return true;
         } else {return false;}
     }
@@ -249,14 +254,14 @@ class Zakaz extends ActiveRecord
     public function getPrefics()
     {
         $list = self::getPreficsList();
-        return (isset($list[$this->id_sotrud])) ? $list[$this->id_sotrud].'-'.$this->id_zakaz : $this->id_zakaz;
+        return (isset($list[$this->id_sotrud])) ? $list[$this->id_sotrud].'-'.$this->id_zakaz :         $this->id_zakaz;
     }
     public function getUploadeFile()
     {
         $notification = new Notification();
 
         $this->file = UploadedFile::getInstance($this, 'file');//Выполнена работа дизайнером
-        if(isset($this->file))
+        if($this->validate())
         {
             $zakaz = $this->id_zakaz;
             $description = $this->description;
