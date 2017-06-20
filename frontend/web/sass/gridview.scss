@@ -48,9 +48,6 @@ $bacgrountTr: #802c2c;
 .table > tfoot > tr.info > th {
     background: $colButtonHover;
     border-radius: 0px 0px 15px 15px;
-    position: $position;
-    top: -14px;
-    z-index: -1;
 }
 
 .container{
@@ -69,7 +66,7 @@ $bacgrountTr: #802c2c;
     background: #302927;
 }
 .zakaz-index{
-    .nav-pills: 37px;   
+    //.nav-pills: 37px;
     .titleCaption{
         color: $colorH3;
         position: relative;
