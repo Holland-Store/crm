@@ -28,19 +28,19 @@ $this->title = 'Доставка';
             ],
             [
                 'attribute' => 'date',
-                'format' => ['date', 'd.m.Y'],
+                'format' => ['date', 'dd.MM.Y'],
             ],
             'to',
             'from',
             'commit',
             [
-                'header' => 'Действие',
+                'header' => '',
                 'format' => 'raw',
                 'value' => function($model, $key){
                     /**
                      * Если курьер не взял доставку, то админ может в этом случае отменить
                      * в противном случае админ не сможет отменить */
-                    return $model->status == 0 ? Html::a('Отменить доставку', ['deletes', 'id' => $model->id]) : '';
+                    return $model->status == 0 ? Html::a('<span class="glyphicon glyphicon-trash"></span>', ['deletes', 'id' => $model->id]) : '';
                 }
             ],
         ],
