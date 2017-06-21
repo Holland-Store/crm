@@ -51,6 +51,11 @@ class CustomController extends Controller
                         'allow' => true,
                         'roles' => ['zakup', 'program'],
                     ],
+                    [
+                        'actions' => ['brought'],
+                        'allow' => true,
+                        'roles' => ['seeAdop'],
+                    ],
 					[
                         'actions' => ['adop'],
                         'allow' => true,
@@ -68,7 +73,7 @@ class CustomController extends Controller
     public function actionIndex()
     {
         $searchModel = new CustomSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, 'zakup');
         $notification = $this->findNotification();
 
         return $this->render('index', [
@@ -83,14 +88,8 @@ class CustomController extends Controller
      */
     public function actionAdop()
     {
-        $dataProvider = new ActiveDataProvider([
-			'query' => Custom::find()->where(['id_user' => Yii::$app->user->id]),
-            'sort' => [
-                'defaultOrder' => [
-                    'date' => SORT_DESC,
-                ]
-		    ],
-        ]);
+        $searchModel = new CustomSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, 'adop');
         $notification = $this->findNotification();
 
         return $this->render('adop', [
@@ -109,8 +108,6 @@ class CustomController extends Controller
             'model' => $this->findModel($id),
         ]);
     }
-
-
 
     /**
      * Creates a new Custom model.
@@ -182,7 +179,25 @@ class CustomController extends Controller
 
         return $this->redirect(['index']);
     }
+    /**
+     * notification role zakup about brought custom
+     */
+    public function actionBrought($id){
+        $model = $this->findModel($id);
+        $model->action = 2;
+        if ($model->save()){
+            return $this->redirect(['custom/adop']);
+        } else {
+            print_r($model->getErrors());
+        }
 
+    }
+    /**
+     * Close an existing Custom model.
+     * if close is successful, the browser will be redirected to hte 'index' page.
+     * @param $id
+     * @return Response
+     */
     public function actionClose($id)
     {
         $notification = $this->findNotification();
