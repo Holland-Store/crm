@@ -3,10 +3,12 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use dosamigos\datepicker\DatePicker;
+use kartik\datecontrol\DateControl;
+use kartik\file\FileInput;
 use app\models\Tovar;
-use app\models\Zakaz;
 use yii\helpers\ArrayHelper;
 use yii\widgets\MaskedInput;
+
 /* @var $this yii\web\View */
 /* @var $model app\models\Zakaz */
 /* @var $form yii\widgets\ActiveForm */
@@ -31,8 +33,47 @@ use yii\widgets\MaskedInput;
         <div class="col-xs-12">
         <?= $form->field($model, 'information')->textarea(['rows' => 5]) ?>
         </div>
-        <div class="col-lg-5">
-            <?= $form->field($model, 'file')->fileInput() ?>
+        <div class="col-lg-12">
+            <?= $form->field($model, 'file')->widget(FileInput::className(), [
+                    'language' => 'ru',
+                    'options' => ['multiple' => false],
+                    'pluginOptions' => [
+                        'showCaption' => false,
+                        'showRemove' => false,
+                        'showUpload' => false,
+                        'showPreview' => true,
+                        'browseClass' => 'btn btn-success btn-block',
+                        'previewFileType' => 'any',
+                        'maxFileCount' => 1,
+//                        'autoReplace' => false,
+                        'preferIconicPreview' => true,
+                        'previewFileIconSettings' => ([
+                            'doc' => '<i class="fa fa-file-word-o text-primary"></i>',
+                            'xls' => '<i class="fa fa-file-excel-o text-success"></i>',
+                            'ppt' => '<i class="fa fa-file-powerpoint-o text-danger"></i>',
+                            'pdf' => '<i class="fa fa-file-pdf-o text-danger"></i>',
+                            'zip' => '<i class="fa fa-file-archive-o text-muted"></i>',
+                            'rar' => '<i class="fa fa-file-archive-o text-muted"></i>',
+                            'txt' => '<i class="fa fa-file-text-o text-info"></i>',
+                            'jpg' => '<i class="fa fa-file-photo-o text-danger"></i>',
+                            'png' => '<i class="fa fa-file-photo-o text-danger"></i>',
+                            'gif' => '<i class="fa fa-file-photo-o text-danger"></i>',
+                        ]),
+                        'layoutTemplates' => [
+                            'preview' => '<div class="file-preview {class}">
+                                <div class="close fileinput-remove">x</div>
+                               <div class="{dropClass}">
+                               <div class="file-preview-thumbnails">
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="file-preview-status text-center text-success"></div>
+                                <div class="kv-fileinput-error"></div>
+                                </div>
+                                </div>',
+                            'actionDrag' => '<span class="file-drag-handle {dragClass}" title="{dragTitle}">{dragIcon}</span>',
+                        ],
+                    ]
+            ]) ?>
             <div class="form-group field-zakaz-file">
             <?php if ($model->img == null) {
                 $fileImg = 'Нет выбранных файлов';
@@ -49,7 +90,7 @@ use yii\widgets\MaskedInput;
         </div>
         <div class="col-xs-12">
         <?= $form->field($model, 'phone')->widget(MaskedInput::className(),[
-            'mask' => '89999999999'
+            'mask' => '8(999)999-99-99'
         ]) ?>
         </div>
          <div class="col-xs-12">
@@ -78,14 +119,17 @@ use yii\widgets\MaskedInput;
 
     <div class="col-xs-4">
            <h3>Управление</h3>
-            <div class="col-xs-6">
+            <div class="col-xs-10">
             <?= $form->field($model, 'srok')->widget(
-                DatePicker::className(), [
-                    'inline' => false, 
-                    'clientOptions' => [
-                        'autoclose' => true,
-                        'format' => 'yyyy-mm-dd'
+                DateControl::className(), [
+                'language' => 'ru',
+                'type' => DateControl::FORMAT_DATETIME,
+//                'displayFormat' => 'php:D, d-MM-Y H:i:s',
+                'widgetOptions' => [
+                    'pluginOptions' => [
+                        'autoclose' => true
                     ]
+                ]
             ])->label('Срок');?>
             </div>
             <div class="col-xs-4">
