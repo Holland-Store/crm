@@ -95,6 +95,15 @@ class RbacController extends Controller
         $auth->add($courier);
         $auth->addChild($courier, $seeCourier);
 
+        $zakup = $auth->createRole('zakup');
+        $auth->add($zakup);
+        $auth->addChild($zakup, $seeAllIspol);
+        $auth->addChild($zakup, $todoist);
+
+        $system = $auth->createRole('system');
+        $auth->add($system);
+        $auth->addChild($system, $seeAllIspol);
+
         $prog = $auth->createRole('program');
         $auth->add($prog);
         $auth->addChild($prog, $admin);
@@ -102,17 +111,8 @@ class RbacController extends Controller
         $auth->addChild($prog, $master);
         $auth->addChild($prog, $shop);
         $auth->addChild($prog, $courier);
-		$auth->addChild($rogram, $zakup);
-		$auth->addChild($program, $system);
-
-		$zakup = $auth->createRole('zakup');
-		$auth->add($zakup);
-		$auth->addChild($zakup, $seeAllIspol);
-        $auth->addChild($zakup, $todoist);
-
-		$system = $auth->createRole('system');
-		$auth->add($system);
-		$auth->addChild($system, $seeAllIspol);
+		$auth->addChild($prog, $zakup);
+		$auth->addChild($prog, $system);
 
 		$auth->assign($zakup, 8);
 		$auth->assign($system, 9);
