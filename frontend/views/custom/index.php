@@ -37,9 +37,10 @@ $this->title = 'Запросы';
                 'format' => 'raw',
                 'value' => function($model) {
 					if(Yii::$app->user->can('zakup')){
-						return Html::a('Привезен', ['custom/close', 'id' => $model->id], ['class' => 'btn btn-primary btn-xs']);
+
+						return $model->action == 0 ? Html::a('Привезен', ['custom/close', 'id' => $model->id], ['class' => 'btn btn-primary btn-xs']) : Html::a('Привезен', ['custom/close', 'id' => $model->id], ['class' => 'btn btn-success btn-xs']);
 					} else {
-						return '';
+						return false;
 					}
                 },
             ],
