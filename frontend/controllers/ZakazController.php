@@ -560,7 +560,7 @@ class ZakazController extends Controller
     public function actionZakaz($id){
         $model = $this->findModel($id);
 
-            return $this->renderPartial('_zakaz', ['model' => $model]);
+        return $this->renderPartial('_zakaz', ['model' => $model]);
     }
     /** END Block admin in gridview*/
     /**
