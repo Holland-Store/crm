@@ -18,22 +18,25 @@ $this->title = 'Запросы';?>
         'dataProvider' => $dataProvider,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
+            
             [
 				'attribute' => 'date',
 				'format' => ['datetime', 'dd.MM.Y H:m'],
 			],
-            [
-                'attribute' => 'id_user',
-                'value' => function($model){
-                    return $model->idUser->name;
-                }
-            ],
             'tovar',
             'number',
             [
                 'attribute' => 'action',
-                'value' => function($model){return $model->action == 1 ? 'Привезен' : 'В процессе';},
+                'value' => function($model){
+                    return $model->action == 0 ? 'В процессе' : 'Привезен';
+                },
+            ],
+            [
+                'header' => 'Действие',
+                'format' => 'raw',
+                'value' => function($model){
+                    return $model->action == 0 ? Html::a('Привезен', ['brought', 'id' => $model->id]) : '';
+                }
             ],
         ],
     ]); ?>
