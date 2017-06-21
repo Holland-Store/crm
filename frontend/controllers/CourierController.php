@@ -104,7 +104,7 @@ class CourierController extends Controller
         $courier = Courier::find();
         $searchModel = new CourierSearch();
         $dataProvider = new ActiveDataProvider([
-            'query' => $courier->andWhere(['>', 'data_from', '0000-00-00 00:00:00']),
+            'query' => $courier->where(['data_to' => '0000-00-00 00:00:00']),
             'pagination' => ['pageSize' => 50,]
         ]);
         $notification = $this->findNotification();//Уведомление
@@ -114,6 +114,12 @@ class CourierController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
+
+    /**
+     * Delete shipping after courier not accepted shipping
+     * @param $id
+     * @return \yii\web\Response
+     */
     public function actionDeletes($id)
     {
         $this->findModel($id)->delete();
