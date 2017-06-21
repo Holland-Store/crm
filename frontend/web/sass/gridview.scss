@@ -207,11 +207,47 @@ $bacgrountTr: #802c2c;
                 border-bottom: none;
                 color: rgba(204, 198, 198, 0.6);
             }
-            .trInform{
+            .divInform{
+                overflow-y: scroll;
+                height: 133px;
                 background: $colorH3;
-                height: 113px;
                 border-radius: 8px;
-                overflow: hidden;
+                padding: 20px 18px 0px 17px;
+                border: 6px solid $colorH3;
+                border-bottom: 14px solid $colorH3;
+            }
+            .comment-zakaz{
+                overflow-y: scroll;
+                height: 80px;
+                margin-top: 5px;
+                background:$colorH3;
+                border-radius: 8px;
+                padding: 9px 18px 0px 17px;
+                border-left: 7px solid $colorH3;
+                border-top: 6px solid $colorH3;
+                border-right: 3px solid $colorH3;
+                border-bottom: 14px solid $colorH3;
+            }
+            ::-webkit-scrollbar {
+                width: 4px;
+            }
+
+            /* Track */
+            ::-webkit-scrollbar-track {
+                -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+                -webkit-border-radius: 10px;
+                border-radius: 10px;
+            }
+
+            /* Handle */
+            ::-webkit-scrollbar-thumb {
+                -webkit-border-radius: 10px;
+                border-radius: 10px;
+                background: $colorText;
+                -webkit-box-shadow: inset 0 0 5px $colorText;
+            }
+            ::-webkit-scrollbar-thumb:window-inactive {
+                background: rgba(255,0,0,0.4);
             }
         }
     }
