@@ -38,7 +38,7 @@ $this->title = 'Запросы';
                 'value' => function($model) {
 					if(Yii::$app->user->can('zakup')){
 
-						return $model->action == 0 ? Html::a('Привезен', ['custom/close', 'id' => $model->id], ['class' => 'btn btn-primary btn-xs']) : Html::a('Привезен', ['custom/close', 'id' => $model->id], ['class' => 'btn btn-success btn-xs']);
+						return $model->action == 0 ? Html::a('Отправить', ['custom/close', 'id' => $model->id], ['class' => 'btn btn-primary btn-xs']) : '';
 					} else {
 						return false;
 					}
