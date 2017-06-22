@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use Yii;
 use app\models\Zakaz;
 use app\models\Courier;
+use app\models\Comment;
 use app\models\Notification;
 use app\models\ZakazSearch;
 use yii\web\Controller;
@@ -132,6 +133,11 @@ class ZakazController extends Controller
                     ],
                     [
                         'actions' => ['zakaz'],
+                        'allow' => true,
+                        'roles' => ['admin', 'program'],
+                    ],
+                    [
+                        'actions' => ['comment'],
                         'allow' => true,
                         'roles' => ['admin', 'program'],
                     ],
@@ -488,7 +494,16 @@ class ZakazController extends Controller
         $notification = $this->findNotification();
         $notifications = new Notification();
         $model = new Zakaz();
+        $comment = new Comment();
         $shipping = new Courier();
+
+        if ($comment->load(Yii::$app->request->post())){
+            if ($comment->save()){
+                return $this->redirect(['admin']);
+            } else {
+                print_r($comment->getErrors());
+            }
+        }
 
         if ($shipping->load(Yii::$app->request->post()))
         {
@@ -560,7 +575,9 @@ class ZakazController extends Controller
     public function actionZakaz($id){
         $model = $this->findModel($id);
 
-        return $this->renderPartial('_zakaz', ['model' => $model]);
+        return $this->renderPartial('_zakaz', [
+            'model' => $model,
+            ]);
     }
     /** END Block admin in gridview*/
     /**
