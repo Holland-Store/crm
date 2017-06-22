@@ -38,6 +38,7 @@ use yii\widgets\MaskedInput;
                     'language' => 'ru',
                     'options' => ['multiple' => false],
                     'pluginOptions' => [
+                        'theme' => 'explorer',
                         'showCaption' => false,
                         'showRemove' => false,
                         'showUpload' => false,
@@ -133,7 +134,7 @@ use yii\widgets\MaskedInput;
             ])->label('Срок');?>
             </div>
             <div class="col-xs-4">
-            <?= $form->field($model, 'minut')->textInput(['type' => 'number', 'min' => '0', 'max' => '24']) ?>
+            <?php //$form->field($model, 'minut')->textInput(['type' => 'number', 'min' => '0', 'max' => '24']) ?>
             </div>
             <?php if (Yii::$app->user->can('admin')): ?> 
             <div class="col-xs-10">
@@ -143,11 +144,11 @@ use yii\widgets\MaskedInput;
             </div>
             <div class="col-xs-10">      
                 <?= $form->field($model, 'status')->dropDownList([
-                '2' => 'Принят',
+//                '2' => 'Принят',
                 '3' => 'Дизайнер',
                 '6' => 'Мастер',
                 '8' => 'Аутсорс',
-                '1' => 'Исполнен',
+//                '1' => 'Исполнен',
                 ],
                 ['prompt' => ''])->label('Назначить');?>
                 <?= $form->field($model, 'prioritet')->dropDownList([
