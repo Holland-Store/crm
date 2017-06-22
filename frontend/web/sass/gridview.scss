@@ -208,7 +208,7 @@ $bacgrountTr: #802c2c;
                 color: rgba(204, 198, 198, 0.6);
             }
             .divInform{
-                overflow-y: scroll;
+                overflow-y: auto;
                 height: 133px;
                 background: $colorH3;
                 border-radius: 8px;
@@ -217,7 +217,7 @@ $bacgrountTr: #802c2c;
                 border-bottom: 14px solid $colorH3;
             }
             .comment-zakaz{
-                overflow-y: scroll;
+                overflow-y: auto;
                 height: 80px;
                 margin-top: 5px;
                 background:$colorH3;

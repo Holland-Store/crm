@@ -413,7 +413,7 @@ body {
 }
 /* line 210, ../sass/gridview.scss */
 .zakaz-index .table-bordered tbody tr .divInform {
-  overflow-y: scroll;
+  overflow-y: auto;
   height: 133px;
   background: #736a50;
   border-radius: 8px;
@@ -423,7 +423,7 @@ body {
 }
 /* line 219, ../sass/gridview.scss */
 .zakaz-index .table-bordered tbody tr .comment-zakaz {
-  overflow-y: scroll;
+  overflow-y: auto;
   height: 80px;
   margin-top: 5px;
   background: #736a50;
