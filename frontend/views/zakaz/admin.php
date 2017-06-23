@@ -150,6 +150,18 @@ $this->title = 'Вce заказы';
                 }
             ],
             [
+                'attribute' => 'id_shipping',
+                'format' => 'raw',
+                'contentOptions' => ['class' => 'tr20'],
+                'value' => function($model){
+                    if ($model->idShipping->status == 0 or $model->idShipping->status == 1) {
+                        return '<i class="fa fa-truck" style="font-size: 13px;color: #f0ad4e;" aria-hidden="true"></i>';
+                    } elseif ($model->idShipping->status == 2){
+                        return '<i class="fa fa-truck" style="font-size: 13px;color: #191412;" aria-hidden="true"></i>';
+                    } else{return '';}
+                }
+            ],
+            [
                 'attribute' => 'oplata',
                 'headerOptions' => ['width' => '70'],
                 'value' => function($model){
@@ -251,6 +263,18 @@ $this->title = 'Вce заказы';
                 }
             ],
             [
+                    'attribute' => 'id_shipping',
+                    'format' => 'raw',
+                    'contentOptions' => ['class' => 'tr20'],
+                    'value' => function($model){
+                        if ($model->idShipping->status == 0 or $model->idShipping->status == 1) {
+                            return '<i class="fa fa-truck" style="font-size: 13px;color: #f0ad4e;" aria-hidden="true"></i>';
+                        } elseif ($model->idShipping->status == 2){
+                            return '<i class="fa fa-truck" style="font-size: 13px;color: #191412;" aria-hidden="true"></i>';
+                        } else{return '';}
+                  }
+            ],
+            [
                 'attribute' => 'oplata',
                 'headerOptions' => ['width' => '70'],
                 'value' => function($model){
@@ -342,6 +366,18 @@ $this->title = 'Вce заказы';
                 'attribute' => 'description',
                 'value' => function($model){
                     return StringHelper::truncate($model->description, 100);
+                }
+            ],
+            [
+                'attribute' => 'id_shipping',
+                'format' => 'raw',
+                'contentOptions' => ['class' => 'tr50'],
+                'value' => function($model){
+                    if ($model->idShipping->status == 0 or $model->idShipping->status == 1) {
+                        return '<i class="fa fa-truck" style="font-size: 13px;color: #f0ad4e;" aria-hidden="true"></i>';
+                    } elseif ($model->idShipping->status == 2){
+                        return '<i class="fa fa-truck" style="font-size: 13px;color: #191412;" aria-hidden="true"></i>';
+                    } else{return '';}
                 }
             ],
             [
