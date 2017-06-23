@@ -46,6 +46,7 @@ class Courier extends \yii\db\ActiveRecord
             [['id_zakaz', 'status'], 'integer'],
             [['data_to', 'data_from', 'date'], 'safe'],
             [['commit'], 'string'],
+            ['status', 'default', 'value' => 0],
             [['to', 'from'], 'string', 'max' => 50],
             [['id_zakaz'], 'exist', 'skipOnError' => true, 'targetClass' => Zakaz::className(), 'targetAttribute' => ['id_zakaz' => 'id_zakaz']],
         ];
