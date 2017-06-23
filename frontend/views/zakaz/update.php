@@ -5,10 +5,10 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Zakaz */
 
-$this->title = 'Редактировать заказ: ' . $model->id_zakaz;
-$this->params['breadcrumbs'][] = ['label' => 'Заказ', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id_zakaz, 'url' => ['view', 'id' => $model->id_zakaz]];
-$this->params['breadcrumbs'][] = 'Редактировать';
+//$this->title = 'Редактировать заказ: ' . $model->id_zakaz;
+//$this->params['breadcrumbs'][] = ['label' => 'Заказ', 'url' => ['index']];
+//$this->params['breadcrumbs'][] = ['label' => $model->id_zakaz, 'url' => ['view', 'id' => $model->id_zakaz]];
+//$this->params['breadcrumbs'][] = 'Редактировать';
 ?>
 <div class="zakaz-update">
 
