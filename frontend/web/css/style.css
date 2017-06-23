@@ -185,7 +185,7 @@ body {
   font-size: 11px;
 }
 
-/* line 37, ../sass/gridview.scss */
+/* line 39, ../sass/gridview.scss */
 .table > thead > tr > td.info,
 .table > tbody > tr > td.info,
 .table > tfoot > tr > td.info,
@@ -202,31 +202,31 @@ body {
   border-radius: 0px 0px 15px 15px;
 }
 
-/* line 53, ../sass/gridview.scss */
+/* line 55, ../sass/gridview.scss */
 .container {
   font-size: 11px;
 }
 
-/* line 57, ../sass/gridview.scss */
+/* line 59, ../sass/gridview.scss */
 .form-control:focus {
   outline: none;
   -webkit-box-shadow: none;
   box-shadow: none;
 }
 
-/* line 63, ../sass/gridview.scss */
+/* line 65, ../sass/gridview.scss */
 .button, .zakaz-index .zakazSearch .zakaz-search button {
   outline: none;
   color: #999265;
   background: #302927;
 }
 
-/* line 70, ../sass/gridview.scss */
+/* line 72, ../sass/gridview.scss */
 .zakaz-index .titleCaption, .zakaz-index .titleTable {
   color: #736a50;
   position: relative;
 }
-/* line 74, ../sass/gridview.scss */
+/* line 76, ../sass/gridview.scss */
 .zakaz-index .titleTable {
   font-size: 24px;
   margin-top: 41px;
@@ -234,16 +234,16 @@ body {
   margin-left: 15px;
   float: left;
 }
-/* line 81, ../sass/gridview.scss */
+/* line 83, ../sass/gridview.scss */
 .zakaz-index .titleTable:nth-of-type(3) {
   float: none;
 }
-/* line 85, ../sass/gridview.scss */
+/* line 87, ../sass/gridview.scss */
 .zakaz-index .zakazSearch {
   height: 73px;
   float: right;
 }
-/* line 89, ../sass/gridview.scss */
+/* line 91, ../sass/gridview.scss */
 .zakaz-index .zakazSearch .zakaz-search input {
   position: relative;
   top: 40px;
@@ -254,13 +254,13 @@ body {
   font-size: 11px;
   border: 1px solid rgba(204, 198, 198, 0.6);
 }
-/* line 98, ../sass/gridview.scss */
+/* line 100, ../sass/gridview.scss */
 .zakaz-index .zakazSearch .zakaz-search input:focus {
   background: rgba(204, 198, 198, 0.6);
   color: #302927;
   border: none;
 }
-/* line 104, ../sass/gridview.scss */
+/* line 106, ../sass/gridview.scss */
 .zakaz-index .zakazSearch .zakaz-search button {
   margin-top: -5px;
   height: 30px;
@@ -272,7 +272,7 @@ body {
   border: 1px solid rgba(204, 198, 198, 0.6);
   border-left: 1px solid #3a3331;
 }
-/* line 115, ../sass/gridview.scss */
+/* line 117, ../sass/gridview.scss */
 .zakaz-index .zakazSearch .zakaz-search button:hover {
   background: #802c2c;
   border-bottom: 1px solid #802c2c;
@@ -280,224 +280,266 @@ body {
   border-right: 1px solid #802c2c;
   color: #fff;
 }
-/* line 126, ../sass/gridview.scss */
+/* line 128, ../sass/gridview.scss */
 .zakaz-index .border-left {
   width: 10px;
   border-radius: 19px 0px 0px 19px;
   border: none;
 }
-/* line 132, ../sass/gridview.scss */
+/* line 134, ../sass/gridview.scss */
 .zakaz-index .border-right {
   width: 90px;
   border-radius: 0px 19px 18px 0px;
   border: none;
 }
-/* line 138, ../sass/gridview.scss */
+/* line 140, ../sass/gridview.scss */
 .zakaz-index .tr10 {
   width: 10px;
 }
-/* line 139, ../sass/gridview.scss */
+/* line 141, ../sass/gridview.scss */
 .zakaz-index .tr20 {
   width: 20px;
 }
-/* line 140, ../sass/gridview.scss */
+/* line 142, ../sass/gridview.scss */
 .zakaz-index .tr25 {
   width: 25px;
 }
-/* line 141, ../sass/gridview.scss */
+/* line 143, ../sass/gridview.scss */
 .zakaz-index .tr50 {
   width: 50px;
 }
-/* line 142, ../sass/gridview.scss */
+/* line 144, ../sass/gridview.scss */
 .zakaz-index .tr70 {
   width: 70px;
 }
-/* line 143, ../sass/gridview.scss */
+/* line 145, ../sass/gridview.scss */
 .zakaz-index .tr90 {
   width: 90px;
 }
-/* line 144, ../sass/gridview.scss */
+/* line 146, ../sass/gridview.scss */
 .zakaz-index .tr180 {
   width: 137px;
 }
-/* line 146, ../sass/gridview.scss */
+/* line 148, ../sass/gridview.scss */
 .zakaz-index .header {
   display: none;
 }
-/* line 147, ../sass/gridview.scss */
+/* line 149, ../sass/gridview.scss */
 .zakaz-index .trBorder {
   border: none;
 }
-/* line 148, ../sass/gridview.scss */
+/* line 150, ../sass/gridview.scss */
 .zakaz-index .position {
   position: relative;
 }
-/* line 149, ../sass/gridview.scss */
+/* line 151, ../sass/gridview.scss */
 .zakaz-index .bold {
   font-weight: 700;
 }
-/* line 150, ../sass/gridview.scss */
+/* line 152, ../sass/gridview.scss */
 .zakaz-index .italic {
   font-weight: 100;
 }
-/* line 151, ../sass/gridview.scss */
+/* line 153, ../sass/gridview.scss */
 .zakaz-index .table .trTablePass {
   background: #802c2c;
 }
-/* line 154, ../sass/gridview.scss */
+/* line 156, ../sass/gridview.scss */
 .zakaz-index .table thead {
   background: #302927;
 }
-/* line 157, ../sass/gridview.scss */
+/* line 159, ../sass/gridview.scss */
 .zakaz-index .table #trNew {
   font-weight: bold;
 }
-/* line 160, ../sass/gridview.scss */
+/* line 162, ../sass/gridview.scss */
 .zakaz-index .reminder {
   position: relative;
   top: -104px;
   clear: both;
 }
-/* line 165, ../sass/gridview.scss */
+/* line 167, ../sass/gridview.scss */
 .zakaz-index .grid-view td {
   white-space: inherit;
 }
-/* line 169, ../sass/gridview.scss */
+/* line 171, ../sass/gridview.scss */
 .zakaz-index .fa-red {
   color: #CC0000;
   font-size: 10px;
 }
-/* line 173, ../sass/gridview.scss */
+/* line 175, ../sass/gridview.scss */
 .zakaz-index .fa-ping {
   color: #FF9999;
   font-size: 10px;
 }
-/* line 177, ../sass/gridview.scss */
+/* line 179, ../sass/gridview.scss */
+.zakaz-index .anketaZakaz {
+  color: rgba(204, 198, 198, 0.6);
+  padding-left: 23px;
+  margin-top: 1px;
+  width: 100px;
+}
+/* line 184, ../sass/gridview.scss */
+.zakaz-index .anketaZakaz div {
+  margin-bottom: 7px;
+}
+/* line 186, ../sass/gridview.scss */
+.zakaz-index .anketaZakaz div:nth-of-type(4) {
+  margin-top: -7px;
+}
+/* line 189, ../sass/gridview.scss */
+.zakaz-index .anketaZakaz div:nth-of-type(5) {
+  margin-top: -7px;
+}
+/* line 193, ../sass/gridview.scss */
+.zakaz-index .anketaZakaz .anketaZakaz_from {
+  font-weight: 900;
+  color: #3a3331;
+}
+/* line 198, ../sass/gridview.scss */
 .zakaz-index table {
   color: #ccc6c6;
 }
-/* line 181, ../sass/gridview.scss */
+/* line 202, ../sass/gridview.scss */
 .zakaz-index thead {
   border: 1px solid #302927;
 }
-/* line 185, ../sass/gridview.scss */
+/* line 206, ../sass/gridview.scss */
 .zakaz-index thead a {
   color: #302927;
 }
-/* line 188, ../sass/gridview.scss */
+/* line 209, ../sass/gridview.scss */
 .zakaz-index .table-bordered > thead > tr > th {
   border: none;
 }
-/* line 193, ../sass/gridview.scss */
+/* line 214, ../sass/gridview.scss */
 .zakaz-index .table tbody > tr {
   border: 1px solid #302927;
 }
-/* line 196, ../sass/gridview.scss */
+/* line 217, ../sass/gridview.scss */
 .zakaz-index .table .textTr {
   color: rgba(204, 198, 198, 0.6);
 }
-/* line 201, ../sass/gridview.scss */
-.zakaz-index .table-bordered tbody tr {
-  /* Track */
-  /* Handle */
-}
-/* line 202, ../sass/gridview.scss */
+/* line 223, ../sass/gridview.scss */
 .zakaz-index .table-bordered tbody tr td {
   border: none;
   border-bottom: none;
 }
-/* line 206, ../sass/gridview.scss */
+/* line 227, ../sass/gridview.scss */
 .zakaz-index .table-bordered tbody tr .zakaz-view-kartik {
   border-bottom: none;
   color: rgba(204, 198, 198, 0.6);
 }
-/* line 210, ../sass/gridview.scss */
-.zakaz-index .table-bordered tbody tr .divInform {
+/* line 231, ../sass/gridview.scss */
+.zakaz-index .table-bordered tbody tr .zakazInfo {
+  margin-top: 1px;
+  /* Track */
+  /* Handle */
+}
+/* line 233, ../sass/gridview.scss */
+.zakaz-index .table-bordered tbody tr .zakazInfo .divInform {
   overflow-y: auto;
   height: 133px;
   background: #736a50;
+  color: #191412;
   border-radius: 8px;
-  padding: 20px 18px 0px 17px;
-  border: 6px solid #736a50;
+  padding: 5px 18px 0px 17px;
+  border-top: 4px solid #736a50;
+  border-right: 4px solid #736a50;
+  border-left: 1px solid #736a50;
   border-bottom: 14px solid #736a50;
 }
-/* line 219, ../sass/gridview.scss */
-.zakaz-index .table-bordered tbody tr .comment-zakaz {
+/* line 245, ../sass/gridview.scss */
+.zakaz-index .table-bordered tbody tr .zakazInfo .comment-zakaz {
   overflow-y: auto;
   height: 80px;
   margin-top: 5px;
-  background: #736a50;
+  color: #3a3331;
+  background: #191412;
   border-radius: 8px;
   padding: 9px 18px 0px 17px;
-  border-left: 7px solid #736a50;
-  border-top: 6px solid #736a50;
-  border-right: 3px solid #736a50;
-  border-bottom: 14px solid #736a50;
+  border-left: 0px solid #191412;
+  border-top: 0px solid #191412;
+  border-right: 3px solid #191412;
+  border-bottom: 27px solid #191412;
 }
-/* line 231, ../sass/gridview.scss */
-.zakaz-index .table-bordered tbody tr ::-webkit-scrollbar {
+/* line 258, ../sass/gridview.scss */
+.zakaz-index .table-bordered tbody tr .zakazInfo ::-webkit-scrollbar {
   width: 4px;
 }
-/* line 236, ../sass/gridview.scss */
-.zakaz-index .table-bordered tbody tr ::-webkit-scrollbar-track {
+/* line 263, ../sass/gridview.scss */
+.zakaz-index .table-bordered tbody tr .zakazInfo ::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   -webkit-border-radius: 10px;
   border-radius: 10px;
 }
-/* line 243, ../sass/gridview.scss */
-.zakaz-index .table-bordered tbody tr ::-webkit-scrollbar-thumb {
+/* line 270, ../sass/gridview.scss */
+.zakaz-index .table-bordered tbody tr .zakazInfo ::-webkit-scrollbar-thumb {
   -webkit-border-radius: 10px;
   border-radius: 10px;
-  background: rgba(204, 198, 198, 0.6);
-  -webkit-box-shadow: inset 0 0 5px rgba(204, 198, 198, 0.6);
+  background: #3a3331;
+  -webkit-box-shadow: inset 0 0 5px #3a3331;
 }
-/* line 249, ../sass/gridview.scss */
-.zakaz-index .table-bordered tbody tr ::-webkit-scrollbar-thumb:window-inactive {
-  background: rgba(255, 0, 0, 0.4);
+/* line 276, ../sass/gridview.scss */
+.zakaz-index .table-bordered tbody tr .zakazInfo ::-webkit-scrollbar-thumb:window-inactive {
+  background: #3a3331;
 }
-/* line 254, ../sass/gridview.scss */
+/* line 280, ../sass/gridview.scss */
+.zakaz-index .table-bordered tbody tr .imgZakaz {
+  font-size: 2em;
+  height: 49px;
+  width: 49px;
+  text-align: center;
+  border-radius: 4px;
+  padding-top: 13px;
+  background: #302927;
+  color: #736a50;
+  margin-top: 10px;
+  margin-left: -20px;
+}
+/* line 294, ../sass/gridview.scss */
 .zakaz-index .tableSize {
   font-size: 11px;
 }
-/* line 257, ../sass/gridview.scss */
+/* line 297, ../sass/gridview.scss */
 .zakaz-index .headerTable {
   display: none;
 }
-/* line 261, ../sass/gridview.scss */
+/* line 301, ../sass/gridview.scss */
 .zakaz-index .summary {
   display: none;
 }
-/* line 264, ../sass/gridview.scss */
+/* line 304, ../sass/gridview.scss */
 .zakaz-index .borderSrok {
   border-bottom: 1px solid #000;
 }
-/* line 268, ../sass/gridview.scss */
+/* line 308, ../sass/gridview.scss */
 .zakaz-index .table-bordered > tbody .trTable {
   border-bottom: 1px solid #423836;
 }
-/* line 272, ../sass/gridview.scss */
+/* line 312, ../sass/gridview.scss */
 .zakaz-index .table-bordered > tbody .trSrok:hover {
   background: #3c3432;
 }
-/* line 277, ../sass/gridview.scss */
+/* line 317, ../sass/gridview.scss */
 .zakaz-index .table-bordered > tbody .trNormal:hover {
   background: #3c3432;
 }
-/* line 282, ../sass/gridview.scss */
+/* line 322, ../sass/gridview.scss */
 .zakaz-index .detail-view {
   background-color: #191412;
 }
-/* line 285, ../sass/gridview.scss */
+/* line 325, ../sass/gridview.scss */
 .zakaz-index .footer-view-zakaz {
   margin-top: 15px;
 }
 
-/* line 289, ../sass/gridview.scss */
+/* line 329, ../sass/gridview.scss */
 .footerNav {
   margin-top: 27px;
   font-size: 24px;
 }
-/* line 292, ../sass/gridview.scss */
+/* line 332, ../sass/gridview.scss */
 .footerNav a {
   width: 135px;
   border-radius: 26px;
@@ -513,12 +555,12 @@ body {
   border: none;
 }
 
-/* line 307, ../sass/gridview.scss */
+/* line 347, ../sass/gridview.scss */
 .nav > li > a:hover, .nav > li > a:focus {
   background: #191412;
 }
 
-/* line 310, ../sass/gridview.scss */
+/* line 350, ../sass/gridview.scss */
 .nav-pills > li > a {
   border-radius: 26px;
 }
@@ -625,14 +667,17 @@ body {
   background: #191412;
 }
 
-/* line 51, ../sass/style.scss */
-.wrap {
+/* line 52, ../sass/style.scss */
+.wrap .logo {
   background-image: url("../img/holland.png");
   background-repeat: no-repeat;
   background-position: 63px 1px;
   background-size: 98px;
+  width: 168px;
+  height: 100px;
+  float: left;
 }
-/* line 56, ../sass/style.scss */
+/* line 61, ../sass/style.scss */
 .wrap .headerNav {
   margin-top: -26px;
   margin-left: 426px;
@@ -642,21 +687,21 @@ body {
   color: #736a50;
   width: 286px;
 }
-/* line 65, ../sass/style.scss */
+/* line 70, ../sass/style.scss */
 .wrap .headerNav li a {
   color: rgba(204, 198, 198, 0.6);
 }
-/* line 67, ../sass/style.scss */
+/* line 72, ../sass/style.scss */
 .wrap .headerNav li a:hover {
   color: #736a50;
 }
-/* line 74, ../sass/style.scss */
+/* line 79, ../sass/style.scss */
 .wrap .nav-pills > li.active > a {
   background-color: #736a50;
   color: #302927;
 }
 
-/* line 79, ../sass/style.scss */
+/* line 84, ../sass/style.scss */
 .titleMain {
   font-size: 27px;
   font-weight: 700;
@@ -665,7 +710,7 @@ body {
   margin-left: 181px;
 }
 
-/* line 86, ../sass/style.scss */
+/* line 91, ../sass/style.scss */
 .notification-container {
   position: fixed;
   width: 16%;
@@ -682,12 +727,12 @@ body {
   list-style: none;
 }
 
-/* line 101, ../sass/style.scss */
+/* line 106, ../sass/style.scss */
 .notification-container .hidden {
   display: none;
 }
 
-/* line 104, ../sass/style.scss */
+/* line 109, ../sass/style.scss */
 .notification-content {
   height: 169px;
   overflow: auto;

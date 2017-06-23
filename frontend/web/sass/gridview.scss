@@ -26,6 +26,8 @@ $colorButton: #3a3331;
 $colButtonHover: #191412;
 $border-radius: 26px;
 $bacgrountTr: #802c2c;
+$backgroundComment: #1f1b1a;
+$bodyBackground: #302927;
 
 @mixin border-bottom($color) {
     border-bottom: 1px solid $color;
@@ -63,7 +65,7 @@ $bacgrountTr: #802c2c;
 .button{
     outline: none;
     color: $colTextButton;
-    background: #302927;
+    background: $bodyBackground;
 }
 .zakaz-index{
     //.nav-pills: 37px;
@@ -174,6 +176,25 @@ $bacgrountTr: #802c2c;
         color: #FF9999;
         font-size: 10px;
     }
+    .anketaZakaz{
+      color: $colorText;
+      padding-left: 23px;
+      margin-top: 1px;
+      width: 100px;
+      div{
+        margin-bottom: 7px;
+        &:nth-of-type(4){
+          margin-top: -7px;
+        }
+        &:nth-of-type(5){
+          margin-top: -7px;
+        }
+      }
+      .anketaZakaz_from{
+        font-weight: 900;
+        color: #3a3331;
+      }
+    }
     table{
         color: #ccc6c6;
     }
@@ -207,47 +228,66 @@ $bacgrountTr: #802c2c;
                 border-bottom: none;
                 color: rgba(204, 198, 198, 0.6);
             }
-            .divInform{
+            .zakazInfo{
+              margin-top: 1px;
+              .divInform{
                 overflow-y: auto;
                 height: 133px;
                 background: $colorH3;
+                color: $colButtonHover;
                 border-radius: 8px;
-                padding: 20px 18px 0px 17px;
-                border: 6px solid $colorH3;
+                padding: 5px 18px 0px 17px;
+                border-top: 4px solid $colorH3;
+                border-right: 4px solid $colorH3;
+                border-left: 1px solid $colorH3;
                 border-bottom: 14px solid $colorH3;
-            }
-            .comment-zakaz{
+              }
+              .comment-zakaz{
                 overflow-y: auto;
                 height: 80px;
                 margin-top: 5px;
-                background:$colorH3;
+                color: $colorButton;
+                background: $colButtonHover;
                 border-radius: 8px;
                 padding: 9px 18px 0px 17px;
-                border-left: 7px solid $colorH3;
-                border-top: 6px solid $colorH3;
-                border-right: 3px solid $colorH3;
-                border-bottom: 14px solid $colorH3;
-            }
-            ::-webkit-scrollbar {
+                border-left: 0px solid $colButtonHover;
+                border-top: 0px solid $colButtonHover;
+                border-right: 3px solid $colButtonHover;
+                border-bottom: 27px solid $colButtonHover;
+              }
+              ::-webkit-scrollbar {
                 width: 4px;
-            }
+              }
 
-            /* Track */
-            ::-webkit-scrollbar-track {
+              /* Track */
+              ::-webkit-scrollbar-track {
                 -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
                 -webkit-border-radius: 10px;
                 border-radius: 10px;
-            }
+              }
 
-            /* Handle */
-            ::-webkit-scrollbar-thumb {
+              /* Handle */
+              ::-webkit-scrollbar-thumb {
                 -webkit-border-radius: 10px;
                 border-radius: 10px;
-                background: $colorText;
-                -webkit-box-shadow: inset 0 0 5px $colorText;
+                background: $colorButton;
+                -webkit-box-shadow: inset 0 0 5px $colorButton;
+              }
+              ::-webkit-scrollbar-thumb:window-inactive {
+                background: $colorButton;
+              }
             }
-            ::-webkit-scrollbar-thumb:window-inactive {
-                background: rgba(255,0,0,0.4);
+            .imgZakaz{
+              font-size: 2em;
+              height: 49px;
+              width: 49px;
+              text-align: center;
+              border-radius: 4px;
+              padding-top: 13px;
+              background: $bodyBackground;
+              color: $colorH3;
+              margin-top: 10px;
+              margin-left: -20px;
             }
         }
     }

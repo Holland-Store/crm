@@ -49,10 +49,15 @@ body{
     }
 }
 .wrap{
-    background-image: url('../img/holland.png');
-    background-repeat: no-repeat;
-    background-position: 63px 1px;
-    background-size: 98px;
+    .logo{
+      background-image: url('../img/holland.png');
+      background-repeat: no-repeat;
+      background-position: 63px 1px;
+      background-size: 98px;
+      width: 168px;
+      height: 100px;
+      float: left;
+    }
     .headerNav{
         margin-top: -26px;
         margin-left: 426px;
