@@ -34,7 +34,7 @@ AppAsset::register($this);
 
 <div class="wrap">
 <?php if (!Yii::$app->user->isGuest): ?>
-    
+    <div class="logo"></div>
 <?php echo '<h1 class="titleMain">'.Html::encode($this->title).'</h1>' ?>
 <?php echo Nav::widget([
     'options' => ['class' => 'nav nav-pills headerNav'],
