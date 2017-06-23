@@ -47,23 +47,23 @@ $this->title = 'Дизайнер';
         'tableOptions' => ['class' => 'table table-bordered tableSize'],
         'rowOptions' => ['class' => 'trTable'],
         'columns' => [
-            [
-                'class'=>'kartik\grid\ExpandRowColumn',
-                'contentOptions' => function($model, $key, $index, $grid){
-                    return ['id' => $model->id_zakaz, 'style' => 'border-radius: 19px 0px 0px 19px;width:10px;'];
-                },                
-                'width'=>'10px',
-                'value' => function ($model, $key, $index) {
-                    return GridView::ROW_COLLAPSED;
-                },
-                'detail'=>function ($model, $key, $index, $column) {
-                    return Yii::$app->controller->renderPartial('_zakaz', ['model'=>$model]);
-                },
-                'enableRowClick' => true,
-                'expandOneOnly' => true,
-                'expandIcon' => ' ',
-                'collapseIcon' => ' ',
-            ],
+//            [
+//                'class'=>'kartik\grid\ExpandRowColumn',
+//                'contentOptions' => function($model, $key, $index, $grid){
+//                    return ['id' => $model->id_zakaz, 'style' => 'border-radius: 19px 0px 0px 19px;width:10px;'];
+//                },
+//                'width'=>'10px',
+//                'value' => function ($model, $key, $index) {
+//                    return GridView::ROW_COLLAPSED;
+//                },
+//                'detail'=>function ($model, $key, $index, $column) {
+//                    return Yii::$app->controller->renderPartial('_zakaz', ['model'=>$model]);
+//                },
+//                'enableRowClick' => true,
+//                'expandOneOnly' => true,
+//                'expandIcon' => ' ',
+//                'collapseIcon' => ' ',
+//            ],
             [
                 'attribute' => 'id_zakaz',
                 'contentOptions' => ['width' => '50px'],
