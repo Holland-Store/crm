@@ -60,6 +60,8 @@ class Zakaz extends ActiveRecord
     const STATUS_MASTER = 6;
     const STATUS_SUC_MASTER = 7;
     const STATUS_AUTSORS = 8;
+    const STATUS_DECLINED_DISAIN = 9;
+    const STATUS_DECLINED_MASTER = 10;
 
     const STATUS_DISAINER_NEW = 0;
     const STATUS_DISAINER_WORK = 1;
@@ -194,10 +196,12 @@ class Zakaz extends ActiveRecord
             self::STATUS_EXECUTE => 'Исполнен',
             self::STATUS_ADOPTED => 'Принят',
             self::STATUS_DISAIN => 'Дизайнер',
-            self::STATUS_SUC_DISAIN => 'Дизайн готов',
+            self::STATUS_SUC_DISAIN => 'Дизайнер выполнен',
+            self::STATUS_DECLINED_DISAIN => 'Дизайн отклонить',
             self::STATUS_REJECT => 'Отклонен',
             self::STATUS_MASTER => 'Мастер',
             self::STATUS_SUC_MASTER => 'Мастер сделал',
+            self::STATUS_DECLINED_MASTER => 'Мастер отклонить',
             self::STATUS_AUTSORS => 'Аутсорс',
         ];
     }
