@@ -152,7 +152,7 @@ $this->title = 'Вce заказы';
             [
                 'attribute' => 'id_shipping',
                 'format' => 'raw',
-                'contentOptions' => ['class' => 'tr20'],
+                'contentOptions' => ['class' => 'tr50'],
                 'value' => function($model){
                     if ($model->idShipping->status == 0 or $model->idShipping->status == 1) {
                         return '<i class="fa fa-truck" style="font-size: 13px;color: #f0ad4e;" aria-hidden="true"></i>';
@@ -163,29 +163,41 @@ $this->title = 'Вce заказы';
             ],
             [
                 'attribute' => 'oplata',
-                'headerOptions' => ['width' => '70'],
                 'value' => function($model){
                     return $model->oplata.' р.';
                 },
                 'hAlign' => GridView::ALIGN_RIGHT,
-                'contentOptions' => ['class' => 'textTr tr70'],
+                'contentOptions' => ['class' => 'textTr tr50'],
             ],
             [
-                'attribute' => 'status',
-                'class' => SetColumn::className(),
-                'label' => 'Отв-ный',
+                'attribute' => '',
                 'format' => 'raw',
-                'name' => 'statusName',
-                'cssCLasses' => [
-                    Zakaz::STATUS_NEW => 'primary',
-                    Zakaz::STATUS_EXECUTE => 'success',
-                    Zakaz::STATUS_ADOPTED => 'warning',
-                    Zakaz::STATUS_REJECT => 'danger',
-                    Zakaz::STATUS_SUC_DISAIN => 'success',
-                    Zakaz::STATUS_SUC_MASTER => 'success',
-                ],
-                'contentOptions' => ['class' => 'border-right'],
-            ],
+                'value' => function($model){
+                    return '';
+                },
+                'contentOptions' => ['class' => 'textTr border-right tr90'],
+            ]
+//            [
+//                'attribute' => 'statusName',
+//                'label' => 'Отв-ный',
+//                'contentOptions' => ['class' => 'border-right'],
+//            ],
+//            [
+//                'attribute' => 'status',
+//                'class' => SetColumn::className(),
+//                'label' => 'Отв-ный',
+//                'format' => 'raw',
+//                'name' => 'statusName',
+//                'cssCLasses' => [
+//                    Zakaz::STATUS_NEW => 'primary',
+//                    Zakaz::STATUS_EXECUTE => 'success',
+//                    Zakaz::STATUS_ADOPTED => 'warning',
+//                    Zakaz::STATUS_REJECT => 'danger',
+//                    Zakaz::STATUS_SUC_DISAIN => 'success',
+//                    Zakaz::STATUS_SUC_MASTER => 'success',
+//                ],
+//                'contentOptions' => ['class' => 'border-right'],
+//            ],
         ],
     ]); ?>
 
@@ -284,19 +296,9 @@ $this->title = 'Вce заказы';
                 'contentOptions' => ['class' => 'textTr tr70'],
             ],
             [
-                'attribute' => 'status',
-                'class' => SetColumn::className(),
+                'attribute' => 'statusName',
                 'label' => 'Отв-ный',
-                'format' => 'raw',
-                'name' => 'statusName',
-                'cssCLasses' => [
-                    Zakaz::STATUS_DISAIN => 'danger',
-                    Zakaz::STATUS_SUC_DISAIN => 'success',
-                    Zakaz::STATUS_MASTER => 'primary',
-                    Zakaz::STATUS_SUC_MASTER => 'success',
-                    Zakaz::STATUS_AUTSORS => 'info',
-                ],
-                'contentOptions' => ['class' => 'border-right'],
+                'contentOptions' => ['class' => 'border-right textTr'],
             ],
         ],
     ]); ?>
@@ -385,9 +387,17 @@ $this->title = 'Вce заказы';
                 'value' => function($model){
                     return $model->oplata.' р.';
                 },
-                'hAlign' => GridView::ALIGN_LEFT,
-                'contentOptions' => ['class' => 'textTr border-right tr180'],
+                'hAlign' => GridView::ALIGN_RIGHT,
+                'contentOptions' => ['class' => 'textTr tr50'],
             ],
+            [
+                'attribute' => '',
+                'format' => 'raw',
+                'value' => function($model){
+                    return '';
+                },
+                'contentOptions' => ['class' => 'textTr border-right tr90'],
+            ]
         ],
     ]); ?> 
     <?php Pjax::end(); ?>
