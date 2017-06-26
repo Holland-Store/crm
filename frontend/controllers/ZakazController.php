@@ -229,6 +229,21 @@ class ZakazController extends Controller
         $model->upload($id);
     }
 
+    public function actionShipping($id)
+    {
+        $model = $this->findModel($id);
+        $shipping = new Courier();
+        if ($model->load(Yii::$app->request->post() && $shipping->save())){
+            $model->id_shipping = $shipping->id;
+            $model->save();
+        } else {
+            return $this->render('shipping', [
+                'model' => $model,
+                'shipping' => $shipping,
+            ]);
+        }
+    }
+
     /**
      * Creates a new Zakaz model.
      * If creation is successful, the browser will be redirected to the 'view' page.
@@ -269,48 +284,35 @@ class ZakazController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        if (Yii::$app->request->isPost){
-            $model->file = UploadedFile::getInstance($model, 'file');
+        $notification = $this->findNotification();
 
-            if ($model->upload($id)){
-                $model->img = $id.'.'.$model->file->extension;
-                if(!$model->save()){
-                    print_r($model->getErrors());
-                } else {
-                    $model->save();
-                }
-                return '{}';
+        if ($model->load(Yii::$app->request->post())) {
+            $model->file = UploadedFile::getInstance($model, 'file');
+            if(isset($model->file))
+            {
+            $model->file->saveAs('attachment/'.$model->id_zakaz.'.'.$model->file->extension);
+            $model->img = $model->id_zakaz.'.'.$model->file->extension;
             }
+            if ($model->status == 3) {
+                $model->data_start_disain = date('Y-m-d H:i:s');
+            }
+            $model->validate();
+            if (!$model->save()){
+                print_r($model->getErrors());
+            } else {
+                $model->save();
+            }
+
+            if (Yii::$app->user->can('shop')) {
+                return $this->redirect(['shop']);
+            } elseif (Yii::$app->user->can('admin')) {
+               return $this->redirect(['admin']);
+           }
+        } else {
+            return $this->render('update', [
+                'model' => $model,
+            ]);
         }
-//        $notification = $this->findNotification();
-//
-//        if ($model->load(Yii::$app->request->post())) {
-//            $model->file = UploadedFile::getInstance($model, 'file');
-//            if(isset($model->file))
-//            {
-//            $model->file->saveAs('attachment/'.$model->id_zakaz.'.'.$model->file->extension);
-//            $model->img = $model->id_zakaz.'.'.$model->file->extension;
-//            }
-//            if ($model->status == 3) {
-//                $model->data_start_disain = date('Y-m-d H:i:s');
-//            }
-//            $model->validate();
-//            if (!$model->save()){
-//                print_r($model->getErrors());
-//            } else {
-//                $model->save();
-//            }
-//
-//            if (Yii::$app->user->can('shop')) {
-//                return $this->redirect(['shop']);
-//            } elseif (Yii::$app->user->can('admin')) {
-//               return $this->redirect(['admin']);
-//           }
-//        } else {
-//            return $this->render('update', [
-//                'model' => $model,
-//            ]);
-//        }
     }
     public function actionCheck($id)//Мастер выполнил свою работу
     {
