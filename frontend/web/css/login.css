@@ -9,7 +9,7 @@ body {
   background: rgba(255, 255, 255, 0.04);
   height: 126px;
   margin-top: 32px;
-  padding: 37px 0px 0px 101px;
+  padding: 18px 0px 0px 101px;
 }
 /* line 30, ../sass/login.scss */
 .headerLogin h1 {
@@ -23,7 +23,7 @@ body {
 /* line 37, ../sass/login.scss */
 .headerLogin p {
   font-size: 13px;
-  margin-top: 3px;
+  margin-top: -8px;
 }
 
 /* line 44, ../sass/login.scss */
@@ -92,7 +92,7 @@ body {
 .site-login .titleLogin {
   text-align: center;
   position: relative;
-  top: -88px;
+  top: -23px;
   left: -18px;
   font-size: 27px;
   font-weight: bold;
