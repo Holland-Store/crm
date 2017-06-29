@@ -1,19 +1,16 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
+use kartik\grid\GridView;
 use yii\bootstrap\Nav;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\TodoistSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Задачник';
+$this->title = 'Все задачи';
 ?>
 <div class="todoist-index">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
         <?php if (Yii::$app->user->can('admin')): ?>
@@ -22,26 +19,23 @@ $this->title = 'Задачник';
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
+        'floatHeader' => true,
+        'headerRowOptions' => ['class' => 'headerTable'],
+        'pjax' => true,
+        'tableOptions' 	=> ['class' => 'table table-bordered tableSize'],
+        'rowOptions' => ['class' => 'trTable trNormal'],
+        'striped' => false,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
             [
                 'attribute' => 'srok',
-                'format' => ['date', 'php:d.m.Y'],
+                'format' => ['date', 'php:d M'],
+                'hAlign' => GridView::ALIGN_RIGHT,
+                'contentOptions' => ['class' => 'border-left textTr tr90', 'style' => 'border:none'],
             ],
             [
-                'attribute' => 'activate',
-                'value' => function($model){
-                    return $model->todoistName;
-                }
+                'attribute' => 'comment',
+                'contentOptions'=>['style'=>'white-space: normal;'],
             ],
-            [
-				'attribute' => 'id_user',
-				'value' => function($model){
-					return $model->idUser->name;
-				}
-			],
-            'comment:ntext',
             [
                 'attribute' => 'zakaz',
                 'format' => 'raw',
@@ -52,10 +46,24 @@ $this->title = 'Задачник';
                     return '';
                 },
                 'label' => 'Заказ',
+                'hAlign' => GridView::ALIGN_RIGHT,
+                'contentOptions' => ['class' => 'textTr tr50'],
             ],
-
-
-//            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'attribute' => 'id_user',
+                'value' => function($model){
+                    return $model->idUser->name;
+                },
+                'contentOptions' => ['class' => 'border-right textTr'],
+            ],
+        ],
+    ]); ?>
+</div>
+<div class="footer-todoist">
+    <?php echo Nav::widget([
+        'options' => ['class' => 'nav nav-pills footerNav'],
+        'items' => [
+            ['label' => 'Архив', 'url' => ['closetodoist'], 'visible' => Yii::$app->user->can('seeAdmin')],
         ],
     ]); ?>
 </div>
