@@ -12,8 +12,6 @@ $this->title = 'Добавить задачу к заказу '.Yii::$app->reque
 ?>
 <div class="todoist-create">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
     <?= $this->render('_formzakaz', [
         'model' => $model,
 
