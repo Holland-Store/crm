@@ -104,7 +104,7 @@ class CourierController extends Controller
         $courier = Courier::find();
         $searchModel = new CourierSearch();
         $dataProvider = new ActiveDataProvider([
-            'query' => $courier->where(['data_to' => '0000-00-00 00:00:00']),
+            'query' => $courier->where(['status' => Courier::DOSTAVKA]),
             'pagination' => ['pageSize' => 50,]
         ]);
         $notification = $this->findNotification();//Уведомление
@@ -122,7 +122,9 @@ class CourierController extends Controller
      */
     public function actionDeletes($id)
     {
-        $this->findModel($id)->delete();
+        $model =  $this->findModel($id);
+        $model->status = 3;
+        $model->save();
 
         return $this->redirect(['shipping']);
     }
@@ -201,7 +203,7 @@ class CourierController extends Controller
         $this->view->params['notifications'] = Notification::find()->where(['id_user' => Yii::$app->user->id, 'active' => true])->all();
 
         $model->data_to = date('Y-m-d H:i:s');
-        $model->status = 1;
+        $model->status = Courier::RECEIVE;
 
         $notification->id_user = 5;//Уведомление, что курьер забрал доставку
         $notification->name = 'Курьер забрал заказ №'.$model->id_zakaz;
@@ -216,7 +218,7 @@ class CourierController extends Controller
         $model = $this->findModel($id);
         $notification = new Notification();
         $model->data_from = date('Y-m-d H:i:s');
-        $model->status = 2;
+        $model->status = Courier::DELIVERED;
         $this->view->params['notifications'] = Notification::find()->where(['id_user' => Yii::$app->user->id, 'active' => true])->all();
 
         $notification->findNotification(8, $model->id_zakaz);//Уведомление, что курьер доставил доставку
