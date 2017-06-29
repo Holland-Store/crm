@@ -76,6 +76,7 @@ class RbacController extends Controller
         $auth->addChild($shop, $seeShop);
         $auth->addChild($shop, $updateOwnZakaz);
         $auth->addChild($shop, $seeAdop);
+        $auth->addChild($shop, $todoist);
 
         $master = $auth->createRole('master');
         $auth->add($master);
