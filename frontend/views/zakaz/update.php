@@ -6,9 +6,9 @@ use yii\helpers\Html;
 /* @var $model app\models\Zakaz */
 
 $this->title = 'Редактировать заказ: ' . $model->id_zakaz;
-$this->params['breadcrumbs'][] = ['label' => 'Заказ', 'url' => ['admin']];
-$this->params['breadcrumbs'][] = ['label' => $model->id_zakaz, 'url' => ['admin', '#' => $model->id_zakaz]];
-$this->params['breadcrumbs'][] = 'Редактировать';
+//$this->params['breadcrumbs'][] = ['label' => 'Заказ', 'url' => ['admin']];
+//$this->params['breadcrumbs'][] = ['label' => $model->id_zakaz, 'url' => ['admin', '#' => $model->id_zakaz]];
+//$this->params['breadcrumbs'][] = 'Редактировать';
 ?>
 <div class="zakaz-update">
 
