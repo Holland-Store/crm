@@ -35,21 +35,6 @@ $bodyBackground: #302927;
 @mixin border($color) {
     border: 1px solid $color;
 }
-@mixin buttonZakaz{
-  padding-left: 13px;
-  padding-right: 13px;
-  float: right;
-  margin-top: -10px;
-  margin-right: 18px;
-  font-size: 11px;
-  background: $colorButton;
-  border-radius: 26px;
-  color: $colorH3;
-  &:hover{
-    color: $colorButton;
-    background: $colorH3;
-  }
-}
 
 .table > thead > tr > td.info,
 .table > tbody > tr > td.info,
@@ -82,7 +67,12 @@ $bodyBackground: #302927;
     color: $colTextButton;
     background: $bodyBackground;
 }
-.zakaz-index{
+.divWork{
+  background: $bodyBackground;
+}
+.headerTable{
+  display: $display;
+}
     //.nav-pills: 37px;
     .titleCaption{
         color: $colorH3;
@@ -137,7 +127,10 @@ $bodyBackground: #302927;
                     color: #fff;
                 }
             }
-
+          .shopSearch{
+            margin-top: -44px;
+            margin-left: 89px;
+          }
         }
     }
     .border-left {
@@ -172,9 +165,10 @@ $bodyBackground: #302927;
     .table thead{
         background: #302927;
     }
-    .table #trNew{
+    .table .trNew{
         font-weight: bold;
-    } 
+        color: #191412;
+    }
     .reminder{
         position: relative;
         top: -104px;
@@ -211,6 +205,14 @@ $bodyBackground: #302927;
         color: $colorButton;
       }
     }
+  .linePrice{
+    margin-top: 13px;
+    border-bottom: 1px solid rgba(48, 41, 39, 0.3);
+    position: relative;
+    left: -18px;
+    top: -10px;
+    width: 228px;
+  }
     .responsible{
       color: $colorText;
       margin-top: 1px;
@@ -226,6 +228,35 @@ $bodyBackground: #302927;
         font-weight: 900;
         color: $colorButton;
         margin-left: -1px;
+        margin-right: 20px;
+      }
+      .namePrice{
+        &:nth-of-type(1){
+          margin-right: 7px;
+          position: relative;
+          left: -19px;
+        }
+        &:nth-of-type(3){
+          margin-left: 12px;
+        }
+      }
+      .price{
+        font-weight: $italic;
+        color: $colorText;
+        margin-right: 0px;
+        margin-left: 36px;
+        float: left;
+        &:nth-of-type(1){
+          margin-left: 18px;
+        }
+        &:nth-of-type(2){
+          margin-left: 64px;
+        }
+        &:nth-of-type(3){
+          margin-right: 27px;
+          margin-left: 0px;
+          float: right;
+        }
       }
       .statusZakaz{
         width: 155px;
@@ -238,39 +269,12 @@ $bodyBackground: #302927;
         color: white;
         text-align: center;
         }
-      .action{
-        padding-left: 13px;
-        padding-right: 13px;
-        font-size: 11px;
-        background: #3a3331;
-        border-radius: 26px;
-        color: $colorH3;
-        padding-top: 3px;
-        padding-bottom: 2px;
-        text-decoration: none;
-        &:hover{
-          background: $colorH3;
-          color: $colorButton;
-        }
-      }
-      .actionCancel{
-        &:hover{
-          background: #802c2c;
-          color: white;
-        }
-      }
-      .actionApprove{
-        &:hover{
-          background: #446505;
-          color: white;
-        }
-      }
     }
     .zakazFile{
       color: $colorText;
-      padding-left: 23px;
+      padding-left: 20px;
       margin-top: 1px;
-      width: 100px;
+      width: 52px;
       div{
         margin-left: -28px;
         .zakazFile_block-number{
@@ -332,7 +336,7 @@ $bodyBackground: #302927;
               }
               .comment-zakaz{
                 overflow-y: auto;
-                height: 80px;
+                height: 38px;
                 margin-top: 5px;
                 color: $colorButton;
                 background: $colButtonHover;
@@ -386,10 +390,6 @@ $bodyBackground: #302927;
     .tableSize{
         font-size: $font-size;
     }
-    .headerTable{
-        display: $display;
-    }
-
     .summary{
         display: $display;
     }
@@ -424,21 +424,18 @@ $bodyBackground: #302927;
     }
     .footer-view-zakaz{
         margin-top: -22px;
-        a{
-          @include buttonZakaz;
-          background: none;
-          border: 1px solid #3a3331;
-          color: $colorButton;
-          margin-top: 1px;
-          float:none;
-          &:hover{
-            text-decoration: none;
-            outline: 0;
-            color: #191412;
-            background: #3a3331;
-          }
-        }
     }
+.zakaz-index{
+  .detail-view{
+    tbody{
+      background: $colButtonHover;
+    }
+  }
+}
+.shipping{
+  color: $colButtonHover;
+  font-weight: $bold;
+  margin-right: 4px;
 }
 .footerNav{
     margin-top: 27px;
