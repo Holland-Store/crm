@@ -44,7 +44,7 @@ class CustomController extends Controller
                     [
                         'actions' => ['create'],
                         'allow' => true,
-                        'roles' => ['shop', 'program'],
+                        'roles' => ['shop', 'admin', 'program'],
                     ],
                     [
                         'actions' => ['close'],
