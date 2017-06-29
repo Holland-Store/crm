@@ -1,0 +1,25 @@
+$font-size: 11px;
+$bodyBackground: #302927;
+$colorH3: #736a50;
+$bodyBackground: #302927;
+$titleMain: rgba(204, 198, 198, 0.6);
+$colButtonHover: #191412;
+$colorText: rgba(204, 198, 198, 0.6);
+$colorButton: #3a3331;
+$colorGreen: #446505;
+
+.modal-content{
+  background: $bodyBackground;
+  border: 2px solid $colorText;
+  select{
+    background: #302927;
+    option{
+      &:hover{
+        background-color: #2b542c;
+      }
+    }
+  }
+  .modal-header{
+    border-bottom: none;
+  }
+}

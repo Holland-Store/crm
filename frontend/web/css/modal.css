@@ -1,0 +1,17 @@
+/* line 11, ../sass/modal.scss */
+.modal-content {
+  background: #302927;
+  border: 2px solid rgba(204, 198, 198, 0.6);
+}
+/* line 14, ../sass/modal.scss */
+.modal-content select {
+  background: #302927;
+}
+/* line 17, ../sass/modal.scss */
+.modal-content select option:hover {
+  background-color: #2b542c;
+}
+/* line 22, ../sass/modal.scss */
+.modal-content .modal-header {
+  border-bottom: none;
+}
