@@ -43,30 +43,16 @@ AppAsset::register($this);
     ['label' => 'Дизайнер', 'url' => ['zakaz/disain'], 'visible' => Yii::$app->user->can('disain')],
     ['label' => 'Готовые заказы', 'url' => ['zakaz/ready'], 'visible' => Yii::$app->user->can('disain')],
     ['label' => 'Мастер', 'url' => ['zakaz/master'], 'visible' => Yii::$app->user->can('master')],
-    ['label' => 'Прием заказов', 'url' => ['zakaz/shop'], 'visible' => Yii::$app->user->can('seeShop')],
+    ['label' => 'Заказы', 'url' => ['zakaz/shop'], 'visible' => Yii::$app->user->can('seeShop')],
     ['label' => 'Курьер', 'url' => ['courier/index'], 'visible' => Yii::$app->user->can('courier')],
-    ['label' => 'Закрытые заказы', 'url' => ['zakaz/closezakaz'], 'visible' => Yii::$app->user->can('seeShop')],
     ['label' => 'Готовые доставки', 'url' => ['courier/ready'], 'visible' => Yii::$app->user->can('courier')],
     ['label' => 'Задачи', 'url' => ['todoist/index'], 'visible' => Yii::$app->user->can('admin')],
     ['label' => 'Поломки', 'url' => ['helpdesk/index'], 'visible' => !Yii::$app->user->isGuest],
     ['label' => 'Закупки', 'url' => ['custom/adop'], 'visible' => Yii::$app->user->can('seeAdop')],
     ['label' => 'Доставки', 'url' => ['courier/shipping'], 'visible' => Yii::$app->user->can('admin')],
-    // ['label' => 'Выполненые задачи', 'url' => ['todoist/closetodoist'], 'visible' => Yii::$app->user->can('admin')],
-    // ['label' => 'Прочее', 'items' => [
-    //     ['label' => 'Задачник', 'url' => ['todoist/index'], 'visible' => Yii::$app->user->can('admin')],
-    //     ['label' => 'Выполненые задачи', 'url' => ['todoist/closetodoist'], 'visible' => Yii::$app->user->can('admin')],
-    //     ['label' => 'Задачи', 'url' => ['todoist/shop'], 'visible' => Yii::$app->user->can('shop')],
-    //     ['label' => 'Help Desk', 'url' => ['helpdesk/index']],
-    //     ['label' => 'Запросы на товар', 'url' => ['custom/adop'], 'visible' => Yii::$app->user->can('shop')],
-    // ], 'visible' => Yii::$app->user->can('seeAdop')],
-    ['label' => 'Создать запрос', 'url' => ['todoist/create_shop'], 'visible' =>Yii::$app->user->can('shop'), 'items' => [
-        ['label' => 'Helpdesk', 'url' => ['todoist/create_shop'], 'visible' => Yii::$app->user->can('shop')],
-        ['label' => 'Запрос на товар', 'url' => ['todoist/create_shop'], 'visible' => Yii::$app->user->can('shop')],
-    ],
-    ],
     ['label' => 'Запросы на товар', 'url' => ['custom/index'], 'visible' => Yii::$app->user->can('zakup')],
-    ['label' => 'Задачник', 'url' => ['todoist/shop'], 'visible' => Yii::$app->user->can('todoist')],
-    ['label' => 'Help Desk', 'url' => ['helpdesk/index'], 'visible' => Yii::$app->user->can('todoist')],
+    ['label' => 'Задачи', 'url' => ['todoist/shop'], 'visible' => Yii::$app->user->can('todoist')],
+//    ['label' => 'Help Desk', 'url' => ['helpdesk/index'], 'visible' => Yii::$app->user->can('todoist')],
     ],
 ]); ?>
 <?php endif ?>
@@ -157,12 +143,6 @@ AppAsset::register($this);
         ]) ?>
         <?= Alert::widget() ?>
         <?= $content ?>
-        <?php echo Nav::widget([
-            'options' => ['class' => 'nav nav-pills footerNav'],
-            'items' => [
-            ['label' => 'Архив', 'url' => ['zakaz/archive'], 'visible' => Yii::$app->user->can('seeAdmin')],
-            ],
-        ]); ?>
     </div>
 </div>
 
