@@ -30,9 +30,10 @@
         "codeception/verify": "*",
         "codeception/codeception": "2.3.3",
         "kartik-v/yii2-widget-fileinput": "@dev",
+        "kint-php/kint": "^2.1",
+        "kartik-v/yii2-widget-datetimepicker": "*",
         "kartik-v/yii2-datecontrol": "dev-master",
-        "kartik-v/yii2-widget-datetimepicker": "^1.4",
-        "kint-php/kint": "^2.1"
+        "kartik-v/yii2-widgets": "^3.4"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
