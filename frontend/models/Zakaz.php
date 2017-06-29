@@ -33,12 +33,14 @@ use yii\web\UploadedFile;
  * @property string $maket
  * @property integer $time
  * @property integer $statusDisain
+ * @property integer $statusMaster
  * @property string $data_start_disain
  * @property string $name
  * @property integer $phone
  * @property string $email
  * @property string $comment
  * @property integer $id_shipping
+ * @property string $declined
  *
  * @property Courier[] $couriers
  * @property Todoist[] $todoists
@@ -66,6 +68,16 @@ class Zakaz extends ActiveRecord
     const STATUS_DISAINER_NEW = 0;
     const STATUS_DISAINER_WORK = 1;
     const STATUS_DISAINER_SOGLAS = 2;
+    const STATUS_DISAINER_PROCESS = 3;
+    const STATUS_DISAINER_DECLINED = 4;
+
+    const STATUS_MASTER_NEW = 0;
+    const STATUS_MASTER_WORK = 1;
+    const STATUS_MASTER_PROCESS = 2;
+    const STATUS_MASTER_DECLINED = 3;
+
+    const SCENARIO_DECLINED = 'declined';
+    const SCENARIO_DEFAULT  = 'default';
 
     /**
      * @inheritdoc
@@ -75,17 +87,26 @@ class Zakaz extends ActiveRecord
         return 'zakaz';
     }
 
+    public function scenarios()
+    {
+        return [
+            self::SCENARIO_DECLINED => ['declined', 'required'],
+            self::SCENARIO_DEFAULT => ['srok', 'number', 'description', 'phone', 'id_sotrud','sotrud_name', 'status', 'id_tovar', 'oplata', 'fact_oplata', 'number', 'statusDisain', 'statusMaster', 'img', 'id_shipping', 'id_tovar', 'information', 'data', 'data-start-disain', 'prioritet', 'phone', 'email', 'name', 'maket', 'time'],
+        ];
+    }
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['srok', 'number', 'description', 'phone', 'sotrud_name'], 'required'],
-            [['id_zakaz', 'id_tovar', 'oplata', 'fact_oplata', 'minut', 'time', 'number', 'status', 'action', 'id_sotrud', 'phone', 'id_shipping' ,'prioritet', 'statusDisain'], 'integer'],
+            [['srok', 'number', 'description', 'phone', 'sotrud_name'], 'required', 'on' => self::SCENARIO_DEFAULT],
+            ['declined', 'required', 'message' => 'Введите причину отказа', 'on'=> self::SCENARIO_DECLINED],
+            [['id_zakaz', 'id_tovar', 'oplata', 'fact_oplata', 'minut', 'time', 'number', 'status', 'action', 'id_sotrud', 'phone', 'id_shipping' ,'prioritet', 'statusDisain', 'statusMaster'], 'integer'],
             [['srok', 'data', 'data-start-disain'], 'safe'],
-            [['information', 'comment', 'search'], 'string'],
-
+            [['information', 'comment', 'search', 'declined'], 'string'],
+            ['prioritet', 'default', 'value' => 0],
             ['status', 'default', 'value' => self::STATUS_NEW],
             ['id_sotrud', 'default', 'value' => Yii::$app->user->getId()],
             ['data', 'default', 'value' => date('Y-m-d H:i:s')],
@@ -123,6 +144,7 @@ class Zakaz extends ActiveRecord
             'time' => 'Рекомендуемое время',
             'maket' => 'Макет дизайнера',
             'statusDisain' => 'Этап',
+            'statusMaster' => 'Этап',
             'data_start_disain' => 'Дата начала',
             'file' => 'Файл',
             'information' => 'Дополнительная информация',
@@ -131,6 +153,7 @@ class Zakaz extends ActiveRecord
             'email' => 'Email',
             'comment' => 'Комментарий',
             'id_shipping' => 'Доставка',
+            'declined' => 'Причина отказа',
             'search' => 'Search',
         ];
     }
@@ -172,36 +195,18 @@ class Zakaz extends ActiveRecord
 
         return ArrayHelper::map($sotruds, 'id', 'fio');
     }
-    public static function getTovarList()
-    {
-        $tovars = Tovar::find()
-        ->select(['tovar.id','tovar.name'])
-        ->join('JOIN','zakaz', 'zakaz.id_tovar = tovar.id')
-        ->all();
-
-        return ArrayHelper::map($tovars, 'id', 'name');
-    }
-    // public static function getClientList()
-    // {
-    //     $tovars = Client::find()
-    //     ->select(['client.id','client.fio'])
-    //     ->join('JOIN','zakaz', 'zakaz.id_client = client.id')
-    //     ->all();
-
-    //     return ArrayHelper::map($tovars, 'id', 'fio');
-    // }
     public static function getStatusArray(){
         return [
             self::STATUS_NEW => 'Новый',
             self::STATUS_EXECUTE => 'Исполнен',
             self::STATUS_ADOPTED => 'Принят',
             self::STATUS_DISAIN => 'Дизайнер',
-            self::STATUS_SUC_DISAIN => 'Дизайнер выполнен',
-            self::STATUS_DECLINED_DISAIN => 'Дизайн отклонить',
+            self::STATUS_SUC_DISAIN => 'Дизайнер',
+            self::STATUS_DECLINED_DISAIN => 'Дизайнер',
             self::STATUS_REJECT => 'Отклонен',
             self::STATUS_MASTER => 'Мастер',
-            self::STATUS_SUC_MASTER => 'Мастер сделал',
-            self::STATUS_DECLINED_MASTER => 'Мастер отклонить',
+            self::STATUS_SUC_MASTER => 'Мастер',
+            self::STATUS_DECLINED_MASTER => 'Мастер',
             self::STATUS_AUTSORS => 'Аутсорс',
         ];
     }
@@ -227,11 +232,26 @@ class Zakaz extends ActiveRecord
             self::STATUS_DISAINER_NEW => 'Новый',
             self::STATUS_DISAINER_WORK => 'В работе',
             self::STATUS_DISAINER_SOGLAS => 'Согласование',
+            self::STATUS_DISAINER_PROCESS => 'На проверке',
+            self::STATUS_DISAINER_DECLINED => 'Отлонен',
         ];
     }
     public function getStatusDisainName()
     {
         return ArrayHelper::getValue(self::getStatusDisainArray(), $this->statusDisain);
+    }
+    public static function getStatusMasterArray()
+    {
+        return [
+            self::STATUS_MASTER_NEW => 'Новый',
+            self::STATUS_MASTER_WORK => 'В работе',
+            self::STATUS_MASTER_PROCESS => 'На проверке',
+            self::STATUS_MASTER_DECLINED => 'Отклонен',
+        ];
+    }
+    public function getStatusMasterName()
+    {
+        return ArrayHelper::getValue(self::getStatusMasterArray(), $this->statusMaster);
     }
 
     /**
