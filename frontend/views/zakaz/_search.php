@@ -19,7 +19,7 @@ use app\models\User;
 
     <!-- <?= $form->field($model, 'id_zakaz') ?> -->
 
-    <?php if (Yii::$app->user->can('admin')): ?>
+    <!-- <?php if (Yii::$app->user->can('admin')): ?>
     <div class="col-xs-2">
         <?= $form->field($model, 'srok')->widget(
             DatePicker::className(), [
@@ -38,32 +38,34 @@ use app\models\User;
                 ]
         ]);?>
     </div>
-    <?php endif ?>
+    <?php endif ?> -->
     
     <?php if (Yii::$app->user->can('admin')): ?>
     <div class="col-xs-2">
         <?= $form->field($model, 'id_sotrud')->dropDownList([
                 '2' => 'Московский',
                 '5' => 'Админ',
+                '6' => 'Пушкина',
+                '9' => 'Сибирский',
             ],
             ['prompt' => 'Выберите магазин']
         ) ?>
-        <?= $form->field($model, 'status')->dropDownList(
-            ArrayHelper::map(User::find()->all(), 'id', 'name'),
-        ['prompt' => 'Выберите этап',]); ?>
+        <?php //$form->field($model, 'status')->dropDownList(
+            //ArrayHelper::map(User::find()->all(), 'id', 'name'),
+        //['prompt' => 'Выберите этап',]); ?>
         
     </div>
     <?php endif ?>
     
-    <div class="col-xs-2">
-        <?= $form->field($model, 'name') ?>
+<!--    <div class="col-xs-2">-->
+<!--        --><?//= $form->field($model, 'name') ?>
 
-        <?= $form->field($model, 'phone') ?>
-    </div>
+        <?= $form->field($model, 'phone')->textInput(['class' => 'form-control', 'placeholder' => 'Введите номер телефона'])->label(false) ?>
+<!--    </div>-->
     
     <div class="form-group col-xs-3" style="margin-top: 24px;">
         <!-- <?= Html::resetButton('Сбросить настройки', ['class' => 'btn btn-default']) ?> -->
-        <?= Html::submitButton('Найти', ['class' => 'btn btn-primary']) ?>
+        <?= Html::submitButton('Найти', ['class' => 'btn btn-primary shopSearch']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

@@ -5,21 +5,26 @@
 /* @var $model \common\models\LoginForm */
 
 use yii\helpers\Html;
+// use kartik\widgets\ActiveForm;
+// use kartik\label\LabelInPlace;
 use yii\bootstrap\ActiveForm;
 
-$this->title = 'Войти';
+$this->title = 'Авторизация';
 // $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-login">
-    <h1><?= Html::encode($this->title) ?></h1>
 
     <div class="row">
-        <div class="col-lg-5">
-            <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
+        <div class="col-lg-3 formLogin">
+            <h1 class="titleLogin"><?= Html::encode($this->title) ?></h1>
+            <?php $form = ActiveForm::begin(['id' => 'login-form',
+            'enableClientValidation' => false,
+            'enableClientScript' => false,
+            'validateOnBlur' => false]); ?>
 
-                <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
+                <?= $form->field($model, 'username')->textInput(['autofocus' => false, 'placeholder' => 'Логин', 'class' => 'inputForm'])->label(false) ?>
 
-                <?= $form->field($model, 'password')->passwordInput() ?>
+                <?= $form->field($model, 'password')->passwordInput(['placeholder' => 'Пароль', 'class' => 'inputForm'])->label(false) ?>
 
                 <?= $form->field($model, 'rememberMe')->checkbox() ?>
 
@@ -28,10 +33,16 @@ $this->title = 'Войти';
                 </div> -->
 
                 <div class="form-group">
-                    <?= Html::submitButton('Войти', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+                    <?= Html::submitButton('Войти', ['name' => 'login-button']) ?>
                 </div>
 
             <?php ActiveForm::end(); ?>
         </div>
     </div>
+
+    <!-- <div class="footerLogin">
+        <img src="img/logo.png" title="Logo">
+        <div>Сеть магазинов</div>
+        <div>&copy Holland <?php echo date('Y') ?></div>
+    </div> -->
 </div>

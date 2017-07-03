@@ -146,8 +146,12 @@ class TodoistController extends Controller
         $model = new Todoist();
         $notification = $this->findNotification();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            if ($model->save()){
+                return $this->redirect(['index', 'id' => $model->id]);
+            } else {
+                print_r($model->getErrors());
+            }
         } else {
             return $this->render('create', [
                 'model' => $model,

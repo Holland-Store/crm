@@ -3,8 +3,10 @@
 namespace frontend\controllers;
 
 use Yii;
+use app\models\Unread;
 use app\models\Zakaz;
 use app\models\Courier;
+use app\models\Comment;
 use app\models\Notification;
 use app\models\ZakazSearch;
 use yii\web\Controller;
@@ -58,7 +60,7 @@ class ZakazController extends Controller
                     [
                         'actions' => ['view'],
                         'allow' => true,
-                        'roles' => ['admin', 'disain', 'master', 'program', 'shop'],
+                        'roles' => ['admin', 'disain', 'master', 'program', 'shop', 'zakup'],
                     ],
                     [
                         'actions' => ['check'],
@@ -66,13 +68,18 @@ class ZakazController extends Controller
                         'roles' => ['master', 'program'],
                     ],
                     [
+                        'actions' => ['uploadedisain'],
+                        'allow' => true,
+                        'roles' => ['disain', 'program'],
+                    ],
+                    [
                         'actions' => ['close'],
-                        'allow' => ture,
+                        'allow' => true,
                         'roles' => ['admin', 'program', 'shop'],
                     ],
                     [
                         'actions' => ['restore'],
-                        'allow' => ture,
+                        'allow' => true,
                         'roles' => ['admin', 'program'],
                     ],
                     [
@@ -121,10 +128,50 @@ class ZakazController extends Controller
                         'roles' => ['admin', 'program'],
                     ],
                     [
+                        'actions' => ['adopdisain'],
+                        'allow' => true,
+                        'roles' => ['disain', 'program'],
+                    ],
+                    [
+                        'actions' => ['adopmaster'],
+                        'allow' => true,
+                        'roles' => ['master', 'program'],
+                    ],
+                    [
                         'actions' => ['statusdisain'],
                         'allow' => true,
                         'roles' => ['disain', 'program'],
                     ],
+                    [
+                        'actions' => ['zakazedit'],
+                        'allow' => true,
+                        'roles' => ['admin', 'program'],
+                    ],
+                    [
+                        'actions' => ['zakaz'],
+                        'allow' => true,
+                        'roles' => ['admin', 'program'],
+                    ],
+                    [
+                        'actions' => ['comment'],
+                        'allow' => true,
+                        'roles' => ['admin', 'program'],
+                    ],
+                    [
+                        'actions' => ['declined'],
+                        'allow' => true,
+                        'roles' => ['admin']
+                    ],
+                    [
+                        'actions' => ['accept'],
+                        'allow' => true,
+                        'roles' => ['admin']
+                    ],
+                    [
+                        'actions' => ['fulfilled'],
+                        'allow' => true,
+                        'roles' => ['admin']
+                    ]
                 ],
             ],
         ];
@@ -136,6 +183,7 @@ class ZakazController extends Controller
      */
     public function actionIndex()
     {
+        $model = new Zakaz();
         $notification = $this->findNotification();
 
         return $this->render('index', [
@@ -200,13 +248,67 @@ class ZakazController extends Controller
         return $this->render('view', [
             'model' => $this->findModel($id),
             'notification' => $notification,
-            'user_name' => $user_name,
             'shipping' => $shipping,
-            'file' => $file,
             'reminder' => $reminder,
         ]);
     }
-    
+
+//    /** Uploade file in directory 'attachment/*' */
+//    public function actionUploade($id){
+//        $model = $this->findModel($id);
+////        $model->scenario = Zakaz::SCENARIO_DEFAULT;
+//        $notification = $this->findNotification();
+//
+//        if ($model->load(Yii::$app->request->post())) {
+//            if ($model->validate()) {
+//                $model->file = UploadedFile::getInstance($model, 'file');
+//                if ($model->upload()) {
+//                    $model->img = time() . '.' . $model->file->extension;
+//                }
+//                if (!$model->save()) {
+//                    print_r($model->getErrors());
+//                } else {
+//                    $model->save();
+//                }
+//            } else {
+//                $errors = $model->errors;
+//                return $this->render('update', [
+//                    'model' => $model,
+//                ]);
+//            }
+//
+//            if (Yii::$app->user->can('shop')) {
+//                return $this->redirect(['shop']);
+//            } elseif (Yii::$app->user->can('admin')) {
+//                return $this->redirect(['admin', '#' => $id]);
+//            }
+//        } else {
+//            return $this->render('update', [
+//                'model' => $model,
+//            ]);
+//        }
+//    }
+
+    /**
+     * appointed shipping in courier
+     * @param $id
+     * @return string
+     */
+    public function actionShipping($id)
+    {
+        $model = $this->findModel($id);
+        $shipping = new Courier();
+        if ($model->load(Yii::$app->request->post() && $shipping->save())){
+            $model->id_shipping = $shipping->id;
+            $model->save();
+        } else {
+            return $this->render('shipping', [
+                'model' => $model,
+                'shipping' => $shipping,
+            ]);
+        }
+    }
+
     /**
      * Creates a new Zakaz model.
      * If creation is successful, the browser will be redirected to the 'view' page.
@@ -217,12 +319,15 @@ class ZakazController extends Controller
         $model = new Zakaz();
         $notification = $this->findNotification();
 
-        if ($model->load(Yii::$app->request->post())) {
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $model->file = UploadedFile::getInstance($model, 'file');
-            if($model->upload()){
+            if($model->file){
+            $model->upload();
             $model->img = time().'.'.$model->file->extension;
             }
-            $model->save();
+            if (!$model->save()){
+                print_r($model->getErrors());
+            } $model->save();
 
             if (Yii::$app->user->can('shop')) {
                 return $this->redirect(['shop']);
@@ -232,7 +337,6 @@ class ZakazController extends Controller
         } else {
             return $this->render('create', [
                 'model' => $model,
-                'url' => $url,
             ]);
         }
     }
@@ -252,14 +356,18 @@ class ZakazController extends Controller
             $model->file = UploadedFile::getInstance($model, 'file');
             if(isset($model->file))
             {
-            $model->file->saveAs('attachment/'.$model->id_zakaz.'.'.$model->file->extension);
-            $model->img = $model->id_zakaz.'.'.$model->file->extension;
+                $model->file->saveAs('attachment/'.$model->id_zakaz.'.'.$model->file->extension);
+                $model->img = $model->id_zakaz.'.'.$model->file->extension;
             }
-            if ($model->status == 3) {
-                $model->data_start_disain = date('Y-m-d H:i:s');
+            if ($model->status == Zakaz::STATUS_DISAIN or $model->status == Zakaz::STATUS_MASTER){
+                $model->id_unread = 0;
             }
-            
-            $model->save();
+            $model->validate();
+            if (!$model->save()){
+                print_r($model->getErrors());
+            } else {
+                $model->save();
+            }
 
             if (Yii::$app->user->can('shop')) {
                 return $this->redirect(['shop']);
@@ -272,24 +380,73 @@ class ZakazController extends Controller
             ]);
         }
     }
+
+    /**
+     * Master fulfilled zakaz
+     * if success redirected zakaz/master
+     * @param $id
+     * @return \yii\web\Response
+     */
     public function actionCheck($id)//Мастер выполнил свою работу
     {
         $model = $this->findModel($id);
         $notification = new Notification();
         $notifications = $this->findNotification();
 
-        $model->status = 7;
+        $model->status = Zakaz::STATUS_SUC_MASTER;
+        $model->statusMaster = Zakaz::STATUS_MASTER_PROCESS;
         $notification->getByIdNotification(8, $id);
         $notification->saveNotification;
-        $model->save();
-        
-        return $this->redirect(['zakaz/master']);
+        if ($model->save()){
+            return $this->redirect(['master']);
+        } else {
+            print_r($model->getErrors());
+        }
     }
+
+    /**
+     * Disain filfilled zakaz
+     * @param $id
+     * @return string
+     */
+    public function actionUploadedisain($id)
+    {
+        $model = $this->findModel($id);
+
+        if ($model->load(Yii::$app->request->post())){
+            //Выполнение работы дизайнером
+            if ($model->file){
+                $model->uploadeFile;
+            }
+            $model->status = Zakaz::STATUS_SUC_DISAIN;
+            $model->statusDisain = Zakaz::STATUS_DISAINER_PROCESS;
+            $model->id_unread = true;
+            if ($model->save()) {
+                return $this->redirect(['disain', 'id' => $id]);
+            } else {
+                print_r($model->getErrors());
+            }
+        }
+            return $this->renderAjax('_upload', [
+                'model' => $model
+            ]);
+    }
+
+    /**
+     * When zakaz close Shope or Admin
+     * if success then redirected shop or admin
+     * @param integer $id
+     * @return mixed
+     */
     public function actionClose($id)
     {
         $model = $this->findModel($id);
         $model->action = 0;
-        $model->save();
+        if (!$model->save()){
+            print_r($model->getErrors());
+        } else {
+            $model->save();
+        }
 
         $this->view->params['notifications'] = Notification::find()->where(['id_user' => Yii::$app->user->id, 'active' => true])->all();
 
@@ -309,16 +466,64 @@ class ZakazController extends Controller
 
         return $this->redirect(['archive']);
     }
+
+    /**
+     * New zakaz become in status adopted
+     * @param $id
+     * @return \yii\web\Response
+     */
     public function actionAdopted($id)
     {
-        $notification = $this->findNotification();
-
         $model = $this->findModel($id);
-        $model->status = 2;
+        $model->status = Zakaz::STATUS_ADOPTED;
         $model->save();
-
-        return $this->redirect(['view', 'id' => $model->id_zakaz]);
     }
+
+    /**
+     * New zakaz become in status wokr for disain
+     * @param $id
+     * @return \yii\web\Response
+     */
+    public function actionAdopdisain($id)
+    {
+        $model = $this->findModel($id);
+        $model->statusDisain = Zakaz::STATUS_DISAINER_WORK;
+        $model->save();
+    }
+    /**
+     * New zakaz become in status wokr for master
+     * @param $id
+     * @return \yii\web\Response
+     */
+    public function actionAdopmaster($id)
+    {
+        $model = $this->findModel($id);
+        $model->statusMaster = Zakaz::STATUS_MASTER_WORK;
+        $model->save();
+    }
+
+    /**
+     * Zakaz fulfilled
+     * if success then redirected zakaz/admin
+     * @param $id
+     * @return \yii\web\Response
+     */
+    public function actionFulfilled($id)
+    {
+        $model = $this->findModel($id);
+        $model->status = Zakaz::STATUS_EXECUTE;
+        $model->id_unread = 0;
+        if ($model->save()){
+            return $this->redirect(['admin']);
+        } else {
+            print_r($model->getErrors());
+        }
+    }
+
+    /**
+     * All existing close zakaz in Admin
+     * @return string
+     */
     public function actionArchive()
     {
         $searchModel = new ZakazSearch();
@@ -330,6 +535,7 @@ class ZakazController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
+    /** All close zakaz in shop */
     public function actionClosezakaz()
     {
         $searchModel = new ZakazSearch();
@@ -341,6 +547,7 @@ class ZakazController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
+    /** All fulfilled disain */
     public function actionReady()
     {
         $searchModel = new ZakazSearch();
@@ -356,13 +563,17 @@ class ZakazController extends Controller
             ]);
     }
 
-    //Disain
+    /**
+     * Disain internal status zakaz
+     * @param $id
+     * @return \yii\web\Response
+     */
     public function actionStatusdisain($id)
     {
         $notification = $this->findNotification();
 
         $model = $this->findModel($id);
-        $model->statusDisain = 1;
+        $model->statusDisain = Zakaz::STATUS_DISAINER_WORK;
         $model->save();
 
         return $this->redirect(['view', 'id' => $model->id_zakaz]);
@@ -380,18 +591,29 @@ class ZakazController extends Controller
 
         return $this->redirect(['index']);
     }
-
+    /** START view role */
+    /**
+     * All zakaz existing in Shop
+     * @return string
+     */
     public function actionShop()
     {
         $searchModel = new ZakazSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, 'shop');
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, 'shopWork');
+        $dataProviderExecute = $searchModel->search(Yii::$app->request->queryParams, 'shopExecute');
         $notification = $this->findNotification();
 
         return $this->render('shop', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'dataProviderExecute' => $dataProviderExecute,
         ]);
     }
+
+    /**
+     * All zakaz existing in Disain
+     * @return string
+     */
     public function actionDisain()
     {
         $searchModel = new ZakazSearch();
@@ -403,6 +625,11 @@ class ZakazController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
+
+    /**
+     * All zakaz existing in Master
+     * @return string
+     */
     public function actionMaster()
     {
         $searchModel = new ZakazSearch();
@@ -414,10 +641,44 @@ class ZakazController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
+
+    /**
+     * All zakaz existing in Admin
+     * @return string|\yii\web\Response
+     * windows Admin
+     */
     public function actionAdmin()
     {
         $notification = $this->findNotification();
-        
+        $notifications = new Notification();
+        $model = new Zakaz();
+        $comment = new Comment();
+        $shipping = new Courier();
+
+        if ($comment->load(Yii::$app->request->post())){
+            if ($comment->save()){
+                return $this->redirect(['admin']);
+            } else {
+                print_r($comment->getErrors());
+            }
+        }
+
+        if ($shipping->load(Yii::$app->request->post()))
+        {
+            $shipping->save();//сохранение доставка
+            if (!$shipping->save()){
+                Yii::warning($shipping->getErrors());
+            }
+            $model = Zakaz::findOne($shipping->id_zakaz);//Определяю заказ
+            $model->id_shipping = $shipping->id;//Оформление доставку в таблице заказа
+            $model->save();
+
+            $notifications->getByIdNotification(7, $shipping->id_zakaz);//оформление уведомлений
+            $notifications->saveNotification;
+
+            return $this->redirect(['admin', '#' => $model->id_zakaz]);
+        }
+
         $searchModel = new ZakazSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, 'admin');
         $image = $model->img;
@@ -433,9 +694,85 @@ class ZakazController extends Controller
             'dataProviderWork' => $dataProviderWork,
             'dataProviderIspol' => $dataProviderIspol,
             'image' => $image,
+            'notification' => $notification,
         ]);
     }
+    /** END view role */
+    /** START Block admin in gridview */
+    /**
+     * Zakaz deckined admin and in db setup STATUS_DECLINED_DISAIN or STATUS_DECLINED_MASTER
+     * if success then redirected view admin
+     * @param $id
+     * @return string|\yii\web\Response
+     */
+    public function actionDeclined($id)
+    {
+        $model = $this->findModel($id);
+        $model->scenario = Zakaz::SCENARIO_DECLINED;
 
+        if($model->load(Yii::$app->request->post())){
+            if ($model->validate()) {
+                if ($model->status == Zakaz::STATUS_SUC_DISAIN){
+                    $model->status = Zakaz::STATUS_DECLINED_DISAIN;
+                    $model->statusDisain = Zakaz::STATUS_DISAINER_DECLINED;
+                } else {
+                    $model->status = Zakaz::STATUS_DECLINED_MASTER;
+                    $model->statusMaster = Zakaz::STATUS_MASTER_DECLINED;
+                }
+                if (!$model->save()) {
+                    print_r($model->getErrors());
+                } else {
+                    $model->save();
+                }
+                return $this->redirect(['admin', '#' => $model->id_zakaz]);
+            } else {
+                $errors = $model->errors;
+                return $this->renderAjax('_declined', ['model' => $model]);
+            }
+        } else {
+            return $this->renderAjax('_declined', ['model' => $model]);
+        }
+    }
+
+    /**
+     * * Zakaz accept admin and in appoint
+     * if success then redirected view admin
+     * @param $id
+     * @return string|\yii\web\Response
+     */
+    public function actionAccept($id)
+    {
+        $model = $this->findModel($id);
+
+        if ($model->load(Yii::$app->request->post())){
+            if ($model->validate()){
+                if ($model->save()) {
+                    return $this->redirect(['admin', 'id' => $id]);
+                } else {
+                    print_r($model->getErrors());
+                }
+            } else {
+               $errors = $model->errors;
+               return $this->renderAjax('accept', ['model' => $model]);
+            }
+        } else {
+            return $this->renderAjax('accept', ['model' => $model]);
+        }
+    }
+
+    /**
+     * Bloc view zakaz in Admin
+     * @param $id
+     * @return string
+     */
+    public function actionZakaz($id){
+        $model = $this->findModel($id);
+
+        return $this->renderPartial('_zakaz', [
+            'model' => $model,
+            ]);
+    }
+    /** END Block admin in gridview*/
     /**
      * Finds the Zakaz model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.

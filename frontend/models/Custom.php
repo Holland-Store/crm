@@ -54,7 +54,7 @@ class Custom extends \yii\db\ActiveRecord
             'tovar' => 'Товар',
             'number' => 'Кол-во',
             'date' => 'Дата',
-            'action' => 'Action',
+            'action' => 'Статус',
             'date_end' => 'Date_end,',
         ];
     }

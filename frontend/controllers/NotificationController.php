@@ -93,7 +93,7 @@ class NotificationController extends Controller
         $model->active = 0;
         $model->save();
 
-        return $this->redirect(['zakaz/view', 'id' => $id]);
+        return $this->redirect(['zakaz/admin', '#' => $id]);
     }
 
     /**

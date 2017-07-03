@@ -100,7 +100,7 @@ class Notification extends \yii\db\ActiveRecord
         switch ($id) {
             case '7'://оформление уведомление доставки
                 $this->id_user = $id;
-                $this->name = 'Новый заказ №'.$zakaz;
+                $this->name = 'Новая доставка №'.$zakaz;
                 $this->id_zakaz = $zakaz;
                 $this->category = 2;
                 break;

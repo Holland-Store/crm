@@ -48,28 +48,28 @@ class ZakazSearch extends Zakaz
 
         switch ($role) {
             case 'master':
-                $query->andWhere(['status' => Zakaz::STATUS_MASTER, 'action' => 1]);
+                $query->andWhere(['status' => [Zakaz::STATUS_MASTER, Zakaz::STATUS_SUC_MASTER, Zakaz::STATUS_DECLINED_MASTER], 'action' => 1]);
                 $sort = ['srok' => SORT_ASC];
                 break;
             case 'disain':
-                $query->andWhere(['status' => Zakaz::STATUS_DISAIN, 'action' => 1]);
+                $query->andWhere(['status' => [Zakaz::STATUS_DISAIN, Zakaz::STATUS_SUC_DISAIN,Zakaz::STATUS_DECLINED_DISAIN], 'action' => 1]);
                 $sort = ['srok' => SORT_ASC];
                 break;
-            case 'shop':
-                $query->andWhere(['id_sotrud' => Yii::$app->user->id, 'action' => 1]);
+            case 'shopWork':
+                $query->andWhere(['id_sotrud' => Yii::$app->user->id, 'action' => 1, 'status' => [Zakaz::STATUS_DISAIN, Zakaz::STATUS_MASTER, Zakaz::STATUS_AUTSORS, Zakaz::STATUS_SUC_MASTER, Zakaz::STATUS_SUC_DISAIN, Zakaz::STATUS_DECLINED_DISAIN, Zakaz::STATUS_DECLINED_MASTER, Zakaz::STATUS_NEW, Zakaz::STATUS_ADOPTED]]);
+                $sort = ['data' => SORT_DESC];
+                break;
+            case 'shopExecute':
+                $query->andWhere(['id_sotrud' => Yii::$app->user->id, 'action' => 1, 'status' => Zakaz::STATUS_EXECUTE]);
                 $sort = ['data' => SORT_DESC];
                 break;
             case 'admin':
-                $query->andWhere(['status' => [Zakaz::STATUS_DISAIN, Zakaz::STATUS_MASTER, Zakaz::STATUS_AUTSORS], 'action' => 1]);
-                $sort = ['srok' => SORT_DESC];
-                break;
-            case 'adminNew':
-                $query->andWhere(['status' => Zakaz::STATUS_NEW, 'action' => 1]);
-                $sort = ['srok' => SORT_DESC];
+                $query->andWhere(['status' => [Zakaz::STATUS_DISAIN, Zakaz::STATUS_MASTER, Zakaz::STATUS_AUTSORS, Zakaz::STATUS_SUC_MASTER, Zakaz::STATUS_SUC_DISAIN, Zakaz::STATUS_DECLINED_DISAIN, Zakaz::STATUS_DECLINED_MASTER], 'action' => 1]);
+                $sort = ['id_unread' => SORT_DESC];
                 break;
             case 'adminWork':
-                $query->andWhere(['status' => [Zakaz::STATUS_ADOPTED, Zakaz::STATUS_REJECT, Zakaz::STATUS_SUC_MASTER, Zakaz::STATUS_SUC_DISAIN], 'action' => 1]);
-                $sort = ['srok' => SORT_DESC];
+                $query->andWhere(['status' => [Zakaz::STATUS_NEW, Zakaz::STATUS_ADOPTED, Zakaz::STATUS_REJECT], 'action' => 1]);
+                $sort = ['data' => SORT_DESC];
                 break;
             case 'adminIspol':
                 $query->andWhere(['status' => Zakaz::STATUS_EXECUTE, 'action' => 1]);

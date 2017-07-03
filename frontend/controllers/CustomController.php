@@ -6,11 +6,14 @@ use Yii;
 use app\models\Custom;
 use app\models\CustomSearch;
 use app\models\Notification;
+use yii\base\Model;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\data\ActiveDataProvider;
+use yii\web\Response;
+use yii\widgets\ActiveForm;
 
 
 /**
@@ -34,19 +37,29 @@ class CustomController extends Controller
 				'class' => AccessControl::className(),
 				'rules' => [
 					[
-					'actions' => ['index'],
-					'allow' => true,
-					'roles' => ['zakup', 'program'],
+                        'actions' => ['index'],
+                        'allow' => true,
+                        'roles' => ['zakup', 'program'],
 					],
                     [
-                    'actions' => ['close'],
-                    'allow' => true,
-                    'roles' => ['zakup', 'program'],
+                        'actions' => ['create'],
+                        'allow' => true,
+                        'roles' => ['shop', 'admin', 'program'],
+                    ],
+                    [
+                        'actions' => ['close'],
+                        'allow' => true,
+                        'roles' => ['zakup', 'program'],
+                    ],
+                    [
+                        'actions' => ['brought'],
+                        'allow' => true,
+                        'roles' => ['seeAdop'],
                     ],
 					[
-					'actions' => ['adop'],
-					'allow' => true,
-					'roles' => ['seeAdop'],
+                        'actions' => ['adop'],
+                        'allow' => true,
+                        'roles' => ['seeAdop'],
 					],
 				],
 			],
@@ -54,13 +67,13 @@ class CustomController extends Controller
     }
 
     /**
-     * Lists all Custom models.
+     * Lists all Custom models for role zakup.
      * @return mixed
      */
     public function actionIndex()
     {
         $searchModel = new CustomSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, 'zakup');
         $notification = $this->findNotification();
 
         return $this->render('index', [
@@ -70,14 +83,13 @@ class CustomController extends Controller
     }
 
 	/**
-     * Lists all Custom models.
+     * Lists all Custom models for shop.
      * @return mixed
      */
     public function actionAdop()
     {
-        $dataProvider = new ActiveDataProvider([
-			'query' => Custom::find()->where(['id_user' => Yii::$app->user->id])
-		]);
+        $searchModel = new CustomSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, 'adop');
         $notification = $this->findNotification();
 
         return $this->render('adop', [
@@ -97,25 +109,39 @@ class CustomController extends Controller
         ]);
     }
 
-
-
     /**
      * Creates a new Custom model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
+     * If creation is successful, the browser will be redirected to the 'shop' page.
+     * Class TabularInputAction
+     * @param unclead\multipleinput\examples\actions
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Custom();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index', 'id' => $model->id]);
+        $notification = $this->findNotification();
+        $data = Yii::$app->request->post('Custom', []);
+        $models = [new Custom()];
+        foreach (array_keys($data) as $index) {
+            $models[$index] = new Custom();
+        }
+// загружаем данные из запроса в массив созданных моделей
+        if (Model::loadMultiple($models, Yii::$app->request->post())) {
+            foreach ($models as $model) {
+                //сохраняем данные
+                if (!$model->save()){
+                    print_r($model->getErrors());
+                } else {
+                    $model->save();
+                }
+            }
+            return $this->redirect(['adop']);
         } else {
             return $this->render('create', [
-                'model' => $model,
+               'models' => $models,
             ]);
         }
     }
+
 
     /**
      * Updates an existing Custom model.
@@ -148,7 +174,25 @@ class CustomController extends Controller
 
         return $this->redirect(['index']);
     }
+    /**
+     * notification role zakup about brought custom
+     */
+    public function actionBrought($id){
+        $model = $this->findModel($id);
+        $model->action = 2;
+        if ($model->save()){
+            return $this->redirect(['custom/adop']);
+        } else {
+            print_r($model->getErrors());
+        }
 
+    }
+    /**
+     * Close an existing Custom model.
+     * if close is successful, the browser will be redirected to hte 'index' page.
+     * @param $id
+     * @return Response
+     */
     public function actionClose($id)
     {
         $notification = $this->findNotification();
@@ -176,6 +220,11 @@ class CustomController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
+    /**
+     * Проверяет активные уведомлеине у пользователя.
+     * Если кол-во уведомлении больше 50, то выводит 50+
+     */
     protected function findNotification()
     {
         $notification = Notification::find()->where(['id_user' => Yii::$app->user->id, 'active' => true]);

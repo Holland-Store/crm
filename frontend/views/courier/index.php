@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use app\models\Courier;
 use app\models\Zakaz;
-use yii\grid\GridView;
+use kartik\grid\GridView;
 use yii\bootstrap\Nav;
 use yii\widgets\ActiveForm;
 use yii\widgets\Pjax;
@@ -11,7 +11,7 @@ use yii\widgets\Pjax;
 /* @var $searchModel app\models\CourierSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Доставка';
+$this->title = 'Все доставки';
 ?>
 <?php Pjax::begin(); ?>
 <div class="courier-index">
@@ -28,34 +28,66 @@ $this->title = 'Доставка';
 
 <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+        'floatHeader' => true,
+        'headerRowOptions' => ['class' => 'headerTable'],
+        'pjax' => true,
+        'tableOptions' 	=> ['class' => 'table table-bordered tableSize'],
+        'striped' => false,
+        'rowOptions' => ['class' => 'trTable srok trNormal'],
         'columns' => [
-            'id_zakaz',
             [
                 'attribute' => 'id_zakaz',
-                'format' => 'text',
-                'value' => 'idZakaz.description',
-				'contentOptions'=>['style'=>'white-space: normal;'],
-                'label' => 'Описание',
-                'filter' => false,
+                'value' => 'idZakaz.prefics',
+                'hAlign' => GridView::ALIGN_RIGHT,
+                'contentOptions' => ['class' => 'border-left textTr tr70', 'style' => 'border:none'],
             ],
-			[
-				'attribute' => 'date',
-				'format' => ['date', 'd.m.Y'],
-			],
-            'to',
-            'from',
-            'commit',
+            [
+                'attribute' => 'date',
+                'format' => ['date', 'php:d M'],
+                'hAlign' => GridView::ALIGN_RIGHT,
+                'contentOptions' => ['class' => 'textTr tr70'],
+            ],
+            [
+                'attribute' => 'commit',
+                'contentOptions'=>['style'=>'white-space: normal;'],
+            ],
+            [
+                'attribute' => 'to',
+                'format' => 'raw',
+                'value' => function($courier){
+                    return '<span class="shipping">Откуда: </span>'.$courier->to ;
+                },
+                'contentOptions' => ['class' => 'textTr tr202'],
+            ],
+            [
+                'attribute' => 'from',
+                'format' => 'raw',
+                'contentOptions' => ['class' => 'textTr tr180'],
+                'value' => function($courier){
+                    return '<span class="shipping">Куда: </span>'.$courier->from ;
+                },
+            ],
             [
                 'format' => 'raw',
                 'value' => function($model, $key){
-                    if ($model->data_to == '0000-00-00 00:00:00') {
-                        return Html::a('Забрать', ['make', 'id' => $model->id], ['class' => 'btn btn-ptimary']);
-                    } else {
-                        return Html::a('Доставил', ['delivered', 'id' => $model->id], ['class' => 'btn btn-ptimary']);
+                    if ($model->status == Courier::DOSTAVKA) {
+                        return Html::a('Забрать', ['make', 'id' => $model->id]);
+                    } elseif($model->status == Courier::RECEIVE) {
+                        return Html::a('Доставил', ['delivered', 'id' => $model->id]);
+                    } elseif($model->status == Courier::CANCEL){
+                        return 'Доставка отменена';
                     }
-                }
+                },
+                'contentOptions' => ['class' => 'border-right textTr tr50'],
             ],
         ],
     ]); ?>
 <?php Pjax::end(); ?></div>
+<div class="footerNav">
+    <?php echo Nav::widget([
+        'options' => ['class' => 'nav nav-pills footerNav'],
+        'items' => [
+            ['label' => 'Архив', 'url' => ['courier/ready'], 'visible' => Yii::$app->user->can('courier')],
+        ],
+    ]); ?>
+</div>

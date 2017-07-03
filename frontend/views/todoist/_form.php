@@ -25,9 +25,9 @@ use dosamigos\datepicker\DatePicker;
     <!-- <?= $form->field($model, 'id_zakaz')->textInput() ?> -->
 
     <?= $form->field($model, 'id_user')->dropDownList([
-        '2' => 'Московский',
-        '6' => 'Пушкино',
-		'9' => 'Сибирский',
+        '2' => 'Мск',
+        '6' => 'Пшк',
+		'9' => 'Сиб',
 		'4' => 'Дизайнер',
 		'3' => 'Мастер',
 		'10' => 'Закупщику',

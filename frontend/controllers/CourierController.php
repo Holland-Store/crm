@@ -41,19 +41,29 @@ class CourierController extends Controller
                        'roles' => ['courier', 'program'],
                    ],
                    [
-                    'actions' => ['ready'],
-                    'allow' => true,
-                    'roles' => ['courier', 'program'],
+                        'actions' => ['ready'],
+                        'allow' => true,
+                        'roles' => ['courier', 'program'],
                    ],
                    [
-                    'actions' => ['make'],
-                    'allow' => true,
-                    'roles' => ['courier', 'program'],
+                        'actions' => ['make'],
+                        'allow' => true,
+                        'roles' => ['courier', 'program'],
                    ],
                    [
-                    'actions' => ['delivered'],
-                    'allow' => true,
-                    'roles' => ['courier', 'program'],
+                        'actions' => ['delivered'],
+                        'allow' => true,
+                        'roles' => ['courier', 'program'],
+                   ],
+                   [
+                        'actions' => ['shipping'],
+                        'allow' => true,
+                        'roles' => ['admin', 'program'],
+                   ],
+                   [
+                        'actions' => ['deletes'],
+                        'allow' => true,
+                        'roles' => ['admin', 'program'],
                    ],
                 ],
             ],
@@ -75,7 +85,7 @@ class CourierController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
-     public function actionReady()
+    public function actionReady()
     {
         $courier = Courier::find();
 		$notification = $this->findNotification();
@@ -85,9 +95,38 @@ class CourierController extends Controller
             ]);
         
         return $this->render('ready', [
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+    /** View for admin scans all active shipping */
+    public function actionShipping()
+    {
+        $courier = Courier::find();
+        $searchModel = new CourierSearch();
+        $dataProvider = new ActiveDataProvider([
+            'query' => $courier->where(['status' => Courier::DOSTAVKA]),
+            'pagination' => ['pageSize' => 50,]
+        ]);
+        $notification = $this->findNotification();//Уведомление
+
+        return $this->render('shipping', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
+    }
+
+    /**
+     * Delete shipping after courier not accepted shipping
+     * @param $id
+     * @return \yii\web\Response
+     */
+    public function actionDeletes($id)
+    {
+        $model =  $this->findModel($id);
+        $model->status = 3;
+        $model->save();
+
+        return $this->redirect(['shipping']);
     }
 
     /**
@@ -112,8 +151,12 @@ class CourierController extends Controller
         $model = new Courier();
         $this->view->params['notifications'] = Notification::find()->where(['id_user' => Yii::$app->user->id, 'active' => true])->all();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            if ($model->save()){
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                print_r($model->getErrors());
+            }
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -160,31 +203,33 @@ class CourierController extends Controller
         $this->view->params['notifications'] = Notification::find()->where(['id_user' => Yii::$app->user->id, 'active' => true])->all();
 
         $model->data_to = date('Y-m-d H:i:s');
-        $model->status = 1;
+        $model->status = Courier::RECEIVE;
 
-        $notification->id_user = 5;//Уведомление, что курьер забрал доставку
-        $notification->name = 'Курьер забрал заказ №'.$model->id_zakaz;
+        $notification->getByIdNotification(5, $model->id_zakaz);//Уведомление, что курьер забрал доставку
         $notification->saveNotification;
 
-        $model->save();
-
-        return $this->redirect(['index']);
+        if ($model->save()){
+            return $this->redirect(['index']);
+        } else {
+            print_r($model->getErrors());
+        }
     }
     public function actionDelivered($id)//Курьер доставил заказ
     {
         $model = $this->findModel($id);
         $notification = new Notification();
         $model->data_from = date('Y-m-d H:i:s');
-        $model->status = 2;
+        $model->status = Courier::DELIVERED;
         $this->view->params['notifications'] = Notification::find()->where(['id_user' => Yii::$app->user->id, 'active' => true])->all();
 
-        $notification->id_user = 5;//Уведомление, что курьер доставил доставку
-        $notification->name = 'Курьер доставил заказ №'.$model->id_zakaz;
+        $notification->getByIdNotification(8, $model->id_zakaz);//Уведомление, что курьер доставил доставку
         $notification->saveNotification;
 
-        $model->save();
-
-        return $this->redirect(['index']);
+        if ($model->save()){
+            return $this->redirect(['index']);
+        } else {
+            print_r($model->getErrors());
+        }
     }
     /**
      * Finds the Courier model based on its primary key value.
