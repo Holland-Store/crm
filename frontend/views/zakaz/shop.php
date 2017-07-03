@@ -16,7 +16,7 @@ $this->title = 'ВСЕ ЗАКАЗЫ';
 ?>
 <?php Pjax::begin(); ?>
 
-<div class="zakaz-index">
+<div class="zakaz-shop">
 
     <?php echo ButtonDropdown::widget([
         'label' => '+',
@@ -61,10 +61,10 @@ $this->title = 'ВСЕ ЗАКАЗЫ';
             ]
         ]
     ]); ?>
-    <div class="col-lg-2 zakazSearch">
+    <div class="col-lg-3 zakazSearch">
         <?php echo $this->render('_search', ['model' => $searchModel]);?>
     </div>
-    <div class="col-lg-12">
+    <div class="col-lg-9 shopZakaz">
         <h3 class="titleTable">Исполнено</h3>
     </div>
     <div class="col-xs-12 ispolShop">
@@ -98,7 +98,7 @@ $this->title = 'ВСЕ ЗАКАЗЫ';
                     'attribute' => 'id_zakaz',
                     'value' => 'prefics',
                     'hAlign' => GridView::ALIGN_RIGHT,
-                    'contentOptions' => ['class' => 'textTr tr50'],
+                    'contentOptions' => ['class' => 'textTr tr70'],
                 ],
                 [
                     'attribute' => 'srok',
@@ -131,7 +131,7 @@ $this->title = 'ВСЕ ЗАКАЗЫ';
                         return $model->oplata.' р.';
                     },
                     'hAlign' => GridView::ALIGN_RIGHT,
-                    'contentOptions' => ['class' => 'textTr tr50'],
+                    'contentOptions' => ['class' => 'textTr tr70'],
                 ],
                 [
                     'attribute' => '',
@@ -182,7 +182,7 @@ $this->title = 'ВСЕ ЗАКАЗЫ';
                 'attribute' => 'id_zakaz',
                 'value' => 'prefics',
                 'hAlign' => GridView::ALIGN_RIGHT,
-                'contentOptions' => ['class' => 'textTr tr50'],
+                'contentOptions' => ['class' => 'textTr tr70'],
             ],
             [
                 'attribute' => 'srok',
@@ -215,7 +215,7 @@ $this->title = 'ВСЕ ЗАКАЗЫ';
                     return $model->oplata.' р.';
                 },
                 'hAlign' => GridView::ALIGN_RIGHT,
-                'contentOptions' => ['class' => 'textTr tr50'],
+                'contentOptions' => ['class' => 'textTr tr70'],
             ],
             [
                 'attribute' => '',

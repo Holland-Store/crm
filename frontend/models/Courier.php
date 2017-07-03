@@ -26,6 +26,7 @@ class Courier extends \yii\db\ActiveRecord
     const DOSTAVKA = 0;
     const RECEIVE = 1;
     const DELIVERED = 2;
+    const CANCEL = 3;
 
 
     /**
@@ -72,7 +73,7 @@ class Courier extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'id_zakaz' => 'Заказ',
-			'date' => 'Дата выполнение',
+			'date' => 'Срок',
             'to' => 'Откуда',
             'data_to' => 'Data To',
             'from' => 'Куда',

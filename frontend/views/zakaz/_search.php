@@ -57,15 +57,15 @@ use app\models\User;
     </div>
     <?php endif ?>
     
-    <div class="col-xs-2">
-        <?= $form->field($model, 'name') ?>
+<!--    <div class="col-xs-2">-->
+<!--        --><?//= $form->field($model, 'name') ?>
 
-        <?= $form->field($model, 'phone') ?>
-    </div>
+        <?= $form->field($model, 'phone')->textInput(['class' => 'form-control', 'placeholder' => 'Введите номер телефона'])->label(false) ?>
+<!--    </div>-->
     
     <div class="form-group col-xs-3" style="margin-top: 24px;">
         <!-- <?= Html::resetButton('Сбросить настройки', ['class' => 'btn btn-default']) ?> -->
-        <?= Html::submitButton('Найти', ['class' => 'btn btn-primary']) ?>
+        <?= Html::submitButton('Найти', ['class' => 'btn btn-primary shopSearch']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

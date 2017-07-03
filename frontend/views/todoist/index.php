@@ -1,5 +1,6 @@
 <?php
 
+use yii\bootstrap\ButtonDropdown;
 use yii\helpers\Html;
 use kartik\grid\GridView;
 use yii\bootstrap\Nav;
@@ -14,7 +15,53 @@ $this->title = 'Все задачи';
 
     <p>
         <?php if (Yii::$app->user->can('admin')): ?>
-            <?= Html::a('Создать задачу', ['create'], ['class' => 'btn btn-success']) ?>
+            <?php echo ButtonDropdown::widget([
+                'label' => '+',
+                'options' => [
+                    'class' => 'btn buttonAdd',
+                ],
+                'dropdown' => [
+                    'items' => [
+                        [
+                            'label' => 'Заказ',
+                            'url' => ['zakaz/create'],
+                        ],
+                        [
+                            'label' => '',
+                            'options' => [
+                                'role' => 'presentation',
+                                'class' => 'divider'
+                            ]
+                        ],
+                        [
+                            'label' => 'Закупки',
+                            'url' => ['custom/create']
+                        ],
+                        [
+                            'label' => '',
+                            'options' => [
+                                'role' => 'presentation',
+                                'class' => 'divider'
+                            ]
+                        ],
+                        [
+                            'label' => 'Поломки',
+                            'url' => ['helpdesk/create']
+                        ],
+                        [
+                            'label' => '',
+                            'options' => [
+                                'role' => 'presentation',
+                                'class' => 'divider'
+                            ]
+                        ],
+                        [
+                            'label' => 'Задачи',
+                            'url' => ['todoist/create']
+                        ],
+                    ]
+                ]
+            ]); ?>
         <?php endif ?>
     </p>
     <?= GridView::widget([

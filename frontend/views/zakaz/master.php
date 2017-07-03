@@ -11,7 +11,7 @@ use yii\widgets\Pjax;
 /* @var $searchModel app\models\ZakazSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Мастер';
+$this->title = 'Все заказы';
 ?>
 <?php Pjax::begin(['id' => 'pjax-container']); ?>
 
@@ -24,12 +24,8 @@ $this->title = 'Мастер';
         'pjax' => true,
         'tableOptions' 	=> ['class' => 'table table-bordered tableSize'],
         'rowOptions' => function($model, $key, $index, $grid){
-            if ($model->srok < date('Y-m-d') && $model->status > Zakaz::STATUS_NEW ) {
-                return ['class' => 'trTable trTablePass italic trSrok'];
-            } elseif ($model->srok < date('Y-m-d') && $model->status == Zakaz::STATUS_NEW) {
-                return['class' => 'trTable trTablePass bold trSrok trNew'];
-            } elseif ($model->srok > date('Y-m-d') && $model->status == Zakaz::STATUS_NEW){
-                return['class' => 'trTable bold trSrok trNew'];
+            if ($model->statusMaster == Zakaz::STATUS_MASTER_NEW) {
+                return ['class' => 'trTable trNormal trNewMaster'];
             } else {
                 return ['class' => 'trTable trNormal'];
             }
@@ -57,7 +53,7 @@ $this->title = 'Мастер';
                 'attribute' => 'id_zakaz',
                 'value' => 'prefics',
                 'hAlign' => GridView::ALIGN_RIGHT,
-                'contentOptions' => ['class' => 'textTr tr50'],
+                'contentOptions' => ['class' => 'textTr tr70'],
             ],
             [
                 'attribute' => '',
@@ -105,7 +101,7 @@ $this->title = 'Мастер';
                     return $model->oplata.' р.';
                 },
                 'hAlign' => GridView::ALIGN_RIGHT,
-                'contentOptions' => ['class' => 'textTr tr50'],
+                'contentOptions' => ['class' => 'textTr tr70'],
             ],
             [
                 'attribute' => 'statusMasterName',

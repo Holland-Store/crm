@@ -1,0 +1,205 @@
+/* line 48, ../sass/input.scss */
+#login-form input {
+  padding-left: 5%;
+}
+
+/* line 53, ../sass/input.scss */
+.form-group input {
+  border-radius: 26px;
+  font-size: 11px;
+  height: 26px;
+  color: #000;
+  background: #736a50;
+  border: none;
+  outline: 0;
+}
+/* line 61, ../sass/input.scss */
+.form-group input::-webkit-inner-spin-button {
+  display: none;
+}
+/* line 64, ../sass/input.scss */
+.form-group input::-webkit-input-placeholder {
+  color: #191412;
+  text-indent: 0px;
+  transition: text-indent 0.3s ease;
+}
+/* line 69, ../sass/input.scss */
+.form-group input:focus::-webkit-input-placeholder {
+  text-indent: 550px;
+  transition: text-indent 0.3s ease;
+}
+/* line 74, ../sass/input.scss */
+.form-group select {
+  outline: 0;
+  width: 86%;
+  padding-left: 3%;
+  background: #736a50;
+  border: none;
+  border-radius: 26px;
+  font-size: 11px;
+  border: none;
+  height: 26px;
+  color: #000;
+}
+/* line 82, ../sass/input.scss */
+.form-group textarea {
+  outline: 0;
+  width: 86%;
+  padding-left: 3%;
+  background: #736a50;
+  border: none;
+  color: #000;
+  font-size: 11px;
+  height: 66px;
+}
+/* line 87, ../sass/input.scss */
+.form-group textarea::-webkit-input-placeholder {
+  color: #191412;
+  font-size: 11px;
+}
+/* line 92, ../sass/input.scss */
+.form-group .inputForm {
+  outline: 0;
+  width: 86%;
+  padding-left: 3%;
+  background: #736a50;
+  border: none;
+}
+/* line 95, ../sass/input.scss */
+.form-group .help-block {
+  color: rgba(171, 100, 24, 0.99);
+}
+
+/* line 100, ../sass/input.scss */
+.zakaz-shippingForm input {
+  width: 55%;
+  margin-left: 15px;
+}
+/* line 104, ../sass/input.scss */
+.zakaz-shippingForm .inputForm {
+  width: 38%;
+}
+/* line 107, ../sass/input.scss */
+.zakaz-shippingForm .help-block {
+  margin-left: 19px;
+}
+
+/* line 112, ../sass/input.scss */
+.zakaz-form .input-group-addon {
+  padding: 0px 7px;
+  background: #736a50;
+  border: none;
+  color: #000;
+}
+/* line 118, ../sass/input.scss */
+.zakaz-form #zakaz-number {
+  padding-left: 9%;
+  margin-left: -48px;
+}
+/* line 122, ../sass/input.scss */
+.zakaz-form #zakaz-phone, .zakaz-form #zakaz-email {
+  width: 109px;
+}
+/* line 125, ../sass/input.scss */
+.zakaz-form #zakaz-sotrud_name {
+  width: 69%;
+}
+/* line 128, ../sass/input.scss */
+.zakaz-form #zakaz-name, .zakaz-form #zakaz-oplata, .zakaz-form #zakaz-fact_oplata {
+  padding-left: 7%;
+}
+/* line 131, ../sass/input.scss */
+.zakaz-form #zakaz-srok-disp {
+  width: 123px;
+}
+/* line 33, ../sass/input.scss */
+.zakaz-form .file-preview {
+  border: none;
+}
+/* line 35, ../sass/input.scss */
+.zakaz-form .file-preview .close {
+  display: none;
+}
+/* line 38, ../sass/input.scss */
+.zakaz-form .file-preview .file-actions-cell {
+  display: none;
+}
+/* line 41, ../sass/input.scss */
+.zakaz-form .file-preview .file-footer-buttons {
+  display: none;
+}
+/* line 135, ../sass/input.scss */
+.zakaz-form button {
+  height: 30px;
+}
+/* line 138, ../sass/input.scss */
+.zakaz-form select {
+  width: 70%;
+}
+
+/* line 143, ../sass/input.scss */
+#acceptdModal select {
+  width: 64%;
+  margin-left: 11px;
+  height: 30px;
+  background: #736a50;
+  border: none;
+}
+/* line 23, ../sass/input.scss */
+#acceptdModal button {
+  float: right;
+  margin-top: -45px;
+  height: 30px;
+  width: 99px;
+  height: 30px;
+  margin-right: 26px;
+}
+
+/* line 149, ../sass/input.scss */
+#declinedModal input {
+  width: 64%;
+  margin-left: 11px;
+  height: 30px;
+  background: #736a50;
+  border: none;
+}
+/* line 23, ../sass/input.scss */
+#declinedModal button {
+  float: right;
+  margin-top: -45px;
+  height: 30px;
+  width: 99px;
+  height: 30px;
+  margin-right: 26px;
+}
+
+/* line 33, ../sass/input.scss */
+#modalFile .file-preview {
+  border: none;
+}
+/* line 35, ../sass/input.scss */
+#modalFile .file-preview .close {
+  display: none;
+}
+/* line 38, ../sass/input.scss */
+#modalFile .file-preview .file-actions-cell {
+  display: none;
+}
+/* line 41, ../sass/input.scss */
+#modalFile .file-preview .file-footer-buttons {
+  display: none;
+}
+
+/* line 157, ../sass/input.scss */
+.datetimepicker {
+  margin-top: 19px;
+}
+/* line 159, ../sass/input.scss */
+.datetimepicker table {
+  color: #000;
+}
+
+/* line 164, ../sass/input.scss */
+.modal-dialog h2 {
+  margin-left: 15px;
+}

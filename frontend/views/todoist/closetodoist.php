@@ -1,43 +1,36 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
+use kartik\grid\GridView;
 use yii\bootstrap\Nav;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\TodoistSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Выполненые задачи';
+$this->title = 'Архив задач';
 ?>
-<div class="todoist-index">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+<div class="todoist-close">
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
+        'floatHeader' => true,
+        'headerRowOptions' => ['class' => 'headerTable'],
+        'pjax' => true,
+        'tableOptions' 	=> ['class' => 'table table-bordered tableSize'],
+        'rowOptions' => ['class' => 'trTable trNormal'],
+        'striped' => false,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
             [
                 'attribute' => 'srok',
-                'format' => ['date', 'php:d.m.Y'],
+                'format' => ['date', 'php:d M'],
+                'hAlign' => GridView::ALIGN_RIGHT,
+                'contentOptions' => ['class' => 'border-left textTr tr90', 'style' => 'border:none'],
             ],
             [
-                'attribute' => 'activate',
-                'value' => function($model){
-                    return $model->todoistName;
-                }
+                'attribute' => 'comment',
+                'contentOptions'=>['style'=>'white-space: normal;'],
             ],
-            'typ',
-            [
-				'attribute' => 'id_user',
-				'value' => function($model){
-					return $model->idUser->name;
-				}
-			],
-            'comment:ntext',
             [
                 'attribute' => 'zakaz',
                 'format' => 'raw',
@@ -48,10 +41,16 @@ $this->title = 'Выполненые задачи';
                     return '';
                 },
                 'label' => 'Заказ',
+                'hAlign' => GridView::ALIGN_RIGHT,
+                'contentOptions' => ['class' => 'textTr tr50'],
             ],
-
-
-//            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'attribute' => 'id_user',
+                'value' => function($model){
+                    return $model->idUser->name;
+                },
+                'contentOptions' => ['class' => 'border-right textTr'],
+            ],
         ],
     ]); ?>
 </div>

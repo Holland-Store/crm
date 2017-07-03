@@ -1,4 +1,5 @@
 <?php
+use kartik\file\FileInput;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use yii\helpers\Url;
@@ -8,17 +9,6 @@ use yii\bootstrap\ActiveForm;
 use app\models\Comment;
 use app\models\Zakaz;
 ?>
-
-<?php //$this->registerJs('$("body").on("click", "#edit", function(){
-//           var key = $(this).data("key");
-//        $.ajax({
-//            url: "'.Url::toRoute(['zakaz/zakazedit']).'?id="+key,
-//            timeout: 10000,
-//            success: function(html){
-//                $(".view-zakaz").html(html);
-//            }
-//        })
-//    });') ?>
 
 <div class="view-zakaz" style="color: black">
 	<div class="col-lg-2 anketaZakaz">
@@ -30,15 +20,13 @@ use app\models\Zakaz;
 
         <span class="anketaZakaz_from">Клиент:</span>
         <div><?= $model->name ?></div>
-        <div>8<?= $model->phone ?></div>
+        <div><?= $model->phone ?></div>
         <div><?= $model->email ?></div>
 	    </div>
     </div>
 	<div class="col-lg-7 zakazInfo">
         <div class="divInform">
-        <?= 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Hic quia quaerat, id velit sit, perspiciatis repudiandae repellendus, distinctio ut, qui illo veniam! Quisquam blanditiis nostrum commodi esse inventore est eaque quidem rerum neque expedita ipsum itaque delectus saepe quia voluptatibus, aspernatur necessitatibus placeat rem minima facilis, dolores odio. Officiis voluptas, minima error iusto magnam omnis nostrum esse autem, sapiente sed repudiandae, natus quibusdam? Nisi fugit ex itaque animi cumque distinctio veritatis tempora possimus cupiditate culpa quam incidunt molestiae, minus laborum dolorum quidem aliquam vel. Quae nisi eveniet nam a consequuntur quaerat veniam sit rerum pariatur. Praesentium laborum sunt dolor, non. Enim error praesentium hic, mollitia deserunt id a iure at, in delectus, aspernatur nisi sint maiores illo animi ratione maxime porro impedit accusantium. Perspiciatis consequatur cum distinctio esse eaque repellat velit qui neque nam sed id non explicabo accusamus cupiditate eveniet, sunt officiis temporibus officia nesciunt porro. Earum aut deleniti adipisci vero explicabo sit et eum ad iste animi distinctio soluta, ipsam blanditiis veniam illum temporibus sint, commodi, laborum itaque cum ullam nihil reprehenderit laudantium consequatur debitis! Dolorem, debitis, quaerat. Eligendi eum officiis excepturi cupiditate dolorum, provident perferendis sint voluptatem natus aliquam fugit tempora earum alias atque iste impedit. Laudantium quas tempora quae vero eaque necessitatibus nam sint doloremque dolorum voluptas cupiditate soluta perferendis quibusdam animi, minus magnam minima ullam. Pariatur incidunt totam sed tenetur explicabo, recusandae quidem, placeat blanditiis at repellendus ipsum minima quia et, dolor animi aperiam tempore voluptates provident fuga qui. Nostrum perspiciatis vitae maiores consequuntur iure sed est repellat natus minima placeat saepe, amet eius blanditiis, facilis doloribus a cum cumque aspernatur porro ex nobis corrupti accusamus sint possimus beatae. Delectus nemo incidunt, laboriosam, nostrum voluptatum aperiam perspiciatis voluptatem libero quidem sunt autem! Deserunt vitae, molestias soluta delectus voluptatibus atque magni consequatur est sunt! Eveniet quia dolores quas provident, sit eligendi totam incidunt nesciunt accusantium fugiat asperiores id ad magni nobis reprehenderit explicabo earum consequatur error soluta repellat, ex! Explicabo officiis dolores voluptatem libero, cum quis similique doloremque reprehenderit tempora totam mollitia esse, aliquam quibusdam commodi quos. Cupiditate atque minima nulla illum velit. Quam similique in ea nisi quis modi vero libero repellendus iure sapiente enim amet impedit maxime fugiat ullam esse ad voluptate, culpa at illum provident aspernatur natus. Rerum minima in impedit quia voluptatum necessitatibus vero hic temporibus nam reiciendis. Illum, quae. Tenetur quod consequatur vitae natus veniam in iusto blanditiis perferendis cum quos ratione unde accusantium, assumenda nulla, velit voluptate magni fuga consectetur error hic sapiente animi! Perferendis atque recusandae, alias sequi quos voluptatem est provident, aliquid architecto. Repellat, cumque inventore incidunt, est saepe aut iure maiores amet minima debitis consequatur, voluptates accusantium enim reiciendis corporis veniam a eveniet. Blanditiis illum ducimus ipsa magnam quam sint ab fuga et, alias, architecto laborum itaque nostrum. Rem repellat voluptatem culpa distinctio provident iusto molestiae porro autem nostrum quibusdam aliquid veniam fuga blanditiis, quos quae asperiores ab dolor, quis in ad eum, ut voluptates numquam! Dolor aut quos, blanditiis accusantium molestias, tempora labore cupiditate quidem amet?'
-
-        //$model->information ?>
+        <?= $model->information ?>
         </div>
         <?php $comments = Comment::find()->where(['id_zakaz' => $model->id_zakaz])->all(); ?>
         <div class="comment-zakaz">
@@ -60,17 +48,17 @@ use app\models\Zakaz;
 </div>';
             }?>
         </div>
-        <?= Html::buttonInput('Коммент', [
-            'class' => 'btn btn-xs',
-            'style' => '    padding-left: 13px;
-                            padding-right: 13px;
-                            float: right;
-                            margin-top: -10px;
-                            margin-right: 18px;
-                            font-size: 11px;
-                            background: #3a3331;
-                            border-radius: 26px;
-                            color: #736a50;']) ?>
+<!--        --><?//= Html::buttonInput('Коммент', [
+//            'class' => 'btn btn-xs',
+//            'style' => '    padding-left: 13px;
+//                            padding-right: 13px;
+//                            float: right;
+//                            margin-top: -10px;
+//                            margin-right: 18px;
+//                            font-size: 11px;
+//                            background: #3a3331;
+//                            border-radius: 26px;
+//                            color: #736a50;']) ?>
 <!--        <div>-->
 <!--            --><?php //$formComment = ActiveForm::begin([
 //                    'id' => 'formComment',
@@ -124,52 +112,99 @@ use app\models\Zakaz;
 		]) ?>
 	</div>
     <div class="responsible">
+        <?php if (Yii::$app->user->can('seeIspol')): ?>
+            <div class="responsible_person-status">
+                <?php if ($model->status == Zakaz::STATUS_DECLINED_DISAIN or $model->status == Zakaz::STATUS_DECLINED_MASTER){
+                    echo '<div class="statusZakaz" style="background: #7c1111;margin-top: 15px;">Отклонено</div>
+<div style="width: 155px;">
+<span class="responsible_person">По причине:</span><br>'.$model->declined.'</div>';
+                }
+                ?>
+            </div>
+        <?php endif ?>
+        <?php if (Yii::$app->user->can('admin')): ?>
         <span class="responsible_person">Статус:</span>
-        <div>
-            <?php if ($model->status == Zakaz::STATUS_SUC_DISAIN){
+        <div class="responsible_person-status">
+            <?php if ($model->status == Zakaz::STATUS_SUC_DISAIN or $model->status == Zakaz::STATUS_SUC_MASTER){
                 echo '<div class="statusZakaz">Выполнено</div>
 <div>'
-                    .Html::a('<div class="action actionApprove" style="width:70px;position: relative;left: 62px;top: -1px;">Принять</div>', ['#']).' '
-                    .Html::a('<div class="action actionCancel" style="left:143px;top:-21px;width:79px;position: relative;">Отклонить</div>', ['#']).'
+                    .Html::submitButton('Принять', ['class' => 'action actionApprove', 'value' => Url::to(['zakaz/accept', 'id' => $model->id_zakaz])]).' '
+                    .Html::submitButton('Отклонить', ['class' => 'action actionCancel', 'value' => Url::to(['zakaz/declined', 'id' => $model->id_zakaz])]).'
 </div>';
             }
-            elseif($model->status == Zakaz::STATUS_DECLINED_DISAIN){
+            elseif($model->status == Zakaz::STATUS_DECLINED_DISAIN or $model->status == Zakaz::STATUS_DECLINED_MASTER){
                 echo '<div class="statusZakaz" style="background: #7c1111">Отклонено</div>
 <div style="width: 155px;position: relative;left: 63px;top: -1px;"">
-<span class="responsible_person">По причине:</span><br> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores, vero.</div>';
+<span class="responsible_person">По причине:</span><br>'.$model->declined.'</div>';
+            } elseif($model->status == Zakaz::STATUS_ADOPTED){
+//                echo Yii::$app->controller->renderPartial('accept', ['model' => $model]);
+                echo Html::submitButton('Назначить', ['class' => 'action actionApprove', 'style' => 'top: -16px;left: 139px;', 'value' => Url::to(['zakaz/accept', 'id' => $model->id_zakaz])]);
             }
             ?>
         </div>
+        <?php endif ?>
+        <div class="linePrice"></div>
         <div class="oplata-zakaz">
-            <span class="responsible_person">Всего:</span>
-            <span class="responsible_person">Оплачено:</span>
-            <span class="responsible_person">К доплате:</span><br>
-            <?= $model->oplata.'р.' ?>
-            <?= $model->fact_oplata.'р.' ?>
-            <?php if($model->oplata != null){?>
+            <span class="responsible_person namePrice">Оплачено:</span>
+            <span class="responsible_person namePrice">К доплате:</span>
+            <span class="responsible_person namePrice">Всего:</span>
+            <div class="responsible_person price"><?= $model->fact_oplata.'р.' ?></div>
+            <div class="responsible_person price"><?php if($model->oplata != null){?>
                 <?php echo $model->oplata - $model->fact_oplata.'р.'; ?>
-            <?php } ?>
+            <?php } ?></div>
+            <div class="responsible_person price"><?= $model->oplata.'р.' ?></div>
         </div>
     </div>
     <div class="col-lg-12 footerView"></div>
     <div class="col-lg-12 footer-view-zakaz">
-        <?= Html::a('Задача', ['todoist/createzakaz', 'id_zakaz' => $model->id_zakaz], ['class' => 'btn btn-xs', 'style' => 'margin-left: 97px;']) ?>
-        <?= Html::a('Запрос', ['todoist/create_shop'], ['class' => 'btn btn-xs']) ?>
-        <?php Modal::begin([
-            'header' => '<h2>Создание доставки</h2>',
-            'toggleButton' => [
-                'tag' => 'a',
-                'class' => 'btn btn-xs',
-                'label' => 'Доставка',
-            ]
-        ]);
-        $shipping = new Courier();
-        echo $this->render('shipping', [
-            'shipping' => $shipping,
-            'model' => $model->id_zakaz,
-        ]);
+        <?php if (($model->status == Zakaz::STATUS_MASTER or $model->status == Zakaz::STATUS_DECLINED_MASTER) && Yii::$app->user->can('master')): ?>
+            <?= Html::a('Готово', ['check', 'id' => $model->id_zakaz], ['class' => 'btn btn- done']) ?>
+        <?php endif ?>
+        <?php if (Yii::$app->user->can('seeAdop')): ?>
+            <?php if ($model->status == Zakaz::STATUS_EXECUTE && $model->action == 1): ?>
+                <?= Html::a('Готово', ['close', 'id' => $model->id_zakaz], ['class' => 'btn btn-xs done']) ?>
+            <?php endif ?>
+        <?php endif ?>
+        <?php if (Yii::$app->user->can('admin')): ?>
+            <?php if($model->status == Zakaz::STATUS_ADOPTED && $model->action == 1): ?>
+                <?= Html::a('Выполнить', ['fulfilled','id' => $model->id_zakaz], ['class' => 'btn btn-xs done']) ?>
+            <?php endif ?>
+            <?php if ($model->status == Zakaz::STATUS_AUTSORS && $model->action == 1): ?>
+                <?= Html::a('Выполнить', ['fulfilled','id' => $model->id_zakaz], ['class' => 'btn btn-xs done']) ?>
+            <?php endif ?>
+            <?php if ($model->action == 0): ?>
+                <?= Html::a('Восстановить', ['restore','id' => $model->id_zakaz], [
+                        'class' => 'btn btn-xs done',
+                        'data' => [
+                            'confirm' => 'Вы действительно хотите восстановить заказ?',
+                            'method' => 'post',
+                        ],
+                ]) ?>
+            <?php endif ?>
+            <?= Html::a('Задача', ['todoist/createzakaz', 'id_zakaz' => $model->id_zakaz], ['class' => 'btn btn-xs', 'style' => 'margin-left: 111px;']) ?>
+            <?php Modal::begin([
+                'header' => '<h2>Задание на доставку</h2>',
+                'class' => 'model-sm modalShipping',
+                'toggleButton' => [
+                    'tag' => 'a',
+                    'class' => 'btn btn-xs',
+                    'label' => 'Доставка',
+                ]
+            ]);
+            $shipping = new Courier();
+            echo $this->render('shipping', [
+                'shipping' => $shipping,
+                'model' => $model->id_zakaz,
+            ]);
 
-        Modal::end(); ?>
-        <?= Html::a('Редактировать', ['zakaz/update', 'id' => $model->id_zakaz], ['class' => 'btn btn-xs', 'style' => 'float: right;margin-right: 10px;'])?>
+            Modal::end(); ?>
+        <?php endif ?>
+        <?php if (($model->status == Zakaz::STATUS_DISAIN or $model->status == Zakaz::STATUS_DECLINED_DISAIN) && Yii::$app->user->can('disain')): ?>
+            <?= Html::submitButton('Заказ исполнен', ['class' => 'action modalDisain', 'value' => Url::to(['uploadedisain', 'id' => $model->id_zakaz])]) ?>
+        <?php endif ?>
+        <?php if (!Yii::$app->user->can('seeIspol')): ?>
+            <?= Html::a('Редактировать', ['zakaz/update', 'id' => $model->id_zakaz], ['class' => 'btn btn-xs', 'style' => 'float: right;margin-right: 10px;'])?>
+        <?php endif ?>
+<!--            --><?//= Html::a('Чек', ['#'], ['class' => 'btn btn-xs', 'style' => 'float: right;margin-right: 71px;'])?>
     </div>
 </div>

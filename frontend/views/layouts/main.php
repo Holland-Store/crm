@@ -40,17 +40,15 @@ AppAsset::register($this);
     'options' => ['class' => 'nav nav-pills headerNav'],
     'items' => [
     ['label' => 'Заказы', 'url' => ['zakaz/admin'], 'visible' => Yii::$app->user->can('seeAdmin')],
-    ['label' => 'Дизайнер', 'url' => ['zakaz/disain'], 'visible' => Yii::$app->user->can('disain')],
-    ['label' => 'Готовые заказы', 'url' => ['zakaz/ready'], 'visible' => Yii::$app->user->can('disain')],
-    ['label' => 'Мастер', 'url' => ['zakaz/master'], 'visible' => Yii::$app->user->can('master')],
+    ['label' => 'Заказы', 'url' => ['zakaz/disain'], 'visible' => Yii::$app->user->can('disain')],
+    ['label' => 'Заказы', 'url' => ['zakaz/master'], 'visible' => Yii::$app->user->can('master')],
     ['label' => 'Заказы', 'url' => ['zakaz/shop'], 'visible' => Yii::$app->user->can('seeShop')],
-    ['label' => 'Курьер', 'url' => ['courier/index'], 'visible' => Yii::$app->user->can('courier')],
-    ['label' => 'Готовые доставки', 'url' => ['courier/ready'], 'visible' => Yii::$app->user->can('courier')],
+    ['label' => 'Доставки', 'url' => ['courier/index'], 'visible' => Yii::$app->user->can('courier')],
     ['label' => 'Задачи', 'url' => ['todoist/index'], 'visible' => Yii::$app->user->can('admin')],
     ['label' => 'Поломки', 'url' => ['helpdesk/index'], 'visible' => !Yii::$app->user->isGuest],
     ['label' => 'Закупки', 'url' => ['custom/adop'], 'visible' => Yii::$app->user->can('seeAdop')],
     ['label' => 'Доставки', 'url' => ['courier/shipping'], 'visible' => Yii::$app->user->can('admin')],
-    ['label' => 'Запросы на товар', 'url' => ['custom/index'], 'visible' => Yii::$app->user->can('zakup')],
+    ['label' => 'Закупки', 'url' => ['custom/index'], 'visible' => Yii::$app->user->can('zakup')],
     ['label' => 'Задачи', 'url' => ['todoist/shop'], 'visible' => Yii::$app->user->can('todoist')],
 //    ['label' => 'Help Desk', 'url' => ['helpdesk/index'], 'visible' => Yii::$app->user->can('todoist')],
     ],
@@ -97,7 +95,7 @@ AppAsset::register($this);
         echo Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(
                 '<span>'.Yii::$app->user->identity->name.'</span> <span class="glyphicon glyphicon-off exit"></span>',
-                ['class' => 'btn btn-link logout']
+                ['class' => 'btn btn-link logout', 'title' => 'Выход']
             )
             . Html::endForm();
     }
@@ -131,7 +129,7 @@ AppAsset::register($this);
 
 <?php if (Yii::$app->user->isGuest): ?>
     <div class="headerLogin">
-        <h1>HOLLAND <span>CRM 3.0</span></h1>
+        <h1>HOLLAND <span>CRM 2.1</span></h1>
         <p>Управление заказами</p>
     </div>
 <?php endif ?>

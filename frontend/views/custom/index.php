@@ -8,7 +8,7 @@ use yii\bootstrap\Nav;
 /* @var $searchModel app\models\CustomSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Запросы';
+$this->title = 'Все запросы';
 ?>
 <div class="custom-index">
 

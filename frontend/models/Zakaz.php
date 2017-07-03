@@ -41,6 +41,7 @@ use yii\web\UploadedFile;
  * @property string $comment
  * @property integer $id_shipping
  * @property string $declined
+ * @property integer $id_unread
  *
  * @property Courier[] $couriers
  * @property Todoist[] $todoists
@@ -91,7 +92,7 @@ class Zakaz extends ActiveRecord
     {
         return [
             self::SCENARIO_DECLINED => ['declined', 'required'],
-            self::SCENARIO_DEFAULT => ['srok', 'number', 'description', 'phone', 'id_sotrud','sotrud_name', 'status', 'id_tovar', 'oplata', 'fact_oplata', 'number', 'statusDisain', 'statusMaster', 'img', 'id_shipping', 'id_tovar', 'information', 'data', 'data-start-disain', 'prioritet', 'phone', 'email', 'name', 'maket', 'time'],
+            self::SCENARIO_DEFAULT => ['srok', 'number', 'description', 'phone', 'id_sotrud','sotrud_name', 'status', 'id_tovar', 'oplata', 'fact_oplata', 'number', 'statusDisain', 'statusMaster', 'img', 'id_shipping', 'id_tovar', 'id_unread', 'information', 'data', 'prioritet', 'phone', 'email', 'name', 'maket', 'time'],
         ];
     }
 
@@ -101,16 +102,15 @@ class Zakaz extends ActiveRecord
     public function rules()
     {
         return [
-            [['srok', 'number', 'description', 'phone', 'sotrud_name'], 'required', 'on' => self::SCENARIO_DEFAULT],
+            [['srok', 'number', 'description', 'phone'], 'required', 'on' => self::SCENARIO_DEFAULT],
             ['declined', 'required', 'message' => 'Введите причину отказа', 'on'=> self::SCENARIO_DECLINED],
-            [['id_zakaz', 'id_tovar', 'oplata', 'fact_oplata', 'minut', 'time', 'number', 'status', 'action', 'id_sotrud', 'phone', 'id_shipping' ,'prioritet', 'statusDisain', 'statusMaster'], 'integer'],
+            [['id_zakaz', 'id_tovar', 'oplata', 'fact_oplata', 'minut', 'time', 'number', 'status', 'action', 'id_sotrud', 'phone', 'id_shipping' ,'prioritet', 'statusDisain', 'statusMaster', 'id_unread'], 'integer'],
             [['srok', 'data', 'data-start-disain'], 'safe'],
             [['information', 'comment', 'search', 'declined'], 'string'],
             ['prioritet', 'default', 'value' => 0],
             ['status', 'default', 'value' => self::STATUS_NEW],
             ['id_sotrud', 'default', 'value' => Yii::$app->user->getId()],
             ['data', 'default', 'value' => date('Y-m-d H:i:s')],
-
             [['description'], 'string', 'max' => 500],
             [['email', 'name', 'img', 'maket', 'sotrud_name'],'string', 'max' => 50],
             [['file'], 'file', 'skipOnEmpty' => true],
@@ -154,6 +154,7 @@ class Zakaz extends ActiveRecord
             'comment' => 'Комментарий',
             'id_shipping' => 'Доставка',
             'declined' => 'Причина отказа',
+            'id_unread' => 'Id unread',
             'search' => 'Search',
         ];
     }
@@ -258,10 +259,10 @@ class Zakaz extends ActiveRecord
      * @param $id
      * @return bool
      */
-    public function upload($id)
+    public function upload()
     {
         if($this->validate()){
-            $this->file->saveAs('attachment/'.$id.'.'.$this->file->extension);
+            $this->file->saveAs('attachment/'.time().'.'.$this->file->extension);
         return true;
         } else {return false;}
     }

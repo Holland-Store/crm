@@ -1,6 +1,7 @@
 <?php
 
 use yii\bootstrap\Modal;
+use yii\bootstrap\Nav;
 use yii\helpers\Html;
 use yii\helpers\StringHelper;
 use kartik\grid\GridView;
@@ -11,7 +12,7 @@ use yii\widgets\Pjax;
 /* @var $searchModel app\models\ZakazSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Дизайнер';
+$this->title = 'Все заказы';
 ?>
 <?php Pjax::begin(['id' => 'pjax-container']); ?>
 
@@ -24,12 +25,8 @@ $this->title = 'Дизайнер';
         'pjax' => true,
         'tableOptions' 	=> ['class' => 'table table-bordered tableSize'],
         'rowOptions' => function($model, $key, $index, $grid){
-            if ($model->srok < date('Y-m-d') && $model->status > Zakaz::STATUS_NEW ) {
-                return ['class' => 'trTable trTablePass italic trSrok'];
-            } elseif ($model->srok < date('Y-m-d') && $model->status == Zakaz::STATUS_NEW) {
-                return['class' => 'trTable trTablePass bold trSrok trNew'];
-            } elseif ($model->srok > date('Y-m-d') && $model->status == Zakaz::STATUS_NEW){
-                return['class' => 'trTable bold trSrok trNew'];
+            if ($model->statusDisain == Zakaz::STATUS_DISAINER_NEW) {
+                return ['class' => 'trTable trNormal trNewDisain'];
             } else {
                 return ['class' => 'trTable trNormal'];
             }
@@ -57,7 +54,7 @@ $this->title = 'Дизайнер';
                 'attribute' => 'id_zakaz',
                 'value' => 'prefics',
                 'hAlign' => GridView::ALIGN_RIGHT,
-                'contentOptions' => ['class' => 'textTr tr50'],
+                'contentOptions' => ['class' => 'textTr tr70'],
             ],
             [
                 'attribute' => '',
@@ -120,14 +117,30 @@ $this->title = 'Дизайнер';
             ],
             [
                 'attribute' => 'statusDisainName',
-                'contentOptions' => ['class' => 'border-right textTr tr90'],
+                'contentOptions' => function($model) {
+                    if ($model->status == Zakaz::STATUS_SUC_DISAIN) {
+                        return ['class' => 'border-right textTr tr90 success-ispol'];
+                    } elseif($model->status == Zakaz::STATUS_DECLINED_DISAIN) {
+
+                        return ['class' => 'border-right textTr tr90'];
+                    }
+                }
             ],
         ],
     ]); ?>
     <?php Pjax::end(); ?>
 </div>
+<div class="footerNav">
+    <?php echo Nav::widget([
+        'options' => ['class' => 'nav nav-pills footerNav'],
+        'items' => [
+            ['label' => 'Архив', 'url' => ['zakaz/ready'], 'visible' => Yii::$app->user->can('disain')],
+        ],
+    ]); ?>
+</div>
 <?php Modal::begin([
     'id' => 'modalFile',
+    'size' => 'modal-sm',
     'header' => '<h2>Прикрепите макет</h2>',
 ]);
 

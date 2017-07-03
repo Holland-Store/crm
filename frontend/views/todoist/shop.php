@@ -1,5 +1,6 @@
 <?php
 
+use yii\bootstrap\ButtonDropdown;
 use yii\helpers\Html;
 use kartik\grid\GridView;
 use yii\bootstrap\Nav;
@@ -8,7 +9,7 @@ use yii\bootstrap\Nav;
 /* @var $searchModel app\models\TodoistSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Задачник';
+$this->title = 'Все задачи';
 ?>
 <div class="todoist-index ispolShop">
 

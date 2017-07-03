@@ -119,27 +119,22 @@ class CustomController extends Controller
     public function actionCreate()
     {
         $notification = $this->findNotification();
+        $data = Yii::$app->request->post('Custom', []);
         $models = [new Custom()];
-        $request = Yii::$app->getRequest();
-        if ($request->isPost && $request->post('ajax') !== null){
-            $data = Yii::$app->request->post('Custom', []);
-            foreach (array_keys($data) as $index) {
-                $models[$index] = new Custom();
-            }
-            Model::loadMultiple($models, Yii::$app->request->post());
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            $result = ActiveForm::validateMultiple($models);
-            return $result;
+        foreach (array_keys($data) as $index) {
+            $models[$index] = new Custom();
         }
-
-        if(Model::loadMultiple($models, Yii::$app->request->post())) {
-            foreach ($models as $custom) {
-                if ($custom->save()){
-                    return $this->redirect(Yii::$app->request->referrer);
-                } else{
-                   print_r($custom->getErrors());
+// загружаем данные из запроса в массив созданных моделей
+        if (Model::loadMultiple($models, Yii::$app->request->post())) {
+            foreach ($models as $model) {
+                //сохраняем данные
+                if (!$model->save()){
+                    print_r($model->getErrors());
+                } else {
+                    $model->save();
                 }
             }
+            return $this->redirect(['adop']);
         } else {
             return $this->render('create', [
                'models' => $models,

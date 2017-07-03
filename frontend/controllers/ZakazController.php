@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use Yii;
+use app\models\Unread;
 use app\models\Zakaz;
 use app\models\Courier;
 use app\models\Comment;
@@ -125,6 +126,16 @@ class ZakazController extends Controller
                         'actions' => ['adopted'],
                         'allow' => true,
                         'roles' => ['admin', 'program'],
+                    ],
+                    [
+                        'actions' => ['adopdisain'],
+                        'allow' => true,
+                        'roles' => ['disain', 'program'],
+                    ],
+                    [
+                        'actions' => ['adopmaster'],
+                        'allow' => true,
+                        'roles' => ['master', 'program'],
                     ],
                     [
                         'actions' => ['statusdisain'],
@@ -311,6 +322,7 @@ class ZakazController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $model->file = UploadedFile::getInstance($model, 'file');
             if($model->file){
+            $model->upload();
             $model->img = time().'.'.$model->file->extension;
             }
             if (!$model->save()){
@@ -347,8 +359,8 @@ class ZakazController extends Controller
                 $model->file->saveAs('attachment/'.$model->id_zakaz.'.'.$model->file->extension);
                 $model->img = $model->id_zakaz.'.'.$model->file->extension;
             }
-            if ($model->status == 3) {
-                $model->data_start_disain = date('Y-m-d H:i:s');
+            if ($model->status == Zakaz::STATUS_DISAIN or $model->status == Zakaz::STATUS_MASTER){
+                $model->id_unread = 0;
             }
             $model->validate();
             if (!$model->save()){
@@ -402,9 +414,13 @@ class ZakazController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post())){
-            $model->uploadeFile;//Выполнение работы дизайнером
+            //Выполнение работы дизайнером
+            if ($model->file){
+                $model->uploadeFile;
+            }
             $model->status = Zakaz::STATUS_SUC_DISAIN;
             $model->statusDisain = Zakaz::STATUS_DISAINER_PROCESS;
+            $model->id_unread = true;
             if ($model->save()) {
                 return $this->redirect(['disain', 'id' => $id]);
             } else {
@@ -429,7 +445,7 @@ class ZakazController extends Controller
         if (!$model->save()){
             print_r($model->getErrors());
         } else {
-            $model->save;
+            $model->save();
         }
 
         $this->view->params['notifications'] = Notification::find()->where(['id_user' => Yii::$app->user->id, 'active' => true])->all();
@@ -453,7 +469,6 @@ class ZakazController extends Controller
 
     /**
      * New zakaz become in status adopted
-     * if success then redirected admin
      * @param $id
      * @return \yii\web\Response
      */
@@ -461,6 +476,29 @@ class ZakazController extends Controller
     {
         $model = $this->findModel($id);
         $model->status = Zakaz::STATUS_ADOPTED;
+        $model->save();
+    }
+
+    /**
+     * New zakaz become in status wokr for disain
+     * @param $id
+     * @return \yii\web\Response
+     */
+    public function actionAdopdisain($id)
+    {
+        $model = $this->findModel($id);
+        $model->statusDisain = Zakaz::STATUS_DISAINER_WORK;
+        $model->save();
+    }
+    /**
+     * New zakaz become in status wokr for master
+     * @param $id
+     * @return \yii\web\Response
+     */
+    public function actionAdopmaster($id)
+    {
+        $model = $this->findModel($id);
+        $model->statusMaster = Zakaz::STATUS_MASTER_WORK;
         $model->save();
     }
 
@@ -474,6 +512,7 @@ class ZakazController extends Controller
     {
         $model = $this->findModel($id);
         $model->status = Zakaz::STATUS_EXECUTE;
+        $model->id_unread = 0;
         if ($model->save()){
             return $this->redirect(['admin']);
         } else {
@@ -534,7 +573,7 @@ class ZakazController extends Controller
         $notification = $this->findNotification();
 
         $model = $this->findModel($id);
-        $model->statusDisain = 1;
+        $model->statusDisain = Zakaz::STATUS_DISAINER_WORK;
         $model->save();
 
         return $this->redirect(['view', 'id' => $model->id_zakaz]);

@@ -8,7 +8,7 @@ use yii\widgets\Pjax;
 /* @var $searchModel app\models\CourierSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Доставка';
+$this->title = 'Все доставки';
 ?>
 <?php Pjax::begin(); ?>
 <div class="courier-shipping">
@@ -26,7 +26,7 @@ $this->title = 'Доставка';
                 'attribute' => 'date',
                 'format' => ['date', 'php:d M'],
                 'hAlign' => GridView::ALIGN_RIGHT,
-                'contentOptions' => ['class' => 'border-left textTr tr50'],
+                'contentOptions' => ['class' => 'border-left textTr tr70'],
             ],
             [
                 'attribute' => 'commit',

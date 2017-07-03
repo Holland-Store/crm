@@ -42,7 +42,7 @@ class CourierSearch extends Courier
     public function search($params)
     {
         $query = Courier::find();
-        $query->andWhere(['status' => Courier::DELIVERED]);
+        $query->andWhere(['<','status',Courier::DELIVERED]);
 
         // add conditions that should always apply here
 

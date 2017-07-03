@@ -12,7 +12,6 @@ use app\models\User;
 ?>
 
 <div class="zakaz-search">
-
     <?php $form = ActiveForm::begin(['method' => 'get', 'action' => ['']]); ?>
 
     <?= $form->field($model, 'search')->textInput(['class' => 'form-control'])->label(false) ?>
@@ -20,5 +19,4 @@ use app\models\User;
     <?= Html::submitButton('Найти') ?>
 
     <?php ActiveForm::end(); ?>
-
 </div>

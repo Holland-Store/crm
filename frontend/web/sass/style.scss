@@ -22,6 +22,11 @@ $bodyBackground: #302927;
 @mixin border($color) {
     border: 1px solid $color;
 }
+@mixin borFormZakaz($color){
+  height: 255px;
+  border-top: 1px solid $color;
+  border-bottom: 1px solid $color;
+}
 
 body{
     background: $bodyBackground;
@@ -57,7 +62,7 @@ body{
       background-position: 63px 15px;
       background-size: 98px;
       width: 168px;
-      height: 100px;
+      height: 58px;
       float: left;
     }
     .headerNav{
@@ -78,6 +83,9 @@ body{
             }
         }
 
+    }
+    .container{
+      padding: 41px 15px 20px;
     }
     .nav-pills > li.active > a{
         background-color: $colorH3;
@@ -114,4 +122,40 @@ body{
 .notification-content{
     height: 169px;
     overflow: auto;
+}
+.zakaz-form{
+  h3{
+    color: $colorH3;
+  }
+  .informationZakaz{
+    margin-left: 94px;
+    @include borFormZakaz($colorH3);
+    h3{
+      padding-left: 16px;
+    }
+    textarea{
+      width: 255px;
+    }
+  }
+  .clientZakaz{
+    margin-left: -76px;
+    @include borFormZakaz($colorH3);
+    h3{
+      padding-left: 18px;
+    }
+  }
+  .moneyZakaz{
+    margin-left: -42px;
+    @include borFormZakaz($colorH3);
+    h3{
+      padding-left: 12px;
+    }
+  }
+  .managmentZakaz{
+    margin-left: -60px;
+    @include borFormZakaz($colorH3);
+    h3{
+      padding-left: 12px;
+    }
+  }
 }

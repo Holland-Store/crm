@@ -1,7 +1,13 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: holland
- * Date: 26.06.2017
- * Time: 13:39
- */
+
+use yii\widgets\ActiveForm;
+use yii\helpers\Html;
+?>
+
+<?php $form = ActiveForm::begin([]); ?>
+
+<?= $form->field($model, 'declined')->textInput()->label(false) ?>
+
+<?= Html::submitButton('Отправить', ['class' => 'action'])?>
+
+<?php ActiveForm::end()?>

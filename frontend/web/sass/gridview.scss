@@ -28,6 +28,8 @@ $border-radius: 26px;
 $bacgrountTr: #802c2c;
 $backgroundComment: #1f1b1a;
 $bodyBackground: #302927;
+$success: #446505;
+$orangeDostavka: #f0ad4e;
 
 @mixin border-bottom($color) {
     border-bottom: 1px solid $color;
@@ -127,10 +129,6 @@ $bodyBackground: #302927;
                     color: #fff;
                 }
             }
-          .shopSearch{
-            margin-top: -44px;
-            margin-left: 89px;
-          }
         }
     }
     .border-left {
@@ -167,7 +165,7 @@ $bodyBackground: #302927;
     }
     .table .trNew{
         font-weight: bold;
-        color: #191412;
+        color: $colButtonHover;
     }
     .reminder{
         position: relative;
@@ -428,6 +426,29 @@ $bodyBackground: #302927;
 .zakaz-index{
   .detail-view{
     tbody{
+      background: $colButtonHover;
+    }
+  }
+  .success-ispol{
+    color: $success;
+  }
+}
+.zakaz-shop{
+  .zakazSearch{
+    .shopSearch{
+      margin-top: -45px;
+      margin-left: 158px;
+    }
+      input{
+        left: 5px;
+        width: 168px;
+      }
+    }
+  .shopZakaz{
+    margin-top: 1px;
+  }
+  .zakazFile{
+    .table{
       background: $colButtonHover;
     }
   }

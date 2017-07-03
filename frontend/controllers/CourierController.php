@@ -205,13 +205,14 @@ class CourierController extends Controller
         $model->data_to = date('Y-m-d H:i:s');
         $model->status = Courier::RECEIVE;
 
-        $notification->id_user = 5;//Уведомление, что курьер забрал доставку
-        $notification->name = 'Курьер забрал заказ №'.$model->id_zakaz;
+        $notification->getByIdNotification(5, $model->id_zakaz);//Уведомление, что курьер забрал доставку
         $notification->saveNotification;
 
-        $model->save();
-
-        return $this->redirect(['index']);
+        if ($model->save()){
+            return $this->redirect(['index']);
+        } else {
+            print_r($model->getErrors());
+        }
     }
     public function actionDelivered($id)//Курьер доставил заказ
     {
@@ -221,12 +222,14 @@ class CourierController extends Controller
         $model->status = Courier::DELIVERED;
         $this->view->params['notifications'] = Notification::find()->where(['id_user' => Yii::$app->user->id, 'active' => true])->all();
 
-        $notification->findNotification(8, $model->id_zakaz);//Уведомление, что курьер доставил доставку
+        $notification->getByIdNotification(8, $model->id_zakaz);//Уведомление, что курьер доставил доставку
         $notification->saveNotification;
 
-        $model->save();
-
-        return $this->redirect(['index']);
+        if ($model->save()){
+            return $this->redirect(['index']);
+        } else {
+            print_r($model->getErrors());
+        }
     }
     /**
      * Finds the Courier model based on its primary key value.
