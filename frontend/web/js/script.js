@@ -1,6 +1,12 @@
+<<<<<<< HEAD
 // document.getElementById('notification').onclick = () => {
 // 	document.getElementById('notification-container').classList.toggle('hidden');
 // }
+=======
+document.getElementById('notification').onclick = () => {
+	document.getElementById('notification-container').classList.toggle('hidden');
+}
+>>>>>>> 94df34a55697b2e667b1a48fb1174487f2ae0b32
 $(document).ready(function(){
 //	$('body').on('click', '.trTable', function(){
 //		var key = $(this).data('key');
@@ -13,6 +19,7 @@ $(document).ready(function(){
 	setInterval(function(){
 		$.pjax.reload('#pjax-container')
 	}, 100000);
+<<<<<<< HEAD
        $('.actionCancel').click(function () {
            $('#declinedModal').modal('show')
                .find('.modalContent')
@@ -51,3 +58,6 @@ $(document).ready(function(){
        })
 });
 
+=======
+});
+>>>>>>> 94df34a55697b2e667b1a48fb1174487f2ae0b32

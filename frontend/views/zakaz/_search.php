@@ -19,7 +19,11 @@ use app\models\User;
 
     <!-- <?= $form->field($model, 'id_zakaz') ?> -->
 
+<<<<<<< HEAD
     <!-- <?php if (Yii::$app->user->can('admin')): ?>
+=======
+    <?php if (Yii::$app->user->can('admin')): ?>
+>>>>>>> 94df34a55697b2e667b1a48fb1174487f2ae0b32
     <div class="col-xs-2">
         <?= $form->field($model, 'srok')->widget(
             DatePicker::className(), [
@@ -38,13 +42,18 @@ use app\models\User;
                 ]
         ]);?>
     </div>
+<<<<<<< HEAD
     <?php endif ?> -->
+=======
+    <?php endif ?>
+>>>>>>> 94df34a55697b2e667b1a48fb1174487f2ae0b32
     
     <?php if (Yii::$app->user->can('admin')): ?>
     <div class="col-xs-2">
         <?= $form->field($model, 'id_sotrud')->dropDownList([
                 '2' => 'Московский',
                 '5' => 'Админ',
+<<<<<<< HEAD
                 '6' => 'Пушкина',
                 '9' => 'Сибирский',
             ],
@@ -53,10 +62,19 @@ use app\models\User;
         <?php //$form->field($model, 'status')->dropDownList(
             //ArrayHelper::map(User::find()->all(), 'id', 'name'),
         //['prompt' => 'Выберите этап',]); ?>
+=======
+            ],
+            ['prompt' => 'Выберите магазин']
+        ) ?>
+        <?= $form->field($model, 'status')->dropDownList(
+            ArrayHelper::map(User::find()->all(), 'id', 'name'),
+        ['prompt' => 'Выберите этап',]); ?>
+>>>>>>> 94df34a55697b2e667b1a48fb1174487f2ae0b32
         
     </div>
     <?php endif ?>
     
+<<<<<<< HEAD
 <!--    <div class="col-xs-2">-->
 <!--        --><?//= $form->field($model, 'name') ?>
 
@@ -66,6 +84,17 @@ use app\models\User;
     <div class="form-group col-xs-3" style="margin-top: 24px;">
         <!-- <?= Html::resetButton('Сбросить настройки', ['class' => 'btn btn-default']) ?> -->
         <?= Html::submitButton('Найти', ['class' => 'btn btn-primary shopSearch']) ?>
+=======
+    <div class="col-xs-2">
+        <?= $form->field($model, 'name') ?>
+
+        <?= $form->field($model, 'phone') ?>
+    </div>
+    
+    <div class="form-group col-xs-3" style="margin-top: 24px;">
+        <!-- <?= Html::resetButton('Сбросить настройки', ['class' => 'btn btn-default']) ?> -->
+        <?= Html::submitButton('Найти', ['class' => 'btn btn-primary']) ?>
+>>>>>>> 94df34a55697b2e667b1a48fb1174487f2ae0b32
     </div>
 
     <?php ActiveForm::end(); ?>

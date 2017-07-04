@@ -17,7 +17,11 @@ $this->title = 'Создать задачу';
 ?>
 <div class="todoist-create-shop">
 
+<<<<<<< HEAD
 <!--    <h1>--><?//= Html::encode($this->title) ?><!--</h1>-->
+=======
+    <h1><?= Html::encode($this->title) ?></h1>
+>>>>>>> 94df34a55697b2e667b1a48fb1174487f2ae0b32
 
     <?php echo Tabs::widget([
     	'items' => [

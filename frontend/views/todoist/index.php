@@ -1,14 +1,20 @@
 <?php
 
+<<<<<<< HEAD
 use yii\bootstrap\ButtonDropdown;
 use yii\helpers\Html;
 use kartik\grid\GridView;
+=======
+use yii\helpers\Html;
+use yii\grid\GridView;
+>>>>>>> 94df34a55697b2e667b1a48fb1174487f2ae0b32
 use yii\bootstrap\Nav;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\TodoistSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
+<<<<<<< HEAD
 $this->title = 'Все задачи';
 ?>
 <div class="todoist-index">
@@ -62,10 +68,23 @@ $this->title = 'Все задачи';
                     ]
                 ]
             ]); ?>
+=======
+$this->title = 'Задачник';
+?>
+<div class="todoist-index">
+
+    <h1><?= Html::encode($this->title) ?></h1>
+    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+
+    <p>
+        <?php if (Yii::$app->user->can('admin')): ?>
+            <?= Html::a('Создать задачу', ['create'], ['class' => 'btn btn-success']) ?>
+>>>>>>> 94df34a55697b2e667b1a48fb1174487f2ae0b32
         <?php endif ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
+<<<<<<< HEAD
         'floatHeader' => true,
         'headerRowOptions' => ['class' => 'headerTable'],
         'pjax' => true,
@@ -84,6 +103,29 @@ $this->title = 'Все задачи';
                 'contentOptions'=>['style'=>'white-space: normal;'],
             ],
             [
+=======
+        'columns' => [
+            ['class' => 'yii\grid\SerialColumn'],
+
+            [
+                'attribute' => 'srok',
+                'format' => ['date', 'php:d.m.Y'],
+            ],
+            [
+                'attribute' => 'activate',
+                'value' => function($model){
+                    return $model->todoistName;
+                }
+            ],
+            [
+				'attribute' => 'id_user',
+				'value' => function($model){
+					return $model->idUser->name;
+				}
+			],
+            'comment:ntext',
+            [
+>>>>>>> 94df34a55697b2e667b1a48fb1174487f2ae0b32
                 'attribute' => 'zakaz',
                 'format' => 'raw',
                 'value' => function($model){
@@ -93,6 +135,7 @@ $this->title = 'Все задачи';
                     return '';
                 },
                 'label' => 'Заказ',
+<<<<<<< HEAD
                 'hAlign' => GridView::ALIGN_RIGHT,
                 'contentOptions' => ['class' => 'textTr tr50'],
             ],
@@ -111,6 +154,12 @@ $this->title = 'Все задачи';
         'options' => ['class' => 'nav nav-pills footerNav'],
         'items' => [
             ['label' => 'Архив', 'url' => ['closetodoist'], 'visible' => Yii::$app->user->can('seeAdmin')],
+=======
+            ],
+
+
+//            ['class' => 'yii\grid\ActionColumn'],
+>>>>>>> 94df34a55697b2e667b1a48fb1174487f2ae0b32
         ],
     ]); ?>
 </div>

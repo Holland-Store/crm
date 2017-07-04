@@ -1,4 +1,5 @@
 <?php
+<<<<<<< HEAD
 use kartik\file\FileInput;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
@@ -208,3 +209,52 @@ use app\models\Zakaz;
 <!--            --><?//= Html::a('Чек', ['#'], ['class' => 'btn btn-xs', 'style' => 'float: right;margin-right: 71px;'])?>
     </div>
 </div>
+=======
+use yii\helpers\Html;
+use kartik\detail\DetailView;
+
+?>
+
+<?= DetailView::widget([
+	'model' => $model,
+	'rowOptions' => ['style' => 'font-size: 11px;'],
+	'panel' => [
+		'heading' => 'Заказ',
+        'type' => DetailView::TYPE_PRIMARY,
+    ],
+	'attributes' => [
+		[
+			'attribute' => data,
+			'columns' => [
+				[
+					'attribute' => 'data',
+					'format' => ['date', 'd.MM.Y'],
+				],
+				[
+					'attribute' => 'information',
+					'format' => 'text',
+					'value' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+						quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+						consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+						cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+						proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+				],
+				[
+					'attribute' => 'srok',
+					'format' => ['date','d.MM.Y'],
+					'labelColOptions' => ['style' => 'width:20%'],
+					'valueColOptions' => ['style' => 'width:20%'],
+				],
+			],
+			[
+				'attribute' => prioritetName,
+			],
+		],
+	],
+
+
+
+
+])  ?>
+>>>>>>> 94df34a55697b2e667b1a48fb1174487f2ae0b32

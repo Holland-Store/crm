@@ -1,9 +1,19 @@
 <?php
 
+<<<<<<< HEAD
 use app\models\Zakaz;
 use kartik\grid\GridView;
 use yii\widgets\Pjax;
 use yii\helpers\StringHelper;
+=======
+use yii\helpers\Html;
+use yii\grid\GridView;
+use app\models\Otdel;
+use app\models\Zakaz;
+use yii\bootstrap\Nav;
+use yii\grid\SetColumn;
+use yii\widgets\Pjax;
+>>>>>>> 94df34a55697b2e667b1a48fb1174487f2ae0b32
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\ZakazSearch */
@@ -15,6 +25,7 @@ $this->title = 'Готовые макеты';
 
 <div class="zakaz-index">
 
+<<<<<<< HEAD
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'floatHeader' => true,
@@ -124,6 +135,52 @@ $this->title = 'Готовые макеты';
                     return $model->time.' минут';
                 },
                 'contentOptions' => ['class' => 'border-right textTr tr90'],
+=======
+    <h1><?= Html::encode($this->title) ?></h1>
+    <p>
+        <?= Html::a('<span class="glyphicon glyphicon-refresh"></span>', ['zakaz/disain'], ['class' => 'btn btn-primary btn-lg pull-right']) ?>
+    </p>
+
+    <?= GridView::widget([
+        'dataProvider' => $dataProvider,
+        'columns' => [
+            [
+                'attribute' => 'id_zakaz',
+                'headerOptions' => ['width' => '20'],
+            ],
+            [
+            'attribute' => 'description',
+            'headerOptions' => ['width' => '550'],
+            ],
+            'prioritet',
+             [
+                'attribute' => 'id_tovar',
+                'value' => 'idTovar.name',
+                'headerOptions' => ['width' => '100'],
+            ],
+            [
+                'attribute' => 'srok',
+                'format' => ['datetime', 'php:d.m.Y'],
+                'headerOptions' => ['width' => '70'],
+            ],
+            [
+                'attribute' => 'minut',
+                'format' => ['time', 'php:H:i'],
+                'headerOptions' => ['width' => '10'],
+            ],
+            'number',
+            'img',
+            [
+            'class' => 'yii\grid\ActionColumn',
+            'template' => '{view}',
+            'buttons' => [
+                'view' => function ($url,$model) {
+                    return Html::a(
+                    'Открыть', 
+                    $url, ['class' => 'btn btn-primary']);
+                },
+                ],
+>>>>>>> 94df34a55697b2e667b1a48fb1174487f2ae0b32
             ],
         ],
     ]); ?>

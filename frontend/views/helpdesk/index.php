@@ -1,19 +1,29 @@
 <?php
 
+<<<<<<< HEAD
 use yii\bootstrap\ButtonDropdown;
 use yii\helpers\Html;
 use kartik\grid\GridView;
+=======
+use yii\helpers\Html;
+use yii\grid\GridView;
+>>>>>>> 94df34a55697b2e667b1a48fb1174487f2ae0b32
 use yii\widgets\Pjax;
 use yii\bootstrap\Nav;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\HelpdeskSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
+<<<<<<< HEAD
 $this->title = 'Все поломки';
+=======
+$this->title = 'Help Desk';
+>>>>>>> 94df34a55697b2e667b1a48fb1174487f2ae0b32
 ?>
 <?php Pjax::begin(); ?>
 <div class="helpdesk-index">
 
+<<<<<<< HEAD
     <p>
         <?php if (Yii::$app->user->can('disain')): ?>
         <?= Html::a('+', ['create'], ['class' => 'buttonAdd btn-group'])?>
@@ -71,11 +81,19 @@ $this->title = 'Все поломки';
                 ]
             ]); ?>
             <?php endif ?>
+=======
+    <h1><?= Html::encode($this->title) ?></h1>
+    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <p>
+       	<?php if(!(Yii::$app->user->can('system') or Yii::$app->user->can('shop'))):?>
+		<?= Html::a('Создать заказ', ['create'], ['class' => 'btn btn-success']) ?>
+>>>>>>> 94df34a55697b2e667b1a48fb1174487f2ae0b32
        	<?php endif; ?>
     </p>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
+<<<<<<< HEAD
         'floatHeader' => true,
         'headerRowOptions' => ['class' => 'headerTable'],
         'pjax' => true,
@@ -94,11 +112,22 @@ $this->title = 'Все поломки';
                 'hAlign' => GridView::ALIGN_RIGHT,
                 'contentOptions' => ['class' => 'textTr tr90'],
             ],
+=======
+        'columns' => [
+            ['class' => 'yii\grid\SerialColumn'],
+
+            'id',
+            [
+				'attribute' => 'id_user',
+				'value' => 'idUser.name',
+			],
+>>>>>>> 94df34a55697b2e667b1a48fb1174487f2ae0b32
             [
 				'attribute' => 'commetnt',
 				'format' => 'text',
 				'contentOptions'=>['style'=>'white-space: normal;'],
 			],
+<<<<<<< HEAD
             [
                 'attribute' => 'id_user',
                 'value' => 'idUser.name',
@@ -119,6 +148,17 @@ $this->title = 'Все поломки';
                 'attribute' => '',
                 'format' => 'raw',
                 'contentOptions' => ['class' => 'border-right textTr'],
+=======
+//            'status',
+            [
+				'attribute' => 'date',
+				'format' => ['date', 'd.MM.Y H:i']
+			],
+            'sotrud',
+			[
+                'attribute' => '',
+                'format' => 'raw',
+>>>>>>> 94df34a55697b2e667b1a48fb1174487f2ae0b32
                 'value' => function($model) {
 					if($model->status == 0){
 						return Html::a('Решена', ['helpdesk/close', 'id' => $model->id]);
@@ -128,8 +168,16 @@ $this->title = 'Все поломки';
                 },
 				'visible' => Yii::$app->user->can('system')
             ],
+<<<<<<< HEAD
+=======
+
+//            ['class' => 'yii\grid\ActionColumn'],
+>>>>>>> 94df34a55697b2e667b1a48fb1174487f2ae0b32
         ],
     ]); ?>
 </div>
 <?php Pjax::end(); ?>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 94df34a55697b2e667b1a48fb1174487f2ae0b32

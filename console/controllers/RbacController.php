@@ -77,7 +77,10 @@ class RbacController extends Controller
         $auth->addChild($shop, $updateOwnZakaz);
         $auth->addChild($shop, $seeAdop);
 <<<<<<< HEAD
+<<<<<<< HEAD
         $auth->addChild($shop, $todoist);
+=======
+>>>>>>> 94df34a55697b2e667b1a48fb1174487f2ae0b32
 =======
 >>>>>>> 94df34a55697b2e667b1a48fb1174487f2ae0b32
 
@@ -100,6 +103,7 @@ class RbacController extends Controller
         $auth->addChild($courier, $seeCourier);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         $zakup = $auth->createRole('zakup');
         $auth->add($zakup);
         $auth->addChild($zakup, $seeAllIspol);
@@ -111,6 +115,8 @@ class RbacController extends Controller
 
 =======
 >>>>>>> 94df34a55697b2e667b1a48fb1174487f2ae0b32
+=======
+>>>>>>> 94df34a55697b2e667b1a48fb1174487f2ae0b32
         $prog = $auth->createRole('program');
         $auth->add($prog);
         $auth->addChild($prog, $admin);
@@ -119,9 +125,12 @@ class RbacController extends Controller
         $auth->addChild($prog, $shop);
         $auth->addChild($prog, $courier);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		$auth->addChild($prog, $zakup);
 		$auth->addChild($prog, $system);
 =======
+=======
+>>>>>>> 94df34a55697b2e667b1a48fb1174487f2ae0b32
 		$auth->addChild($rogram, $zakup);
 		$auth->addChild($program, $system);
 
@@ -133,6 +142,9 @@ class RbacController extends Controller
 		$system = $auth->createRole('system');
 		$auth->add($system);
 		$auth->addChild($system, $seeAllIspol);
+<<<<<<< HEAD
+>>>>>>> 94df34a55697b2e667b1a48fb1174487f2ae0b32
+=======
 >>>>>>> 94df34a55697b2e667b1a48fb1174487f2ae0b32
 
 		$auth->assign($zakup, 8);
