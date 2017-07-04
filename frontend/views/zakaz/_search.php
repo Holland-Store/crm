@@ -2,6 +2,9 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use dosamigos\datepicker\DatePicker;
+use yii\helpers\ArrayHelper;
+use app\models\User;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\ZakazSearch */
@@ -11,39 +14,58 @@ use yii\widgets\ActiveForm;
 <div class="zakaz-search">
 
     <?php $form = ActiveForm::begin([
-        'action' => ['index'],
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'id_zakaz') ?>
+    <!-- <?= $form->field($model, 'id_zakaz') ?> -->
 
-    <?= $form->field($model, 'srok') ?>
+    <!-- <?php if (Yii::$app->user->can('admin')): ?>
+    <div class="col-xs-2">
+        <?= $form->field($model, 'srok')->widget(
+            DatePicker::className(), [
+                'inline' => false, 
+                'clientOptions' => [
+                    'autoclose' => true,
+                    'format' => 'yyyy-mm-dd'
+                ]
+        ]);?>
+        <?= $form->field($model, 'data')->widget(
+            DatePicker::className(), [
+                'inline' => false, 
+                'clientOptions' => [
+                    'autoclose' => true,
+                    'format' => 'yyyy-mm-dd'
+                ]
+        ]);?>
+    </div>
+    <?php endif ?> -->
+    
+    <?php if (Yii::$app->user->can('admin')): ?>
+    <div class="col-xs-2">
+        <?= $form->field($model, 'id_sotrud')->dropDownList([
+                '2' => 'Московский',
+                '5' => 'Админ',
+                '6' => 'Пушкина',
+                '9' => 'Сибирский',
+            ],
+            ['prompt' => 'Выберите магазин']
+        ) ?>
+        <?php //$form->field($model, 'status')->dropDownList(
+            //ArrayHelper::map(User::find()->all(), 'id', 'name'),
+        //['prompt' => 'Выберите этап',]); ?>
+        
+    </div>
+    <?php endif ?>
+    
+<!--    <div class="col-xs-2">-->
+<!--        --><?//= $form->field($model, 'name') ?>
 
-    <?= $form->field($model, 'id_sotrud') ?>
-
-    <?= $form->field($model, 'prioritet') ?>
-
-    <?= $form->field($model, 'status') ?>
-
-    <?php // echo $form->field($model, 'id_tovar') ?>
-
-    <?php // echo $form->field($model, 'oplata') ?>
-
-    <?php // echo $form->field($model, 'number') ?>
-
-    <?php // echo $form->field($model, 'data') ?>
-
-    <?php // echo $form->field($model, 'description') ?>
-
-    <?php // echo $form->field($model, 'information') ?>
-
-    <?php // echo $form->field($model, 'id_client') ?>
-
-    <?php // echo $form->field($model, 'comment') ?>
-
-    <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>
+        <?= $form->field($model, 'phone')->textInput(['class' => 'form-control', 'placeholder' => 'Введите номер телефона'])->label(false) ?>
+<!--    </div>-->
+    
+    <div class="form-group col-xs-3" style="margin-top: 24px;">
+        <!-- <?= Html::resetButton('Сбросить настройки', ['class' => 'btn btn-default']) ?> -->
+        <?= Html::submitButton('Найти', ['class' => 'btn btn-primary shopSearch']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

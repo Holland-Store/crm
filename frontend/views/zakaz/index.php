@@ -1,108 +1,63 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
 use app\models\Otdel;
 use app\models\Zakaz;
-use dosamigos\datepicker\DatePicker;
 use yii\bootstrap\Nav;
+use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\ZakazSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-
-$this->title = 'Заказ';
-$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="sidebar">
-        <ui class="nav nav-pills">
-        <?php if (!Yii::$app->user->isGuest && Yii::$app->authManager->getRolesByUser(Yii::$app->user->getId())['admin']->name == 'admin') {
-        ?>
-            <li>
-                <a href="index.php?r=zakaz%2Findex" >
-                    <span>Админ</span>
-                </a>
-            </li>
-            <?php } ?>
-            <li>
-                <a href="index.php?r=client%2Findex">
-                    <span>Клиент</span>
-                </a>
-            </li>
-            <li>
-                <a href="index.php?r=tovar%2Findex">
-                    <span>Товар</span>
-                </a>
-            </li>
-        </ui>
-</div>
-<div class="zakaz-index">
+<?php Pjax::begin(); ?>
 
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+<h1>Добро пожаловать</h1>
 
-    <p>
-        <?= Html::a('Создать заказ', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+<p>
+	<h4>Версия 1.0</h4>
+	<ul>
+		<li>Создание таблицы</li>
+		<li>Взаимодействие с отделами</li>
+		<li>Сохрание и загрузка файлов</li>
+		<li>Создание и редактирование заказов</li>
+	</ul>
+    <hr>
+	<h4>Версия 1.1</h4>
+    <ul>
+        <li>Добавлено поле "сотрудник" в создание заказа</li>
+        <li>Оптимизирована таблица</li>
+        <li>В id указывается префикс</li>
+        <li>У дизайнер добавлены внутренние этапы</li>
+        <li>Убран во всех заказах магазин</li>
+        <li>Теперь может магазин закрывать заказы</li>
+        <li>Заказ можно закрыть только в том случае, если он в статусе исполнен</li>
+    </ul>
+    <hr>
+	<h4>Версия 2.0</h4>
+    <ul>
+        <li>Созданы уведомление</li>
+        <li>Реализована у администратора условное форматирование. При просроченном сроке цвет строки меняется на красный. Новые заказы меняются на жирный шрифт</li>
+        <li>Умный тотальный поиск</li>
+        <li>Добавлен задачник, helpdesk, запросы на получение товара</li>
+        <li>Задачу можно прикреплять внутри заказа</li>
+        <li>Сократилась ссылка</li>
+        <li>У магазина убраны этапы</li>
+        <li>Магазин может искать заказ по части имени</li>
+        <li>После авторизации переходит на экран заказов</li>
+        <li>Создана роль закупщика</li>
+        <li>Кликабельность заказов в таблице</li>
+        <li>Добавлено автообновление страницы у админа, мастер и дизайнера</li>
+        <li>Уведомление по движению заказа</li>
+        <li>Реализована напоминалка</li>
+        <li>Внутри заказа можно выходит уведомление если заказ просроченный или закрыт и описано как его восстановить</li>
+        <li>Админ при создание доставки должен указывать внутрение сроки доставки</li>
+        <li>Преобразована навигационная панель, убрано страница главная</li>
+    </ul>
+    <hr>
+</p>
 
-            'id_zakaz',
-             [
-                'attribute' => 'srok',
-                'format' => ['datetime', 'php:d.m.Y'],
-                'value' => 'srok',
-                'filter' => DatePicker::widget([
-                     'model' => $searchModel,
-                     'attribute' => 'srok',
-                    // inline too, not bad
-                     'inline' => false, 
-                     // modify template for custom rendering
-                    // 'template' => '<div class="well well-sm" style="background-color: #fff; width:250px">{input}</div>',
-                    'clientOptions' => [
-                    'autoclose' => true,
-                    'format' => 'yyyy.mm.dd'
-                ],
-                ]),
-            ],
-            [
-                'attribute' => 'minut',
-                'format' => ['datetime', 'php:H:i']
-            ],
-            // [
-            //     'attribute' => 'id_sotrud',
-            //     'value' => 'idSotrud.fio',
-            //     'filter' => Zakaz::getSotrudList(),
-            // ],
-            'prioritet',
-            'status',
-            [
-                'attribute' => 'id_tovar',
-                'value' => 'idTovar.name',
-                'filter' => Zakaz::getTovarList(),
-            ],
-            [
-                'attribute'=>'oplata',
-            ],
-            // 'number',
-            [
-                'attribute'=>'data',
-                'format'=>['date', 'php:d.m.Y']
-            ],
-            // 'description',
-            // 'information',
-            // 'img',
-            [
-                'attribute' => 'id_client',
-                'value' => 'idClient.fio',
-                'filter' => Zakaz::getClientList(),
-            ],
-            // 'comment:ntext',
 
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
-</div>
+<div class="alert alert-info col-xs-4"><h2>Тех поддержка:</h2><br><span class="glyphicon glyphicon-earphone"></span> 89503164233 <br>
+<span>@</span> holland.itkzn@gmail.com</div>
+<?php Pjax::end(); ?>

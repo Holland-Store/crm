@@ -72,7 +72,8 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        return $this->redirect(['login']);
+        // return $this->render('index');
     }
 
     /**
@@ -82,15 +83,36 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
+        $routes = [
+            'shop' => ['zakaz/shop'],
+            'disain' => ['zakaz/disain'],
+            'master' => ['zakaz/master'],
+            'admin' => ['zakaz/admin'],
+            'courier' => ['courier/index'],
+            'program' => ['zakaz/program'],
+            'zakup' => ['custom/index'],
+            'system' => ['helpdesk/index'],
+            ];
+
         if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
+            foreach ($routes as $key => $value) {
+                if (Yii::$app->user->can($key)) {
+                    return $this->redirect($value);
+                }
+            }
         }
 
         $model = new LoginForm();
-        // if ($model->load(Yii::$app->request->post()) && $model->login()) {
+
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             $id_user = Yii::$app->user->identity->getId();
-            return $this->redirect(['/zakaz/index', 'id'=> $id_user]);
+
+
+            foreach ($routes as $key => $value) {
+                if (Yii::$app->user->can($key)) {
+                    return $this->redirect($value);
+                }
+            }
         } else {
             return $this->render('login', [
                 'model' => $model,
@@ -106,8 +128,7 @@ class SiteController extends Controller
     public function actionLogout()
     {
         Yii::$app->user->logout();
-
-        return $this->goHome();
+        return $this->redirect(['logout']);
     }
 
     /**

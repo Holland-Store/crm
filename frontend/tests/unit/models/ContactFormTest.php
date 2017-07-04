@@ -1,6 +1,7 @@
 <?php
 namespace frontend\tests\unit\models;
 
+use PHPUnit_Framework_TestResult;
 use Yii;
 use frontend\models\ContactForm;
 
@@ -28,5 +29,31 @@ class ContactFormTest extends \Codeception\Test\Unit
         expect($emailMessage->getFrom())->hasKey('tester@example.com');
         expect($emailMessage->getSubject())->equals('very important letter subject');
         expect($emailMessage->toString())->contains('body of current message');
+    }
+
+    /**
+     * Count elements of an object
+     * @link http://php.net/manual/en/countable.count.php
+     * @return int The custom count as an integer.
+     * </p>
+     * <p>
+     * The return value is cast to an integer.
+     * @since 5.1.0
+     */
+    public function count()
+    {
+        // TODO: Implement count() method.
+    }
+
+    /**
+     * Runs a test and collects its result in a TestResult instance.
+     *
+     * @param PHPUnit_Framework_TestResult $result
+     *
+     * @return PHPUnit_Framework_TestResult
+     */
+    public function run(PHPUnit_Framework_TestResult $result = null)
+    {
+        // TODO: Implement run() method.
     }
 }
