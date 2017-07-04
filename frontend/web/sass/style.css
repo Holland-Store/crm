@@ -433,6 +433,17 @@ thead a {
   background: #191412; }
 .zakaz-index .success-ispol {
   color: #446505; }
+.zakaz-index .userCommit {
+  width: 62px;
+  float: left;
+  text-align: right;
+  padding-right: 10px; }
+.zakaz-index .comment {
+  width: 446px;
+  float: left;
+  color: #505050; }
+.zakaz-index .dateCommit {
+  float: left; }
 
 .zakaz-shop .zakazSearch .shopSearch {
   margin-top: -45px;

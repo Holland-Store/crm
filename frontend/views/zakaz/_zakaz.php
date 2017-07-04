@@ -31,20 +31,22 @@ use app\models\Zakaz;
         <?php $comments = Comment::find()->where(['id_zakaz' => $model->id_zakaz])->all(); ?>
         <div class="comment-zakaz">
             <?php  foreach ($comments as $com){
-                if ($com->id_user == Yii::$app->user->id){
-                    $user = 'Я';
-                } elseif ($com->id_user == 3){
-                    $user = 'Дизайнер';
-                } elseif ($com->id_user == 4){
-                    $user = 'Мастер';
-                } elseif ($com->id_user == 5){
-                    $user = 'Админ';
+                switch ($com->id_user){
+                    case Yii::$app->user->id;
+                        $user = 'Я';
+                        break;
+                    case (3);
+                        $user = 'Дизайнер';
+                        break;
+                    case (4):
+                        $user = 'Мастер';
+                        break;
                 }
                 echo  '
 <div style="display: block;">
-    <div style="width: 62px;float: left;text-align: right;padding-right: 10px;">'.$user.':</div>
-    <div style="width: 446px;float: left;color: #505050">'.$com->comment.'</div>
-    <div style="float: left;">'.date('d.m H:i', strtotime($com->date)).'</div>
+    <div class="userCommit">'.$user.':</div>
+    <div class="comment">'.$com->comment.'</div>
+    <div class="dateCommit">'.date('d.m H:i', strtotime($com->date)).'</div>
 </div>';
             }?>
         </div>

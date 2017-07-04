@@ -38,6 +38,7 @@ $orangeDostavka: #f0ad4e;
     border: 1px solid $color;
 }
 
+
 .table > thead > tr > td.info,
 .table > tbody > tr > td.info,
 .table > tfoot > tr > td.info,
@@ -431,6 +432,20 @@ $orangeDostavka: #f0ad4e;
   }
   .success-ispol{
     color: $success;
+  }
+  .userCommit{
+    width: 62px;
+    float: left;
+    text-align: right;
+    padding-right: 10px;
+  }
+  .comment{
+    width: 446px;
+    float: left;
+    color: #505050;
+  }
+  .dateCommit{
+    float: left;
   }
 }
 .zakaz-shop{
