@@ -171,6 +171,11 @@ class ZakazController extends Controller
                         'actions' => ['fulfilled'],
                         'allow' => true,
                         'roles' => ['admin']
+                    ],
+                    [
+                        'actions' => ['reconcilation'],
+                        'allow' => true,
+                        'roles' => ['disain']
                     ]
                 ],
             ],
@@ -359,7 +364,7 @@ class ZakazController extends Controller
                 $model->file->saveAs('attachment/'.$model->id_zakaz.'.'.$model->file->extension);
                 $model->img = $model->id_zakaz.'.'.$model->file->extension;
             }
-            if ($model->status == Zakaz::STATUS_DISAIN or $model->status == Zakaz::STATUS_MASTER){
+            if ($model->status == Zakaz::STATUS_DISAIN or $model->status == Zakaz::STATUS_MASTER or Zakaz::STATUS_AUTSORS){
                 $model->id_unread = 0;
             }
             $model->validate();
@@ -414,8 +419,9 @@ class ZakazController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post())){
+            $model->file = UploadedFile::getInstance($model, 'file');
             //Выполнение работы дизайнером
-            if ($model->file){
+            if(isset($model->file)){
                 $model->uploadeFile;
             }
             $model->status = Zakaz::STATUS_SUC_DISAIN;
@@ -515,6 +521,28 @@ class ZakazController extends Controller
         $model->id_unread = 0;
         if ($model->save()){
             return $this->redirect(['admin']);
+        } else {
+            print_r($model->getErrors());
+        }
+    }
+
+    /**
+     * Zakaz the disainer
+     * if success then redirected zakaz/disain
+     * @param $id
+     * @return \yii\web\Response
+     */
+    public function actionReconcilation($id)
+    {
+        $model = $this->findModel($id);
+
+        if ($model->statusDisain == Zakaz::STATUS_DISAINER_SOGLAS){
+            $model->statusDisain = Zakaz::STATUS_DISAINER_WORK;
+        } else {
+            $model->statusDisain = Zakaz::STATUS_DISAINER_SOGLAS;
+        }
+        if ($model->save()){
+            return $this->redirect(['disain']);
         } else {
             print_r($model->getErrors());
         }
@@ -715,9 +743,11 @@ class ZakazController extends Controller
                 if ($model->status == Zakaz::STATUS_SUC_DISAIN){
                     $model->status = Zakaz::STATUS_DECLINED_DISAIN;
                     $model->statusDisain = Zakaz::STATUS_DISAINER_DECLINED;
+                    $model->id_unread = 0;
                 } else {
                     $model->status = Zakaz::STATUS_DECLINED_MASTER;
                     $model->statusMaster = Zakaz::STATUS_MASTER_DECLINED;
+                    $model->id_unread = 0;
                 }
                 if (!$model->save()) {
                     print_r($model->getErrors());
@@ -746,6 +776,17 @@ class ZakazController extends Controller
 
         if ($model->load(Yii::$app->request->post())){
             if ($model->validate()){
+                if($model->status == Zakaz::STATUS_DISAIN or $model->status == Zakaz::STATUS_MASTER or $model->status == Zakaz::STATUS_AUTSORS){
+                    if ($model->status == Zakaz::STATUS_DISAIN){
+                        $model->statusDisain = Zakaz::STATUS_DISAINER_NEW;
+                        $model->id_unread = 0;
+                    } elseif ($model->status == Zakaz::STATUS_MASTER){
+                        $model->statusMaster = Zakaz::STATUS_MASTER_NEW;
+                        $model->id_unread = 0;
+                    } else {
+                        $model->id_unread = 0;
+                    }
+                }
                 if ($model->save()) {
                     return $this->redirect(['admin', 'id' => $id]);
                 } else {
