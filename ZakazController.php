@@ -250,42 +250,6 @@ class ZakazController extends Controller
         ]);
     }
 
-//    /** Uploade file in directory 'attachment/*' */
-//    public function actionUploade($id){
-//        $model = $this->findModel($id);
-////        $model->scenario = Zakaz::SCENARIO_DEFAULT;
-//        $notification = $this->findNotification();
-//
-//        if ($model->load(Yii::$app->request->post())) {
-//            if ($model->validate()) {
-//                $model->file = UploadedFile::getInstance($model, 'file');
-//                if ($model->upload()) {
-//                    $model->img = time() . '.' . $model->file->extension;
-//                }
-//                if (!$model->save()) {
-//                    print_r($model->getErrors());
-//                } else {
-//                    $model->save();
-//                }
-//            } else {
-//                $errors = $model->errors;
-//                return $this->render('update', [
-//                    'model' => $model,
-//                ]);
-//            }
-//
-//            if (Yii::$app->user->can('shop')) {
-//                return $this->redirect(['shop']);
-//            } elseif (Yii::$app->user->can('admin')) {
-//                return $this->redirect(['admin', '#' => $id]);
-//            }
-//        } else {
-//            return $this->render('update', [
-//                'model' => $model,
-//            ]);
-//        }
-//    }
-
     /**
      * appointed shipping in courier
      * @param $id
@@ -299,12 +263,12 @@ class ZakazController extends Controller
             $shipping->save();
             $model->id_shipping = $shipping->id;
             $model->save();
-        } else {
-            return $this->render('shipping', [
-                'model' => $model,
-                'shipping' => $shipping,
-            ]);
         }
+
+        return $this->render('shipping', [
+            'model' => $model,
+            'shipping' => $shipping,
+        ]);
     }
 
     /**
@@ -332,11 +296,11 @@ class ZakazController extends Controller
             } elseif (Yii::$app->user->can('admin')) {
                return $this->redirect(['admin']);
            }
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
         }
+
+        return $this->render('create', [
+            'model' => $model,
+        ]);
     }
 
     /**
@@ -379,11 +343,11 @@ class ZakazController extends Controller
             } elseif (Yii::$app->user->can('admin')) {
                return $this->redirect(['admin']);
            }
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
         }
+
+        return $this->render('update', [
+            'model' => $model,
+        ]);
     }
 
     /**
@@ -403,11 +367,10 @@ class ZakazController extends Controller
         $model->id_unread = true;
         $notification->getByIdNotification(8, $id);
         $notification->saveNotification;
-        if ($model->save()){
-            return $this->redirect(['master']);
-        } else {
+        if (!$model->save()){
             print_r($model->getErrors());
         }
+        return $this->redirect(['master']);
     }
 
     /**
@@ -466,7 +429,7 @@ class ZakazController extends Controller
     }
     public function actionRestore($id)
     {
-        $notification = $this->findNotification();
+//        $notification = $this->findNotification();
 
         $model = $this->findModel($id);
         $model->action = 1;
@@ -521,11 +484,11 @@ class ZakazController extends Controller
         $model = $this->findModel($id);
         $model->status = Zakaz::STATUS_EXECUTE;
         $model->id_unread = 0;
-        if ($model->save()){
-            return $this->redirect(['admin']);
-        } else {
+        if (!$model->save()){
             print_r($model->getErrors());
         }
+
+        return $this->redirect(['admin']);
     }
 
     /**
@@ -536,7 +499,7 @@ class ZakazController extends Controller
     {
         $searchModel = new ZakazSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, 'archive');
-        $notification = $this->findNotification();
+//        $notification = $this->findNotification();
 
         return $this->render('archive', [
             'searchModel' => $searchModel,
@@ -548,7 +511,7 @@ class ZakazController extends Controller
     {
         $searchModel = new ZakazSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, 'closeshop');
-        $notification = $this->findNotification();
+//        $notification = $this->findNotification();
 
         return $this->render('closezakaz', [
             'searchModel' => $searchModel,
@@ -563,7 +526,7 @@ class ZakazController extends Controller
                 'query' => Zakaz::find()->andWhere(['status' => Zakaz::STATUS_SUC_DISAIN, 'action' => 1]),
                 'sort' => ['defaultOrder' => ['srok' => SORT_DESC]] 
             ]);
-        $notification = $this->findNotification();
+//        $notification = $this->findNotification();
 
         return $this->render('ready', [
             'searchModel' => $searchModel,
@@ -578,7 +541,7 @@ class ZakazController extends Controller
      */
     public function actionStatusdisain($id)
     {
-        $notification = $this->findNotification();
+//        $notification = $this->findNotification();
 
         $model = $this->findModel($id);
         $model->statusDisain = Zakaz::STATUS_DISAINER_WORK;
@@ -609,7 +572,7 @@ class ZakazController extends Controller
         $searchModel = new ZakazSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, 'shopWork');
         $dataProviderExecute = $searchModel->search(Yii::$app->request->queryParams, 'shopExecute');
-        $notification = $this->findNotification();
+//        $notification = $this->findNotification();
 
         return $this->render('shop', [
             'searchModel' => $searchModel,
@@ -626,7 +589,7 @@ class ZakazController extends Controller
     {
         $searchModel = new ZakazSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, 'disain');
-        $notification = $this->findNotification();
+//        $notification = $this->findNotification();
 
         return $this->render('disain', [
             'searchModel' => $searchModel,
@@ -642,7 +605,7 @@ class ZakazController extends Controller
     {
         $searchModel = new ZakazSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, 'master');
-        $notification = $this->findNotification();
+//        $notification = $this->findNotification();
 
         return $this->render('master', [
             'searchModel' => $searchModel,
@@ -736,7 +699,6 @@ class ZakazController extends Controller
                 }
                 return $this->redirect(['admin', '#' => $model->id_zakaz]);
             } else {
-                $errors = $model->errors;
                 return $this->renderAjax('_declined', ['model' => $model]);
             }
         } else {
@@ -763,12 +725,11 @@ class ZakazController extends Controller
                     print_r($model->getErrors());
                 }
             } else {
-               $errors = $model->errors;
                return $this->renderAjax('accept', ['model' => $model]);
             }
-        } else {
-            return $this->renderAjax('accept', ['model' => $model]);
         }
+
+        return $this->renderAjax('accept', ['model' => $model]);
     }
 
     /**
