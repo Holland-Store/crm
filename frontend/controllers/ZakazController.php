@@ -12,7 +12,6 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
-use console\controllers\RbacController;
 use yii\data\ActiveDataProvider;
 use yii\web\UploadedFile;
 /**
@@ -256,42 +255,6 @@ class ZakazController extends Controller
         ]);
     }
 
-//    /** Uploade file in directory 'attachment/*' */
-//    public function actionUploade($id){
-//        $model = $this->findModel($id);
-////        $model->scenario = Zakaz::SCENARIO_DEFAULT;
-//        $notification = $this->findNotification();
-//
-//        if ($model->load(Yii::$app->request->post())) {
-//            if ($model->validate()) {
-//                $model->file = UploadedFile::getInstance($model, 'file');
-//                if ($model->upload()) {
-//                    $model->img = time() . '.' . $model->file->extension;
-//                }
-//                if (!$model->save()) {
-//                    print_r($model->getErrors());
-//                } else {
-//                    $model->save();
-//                }
-//            } else {
-//                $errors = $model->errors;
-//                return $this->render('update', [
-//                    'model' => $model,
-//                ]);
-//            }
-//
-//            if (Yii::$app->user->can('shop')) {
-//                return $this->redirect(['shop']);
-//            } elseif (Yii::$app->user->can('admin')) {
-//                return $this->redirect(['admin', '#' => $id]);
-//            }
-//        } else {
-//            return $this->render('update', [
-//                'model' => $model,
-//            ]);
-//        }
-//    }
-
     /**
      * appointed shipping in courier
      * @param $id
@@ -301,7 +264,8 @@ class ZakazController extends Controller
     {
         $model = $this->findModel($id);
         $shipping = new Courier();
-        if ($model->load(Yii::$app->request->post() && $shipping->save())){
+        if ($model->load(Yii::$app->request->post())){
+            $shipping->save();
             $model->id_shipping = $shipping->id;
             $model->save();
         } else {
@@ -644,11 +608,13 @@ class ZakazController extends Controller
     {
         $searchModel = new ZakazSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, 'disain');
+        $dataProviderSoglas = $searchModel->search(Yii::$app->request->queryParams, 'disainSoglas');
         $notification = $this->findNotification();
 
         return $this->render('disain', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'dataProviderSoglas' => $dataProviderSoglas,
         ]);
     }
 
@@ -754,7 +720,6 @@ class ZakazController extends Controller
                 }
                 return $this->redirect(['admin', '#' => $model->id_zakaz]);
             } else {
-                $errors = $model->errors;
                 return $this->renderAjax('_declined', ['model' => $model]);
             }
         } else {
@@ -791,7 +756,6 @@ class ZakazController extends Controller
                     print_r($model->getErrors());
                 }
             } else {
-               $errors = $model->errors;
                return $this->renderAjax('accept', ['model' => $model]);
             }
         } else {

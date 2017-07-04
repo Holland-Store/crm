@@ -52,7 +52,12 @@ class ZakazSearch extends Zakaz
                 $sort = ['srok' => SORT_ASC];
                 break;
             case 'disain':
-                $query->andWhere(['status' => [Zakaz::STATUS_DISAIN, Zakaz::STATUS_SUC_DISAIN,Zakaz::STATUS_DECLINED_DISAIN], 'action' => 1]);
+                $query->andWhere(['status' => [Zakaz::STATUS_DISAIN,Zakaz::STATUS_DECLINED_DISAIN], 'statusDisain' => [Zakaz::STATUS_DISAINER_NEW, Zakaz::STATUS_DISAINER_WORK, Zakaz::STATUS_DISAINER_DECLINED], 'action' => 1]);
+                $sort = ['srok' => SORT_ASC];
+                break;
+            case 'disainSoglas':
+                $query->andWhere(['status' => Zakaz::STATUS_DISAIN, 'statusDisain' => Zakaz::STATUS_DISAINER_SOGLAS, 'action' => 1])
+                ->orWhere(['status' => Zakaz::STATUS_SUC_DISAIN, 'action' => 1]);
                 $sort = ['srok' => SORT_ASC];
                 break;
             case 'shopWork':
