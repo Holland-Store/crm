@@ -1,11 +1,9 @@
 <?php
-use kartik\file\FileInput;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use yii\helpers\Url;
 use yii\bootstrap\Modal;
 use app\models\Courier;
-use yii\bootstrap\ActiveForm;
 use app\models\Comment;
 use app\models\Zakaz;
 ?>
@@ -114,6 +112,14 @@ use app\models\Zakaz;
 		]) ?>
 	</div>
     <div class="responsible">
+        <?php if (Yii::$app->user->can('disain')): ?>
+            <?php if ($model->status == Zakaz::STATUS_DISAIN && $model->statusDisain == Zakaz::STATUS_DISAINER_WORK): ?>
+            Согласование с клиентом: <?= Html::a('Оправить', ['reconcilation', 'id' => $model->id_zakaz], ['class' => 'action']) ?>
+            <?php endif ?>
+            <?php if ($model->status == Zakaz::STATUS_DISAIN && $model->statusDisain == Zakaz::STATUS_DISAINER_SOGLAS): ?>
+                Согласование с клиентом: <?= Html::a('Снять', ['reconcilation', 'id' => $model->id_zakaz], ['class' => 'action']) ?>
+            <?php endif ?>
+        <?php endif ?>
         <?php if (Yii::$app->user->can('seeIspol')): ?>
             <div class="responsible_person-status">
                 <?php if ($model->status == Zakaz::STATUS_DECLINED_DISAIN or $model->status == Zakaz::STATUS_DECLINED_MASTER){
@@ -209,4 +215,3 @@ use app\models\Zakaz;
         <?php endif ?>
 <!--            --><?//= Html::a('Чек', ['#'], ['class' => 'btn btn-xs', 'style' => 'float: right;margin-right: 71px;'])?>
     </div>
-</div>
