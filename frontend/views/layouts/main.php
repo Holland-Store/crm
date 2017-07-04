@@ -5,11 +5,9 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
-use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use common\widgets\Alert;
-use yii\helpers\Url;
 use app\models\Notification;
 
 AppAsset::register($this);
@@ -39,18 +37,17 @@ AppAsset::register($this);
 <?php echo Nav::widget([
     'options' => ['class' => 'nav nav-pills headerNav'],
     'items' => [
-    ['label' => 'Заказы', 'url' => ['zakaz/admin'], 'visible' => Yii::$app->user->can('seeAdmin')],
-    ['label' => 'Заказы', 'url' => ['zakaz/disain'], 'visible' => Yii::$app->user->can('disain')],
-    ['label' => 'Заказы', 'url' => ['zakaz/master'], 'visible' => Yii::$app->user->can('master')],
-    ['label' => 'Заказы', 'url' => ['zakaz/shop'], 'visible' => Yii::$app->user->can('seeShop')],
+        ['label' => 'Заказы <span class="badge pull-right">'.$this->params['scoreZakaz'].'</span>', 'encode' => false, 'url' => ['zakaz/admin'], 'visible' => Yii::$app->user->can('seeAdmin')],
+    ['label' => 'Заказы <span class="badge pull-right">'.$this->params['scoreDisain'].'</span>', 'encode' => false, 'url' => ['zakaz/disain'], 'visible' => Yii::$app->user->can('disain')],
+    ['label' => 'Заказы <span class="badge pull-right">'.$this->params['scoreMaster'].'</span>', 'encode' => false, 'url' => ['zakaz/master'], 'visible' => Yii::$app->user->can('master')],
+    ['label' => 'Заказы <span class="badge pull-right">'.$this->params['scoreZakaz'].'</span>', 'encode' => false, 'url' => ['zakaz/shop'], 'visible' => Yii::$app->user->can('seeShop')],
     ['label' => 'Доставки', 'url' => ['courier/index'], 'visible' => Yii::$app->user->can('courier')],
-    ['label' => 'Задачи', 'url' => ['todoist/index'], 'visible' => Yii::$app->user->can('admin')],
-    ['label' => 'Поломки', 'url' => ['helpdesk/index'], 'visible' => !Yii::$app->user->isGuest],
-    ['label' => 'Закупки', 'url' => ['custom/adop'], 'visible' => Yii::$app->user->can('seeAdop')],
-    ['label' => 'Доставки', 'url' => ['courier/shipping'], 'visible' => Yii::$app->user->can('admin')],
+    ['label' => 'Задачи <span class="badge pull-right">'.$this->params['scoreTodoist'].'</span>', 'url' => ['todoist/index'], 'encode' => false, 'visible' => Yii::$app->user->can('admin')],
+    ['label' => 'Поломки <span class="badge pull-right">'.$this->params['scoreHelp'].'</span>', 'encode' => false, 'url' => ['helpdesk/index'], 'visible' => !Yii::$app->user->isGuest],
+    ['label' => 'Закупки <span class="badge pull-right">'.$this->params['scoreCustom'].'</span>', 'encode' => false, 'url' => ['custom/adop'], 'visible' => Yii::$app->user->can('seeAdop')],
+    ['label' => 'Доставки <span class="badge pull-right">'.$this->params['scoreShipping'].'</span>', 'encode' => false, 'url' => ['courier/shipping'], 'visible' => Yii::$app->user->can('admin')],
     ['label' => 'Закупки', 'url' => ['custom/index'], 'visible' => Yii::$app->user->can('zakup')],
-    ['label' => 'Задачи', 'url' => ['todoist/shop'], 'visible' => Yii::$app->user->can('todoist')],
-//    ['label' => 'Help Desk', 'url' => ['helpdesk/index'], 'visible' => Yii::$app->user->can('todoist')],
+    ['label' => 'Задачи <span class="badge pull-right">'.$this->params['scoreTodoist'].'</span>', 'encode' => false,'url' => ['todoist/shop'], 'visible' => Yii::$app->user->can('todoist')],
     ],
 ]); ?>
 <?php endif ?>
@@ -116,8 +113,7 @@ AppAsset::register($this);
                     } elseif ($notification->category == 4 && $notification->srok >= $date){
                         $notif = '';
                     }
-
-                   echo Html::a($notif.'<br>', ['notification/notification', 'id' => $notification->id_zakaz], ['id' => $notification->id_zakaz, 'class' => 'zakaz', 'data-key' => $notification->id_zakaz]);            
+                    echo Html::a($notif.'<br>', ['notification/notification', 'id' => $notification->id_zakaz], ['id' => $notification->id_zakaz, 'class' => 'zakaz', 'data-key' => $notification->id_zakaz]);
                 } 
                 ?>
             </div>
