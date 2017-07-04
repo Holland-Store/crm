@@ -21,6 +21,7 @@
         "2amigos/yii2-date-picker-widget": "~1.0",
         "mdmsoft/yii2-admin": "~2.0",
         "unclead/yii2-multiple-input": "~2.0",
+<<<<<<< HEAD
         "kartik-v/yii2-grid": "@dev",
         "kartik-v/yii2-mpdf": "^1.0",
         "kartik-v/yii2-detail-view": "*",
@@ -34,6 +35,12 @@
         "kartik-v/yii2-widget-datetimepicker": "*",
         "kartik-v/yii2-datecontrol": "dev-master",
         "kartik-v/yii2-widgets": "^3.4"
+=======
+        "ratacibernetica/yii2-node-socket": "^1.0",
+        "kartik-v/yii2-grid": "@dev",
+        "kartik-v/yii2-mpdf": "^1.0",
+        "kartik-v/yii2-detail-view": "*"
+>>>>>>> 94df34a55697b2e667b1a48fb1174487f2ae0b32
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
