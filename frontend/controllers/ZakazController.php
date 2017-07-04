@@ -3,6 +3,9 @@
 namespace frontend\controllers;
 
 use Yii;
+use app\models\Custom;
+use app\models\Helpdesk;
+use app\models\Todoist;
 use app\models\Zakaz;
 use app\models\Courier;
 use app\models\Comment;
@@ -206,22 +209,22 @@ class ZakazController extends Controller
         $reminder = new Notification();
         $zakaz = $model->id_zakaz;
         $notification = $this->findNotification();
-        
+
 
         if ($shipping->load(Yii::$app->request->post())) {
-			$shipping->save();
+            $shipping->save();
             $model->id_shipping = $shipping->id;//Оформление доставки
             $model->save();
 
             $notifications->getByIdNotification(7, $zakaz);
             $notifications->saveNotification;
-            
+
 //            return $this->redirect(['view', 'id' => $model->id_zakaz]);
         }
-        
-        if($reminder->load(Yii::$app->request->post())){
+
+        if ($reminder->load(Yii::$app->request->post())) {
             $reminder->getReminder($zakaz);
-            if($reminder->validate() && $reminder->save()){
+            if ($reminder->validate() && $reminder->save()) {
                 Yii::$app->session->setFlash('success', 'Напоминание было создана');
             } else {
                 Yii::$app->session->setFlash('error', 'Извините. Напоминание не было создана');
@@ -234,7 +237,7 @@ class ZakazController extends Controller
             $model->uploadeFile;//Выполнение работы дизайнером и оформление уведомление
             $model->validate();
             $model->save();
-            
+
             if ($model->status == 3) {
                 $notifications->getByIdNotification(4, $model->id_zakaz);
                 $notifications->saveNotification;
@@ -264,7 +267,7 @@ class ZakazController extends Controller
     {
         $model = $this->findModel($id);
         $shipping = new Courier();
-        if ($model->load(Yii::$app->request->post())){
+        if ($model->load(Yii::$app->request->post())) {
             $shipping->save();
             $model->id_shipping = $shipping->id;
             $model->save();
@@ -288,19 +291,20 @@ class ZakazController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $model->file = UploadedFile::getInstance($model, 'file');
-            if($model->file){
-            $model->upload();
-            $model->img = time().'.'.$model->file->extension;
+            if ($model->file) {
+                $model->upload();
+                $model->img = time() . '.' . $model->file->extension;
             }
-            if (!$model->save()){
+            if (!$model->save()) {
                 print_r($model->getErrors());
-            } $model->save();
+            }
+            $model->save();
 
             if (Yii::$app->user->can('shop')) {
                 return $this->redirect(['shop']);
             } elseif (Yii::$app->user->can('admin')) {
-               return $this->redirect(['admin']);
-           }
+                return $this->redirect(['admin']);
+            }
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -321,16 +325,15 @@ class ZakazController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
             $model->file = UploadedFile::getInstance($model, 'file');
-            if(isset($model->file))
-            {
-                $model->file->saveAs('attachment/'.$model->id_zakaz.'.'.$model->file->extension);
-                $model->img = $model->id_zakaz.'.'.$model->file->extension;
+            if (isset($model->file)) {
+                $model->file->saveAs('attachment/' . $model->id_zakaz . '.' . $model->file->extension);
+                $model->img = $model->id_zakaz . '.' . $model->file->extension;
             }
-            if ($model->status == Zakaz::STATUS_DISAIN or $model->status == Zakaz::STATUS_MASTER or Zakaz::STATUS_AUTSORS){
+            if ($model->status == Zakaz::STATUS_DISAIN or $model->status == Zakaz::STATUS_MASTER or Zakaz::STATUS_AUTSORS) {
                 $model->id_unread = 0;
             }
             $model->validate();
-            if (!$model->save()){
+            if (!$model->save()) {
                 print_r($model->getErrors());
             } else {
                 $model->save();
@@ -339,8 +342,8 @@ class ZakazController extends Controller
             if (Yii::$app->user->can('shop')) {
                 return $this->redirect(['shop']);
             } elseif (Yii::$app->user->can('admin')) {
-               return $this->redirect(['admin']);
-           }
+                return $this->redirect(['admin']);
+            }
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -362,9 +365,10 @@ class ZakazController extends Controller
 
         $model->status = Zakaz::STATUS_SUC_MASTER;
         $model->statusMaster = Zakaz::STATUS_MASTER_PROCESS;
+        $model->id_unread = true;
         $notification->getByIdNotification(8, $id);
         $notification->saveNotification;
-        if ($model->save()){
+        if ($model->save()) {
             return $this->redirect(['master']);
         } else {
             print_r($model->getErrors());
@@ -380,10 +384,10 @@ class ZakazController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post())){
+        if ($model->load(Yii::$app->request->post())) {
             $model->file = UploadedFile::getInstance($model, 'file');
             //Выполнение работы дизайнером
-            if(isset($model->file)){
+            if (isset($model->file)) {
                 $model->uploadeFile;
             }
             $model->status = Zakaz::STATUS_SUC_DISAIN;
@@ -395,9 +399,9 @@ class ZakazController extends Controller
                 print_r($model->getErrors());
             }
         }
-            return $this->renderAjax('_upload', [
-                'model' => $model
-            ]);
+        return $this->renderAjax('_upload', [
+            'model' => $model
+        ]);
     }
 
     /**
@@ -410,7 +414,7 @@ class ZakazController extends Controller
     {
         $model = $this->findModel($id);
         $model->action = 0;
-        if (!$model->save()){
+        if (!$model->save()) {
             print_r($model->getErrors());
         } else {
             $model->save();
@@ -419,11 +423,12 @@ class ZakazController extends Controller
         $this->view->params['notifications'] = Notification::find()->where(['id_user' => Yii::$app->user->id, 'active' => true])->all();
 
         if (Yii::$app->user->can('shop')) {
-                return $this->redirect(['shop']);
-            } elseif (Yii::$app->user->can('admin')) {
-               return $this->redirect(['admin']);
-           }
+            return $this->redirect(['shop']);
+        } elseif (Yii::$app->user->can('admin')) {
+            return $this->redirect(['admin']);
+        }
     }
+
     public function actionRestore($id)
     {
         $notification = $this->findNotification();
@@ -458,6 +463,7 @@ class ZakazController extends Controller
         $model->statusDisain = Zakaz::STATUS_DISAINER_WORK;
         $model->save();
     }
+
     /**
      * New zakaz become in status wokr for master
      * @param $id
@@ -481,7 +487,7 @@ class ZakazController extends Controller
         $model = $this->findModel($id);
         $model->status = Zakaz::STATUS_EXECUTE;
         $model->id_unread = 0;
-        if ($model->save()){
+        if ($model->save()) {
             return $this->redirect(['admin']);
         } else {
             print_r($model->getErrors());
@@ -498,12 +504,12 @@ class ZakazController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->statusDisain == Zakaz::STATUS_DISAINER_SOGLAS){
+        if ($model->statusDisain == Zakaz::STATUS_DISAINER_SOGLAS) {
             $model->statusDisain = Zakaz::STATUS_DISAINER_WORK;
         } else {
             $model->statusDisain = Zakaz::STATUS_DISAINER_SOGLAS;
         }
-        if ($model->save()){
+        if ($model->save()) {
             return $this->redirect(['disain']);
         } else {
             print_r($model->getErrors());
@@ -525,6 +531,7 @@ class ZakazController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
+
     /** All close zakaz in shop */
     public function actionClosezakaz()
     {
@@ -537,20 +544,21 @@ class ZakazController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
+
     /** All fulfilled disain */
     public function actionReady()
     {
         $searchModel = new ZakazSearch();
         $dataProvider = new ActiveDataProvider([
-                'query' => Zakaz::find()->andWhere(['status' => Zakaz::STATUS_SUC_DISAIN, 'action' => 1]),
-                'sort' => ['defaultOrder' => ['srok' => SORT_DESC]] 
-            ]);
+            'query' => Zakaz::find()->andWhere(['status' => Zakaz::STATUS_SUC_DISAIN, 'action' => 1]),
+            'sort' => ['defaultOrder' => ['srok' => SORT_DESC]]
+        ]);
         $notification = $this->findNotification();
 
         return $this->render('ready', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            ]);
+        ]);
     }
 
     /**
@@ -592,11 +600,23 @@ class ZakazController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, 'shopWork');
         $dataProviderExecute = $searchModel->search(Yii::$app->request->queryParams, 'shopExecute');
         $notification = $this->findNotification();
+        $score = $this->findScorezakaz('shop');
+        $scoreTodoist  = $this->findScoretodoist('adop');
+        $scoreHelp = $this->findScorehelp();
+        $scoreCustom = $this->findScorecustom();
+        $scoreShipping = $this->findScoreshipping();
 
         return $this->render('shop', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'dataProviderExecute' => $dataProviderExecute,
+            'score' => $score,
+            'scoreTodoist' => $scoreTodoist,
+            'scoreHelp' => $scoreHelp,
+            'scoreCustom' => $scoreCustom,
+            'scoreShipping' => $scoreShipping,
+
+
         ]);
     }
 
@@ -610,11 +630,17 @@ class ZakazController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, 'disain');
         $dataProviderSoglas = $searchModel->search(Yii::$app->request->queryParams, 'disainSoglas');
         $notification = $this->findNotification();
+        $scoreZakaz = $this->findScorezakaz('disain');
+        $scoreTodoist = $this->findScoretodoist('adop');
+        $scoreHelp = $this->findScorehelp();
 
         return $this->render('disain', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'dataProviderSoglas' => $dataProviderSoglas,
+            'scoreZakaz' => $scoreZakaz,
+            'scoreTodoist' => $scoreTodoist,
+            'scoreHelp' => $scoreHelp,
         ]);
     }
 
@@ -627,10 +653,16 @@ class ZakazController extends Controller
         $searchModel = new ZakazSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, 'master');
         $notification = $this->findNotification();
+        $scoreZakaz = $this->findScorezakaz('master');
+        $scoreTodoist = $this->findScoretodoist('adop');
+        $scoreHelp = $this->findScorehelp();
 
         return $this->render('master', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'scoreZakaz' => $scoreZakaz,
+            'scoreTodoist' => $scoreTodoist,
+            'scoreHelp' => $scoreHelp,
         ]);
     }
 
@@ -646,19 +678,23 @@ class ZakazController extends Controller
         $model = new Zakaz();
         $comment = new Comment();
         $shipping = new Courier();
+        $scoreZakaz = $this->findScorezakaz('admin');
+        $scoreTodoist  = $this->findScoretodoist('admin');
+        $scoreHelp = $this->findScorehelp();
+        $scoreCustom = $this->findScorecustom();
+        $scoreShipping = $this->findScoreshipping();
 
-        if ($comment->load(Yii::$app->request->post())){
-            if ($comment->save()){
+        if ($comment->load(Yii::$app->request->post())) {
+            if ($comment->save()) {
                 return $this->redirect(['admin']);
             } else {
                 print_r($comment->getErrors());
             }
         }
 
-        if ($shipping->load(Yii::$app->request->post()))
-        {
+        if ($shipping->load(Yii::$app->request->post())) {
             $shipping->save();//сохранение доставка
-            if (!$shipping->save()){
+            if (!$shipping->save()) {
                 Yii::warning($shipping->getErrors());
             }
             $model = Zakaz::findOne($shipping->id_zakaz);//Определяю заказ
@@ -687,6 +723,11 @@ class ZakazController extends Controller
             'dataProviderIspol' => $dataProviderIspol,
             'image' => $image,
             'notification' => $notification,
+            'scoreZakaz' => $scoreZakaz,
+            'scoreTodoist' => $scoreTodoist,
+            'scoreHelp' => $scoreHelp,
+            'scoreCustom' => $scoreCustom,
+            'scoreShipping' => $scoreShipping,
         ]);
     }
     /** END view role */
@@ -702,9 +743,9 @@ class ZakazController extends Controller
         $model = $this->findModel($id);
         $model->scenario = Zakaz::SCENARIO_DECLINED;
 
-        if($model->load(Yii::$app->request->post())){
+        if ($model->load(Yii::$app->request->post())) {
             if ($model->validate()) {
-                if ($model->status == Zakaz::STATUS_SUC_DISAIN){
+                if ($model->status == Zakaz::STATUS_SUC_DISAIN) {
                     $model->status = Zakaz::STATUS_DECLINED_DISAIN;
                     $model->statusDisain = Zakaz::STATUS_DISAINER_DECLINED;
                     $model->id_unread = 0;
@@ -737,13 +778,13 @@ class ZakazController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post())){
-            if ($model->validate()){
-                if($model->status == Zakaz::STATUS_DISAIN or $model->status == Zakaz::STATUS_MASTER or $model->status == Zakaz::STATUS_AUTSORS){
-                    if ($model->status == Zakaz::STATUS_DISAIN){
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->validate()) {
+                if ($model->status == Zakaz::STATUS_DISAIN or $model->status == Zakaz::STATUS_MASTER or $model->status == Zakaz::STATUS_AUTSORS) {
+                    if ($model->status == Zakaz::STATUS_DISAIN) {
                         $model->statusDisain = Zakaz::STATUS_DISAINER_NEW;
                         $model->id_unread = 0;
-                    } elseif ($model->status == Zakaz::STATUS_MASTER){
+                    } elseif ($model->status == Zakaz::STATUS_MASTER) {
                         $model->statusMaster = Zakaz::STATUS_MASTER_NEW;
                         $model->id_unread = 0;
                     } else {
@@ -756,7 +797,7 @@ class ZakazController extends Controller
                     print_r($model->getErrors());
                 }
             } else {
-               return $this->renderAjax('accept', ['model' => $model]);
+                return $this->renderAjax('accept', ['model' => $model]);
             }
         } else {
             return $this->renderAjax('accept', ['model' => $model]);
@@ -768,12 +809,13 @@ class ZakazController extends Controller
      * @param $id
      * @return string
      */
-    public function actionZakaz($id){
+    public function actionZakaz($id)
+    {
         $model = $this->findModel($id);
 
         return $this->renderPartial('_zakaz', [
             'model' => $model,
-            ]);
+        ]);
     }
     /** END Block admin in gridview*/
     /**
@@ -791,28 +833,83 @@ class ZakazController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
     protected function findShipping($id)
     {
         if (($shipping = Courier::findOne($id)) !== null) {
             return $shipping;
         } else {
             throw new NotFoundHttpException("The requested page does not exist.");
-            
+
         }
     }
+
     protected function findNotification()
     {
         $notifModel = Notification::find();
         $notification = $notifModel->where(['id_user' => Yii::$app->user->id, 'active' => true]);
-        if($notification->count()>50){
-                $notifications = '50+';
-            } elseif ($notification->count()<1){
-                $notifications = '';
-            } else {
-                $notifications = $notification->count();
-            }
+        if ($notification->count() > 50) {
+            $notifications = '50+';
+        } elseif ($notification->count() < 1) {
+            $notifications = '';
+        } else {
+            $notifications = $notification->count();
+        }
 
         $this->view->params['notifications'] = $notification->all();
-        $this->view->params['count'] =  $notifications;
+        $this->view->params['count'] = $notifications;
     }
+
+    protected function findScorezakaz($role)
+    {
+        $score = Zakaz::find();
+
+        switch ($role) {
+            case 'admin':
+                return $this->view->params['scoreZakaz'] = $score->andWhere(['action' => 1])->count();
+                break;
+            case 'shop':
+                return $this->view->params['scoreZakaz'] = $score->andWhere(['id_sotrud' => Yii::$app->user->id, 'action' => 1])->count();
+                break;
+            case 'disain':
+                return $this->view->params['scoreDisain'] = $score->andWhere(['status' => [Zakaz::STATUS_DISAIN, Zakaz::STATUS_SUC_DISAIN, Zakaz::STATUS_DECLINED_DISAIN], 'action' => 1])->count();
+                break;
+            case 'master':
+                return $this->view->params['scoreMaster'] = $score->andWhere(['status' => [Zakaz::STATUS_MASTER, Zakaz::STATUS_SUC_MASTER, Zakaz::STATUS_DECLINED_MASTER], 'action' => 1])->count();
+                break;
+        }
+    }
+
+    protected function findScoretodoist($role)
+    {
+        $score = Todoist::find();
+
+        switch ($role) {
+            case 'admin':
+                return $this->view->params['scoreTodoist'] = $score->andWhere(['activate' => 0])->count();
+                break;
+            case 'adop':
+                return $this->view->params['scoreTodoist'] = $score->andWhere(['id_user' => Yii::$app->user->id, 'activate' => 0])->count();
+                break;
+        }
+    }
+
+    protected function findScorehelp()
+    {
+        $score = Helpdesk::find();
+        $this->view->params['scoreHelp'] = $score->andWhere(['id_user' => Yii::$app->user->id, 'status' => 0])->count();
+    }
+
+    protected function findScorecustom()
+    {
+        $score = Custom::find();
+        $this->view->params['scoreCustom'] = $score->andWhere(['id_user' => Yii::$app->user->id, 'action' => 0])->count();
+    }
+
+    protected function findScoreshipping()
+    {
+        $score = Courier::find();
+        $this->view->params['scoreShipping'] = $score->andWhere(['<','status', Courier::DELIVERED])->count();
+    }
+
 }
