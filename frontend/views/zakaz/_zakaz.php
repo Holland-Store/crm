@@ -103,7 +103,7 @@ use app\models\Zakaz;
                 [
                     'attribute' => 'maket',
                     'format' =>'raw',
-                    'value' => $model->maket == null ? '<div style="margin-top: 44px"></div>' : Html::a('<span class="glyphicon glyphicon-saved imgZakaz" style="margin-top: 4px;margin-left: -33px;">', '@web/attachment/'.$model->img, ['download' => true, 'data-pjax' => 0, 'title' => 'Готовый макет от дизайнера'])
+                    'value' => $model->maket == null ? '<div style="margin-top: 44px"></div>' : Html::a('<span class="glyphicon glyphicon-saved imgZakaz" style="margin-top: 4px;margin-left: -33px;">', '@web/attachment/'.$model->maket, ['download' => true, 'data-pjax' => 0, 'title' => 'Готовый макет от дизайнера'])
                 ],
 				[
 				    'attribute' => 'img',
