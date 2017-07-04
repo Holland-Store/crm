@@ -22,163 +22,7 @@ $this->title = $model->id_zakaz;
 ?>
     <div class="zakaz-view">
         <?php Pjax::begin(); ?>
-<<<<<<< HEAD
 
-=======
-        <h1>
-            <?= Html::encode($model->prefics.'. '.$model->description) ?>
-        </h1>
-        <div style="margin-bottom: 10px; height: 112px">
-            <div class="col-xs-5">
-                <?php if (Yii::$app->user->can('shop')): ?>
-                <?= Html::a('<span class = "glyphicon glyphicon-chevron-left"><span>', ['shop'], ['class' => 'btn btn-primary btn-sm']) ?>
-                    <?php endif ?>
-                    <?php if (Yii::$app->user->can('master')): ?>
-                    <?= Html::a('<span class = "glyphicon glyphicon-chevron-left"><span>', ['master'], ['class' => 'btn btn-primary btn-sm']) ?>
-                        <?php endif ?>
-                        <?php if (Yii::$app->user->can('disain')): ?>
-                        <?= Html::a('<span class = "glyphicon glyphicon-chevron-left"><span>', ['disain'], ['class' => 'btn btn-primary btn-sm']) ?>
-                            <?php endif ?>
-                            <?php if (Yii::$app->user->can('admin')): ?>
-                            <?= Html::a('<span class = "glyphicon glyphicon-chevron-left"><span>', ['admin'], ['class' => 'btn btn-primary btn-sm']) ?>
-                                <?php endif ?>
-
-                                <?php if (Yii::$app->user->can('master')): ?>
-                                <?= Html::a('Готово', ['check', 'id' => $model->id_zakaz], [
-            'class' => 'btn btn-success btn-sm',
-            'data' => [
-                'confirm' => 'Вы уверены, что Вы выполнили работу?',
-                'method' => 'post',
-            ]
-        ]); ?>
-                                    <?php endif ?>
-
-                                    <?php if (Yii::$app->user->can('admin')): ?>
-                                    <?php
-        Modal::begin([
-            'header' => '<h2>Доставка<h2>',
-            'size' => 'modal-lg',
-            'toggleButton' => [
-                'tag' => 'button',
-                'class' => 'btn btn-info btn-sm',
-                'label' => 'Доставка',
-            ],
-        ]);
-
-
-        echo $this->render('shipping', [
-            'shipping' => $shipping,
-            'model' => $model
-            ]); 
-
-        Modal::end(); ?>
-                                    <?php endif ?>
-                                    <?php if (Yii::$app->user->can('seeAdop')): ?>
-                                    <?= Html::a('Редактировать', ['update', 'id' => $model->id_zakaz], ['class' => 'btn btn-primary btn-sm']) ?>
-                                        <?php endif ?>
-
-
-                                        <!-- <?php if (Yii::$app->user->can('admin')){ ?>
-        <?= Html::a('Удалить', ['delete', 'id' => $model->id_zakaz], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Вы действительно хотите удалить заказ?',
-                'method' => 'post',
-            ],
-        ]) ?>
-        <?php } ?> -->
-            </div>
-            <div class="col-xs-2">
-                <?php if (Yii::$app->user->can('disain')): ?>
-
-                <?php $form = ActiveForm::begin(); ?>
-
-                <?= $form->field($model, 'statusDisain')->dropDownList(
-            ['0' => 'Новый',
-            '1' => 'В работу',
-            '2' => 'Согласование'],
-            ['prompt' => 'Выберите статус']
-        )->label(false); ?>
-
-                    <?= Html::submitButton('Установить статус', ['class' => 'btn btn-primary btn-sm']) ?>
-
-                        <?php ActiveForm::end(); ?>
-                        <?php endif ?>
-                        <?php if (Yii::$app->user->can('admin')): ?>
-
-                        <?php $form1 = ActiveForm::begin(); ?>
-
-                        <?= $form1->field($model, 'status')->dropDownList([
-                '3' => 'Дизайнер',
-                '6' => 'Мастер',
-                '8' => 'Аутсорс',
-                '1' => 'Исполнен',
-                ],
-                ['prompt' => 'Назначить'])->label(false);?>
-
-                            <?= $form1->field($model, 'time')->textInput(['type' => 'number', 'min' => 0, 'max' => 60])?>
-                                <?= Html::submitButton('Назначить', ['class' => 'btn btn-primary btn-sm']) ?>
-
-                                    <?php ActiveForm::end(); ?>
-                                    <?php endif ?>
-            </div>
-            <div class="col-xs-5">
-                <?php if (Yii::$app->user->can('admin')): ?>
-                <?= Html::a('Поставить задачу', ['todoist/createzakaz', 'id_zakaz' => $model->id_zakaz], ['class' => 'btn btn-primary btn-sm', 'style' => 'margin-left: 185px;']) ?>
-                    <?php endif ?>
-
-                    <?php if ($model->action == 0) { ?>
-
-                    <?= Html::a('Восстановить заказ', ['restore', 'id' => $model->id_zakaz], ['class' => 'btn btn-primary pull-right',
-            'data' => [
-                'confirm' => 'Вы действительно хотите восстановить заказ?',
-                'method' => 'post',
-            ],
-            ]) ?>
-                        <?php } ?>
-
-                        <?php if (Yii::$app->user->can('seeAdop')): ?>
-                        <?php if ($model->action == 1 && $model->status == 1): ?>
-                        <?= Html::a('Закрыть  заказ', ['close', 'id' => $model->id_zakaz], [
-                    'class' => 'btn btn-primary pull-right',
-                    'data' => [
-                        'confirm' => 'Уверены, что заказ закрыт?',
-                        'method' => 'post',
-                    ]
-                ]);  ?>
-                            <?php endif ?>
-                            <?php endif ?>
-            </div>
-        </div>
-
-      <?php if(Yii::$app->user->can('admin')):?>
-       <div class="col-xs-3 reminder">
-            <?php $formReminder = ActiveForm::begin(); ?>
-            
-            <?= $formReminder->field($reminder, 'srok')->textInput(['type' => 'datetime-local', 'required' => 'required']) ?>
-            
-            <?= Html::submitButton('Напомнить', ['class' => 'btn btn-primary btn-sm']) ?>
-            
-            <?php ActiveForm::end(); ?>
-        </div>
-        <?php endif; ?>
-       
-        <div class="col-xs-12">
-            <?php if($model->srok < date('Y-m-d') && $model->action == 1){
-            echo Alert::widget(['options' => ['class' => 'alert-danger'],
-            'body' => '<b>Заказ просрочен!</b>'
-           ]);
-        } ?>
-        </div>
-        <div class="col-xs-12">
-        	<?php if($model->action == 0){
-        		echo Alert::widget(['options' => ['class' => 'alert-warning'],
-								  'body' => '<b>Заказ закрыт!</b><br> Внимание, если Вы хотите воставноить заказ, нажмите на кнопку "Восстановить заказ"'
-			   ]);
-        	} ?>
-        </div>
-
->>>>>>> 94df34a55697b2e667b1a48fb1174487f2ae0b32
         <div class="col-xs-12">
             <?= DetailView::widget([
         'model' => $model,
@@ -226,20 +70,12 @@ $this->title = $model->id_zakaz;
             [
                 'attribute' => 'img',
                 'format' => 'raw',
-<<<<<<< HEAD
                 'value' => $model->img == null ? null : Html::a($model->img, '@web/attachment/'.$model->img, ['download' => true, 'data-pjax' => 0])
-=======
-                'value' => $model->img == null ? null : Html::a($model->img, '@web/attachment/'.$model->img, ['download' => true])
->>>>>>> 94df34a55697b2e667b1a48fb1174487f2ae0b32
             ],
             [
                 'attribute' => 'maket',
                 'format' => 'raw',
-<<<<<<< HEAD
                 'value' => $model->maket == null ? null : Html::a($model->maket, '@web/maket/'.$model->maket, ['download' => true, 'data-pjax' => 0]),
-=======
-                'value' => $model->maket == null ? null : Html::a($model->maket, '@web/maket/'.$model->maket, ['download' => true]),
->>>>>>> 94df34a55697b2e667b1a48fb1174487f2ae0b32
                 'visible' => $model->maket != null
             ],
             [

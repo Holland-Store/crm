@@ -1,6 +1,5 @@
 <?php
 
-<<<<<<< HEAD
 use yii\bootstrap\Nav;
 use yii\helpers\StringHelper;
 use yii\helpers\Html;
@@ -8,24 +7,11 @@ use kartik\grid\GridView;
 use yii\widgets\Pjax;
 use app\models\Zakaz;
 use yii\bootstrap\ButtonDropdown;
-=======
-use yii\helpers\Html;
-use kartik\grid\GridView;
-use app\models\Otdel;
-use app\models\Zakaz;
-use dosamigos\datepicker\DatePicker;
-use yii\bootstrap\Nav;
-use yii\bootstrap\Modal;
-// use yii\grid\SetColumn;
-use yii\widgets\Pjax;
-
->>>>>>> 94df34a55697b2e667b1a48fb1174487f2ae0b32
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\ZakazSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-<<<<<<< HEAD
 $this->title = 'ВСЕ ЗАКАЗЫ';
 ?>
 <?php Pjax::begin(); ?>
@@ -257,52 +243,3 @@ $this->title = 'ВСЕ ЗАКАЗЫ';
     ]); ?>
 </div>
 
-=======
-$this->title = 'Экран - ВСЕ ЗАКАЗЫ';
-?>
-<?php Pjax::begin(); ?>
-
-<div class="zakaz-index">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?php echo $this->render('_search', ['model' => $searchModel]);?>
-        <?= Html::a('<span class="glyphicon glyphicon-refresh"></span>', ['zakaz/shop'], ['class' => 'btn btn-primary btn-lg pull-right', 'style' => 'margin-left:10px;']) ?>
-        <?= Html::a('Создать заказ', ['create'], ['class' => 'btn btn-success btn-lg pull-right']) ?>
-    </p>
-    <div class="col-xs-12">
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'tableOptions' => ['class' => 'table table-bordered'],
-        'rowOptions' => ['class' => 'trTable'],
-        'columns' => [
-            [
-                'attribute' => 'id_zakaz',
-                'headerOptions' => ['width' => '20'],
-                'value' => 'prefics',
-            ],
-            [
-                'attribute' => 'description',
-                'headerOptions' => ['width' => '550'],
-                'contentOptions'=>['style'=>'white-space: normal;'],
-            ],
-            [
-                'attribute' => 'fact_oplata',
-                'label' => 'Предоплата',
-                'headerOptions' => ['width' => '50'],
-            ],
-            [
-                'attribute' => 'closePayment',
-                'value' => function($model){
-                return $model->fact_oplata == null ? $model->oplata - $model->fact_oplata: '0';
-            },
-                'headerOptions' => ['width' => '100'],
-                'label' => 'К доплате',
-            ],
-        ],
-    ]); ?>
-    <?php Pjax::end(); ?>
-    </div>
-</div>
->>>>>>> 94df34a55697b2e667b1a48fb1174487f2ae0b32

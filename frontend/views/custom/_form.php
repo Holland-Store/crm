@@ -2,10 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-<<<<<<< HEAD
 use unclead\multipleinput\TabularInput;
-=======
->>>>>>> 94df34a55697b2e667b1a48fb1174487f2ae0b32
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Custom */
@@ -14,7 +11,6 @@ use unclead\multipleinput\TabularInput;
 
 <div class="custom-form">
 
-<<<<<<< HEAD
     <?php $form = ActiveForm::begin([
         'enableAjaxValidation'      => true,
         'enableClientValidation'    => false,
@@ -52,16 +48,6 @@ use unclead\multipleinput\TabularInput;
     </div>
     <div class="form-group">
         <?= Html::submitButton('Создать', ['class' => 'btn btn-success']) ?>
-=======
-    <?php $form = ActiveForm::begin(); ?>
-
-    <?= $form->field($model, 'tovar')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'number')->textInput(['type' => 'number', 'min' => '0']) ?>
-
-    <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Создать' : 'Редактировать', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
->>>>>>> 94df34a55697b2e667b1a48fb1174487f2ae0b32
     </div>
 
     <?php ActiveForm::end(); ?>

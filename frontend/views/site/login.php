@@ -33,11 +33,7 @@ $this->title = 'Авторизация';
                 </div> -->
 
                 <div class="form-group">
-<<<<<<< HEAD
                     <?= Html::submitButton('Войти', ['name' => 'login-button']) ?>
-=======
-                    <?= Html::submitButton('Войти', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
->>>>>>> 94df34a55697b2e667b1a48fb1174487f2ae0b32
                 </div>
 
             <?php ActiveForm::end(); ?>

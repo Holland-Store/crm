@@ -3,11 +3,7 @@
 use yii\helpers\Html;
 use app\models\Courier;
 use app\models\Zakaz;
-<<<<<<< HEAD
 use kartik\grid\GridView;
-=======
-use yii\grid\GridView;
->>>>>>> 94df34a55697b2e667b1a48fb1174487f2ae0b32
 use yii\bootstrap\Nav;
 use yii\widgets\ActiveForm;
 use yii\widgets\Pjax;
@@ -15,11 +11,7 @@ use yii\widgets\Pjax;
 /* @var $searchModel app\models\CourierSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-<<<<<<< HEAD
 $this->title = 'Все доставки';
-=======
-$this->title = 'Доставка';
->>>>>>> 94df34a55697b2e667b1a48fb1174487f2ae0b32
 ?>
 <?php Pjax::begin(); ?>
 <div class="courier-index">
@@ -36,7 +28,6 @@ $this->title = 'Доставка';
 
 <?= GridView::widget([
         'dataProvider' => $dataProvider,
-<<<<<<< HEAD
         'floatHeader' => true,
         'headerRowOptions' => ['class' => 'headerTable'],
         'pjax' => true,
@@ -88,40 +79,10 @@ $this->title = 'Доставка';
                     }
                 },
                 'contentOptions' => ['class' => 'border-right textTr tr50'],
-=======
-        'filterModel' => $searchModel,
-        'columns' => [
-            'id_zakaz',
-            [
-                'attribute' => 'id_zakaz',
-                'format' => 'text',
-                'value' => 'idZakaz.description',
-				'contentOptions'=>['style'=>'white-space: normal;'],
-                'label' => 'Описание',
-                'filter' => false,
-            ],
-			[
-				'attribute' => 'date',
-				'format' => ['date', 'd.m.Y'],
-			],
-            'to',
-            'from',
-            'commit',
-            [
-                'format' => 'raw',
-                'value' => function($model, $key){
-                    if ($model->data_to == '0000-00-00 00:00:00') {
-                        return Html::a('Забрать', ['make', 'id' => $model->id], ['class' => 'btn btn-ptimary']);
-                    } else {
-                        return Html::a('Доставил', ['delivered', 'id' => $model->id], ['class' => 'btn btn-ptimary']);
-                    }
-                }
->>>>>>> 94df34a55697b2e667b1a48fb1174487f2ae0b32
             ],
         ],
     ]); ?>
 <?php Pjax::end(); ?></div>
-<<<<<<< HEAD
 <div class="footerNav">
     <?php echo Nav::widget([
         'options' => ['class' => 'nav nav-pills footerNav'],
@@ -130,5 +91,3 @@ $this->title = 'Доставка';
         ],
     ]); ?>
 </div>
-=======
->>>>>>> 94df34a55697b2e667b1a48fb1174487f2ae0b32

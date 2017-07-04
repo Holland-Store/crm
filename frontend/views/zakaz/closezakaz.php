@@ -1,18 +1,9 @@
 <?php
 
 use yii\helpers\Html;
-<<<<<<< HEAD
 use kartik\grid\GridView;
 use app\models\Zakaz;
 use yii\helpers\StringHelper;
-=======
-use yii\grid\GridView;
-use app\models\Otdel;
-use app\models\Zakaz;
-use dosamigos\datepicker\DatePicker;
-use yii\bootstrap\Nav;
-use yii\grid\SetColumn;
->>>>>>> 94df34a55697b2e667b1a48fb1174487f2ae0b32
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\ZakazSearch */
@@ -22,7 +13,6 @@ $this->title = 'Закрытые заказы';
 ?>
  
 <div class="zakaz-index">
-<<<<<<< HEAD
 
     <div class="col-xs-12">
         <?= GridView::widget([
@@ -143,74 +133,5 @@ $this->title = 'Закрытые заказы';
 
             ],
         ]); ?>
-=======
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <div class="col-xs-12">
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'columns' => [
-
-            [
-                'attribute' => 'id_zakaz',
-                'headerOptions' => ['width' => '20']
-            ],
-            [
-            'attribute' => 'description',
-            'headerOptions' => ['width' => '550'],
-            ],
-             [
-                'attribute' => 'id_tovar',
-                'value' => 'idTovar.name',
-                'filter' => Zakaz::getTovarList(),
-                'headerOptions' => ['width' => '100'],
-            ],
-             [
-                'attribute' => 'srok',
-                'format' => ['datetime', 'php:d.m.Y'],
-                'value' => 'srok',
-                'filter' => DatePicker::widget([
-                     'model' => $searchModel,
-                     'attribute' => 'srok',
-                     'inline' => false, 
-                    'clientOptions' => [
-                    'autoclose' => true,
-                    'format' => 'yyyy.mm.dd'
-                ],
-                ]),
-                'headerOptions' => ['width' => '70'],
-            ],
-            [
-                'attribute' => 'minut',
-                'format' => ['time', 'php:H:i'],
-                'headerOptions' => ['width' => '10'],
-            ],
-            [
-                'attribute' => 'fact_oplata',
-                'headerOptions' => ['width' => '50'],
-            ],
-            [
-                'attribute' => 'oplata',
-                'headerOptions' => ['width' => '50'],
-            ],
-            [
-                'attribute' => 'img',
-                'format' => 'raw',
-                
-            ],
-            [
-            'class' => 'yii\grid\ActionColumn',
-            'template' => '{view}',
-            'buttons' => [
-                'view' => function ($url,$model) {
-                    return Html::a(
-                    '<button class = "btn btn-primary">Открыть</button>', 
-                    $url);
-                },
-            ],
-            ],
-        ],
-    ]); ?>  
->>>>>>> 94df34a55697b2e667b1a48fb1174487f2ae0b32
     </div>
 </div>

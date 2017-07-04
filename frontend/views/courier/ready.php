@@ -1,17 +1,8 @@
 <?php
 
-<<<<<<< HEAD
 use app\models\Courier;
 use yii\helpers\Html;
 use kartik\grid\GridView;
-=======
-use yii\helpers\Html;
-use app\models\Courier;
-// use app\models\Zakaz;
-use yii\grid\GridView;
-use yii\bootstrap\Nav;
-use yii\widgets\ActiveForm;
->>>>>>> 94df34a55697b2e667b1a48fb1174487f2ae0b32
 use yii\widgets\Pjax;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\CourierSearch */
@@ -23,7 +14,6 @@ $this->title = 'Готовые доставки';
 
 <div class="courier-index">
 
-<<<<<<< HEAD
 <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'floatHeader' => true,
@@ -75,23 +65,6 @@ $this->title = 'Готовые доставки';
                     return $model->status == Courier::CANCEL ? 'Отменена' : '';
                 }
             ]
-=======
-    <h1><?= Html::encode($this->title) ?></h1>
-
-<?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            'id',
-            [
-                'attribute' => 'id_zakaz',
-                'format' => 'text',
-                // 'value' => 'idZakaz.description',
-                'value' => $model->idZakaz->description,
-            ],
-            'to',
-            'from',
->>>>>>> 94df34a55697b2e667b1a48fb1174487f2ae0b32
         ],
     ]); ?>
 <?php Pjax::end(); ?></div>
