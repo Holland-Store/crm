@@ -4,12 +4,7 @@ namespace app\models;
 
 use Yii;
 use yii\helpers\ArrayHelper;
-use app\models\User;
-use app\models\Tovar;
-use app\models\Notification;
-use app\models\Client;
 use yii\db\ActiveRecord;
-use yii\web\UploadedFile;
 
 /**
  * This is the model class for table "zakaz".
@@ -183,19 +178,19 @@ class Zakaz extends ActiveRecord
         return $this->hasOne(Courier::className(), ['id' => 'id_shipping']);
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-
-    public static function getSotrudList()
-    {
-        $sotruds = Otdel::find()
-        ->select(['otdel.id','otdel.fio'])
-        ->join('JOIN','zakaz', 'zakaz.id_sotrud = otdel.id')
-        ->all();
-
-        return ArrayHelper::map($sotruds, 'id', 'fio');
-    }
+//    /**
+//     * @return \yii\db\ActiveQuery
+//     */
+//
+//    public static function getSotrudList()
+//    {
+//        $sotruds = Otdel::find()
+//        ->select(['otdel.id','otdel.fio'])
+//        ->join('JOIN','zakaz', 'zakaz.id_sotrud = otdel.id')
+//        ->all();
+//
+////        return ArrayHelper::map($sotruds, 'id', 'fio');
+//    }
     public static function getStatusArray(){
         return [
             self::STATUS_NEW => 'Новый',
@@ -283,19 +278,13 @@ class Zakaz extends ActiveRecord
     }
     public function getUploadeFile()
     {
-        $notification = new Notification();
-
-        $this->file = UploadedFile::getInstance($this, 'file');//Выполнена работа дизайнером
+        //Выполнена работа дизайнером
         if($this->validate())
         {
-            $zakaz = $this->id_zakaz;
-            $description = $this->description;
-            
+
             $this->file->saveAs('maket/Maket_'.$this->id_zakaz.'.'.$this->file->extension);
             $this->maket = 'Maket_'.$this->id_zakaz.'.'.$this->file->extension;
             $this->status = 4;
-            $notification->getByIdNotification(5, $zakaz);
-            $notification->saveNotification;
         }
     }
 }
