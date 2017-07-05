@@ -11,9 +11,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
-use yii\data\ActiveDataProvider;
 use yii\web\Response;
-use yii\widgets\ActiveForm;
 
 
 /**
@@ -76,9 +74,11 @@ class CustomController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, 'zakup');
         $notification = $this->findNotification();
 
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'notification' => $notification,
         ]);
     }
 
@@ -94,6 +94,7 @@ class CustomController extends Controller
 
         return $this->render('adop', [
             'dataProvider' => $dataProvider,
+            'notification' => $notification,
         ]);
     }
 
@@ -135,11 +136,11 @@ class CustomController extends Controller
                 }
             }
             return $this->redirect(['adop']);
-        } else {
-            return $this->render('create', [
-               'models' => $models,
-            ]);
         }
+        return $this->render('create', [
+           'models' => $models,
+            'notification' => $notification,
+        ]);
     }
 
 
@@ -185,7 +186,6 @@ class CustomController extends Controller
         } else {
             print_r($model->getErrors());
         }
-
     }
     /**
      * Close an existing Custom model.
@@ -195,8 +195,6 @@ class CustomController extends Controller
      */
     public function actionClose($id)
     {
-        $notification = $this->findNotification();
-        
         $model = $this->findModel($id);
         $model->action = 1;
         $model->date_end = date('Y-m-d H:i:s');

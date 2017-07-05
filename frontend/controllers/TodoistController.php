@@ -2,8 +2,6 @@
 
 namespace frontend\controllers;
 
-use app\models\Courier;
-use app\models\Zakaz;
 use Yii;
 use app\models\Todoist;
 use app\models\Helpdesk;
@@ -86,21 +84,11 @@ class TodoistController extends Controller
         $searchModel = new TodoistSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, 'admin');
         $notification = $this->findNotification();
-        $score = $this->findScorezakaz('admin');
-        $scoreTodoist  = $this->findScoretodoist('admin');
-        $scoreHelp = $this->findScorehelp();
-        $scoreCustom = $this->findScorecustom('adop');
-        $scoreShipping = $this->findScoreshipping();
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'notifivation' => $notification,
-            'score' => $score,
-            'scoreTodoist' => $scoreTodoist,
-            'scoreHelp' => $scoreHelp,
-            'scoreCustom' => $scoreCustom,
-            'scoreShipping' => $scoreShipping,
         ]);
     }
     /**
@@ -112,21 +100,11 @@ class TodoistController extends Controller
         $searchModel = new TodoistSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, 'close');
         $notification = $this->findNotification();
-        $score = $this->findScorezakaz('admin');
-        $scoreTodoist  = $this->findScoretodoist('admin');
-        $scoreHelp = $this->findScorehelp();
-        $scoreCustom = $this->findScorecustom('adop');
-        $scoreShipping = $this->findScoreshipping();
 
         return $this->render('closetodoist', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'notifivation' => $notification,
-            'score' => $score,
-            'scoreTodoist' => $scoreTodoist,
-            'scoreHelp' => $scoreHelp,
-            'scoreCustom' => $scoreCustom,
-            'scoreShipping' => $scoreShipping,
         ]);
     }
     /**
@@ -139,32 +117,10 @@ class TodoistController extends Controller
 			'query' => Todoist::find()->where(['id_user' => Yii::$app->user->id, 'activate' => 0])
 		]);
         $notification = $this->findNotification();
-        if (Yii::$app->user->can('disain')){
-            $score = $this->findScorezakaz('disain');
-        } elseif (Yii::$app->user->can('master')){
-            $score = $this->findScorezakaz('master');
-        } elseif (Yii::$app->user->can('shop')){
-            $score = $this->findScorezakaz('shop');
-        }
-        $scoreTodoist  = $this->findScoretodoist('adop');
-        $scoreHelp = $this->findScorehelp();
-        if (Yii::$app->user->can('zakup')){
-            $scoreCustom = $this->findScorecustom('zakup');
-        } else {
-            $scoreCustom = $this->findScorecustom('adop');
-        }
-
-        $scoreShipping = $this->findScoreshipping();
-
 
         return $this->render('shop', [
             'dataProvider' => $dataProvider,
             'notification' => $notification,
-            'score' => $score,
-            'scoreTodoist' => $scoreTodoist,
-            'scoreHelp' => $scoreHelp,
-            'scoreCustom' => $scoreCustom,
-            'scoreShipping' => $scoreShipping,
         ]);
     }
 
@@ -189,11 +145,6 @@ class TodoistController extends Controller
     {
         $model = new Todoist();
         $notification = $this->findNotification();
-        $score = $this->findScorezakaz('admin');
-        $scoreTodoist  = $this->findScoretodoist('admin');
-        $scoreHelp = $this->findScorehelp();
-        $scoreCustom = $this->findScorecustom('adop');
-        $scoreShipping = $this->findScoreshipping();
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->save()){
@@ -205,11 +156,6 @@ class TodoistController extends Controller
         return $this->render('create', [
             'model' => $model,
             'notifivation' => $notification,
-            'score' => $score,
-            'scoreTodoist' => $scoreTodoist,
-            'scoreHelp' => $scoreHelp,
-            'scoreCustom' => $scoreCustom,
-            'scoreShipping' => $scoreShipping,
         ]);
     }
 
@@ -288,12 +234,7 @@ class TodoistController extends Controller
     {
         $model = new Todoist();
         
-         $notification = $this->findNotification();
-        $score = $this->findScorezakaz('admin');
-        $scoreTodoist  = $this->findScoretodoist('admin');
-        $scoreHelp = $this->findScorehelp();
-        $scoreCustom = $this->findScorecustom('adop');
-        $scoreShipping = $this->findScoreshipping();
+        $notification = $this->findNotification();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index', 'id' => $model->id]);
@@ -301,11 +242,6 @@ class TodoistController extends Controller
         return $this->render('createzakaz', [
             'model' => $model,
             'notifivation' => $notification,
-            'score' => $score,
-            'scoreTodoist' => $scoreTodoist,
-            'scoreHelp' => $scoreHelp,
-            'scoreCustom' => $scoreCustom,
-            'scoreShipping' => $scoreShipping,
             ]);
     }
 
@@ -352,80 +288,5 @@ class TodoistController extends Controller
 
         $this->view->params['notifications'] = $notification->all();
         $this->view->params['count'] =  $notifications;
-    }
-
-    /**
-     * Finds the Zakaz model based on its role value
-     * @param $role
-     * @return int|string
-     */
-    protected function findScorezakaz($role)
-    {
-        $score = Zakaz::find();
-
-        switch ($role) {
-            case 'admin':
-                return $this->view->params['scoreZakaz'] = $score->andWhere(['action' => 1])->count();
-                break;
-            case 'shop':
-                return $this->view->params['scoreZakaz'] = $score->andWhere(['id_sotrud' => Yii::$app->user->id, 'action' => 1])->count();
-                break;
-            case 'disain':
-                return $this->view->params['scoreDisain'] = $score->andWhere(['status' => [Zakaz::STATUS_DISAIN, Zakaz::STATUS_SUC_DISAIN, Zakaz::STATUS_DECLINED_DISAIN], 'action' => 1])->count();
-                break;
-            case 'master':
-                return $this->view->params['scoreMaster'] = $score->andWhere(['status' => [Zakaz::STATUS_MASTER, Zakaz::STATUS_SUC_MASTER, Zakaz::STATUS_DECLINED_MASTER], 'action' => 1])->count();
-                break;
-        }
-    }
-
-    /**
-     * Finds the Todoist model based on its role value
-     * @param $role
-     * @return int|string
-     */
-    protected function findScoretodoist($role)
-    {
-        $score = Todoist::find();
-
-        switch ($role) {
-            case 'admin':
-                return $this->view->params['scoreTodoist'] = $score->andWhere(['activate' => 0])->count();
-                break;
-            case 'adop':
-                return $this->view->params['scoreTodoist'] = $score->andWhere(['id_user' => Yii::$app->user->id, 'activate' => 0])->count();
-                break;
-        }
-    }
-
-    /**
-     * Finds the Helpdesk model
-     */
-    protected function findScorehelp()
-    {
-        $score = Helpdesk::find();
-        $this->view->params['scoreHelp'] = $score->andWhere(['id_user' => Yii::$app->user->id, 'status' => 0])->count();
-    }
-
-    /**
-     * Finds the Custom model
-     */
-    protected function findScorecustom($role)
-    {
-        $score = Custom::find();
-        if ($role == 'zakup'){
-            $this->view->params['scoreCustom'] = $score->andWhere(['action' => 0])->count();
-        } else {
-            $this->view->params['scoreCustom'] = $score->andWhere(['id_user' => Yii::$app->user->id, 'action' => 0])->count();
-        }
-    }
-
-    /**
-     * Finds the Courier model
-     */
-    protected function findScoreshipping()
-    {
-        $score = Courier::find();
-        $this->view->params['scoreShipping'] = $score->andWhere(['<','status', Courier::DELIVERED])->count();
     }
 }
