@@ -46,7 +46,7 @@ AppAsset::register($this);
     ['label' => 'Поломки <span class="badge pull-right">'.$this->params['scoreHelp'].'</span>', 'encode' => false, 'url' => ['helpdesk/index'], 'visible' => !Yii::$app->user->can('courier')],
     ['label' => 'Закупки <span class="badge pull-right">'.$this->params['scoreCustom'].'</span>', 'encode' => false, 'url' => ['custom/adop'], 'visible' => Yii::$app->user->can('seeAdop')],
     ['label' => 'Доставки <span class="badge pull-right">'.$this->params['scoreShipping'].'</span>', 'encode' => false, 'url' => ['courier/shipping'], 'visible' => Yii::$app->user->can('admin')],
-    ['label' => 'Закупки', 'url' => ['custom/index'], 'visible' => Yii::$app->user->can('zakup')],
+    ['label' => 'Закупки <span class="badge pull-right">'.$this->params['scoreCustom'].'</span>', 'encode' => false,'url' => ['custom/index'], 'visible' => Yii::$app->user->can('zakup')],
     ['label' => 'Задачи <span class="badge pull-right">'.$this->params['scoreTodoist'].'</span>', 'encode' => false,'url' => ['todoist/shop'], 'visible' => Yii::$app->user->can('todoist')],
     ],
 ]); ?>
