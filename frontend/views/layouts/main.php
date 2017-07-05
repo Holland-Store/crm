@@ -4,10 +4,10 @@
 /* @var $content string */
 
 use yii\helpers\Html;
-use yii\bootstrap\Nav;
 use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use common\widgets\Alert;
+use frontend\components\Counter;
 //use app\models\Notification;
 
 AppAsset::register($this);
@@ -29,27 +29,11 @@ AppAsset::register($this);
 </head>
 <body>
 <?php $this->beginBody() ?>
-
 <div class="wrap">
 <?php if (!Yii::$app->user->isGuest): ?>
     <div class="logo"></div>
 <?php echo '<h1 class="titleMain">'.Html::encode($this->title).'</h1>' ?>
-<?php echo Nav::widget([
-    'options' => ['class' => 'nav nav-pills headerNav'],
-    'items' => [
-        ['label' => 'Заказы <span class="badge pull-right">'.$this->params['scoreZakaz'].'</span>', 'encode' => false, 'url' => ['zakaz/admin'], 'visible' => Yii::$app->user->can('seeAdmin')],
-    ['label' => 'Заказы <span class="badge pull-right">'.$this->params['scoreDisain'].'</span>', 'encode' => false, 'url' => ['zakaz/disain'], 'visible' => Yii::$app->user->can('disain')],
-    ['label' => 'Заказы <span class="badge pull-right">'.$this->params['scoreMaster'].'</span>', 'encode' => false, 'url' => ['zakaz/master'], 'visible' => Yii::$app->user->can('master')],
-    ['label' => 'Заказы <span class="badge pull-right">'.$this->params['scoreZakaz'].'</span>', 'encode' => false, 'url' => ['zakaz/shop'], 'visible' => Yii::$app->user->can('seeShop')],
-    ['label' => 'Доставки <span class="badge pull-right">'.$this->params['scoreShipping'].'</span>', 'encode' => false, 'url' => ['courier/index'], 'visible' => Yii::$app->user->can('courier')],
-    ['label' => 'Задачи <span class="badge pull-right">'.$this->params['scoreTodoist'].'</span>', 'url' => ['todoist/index'], 'encode' => false, 'visible' => Yii::$app->user->can('admin')],
-    ['label' => 'Поломки <span class="badge pull-right">'.$this->params['scoreHelp'].'</span>', 'encode' => false, 'url' => ['helpdesk/index'], 'visible' => !Yii::$app->user->can('courier')],
-    ['label' => 'Закупки <span class="badge pull-right">'.$this->params['scoreCustom'].'</span>', 'encode' => false, 'url' => ['custom/adop'], 'visible' => Yii::$app->user->can('seeAdop')],
-    ['label' => 'Доставки <span class="badge pull-right">'.$this->params['scoreShipping'].'</span>', 'encode' => false, 'url' => ['courier/shipping'], 'visible' => Yii::$app->user->can('admin')],
-    ['label' => 'Закупки <span class="badge pull-right">'.$this->params['scoreCustom'].'</span>', 'encode' => false,'url' => ['custom/index'], 'visible' => Yii::$app->user->can('zakup')],
-    ['label' => 'Задачи <span class="badge pull-right">'.$this->params['scoreTodoist'].'</span>', 'encode' => false,'url' => ['todoist/shop'], 'visible' => Yii::$app->user->can('todoist')],
-    ],
-]); ?>
+    <?= Counter::widget() ?>
 <?php endif ?>
 <?php $counts = '<span class="glyphicon glyphicon-bell" style="font-size:21px"></span><span class="badge pull-right">'.$this->params['count'].'</span>'; ?>
     <?php
@@ -139,14 +123,6 @@ AppAsset::register($this);
         <?= $content ?>
     </div>
 </div>
-
-<!-- <footer class="footer">
-    <div class="container">
-        <p class="pull-left">&copy; Holland <?= date('Y'); ?> <?= Html::a('version 2.0', ['zakaz/index']) ?></p>
-
-        <!-- <p class="pull-right"><?= Yii::powered() ?></p> -->
-    <!--</div>
-</footer> -->
 <?php if (Yii::$app->user->isGuest): ?>
     <footer>
         <div class="footerLogin">
