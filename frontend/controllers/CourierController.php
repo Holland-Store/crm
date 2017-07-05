@@ -2,6 +2,9 @@
 
 namespace frontend\controllers;
 
+use app\models\Custom;
+use app\models\Helpdesk;
+use app\models\Todoist;
 use Yii;
 use app\models\Courier;
 use app\models\Zakaz;
@@ -79,10 +82,13 @@ class CourierController extends Controller
         $searchModel = new CourierSearch();
         $notification = $this->findNotification();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $score = $this->findScoreshipping('courier');
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'notification' => $notification,
+            'score' => $score,
         ]);
     }
     public function actionReady()
@@ -96,6 +102,7 @@ class CourierController extends Controller
         
         return $this->render('ready', [
             'dataProvider' => $dataProvider,
+            'notification' => $notification,
         ]);
     }
     /** View for admin scans all active shipping */
@@ -108,10 +115,21 @@ class CourierController extends Controller
             'pagination' => ['pageSize' => 50,]
         ]);
         $notification = $this->findNotification();//Уведомление
+        $scoreZakaz = $this->findScorezakaz('admin');
+        $scoreTodoist  = $this->findScoretodoist('admin');
+        $scoreHelp = $this->findScorehelp();
+        $scoreCustom = $this->findScorecustom();
+        $scoreShipping = $this->findScoreshipping('admin');
 
         return $this->render('shipping', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'notification' => $notification,
+            'scoreZakaz' => $scoreZakaz,
+            'scoreTodoist' => $scoreTodoist,
+            'scoreHelp' => $scoreHelp,
+            'scoreCustom' => $scoreCustom,
+            'scoreShipping' => $scoreShipping,
         ]);
     }
 
@@ -157,11 +175,10 @@ class CourierController extends Controller
             } else {
                 print_r($model->getErrors());
             }
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
         }
+        return $this->render('create', [
+            'model' => $model,
+        ]);
     }
 
     /**
@@ -260,4 +277,82 @@ class CourierController extends Controller
         $this->view->params['notifications'] = $notification->all();
         $this->view->params['count'] =  $notifications;
     }
+
+    /**
+     * Finds the Zakaz model based on its role value
+     * @param $role
+     * @return int|string
+     */
+    protected function findScorezakaz($role)
+    {
+        $score = Zakaz::find();
+
+        switch ($role) {
+            case 'admin':
+                return $this->view->params['scoreZakaz'] = $score->andWhere(['action' => 1])->count();
+                break;
+            case 'shop':
+                return $this->view->params['scoreZakaz'] = $score->andWhere(['id_sotrud' => Yii::$app->user->id, 'action' => 1])->count();
+                break;
+            case 'disain':
+                return $this->view->params['scoreDisain'] = $score->andWhere(['status' => [Zakaz::STATUS_DISAIN, Zakaz::STATUS_SUC_DISAIN, Zakaz::STATUS_DECLINED_DISAIN], 'action' => 1])->count();
+                break;
+            case 'master':
+                return $this->view->params['scoreMaster'] = $score->andWhere(['status' => [Zakaz::STATUS_MASTER, Zakaz::STATUS_SUC_MASTER, Zakaz::STATUS_DECLINED_MASTER], 'action' => 1])->count();
+                break;
+        }
+    }
+
+    /**
+     * Finds the Todoist model based on its role value
+     * @param $role
+     * @return mixed
+     */
+    protected function findScoretodoist($role)
+    {
+        $score = Todoist::find();
+
+        switch ($role) {
+            case 'admin':
+                return $this->view->params['scoreTodoist'] = $score->andWhere(['activate' => 0])->count();
+                break;
+            case 'adop':
+                return $this->view->params['scoreTodoist'] = $score->andWhere(['id_user' => Yii::$app->user->id, 'activate' => 0])->count();
+                break;
+        }
+    }
+
+    /**
+     * Finds the Helpdesk model
+     */
+    protected function findScorehelp()
+    {
+        $score = Helpdesk::find();
+        $this->view->params['scoreHelp'] = $score->andWhere(['id_user' => Yii::$app->user->id, 'status' => 0])->count();
+    }
+
+    /**
+     * Finds the Custom model
+     */
+    protected function findScorecustom()
+    {
+        $score = Custom::find();
+        $this->view->params['scoreCustom'] = $score->andWhere(['id_user' => Yii::$app->user->id, 'action' => 0])->count();
+    }
+
+    /**
+     * Finds the Courier model
+     */
+    protected function findScoreshipping($role)
+    {
+        $score = Courier::find();
+
+        if ($role == 'admin'){
+            $this->view->params['scoreShipping'] = $score->andWhere(['<','status', Courier::RECEIVE])->count();
+        } else {
+            $this->view->params['scoreShipping'] = $score->andWhere(['<','status', Courier::DELIVERED])->count();
+        }
+
+    }
+
 }
