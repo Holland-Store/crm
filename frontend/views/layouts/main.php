@@ -8,7 +8,7 @@ use yii\bootstrap\Nav;
 use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use common\widgets\Alert;
-use app\models\Notification;
+//use app\models\Notification;
 
 AppAsset::register($this);
 ?>
@@ -41,7 +41,7 @@ AppAsset::register($this);
     ['label' => 'Заказы <span class="badge pull-right">'.$this->params['scoreDisain'].'</span>', 'encode' => false, 'url' => ['zakaz/disain'], 'visible' => Yii::$app->user->can('disain')],
     ['label' => 'Заказы <span class="badge pull-right">'.$this->params['scoreMaster'].'</span>', 'encode' => false, 'url' => ['zakaz/master'], 'visible' => Yii::$app->user->can('master')],
     ['label' => 'Заказы <span class="badge pull-right">'.$this->params['scoreZakaz'].'</span>', 'encode' => false, 'url' => ['zakaz/shop'], 'visible' => Yii::$app->user->can('seeShop')],
-    ['label' => 'Доставки', 'url' => ['courier/index'], 'visible' => Yii::$app->user->can('courier')],
+    ['label' => 'Доставки <span class="badge pull-right">'.$this->params['scoreShipping'].'</span>', 'encode' => false, 'url' => ['courier/index'], 'visible' => Yii::$app->user->can('courier')],
     ['label' => 'Задачи <span class="badge pull-right">'.$this->params['scoreTodoist'].'</span>', 'url' => ['todoist/index'], 'encode' => false, 'visible' => Yii::$app->user->can('admin')],
     ['label' => 'Поломки <span class="badge pull-right">'.$this->params['scoreHelp'].'</span>', 'encode' => false, 'url' => ['helpdesk/index'], 'visible' => !Yii::$app->user->isGuest],
     ['label' => 'Закупки <span class="badge pull-right">'.$this->params['scoreCustom'].'</span>', 'encode' => false, 'url' => ['custom/adop'], 'visible' => Yii::$app->user->can('seeAdop')],
