@@ -34,12 +34,12 @@ class HelpdeskController extends Controller
 					[
     					'actions' => ['index'],
     					'allow' => true,
-    					'roles' => ['@'],
+    					'roles' => ['admin', 'disain', 'master', 'system', 'zakup', 'shop'],
 					],
                     [
                         'actions' => ['create'],
                         'allow' => true,
-                        'roles' => ['@'],
+                        'roles' => ['admin', 'disain', 'master', 'zakup', 'shop'],
                     ],
 					[
 						'actions' => ['close'],
@@ -65,6 +65,7 @@ class HelpdeskController extends Controller
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'notification' => $notification,
         ]);
     }
 
@@ -79,6 +80,7 @@ class HelpdeskController extends Controller
         
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'notification' => $notification,
         ]);
     }
 
@@ -98,11 +100,11 @@ class HelpdeskController extends Controller
             } else {
                 print_r($model->getErrors());
             }
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
         }
+        return $this->render('create', [
+            'model' => $model,
+            'notification' => $notification,
+        ]);
     }
 
     /**
@@ -118,11 +120,11 @@ class HelpdeskController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index', 'id' => $model->id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
         }
+        return $this->render('update', [
+            'model' => $model,
+            'notification' => $notification,
+        ]);
     }
 
     /**
