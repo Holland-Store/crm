@@ -1,0 +1,90 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: holland
+ * Date: 05.07.2017
+ * Time: 14:15
+ */
+
+namespace frontend\components;
+
+use app\models\Courier;
+use app\models\Custom;
+use app\models\Helpdesk;
+use app\models\Todoist;
+use app\models\Zakaz;
+use Yii;
+use yii\base\Widget;
+use yii\bootstrap\Nav;
+
+
+class Counter extends Widget
+{
+    private $params;
+
+    public function init()
+    {
+        parent::init();
+
+        $zakaz = Zakaz::find();
+        $todoist = Todoist::find();
+        $custom = Custom::find();
+        $helpdesk = Helpdesk::find();
+        $shipping = Courier::find();
+
+        if (Yii::$app->user->can('admin')){
+            $this->view->params['scoreZakaz'] = $zakaz->andWhere(['action' => 1])->count();
+            $this->view->params['scoreTodoist'] = $todoist->andWhere(['activate' => 0])->count();
+            $this->view->params['scoreCustom'] = $custom->andWhere(['id_user' => Yii::$app->user->id, 'action' => 0])->count();
+            $this->view->params['scoreHelp'] = $helpdesk->andWhere(['id_user' => Yii::$app->user->id, 'status' => 0])->count();
+            $this->view->params['scoreShipping'] = $shipping->andWhere(['<','status', Courier::RECEIVE])->count();
+        } elseif (Yii::$app->user->can('shop')){
+            $this->view->params['scoreZakaz'] = $zakaz->andWhere(['id_sotrud' => Yii::$app->user->id, 'action' => 1])->count();
+            $this->view->params['scoreTodoist'] = $todoist->andWhere(['id_user' => Yii::$app->user->id, 'activate' => 0])->count();
+            $this->view->params['scoreCustom'] = $custom->andWhere(['id_user' => Yii::$app->user->id, 'action' => 0])->count();
+            $this->view->params['scoreHelp'] = $helpdesk->andWhere(['id_user' => Yii::$app->user->id, 'status' => 0])->count();
+        } elseif(Yii::$app->user->can('disain')){
+            $this->view->params['scoreDisain'] = $zakaz->andWhere(['status' => [Zakaz::STATUS_DISAIN, Zakaz::STATUS_SUC_DISAIN, Zakaz::STATUS_DECLINED_DISAIN], 'action' => 1])->count();
+            $this->view->params['scoreTodoist'] = $todoist->andWhere(['id_user' => Yii::$app->user->id, 'activate' => 0])->count();
+            $this->view->params['scoreCustom'] = $custom->andWhere(['id_user' => Yii::$app->user->id, 'action' => 0])->count();
+            $this->view->params['scoreHelp'] = $helpdesk->andWhere(['id_user' => Yii::$app->user->id, 'status' => 0])->count();
+        } elseif (Yii::$app->user->can('master')){
+            $this->view->params['scoreMaster'] = $zakaz->andWhere(['status' => [Zakaz::STATUS_MASTER, Zakaz::STATUS_SUC_MASTER, Zakaz::STATUS_DECLINED_MASTER], 'action' => 1])->count();
+            $this->view->params['scoreTodoist'] = $todoist->andWhere(['id_user' => Yii::$app->user->id, 'activate' => 0])->count();
+            $this->view->params['scoreCustom'] = $custom->andWhere(['id_user' => Yii::$app->user->id, 'action' => 0])->count();
+            $this->view->params['scoreHelp'] = $helpdesk->andWhere(['id_user' => Yii::$app->user->id, 'status' => 0])->count();
+        } elseif (Yii::$app->user->can('courier')){
+            $this->view->params['scoreShipping'] = $shipping->andWhere(['<','status', Courier::DELIVERED])->count();
+        } elseif (Yii::$app->user->can('zakyp')){
+            $this->view->params['scoreCustom'] = $custom->andWhere(['action' => 0])->count();
+            $this->view->params['scoreHelp'] = $helpdesk->andWhere(['id_user' => Yii::$app->user->id, 'status' => 0])->count();
+            $this->view->params['scoreTodoist'] = $todoist->andWhere(['id_user' => Yii::$app->user->id, 'activate' => 0])->count();
+        } elseif (Yii::$app->user->can('system')){
+            $this->view->params['scoreHelp'] = $helpdesk->andWhere(['status' => 0])->count();
+        }
+
+    }
+
+    /**
+     * @return string
+     */
+    public function run()
+    {
+        return Nav::widget([
+        'options' => ['class' => 'nav nav-pills headerNav'],
+        'items' => [
+            ['label' => 'Заказы <span class="badge pull-right">'.$this->view->params['scoreZakaz'].'</span>', 'encode' => false, 'url' => ['zakaz/admin'], 'visible' => Yii::$app->user->can('seeAdmin')],
+            ['label' => 'Заказы <span class="badge pull-right">'.$this->view->params['scoreDisain'].'</span>', 'encode' => false, 'url' => ['zakaz/disain'], 'visible' => Yii::$app->user->can('disain')],
+            ['label' => 'Заказы <span class="badge pull-right">'.$this->view->params['scoreMaster'].'</span>', 'encode' => false, 'url' => ['zakaz/master'], 'visible' => Yii::$app->user->can('master')],
+            ['label' => 'Заказы <span class="badge pull-right">'.$this->view->params['scoreZakaz'].'</span>', 'encode' => false, 'url' => ['zakaz/shop'], 'visible' => Yii::$app->user->can('seeShop')],
+            ['label' => 'Доставки <span class="badge pull-right">'.$this->view->params['scoreShipping'].'</span>', 'encode' => false, 'url' => ['courier/index'], 'visible' => Yii::$app->user->can('courier')],
+            ['label' => 'Задачи <span class="badge pull-right">'.$this->view->params['scoreTodoist'].'</span>', 'url' => ['todoist/index'], 'encode' => false, 'visible' => Yii::$app->user->can('admin')],
+            ['label' => 'Поломки <span class="badge pull-right">'.$this->view->params['scoreHelp'].'</span>', 'encode' => false, 'url' => ['helpdesk/index'], 'visible' => !Yii::$app->user->can('courier')],
+            ['label' => 'Закупки <span class="badge pull-right">'.$this->view->params['scoreCustom'].'</span>', 'encode' => false, 'url' => ['custom/adop'], 'visible' => Yii::$app->user->can('seeAdop')],
+            ['label' => 'Доставки <span class="badge pull-right">'.$this->view->params['scoreShipping'].'</span>', 'encode' => false, 'url' => ['courier/shipping'], 'visible' => Yii::$app->user->can('admin')],
+            ['label' => 'Закупки <span class="badge pull-right">'.$this->view->params['scoreCustom'].'</span>', 'encode' => false,'url' => ['custom/index'], 'visible' => Yii::$app->user->can('zakup')],
+            ['label' => 'Задачи <span class="badge pull-right">'.$this->view->params['scoreTodoist'].'</span>', 'encode' => false,'url' => ['todoist/shop'], 'visible' => Yii::$app->user->can('todoist')],
+        ],
+    ]);
+    }
+}
