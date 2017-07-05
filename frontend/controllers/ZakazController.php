@@ -193,6 +193,7 @@ class ZakazController extends Controller
 
         return $this->render('index', [
             'model' => $model,
+            'notification' => $notification,
         ]);
     }
 
@@ -271,12 +272,12 @@ class ZakazController extends Controller
             $shipping->save();
             $model->id_shipping = $shipping->id;
             $model->save();
-        } else {
-            return $this->render('shipping', [
-                'model' => $model,
-                'shipping' => $shipping,
-            ]);
         }
+
+        return $this->render('shipping', [
+            'model' => $model,
+            'shipping' => $shipping,
+        ]);
     }
 
     /**
@@ -305,11 +306,12 @@ class ZakazController extends Controller
             } elseif (Yii::$app->user->can('admin')) {
                 return $this->redirect(['admin']);
             }
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
         }
+
+        return $this->render('create', [
+            'model' => $model,
+            'notification' => $notification,
+        ]);
     }
 
     /**
@@ -344,11 +346,11 @@ class ZakazController extends Controller
             } elseif (Yii::$app->user->can('admin')) {
                 return $this->redirect(['admin']);
             }
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
         }
+        return $this->render('update', [
+            'model' => $model,
+            'notification' => $notification,
+        ]);
     }
 
     /**
@@ -361,7 +363,6 @@ class ZakazController extends Controller
     {
         $model = $this->findModel($id);
         $notification = new Notification();
-        $notifications = $this->findNotification();
 
         $model->status = Zakaz::STATUS_SUC_MASTER;
         $model->statusMaster = Zakaz::STATUS_MASTER_PROCESS;
@@ -431,8 +432,6 @@ class ZakazController extends Controller
 
     public function actionRestore($id)
     {
-        $notification = $this->findNotification();
-
         $model = $this->findModel($id);
         $model->action = 1;
         $model->save();
@@ -529,6 +528,7 @@ class ZakazController extends Controller
         return $this->render('archive', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'notification' => $notification,
         ]);
     }
 
@@ -542,6 +542,7 @@ class ZakazController extends Controller
         return $this->render('closezakaz', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'notification' => $notification,
         ]);
     }
 
@@ -558,6 +559,7 @@ class ZakazController extends Controller
         return $this->render('ready', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'notification' => $notification,
         ]);
     }
 
@@ -568,8 +570,6 @@ class ZakazController extends Controller
      */
     public function actionStatusdisain($id)
     {
-        $notification = $this->findNotification();
-
         $model = $this->findModel($id);
         $model->statusDisain = Zakaz::STATUS_DISAINER_WORK;
         $model->save();
@@ -615,8 +615,7 @@ class ZakazController extends Controller
             'scoreHelp' => $scoreHelp,
             'scoreCustom' => $scoreCustom,
             'scoreShipping' => $scoreShipping,
-
-
+            'notification' => $notification,
         ]);
     }
 
@@ -641,6 +640,7 @@ class ZakazController extends Controller
             'scoreZakaz' => $scoreZakaz,
             'scoreTodoist' => $scoreTodoist,
             'scoreHelp' => $scoreHelp,
+            'notification' => $notification,
         ]);
     }
 
@@ -663,6 +663,7 @@ class ZakazController extends Controller
             'scoreZakaz' => $scoreZakaz,
             'scoreTodoist' => $scoreTodoist,
             'scoreHelp' => $scoreHelp,
+            'notification' => $notification,
         ]);
     }
 
@@ -799,9 +800,8 @@ class ZakazController extends Controller
             } else {
                 return $this->renderAjax('accept', ['model' => $model]);
             }
-        } else {
-            return $this->renderAjax('accept', ['model' => $model]);
         }
+        return $this->renderAjax('accept', ['model' => $model]);
     }
 
     /**
@@ -860,6 +860,11 @@ class ZakazController extends Controller
         $this->view->params['count'] = $notifications;
     }
 
+    /**
+     * Finds the Zakaz model based on its role value
+     * @param $role
+     * @return int|string
+     */
     protected function findScorezakaz($role)
     {
         $score = Zakaz::find();
@@ -880,6 +885,11 @@ class ZakazController extends Controller
         }
     }
 
+    /**
+     * Finds the Todoist model based on its role value
+     * @param $role
+     * @return int|string
+     */
     protected function findScoretodoist($role)
     {
         $score = Todoist::find();
@@ -894,18 +904,27 @@ class ZakazController extends Controller
         }
     }
 
+    /**
+     * Finds the Helpdesk model
+     */
     protected function findScorehelp()
     {
         $score = Helpdesk::find();
         $this->view->params['scoreHelp'] = $score->andWhere(['id_user' => Yii::$app->user->id, 'status' => 0])->count();
     }
 
+    /**
+     * Finds the Custom model
+     */
     protected function findScorecustom()
     {
         $score = Custom::find();
         $this->view->params['scoreCustom'] = $score->andWhere(['id_user' => Yii::$app->user->id, 'action' => 0])->count();
     }
 
+    /**
+     * Finds the Courier model
+     */
     protected function findScoreshipping()
     {
         $score = Courier::find();
