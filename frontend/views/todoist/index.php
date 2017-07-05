@@ -94,12 +94,16 @@ $this->title = 'Все задачи';
                 },
                 'label' => 'Заказ',
                 'hAlign' => GridView::ALIGN_RIGHT,
-                'contentOptions' => ['class' => 'textTr tr50'],
+                'contentOptions' => ['class' => 'textTr tr70'],
             ],
             [
                 'attribute' => 'id_user',
                 'value' => function($model){
-                    return $model->idUser->name;
+                    if ($model->id_user == null){
+                        return '';
+                    } else {
+                        return $model->idUser->name;
+                    }
                 },
                 'contentOptions' => ['class' => 'border-right textTr'],
             ],
