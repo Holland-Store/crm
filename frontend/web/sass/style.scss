@@ -12,6 +12,10 @@
 
 $display: none;
 $bodyBackground: #302927;
+$colorNavActiv: #736a50;
+$colorNavText: rgba(204, 198, 198, 0.6);
+$colorNavBadge: #3a3331;
+$colButtonHover: #191412;
 
 @mixin border-bottom($color) {
     border-bottom: 1px solid $color;
@@ -72,17 +76,39 @@ body{
         background: $colorButton;
         border-radius: $border-radius;
         color: $colorH3;
-        width: 368px;
+        width: 506px;
         height: 36px;
         li{
-            a{
-                color: $colorText;
-                 &:hover{
-                    color: $colorH3;
+            a {
+              color: $colorText;
+              padding-right: 3px;
+              span {
+                color: $colorNavText;
+                background: $colorNavBadge;
+                padding-left: 1px;
+                font-size: 11px;
+                font-weight: 700;
+              }
+              &:hover {
+                color: $colorH3;
+                span {
+                  background: rgba(0,0,0,0);
                 }
+              }
             }
         }
-
+        .active{
+          a{
+            span{
+              color: $bodyBackground;
+              background: $colorNavActiv;
+              &:hover{
+                color: $bodyBackground;
+                background: rgba(0,0,0,0);
+              }
+            }
+          }
+        }
     }
     .container{
       padding: 41px 15px 20px;

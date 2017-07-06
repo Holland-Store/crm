@@ -879,12 +879,27 @@ body {
   background: #3a3331;
   border-radius: 26px;
   color: #736a50;
-  width: 368px;
+  width: 506px;
   height: 36px; }
   .wrap .headerNav li a {
-    color: rgba(204, 198, 198, 0.6); }
+    color: rgba(204, 198, 198, 0.6);
+    padding-right: 3px; }
+    .wrap .headerNav li a span {
+      color: rgba(204, 198, 198, 0.6);
+      background: #3a3331;
+      padding-left: 1px;
+      font-size: 11px;
+      font-weight: 700; }
     .wrap .headerNav li a:hover {
       color: #736a50; }
+      .wrap .headerNav li a:hover span {
+        background: transparent; }
+  .wrap .headerNav .active a span {
+    color: #302927;
+    background: #736a50; }
+    .wrap .headerNav .active a span:hover {
+      color: #302927;
+      background: transparent; }
 .wrap .container {
   padding: 41px 15px 20px; }
 .wrap .nav-pills > li.active > a {
