@@ -12,10 +12,11 @@ use kartik\helpers\Html;
         'language' => 'ru',
         'options' => ['multiple' => false],
         'pluginOptions' => [
+            'uploadUrl' => Url::to(['zakaz/upload', 'id' => $model->id_zakaz]),
             'theme' => 'explorer',
             'showCaption' => false,
             'showRemove' => false,
-            'showUpload' => false,
+            'showUpload' => true,
             'showPreview' => true,
             'browseClass' => 'action fileInput',
             'previewFileType' => 'any',
