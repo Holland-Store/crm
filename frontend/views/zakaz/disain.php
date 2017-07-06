@@ -117,12 +117,10 @@ $this->title = 'Все заказы';
             ],
             [
                 'attribute' => 'statusDisainName',
-                'contentOptions' => /** @noinspection PhpInconsistentReturnPointsInspection */
-                function($model) {
+                'contentOptions' => function($model) {
                     if ($model->status == Zakaz::STATUS_SUC_DISAIN) {
                         return ['class' => 'border-right textTr tr90 success-ispol'];
                     } elseif($model->status == Zakaz::STATUS_DECLINED_DISAIN) {
-
                         return ['class' => 'border-right textTr tr90'];
                     }
                 }
@@ -131,48 +129,48 @@ $this->title = 'Все заказы';
     ]); ?>
     <h3 class="titleCaption">На согласование</h3>
     <?=
-    GridView::widget(array(
+    GridView::widget([
         'dataProvider' => $dataProviderSoglas,
         'floatHeader' => true,
-        'headerRowOptions' => array('class' => 'headerTable'),
+        'headerRowOptions' => ['class' => 'headerTable'],
         'pjax' => true,
-        'tableOptions' 	=> array('class' => 'table table-bordered tableSize'),
+        'tableOptions' 	=> ['class' => 'table table-bordered tableSize'],
         'rowOptions' => function($model){
             if ($model->statusDisain == Zakaz::STATUS_DISAINER_NEW) {
-                return array('class' => 'trTable trNormal trNewDisain');
+                return ['class' => 'trTable trNormal trNewDisain'];
             } else {
-                return array('class' => 'trTable trNormal');
+                return ['class' => 'trTable trNormal'];
             }
         },
         'striped' => false,
-        'columns' => array(
-            array(
+        'columns' => [
+            [
                 'class'=>'kartik\grid\ExpandRowColumn',
                 'contentOptions' => function($model){
-                    return array('id' => $model->id_zakaz, 'class' => 'border-left', 'style' => 'border:none');
+                    return ['id' => $model->id_zakaz, 'class' => 'border-left', 'style' => 'border:none'];
                 },
                 'width'=>'10px',
                 'value' => function () {
                     return GridView::ROW_COLLAPSED;
                 },
                 'detail'=>function ($model) {
-                    return Yii::$app->controller->renderPartial('_zakaz', array('model'=> $model));
+                    return Yii::$app->controller->renderPartial('_zakaz', ['model'=> $model]);
                 },
                 'enableRowClick' => true,
                 'expandOneOnly' => true,
                 'expandIcon' => ' ',
                 'collapseIcon' => ' ',
-            ),
-            array(
+            ],
+            [
                 'attribute' => 'id_zakaz',
                 'value' => 'prefics',
                 'hAlign' => GridView::ALIGN_RIGHT,
-                'contentOptions' => array('class' => 'textTr tr70'),
-            ),
-            array(
+                'contentOptions' => ['class' => 'textTr tr70'],
+            ],
+            [
                 'attribute' => '',
                 'format' => 'raw',
-                'contentOptions' => array('class' => 'tr20'),
+                'contentOptions' => ['class' => 'tr20'],
                 'value' => function($model){
                     if ($model->prioritet == 2) {
                         return '<i class="fa fa-circle fa-red" aria-hidden="true"></i>';
@@ -183,18 +181,18 @@ $this->title = 'Все заказы';
                     }
 
                 }
-            ),
-            array(
+            ],
+            [
                 'attribute' => 'srok',
-                'format' => array('datetime', 'php:d M H:i'),
+                'format' => ['datetime', 'php:d M H:i'],
                 'value' => 'srok',
                 'hAlign' => GridView::ALIGN_RIGHT,
-                'contentOptions' => array('class' => 'textTr tr90'),
-            ),
-            array(
+                'contentOptions' => ['class' => 'textTr tr90'],
+            ],
+            [
                 'attribute' => 'minut',
                 'hAlign' => GridView::ALIGN_RIGHT,
-                'contentOptions' => array('class' => 'textTr tr10'),
+                'contentOptions' => ['class' => 'textTr tr10'],
                 'value' => function($model){
                     if ($model->minut == null){
                         return '';
@@ -202,22 +200,22 @@ $this->title = 'Все заказы';
                         return $model->minut;
                     }
                 }
-            ),
-            array(
+            ],
+            [
                 'attribute' => 'description',
                 'value' => function($model){
                     return StringHelper::truncate($model->description, 100);
                 }
-            ),
-            array(
+            ],
+            [
                 'attribute' => 'oplata',
                 'value' => function($model){
                     return $model->oplata.' р.';
                 },
                 'hAlign' => GridView::ALIGN_RIGHT,
-                'contentOptions' => array('class' => 'textTr tr70'),
-            ),
-            array(
+                'contentOptions' => ['class' => 'textTr tr70'],
+            ],
+            [
                 'attribute' => 'time',
                 'value' => function($model){
                     if ($model->time == null){
@@ -226,21 +224,21 @@ $this->title = 'Все заказы';
                         return $model->time.' минут';
                     }
                 },
-                'contentOptions' => array('class' => 'textTr tr70'),
-            ),
-            array(
+                'contentOptions' => ['class' => 'textTr tr70'],
+            ],
+            [
                 'attribute' => 'statusDisainName',
                 'contentOptions' => function($model) {
                     if ($model->status == Zakaz::STATUS_SUC_DISAIN) {
-                        return array('class' => 'border-right textTr tr90 success-ispol');
+                        return ['class' => 'border-right textTr tr90 success-ispol'];
                     } elseif($model->status == Zakaz::STATUS_DECLINED_DISAIN) {
 
-                        return array('class' => 'border-right textTr tr90');
+                        return ['class' => 'border-right textTr tr90'];
                     }
                 }
-            ),
-        ),
-    )); ?>
+            ],
+        ],
+    ]); ?>
     <?php Pjax::end(); ?>
 </div>
 <div class="footerNav">
