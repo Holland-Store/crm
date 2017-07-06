@@ -281,7 +281,6 @@ class Zakaz extends ActiveRecord
         //Выполнена работа дизайнером
         if($this->validate())
         {
-
             $this->file->saveAs('maket/Maket_'.$this->id_zakaz.'.'.$this->file->extension);
             $this->maket = 'Maket_'.$this->id_zakaz.'.'.$this->file->extension;
             $this->status = 4;
