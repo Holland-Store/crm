@@ -33,9 +33,14 @@ class Counter extends Widget
         $shipping = Courier::find();
 
         $this->view->params['scoreZakazAdmin'] = $zakaz->andWhere(['action' => 1])->count();
-        $this->view->params['scoreZakazShop'] = $zakaz->andWhere(['id_sotrud' => Yii::$app->user->id, 'action' => 1])->count();
-        $this->view->params['scoreDisain'] = $zakaz->andWhere(['status' => [Zakaz::STATUS_DISAIN, Zakaz::STATUS_SUC_DISAIN, Zakaz::STATUS_DECLINED_DISAIN], 'action' => 1])->count();
-        $this->view->params['scoreMaster'] = $zakaz->andWhere(['status' => [Zakaz::STATUS_MASTER, Zakaz::STATUS_SUC_MASTER, Zakaz::STATUS_DECLINED_MASTER], 'action' => 1])->count();
+
+        if (Yii::$app->user->can('shop')){
+            $this->view->params['scoreZakazShop'] = $zakaz->andWhere(['id_sotrud' => Yii::$app->user->id, 'action' => 1])->count();
+        } elseif (Yii::$app->user->can('disain')){
+            $this->view->params['scoreDisain'] = $zakaz->andWhere(['status' => [Zakaz::STATUS_DISAIN, Zakaz::STATUS_SUC_DISAIN, Zakaz::STATUS_DECLINED_DISAIN]])->count();
+        } elseif (Yii::$app->user->can('master')){
+            $this->view->params['scoreMaster'] = $zakaz->andWhere(['status' => [Zakaz::STATUS_MASTER, Zakaz::STATUS_SUC_MASTER, Zakaz::STATUS_DECLINED_MASTER], 'action' => 1])->count();
+        }
         $this->view->params['scoreTodoistAdmin'] = $todoist->andWhere(['activate' => 0])->count();
         $this->view->params['scoreShippingAdmin'] = $shipping->andWhere(['<','status', Courier::RECEIVE])->count();
         $this->view->params['scoreShipping'] = $shipping->andWhere(['<','status', Courier::DELIVERED])->count();
@@ -59,9 +64,9 @@ class Counter extends Widget
         'options' => ['class' => 'nav nav-pills headerNav'],
         'items' => [
             ['label' => 'Заказы <span class="badge pull-right">'.$this->view->params['scoreZakazAdmin'].'</span>', 'encode' => false, 'url' => ['zakaz/admin'], 'visible' => Yii::$app->user->can('seeAdmin')],
+            ['label' => 'Заказы <span class="badge pull-right">'.$this->view->params['scoreZakazShop'].'</span>', 'encode' => false, 'url' => ['zakaz/shop'], 'visible' => Yii::$app->user->can('seeShop')],
             ['label' => 'Заказы <span class="badge pull-right">'.$this->view->params['scoreDisain'].'</span>', 'encode' => false, 'url' => ['zakaz/disain'], 'visible' => Yii::$app->user->can('disain')],
             ['label' => 'Заказы <span class="badge pull-right">'.$this->view->params['scoreMaster'].'</span>', 'encode' => false, 'url' => ['zakaz/master'], 'visible' => Yii::$app->user->can('master')],
-            ['label' => 'Заказы <span class="badge pull-right">'.$this->view->params['scoreZakazShop'].'</span>', 'encode' => false, 'url' => ['zakaz/shop'], 'visible' => Yii::$app->user->can('seeShop')],
             ['label' => 'Доставки <span class="badge pull-right">'.$this->view->params['scoreShipping'].'</span>', 'encode' => false, 'url' => ['courier/index'], 'visible' => Yii::$app->user->can('courier')],
             ['label' => 'Задачи <span class="badge pull-right">'.$this->view->params['scoreTodoistAdmin'].'</span>', 'url' => ['todoist/index'], 'encode' => false, 'visible' => Yii::$app->user->can('admin')],
             ['label' => 'Поломки <span class="badge pull-right">'.$this->view->params['scoreHelp'].'</span>', 'encode' => false, 'url' => ['helpdesk/index'], 'visible' => !Yii::$app->user->can('courier')],
