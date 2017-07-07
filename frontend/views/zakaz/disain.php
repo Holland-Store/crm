@@ -117,13 +117,7 @@ $this->title = 'Все заказы';
             ],
             [
                 'attribute' => 'statusDisainName',
-                'contentOptions' => function($model) {
-                    if ($model->status == Zakaz::STATUS_SUC_DISAIN) {
-                        return ['class' => 'border-right textTr tr90 success-ispol'];
-                    } elseif($model->status == Zakaz::STATUS_DECLINED_DISAIN) {
-                        return ['class' => 'border-right textTr tr90'];
-                    }
-                }
+                'contentOptions' => ['class' => 'border-right textTr tr90'],
             ],
         ],
     ]); ?>
