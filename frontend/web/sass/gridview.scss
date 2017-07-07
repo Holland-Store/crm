@@ -30,12 +30,16 @@ $backgroundComment: #1f1b1a;
 $bodyBackground: #302927;
 $success: #446505;
 $orangeDostavka: #f0ad4e;
+$colorDeclined: #7c1111;
 
 @mixin border-bottom($color) {
     border-bottom: 1px solid $color;
 }
 @mixin border($color) {
     border: 1px solid $color;
+}
+@mixin declined{
+  width: 155px;
 }
 
 
@@ -268,6 +272,22 @@ $orangeDostavka: #f0ad4e;
         color: white;
         text-align: center;
         }
+      .declined{
+        background: $colorDeclined;
+      }
+      .declinedIspol{
+        background: $colorDeclined;
+        margin-top: 15px;
+      }
+      .declinedIspol_div{
+        @include declined;
+      }
+      .declined_div{
+        @include declined;
+        position: relative;
+        left: 63px;
+        top: -1px;
+      }
     }
     .zakazFile{
       color: $colorText;
@@ -368,22 +388,37 @@ $orangeDostavka: #f0ad4e;
                 background: $colorButton;
               }
             }
-            .imgZakaz{
-              font-size: 18px;
-              height: 39px;
-              width: 39px;
-              text-align: center;
-              border-radius: 4px;
-              padding-top: 11px;
-              background: $bodyBackground;
-              color: $colorH3;
-              margin-top: 10px;
-              margin-left: -20px;
-              &:hover{
-                color: $bodyBackground;
-                background: $colorH3;
+            .detail-view{
+              background-color: $colButtonHover;
+              .trMaket{
+                color:black;
+                border: none;
+                .maket{
+                  margin-top: 44px;
+                }
+                .imgZakaz{
+                  font-size: 18px;
+                  height: 39px;
+                  width: 39px;
+                  text-align: center;
+                  border-radius: 4px;
+                  padding-top: 11px;
+                  background: $bodyBackground;
+                  color: $colorH3;
+                  margin-top: -5px;
+                  margin-left: -33px;
+                  &:hover{
+                    color: $bodyBackground;
+                    background: $colorH3;
+                  }
+                }
+                .maketView{
+                  margin-top: 4px;
+                  margin-left: -33px;
+                }
               }
             }
+
         }
     }
     .tableSize{
@@ -409,9 +444,6 @@ $orangeDostavka: #f0ad4e;
                 background: #3c3432;
             }
         }
-    }
-    .detail-view{
-        background-color: $colButtonHover;
     }
     .footerView{
         border-top: 1px solid rgba(48, 41, 39, 0.3);

@@ -1,21 +1,21 @@
 /*
 Error: Undefined variable: "$bacgrountTr".
-        on line 189 of C:/OpenServer/domains/crm/frontend/web/sass/button.scss
+        on line 196 of C:/OpenServer/domains/crm/frontend/web/sass/button.scss
 
-184:         text-decoration: none;
-185:     }
-186: }
-187: .courier-shipping{
-188:     a{
-189:         color: $bacgrountTr;
-190:         text-decoration: none;
-191:     }
-192: }
-193: .courier-index, .custom-index, .helpdesk-index{
-194:   a{
+191:         text-decoration: none;
+192:     }
+193: }
+194: .courier-shipping{
+195:     a{
+196:         color: $bacgrountTr;
+197:         text-decoration: none;
+198:     }
+199: }
+200: .courier-index, .custom-index, .helpdesk-index{
+201:   a{
 
 Backtrace:
-C:/OpenServer/domains/crm/frontend/web/sass/button.scss:189
+C:/OpenServer/domains/crm/frontend/web/sass/button.scss:196
 C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/script/tree/variable.rb:49:in `_perform'
 C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/script/tree/node.rb:58:in `perform'
 C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/tree/visitors/perform.rb:397:in `visit_prop'
@@ -78,4 +78,4 @@ C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/vendor/listen/lib/listen/adap
 body:before {
   white-space: pre;
   font-family: monospace;
-  content: "Error: Undefined variable: \"$bacgrountTr\".\A         on line 189 of C:/OpenServer/domains/crm/frontend/web/sass/button.scss\A \A 184:         text-decoration: none;\A 185:     }\A 186: }\A 187: .courier-shipping{\A 188:     a{\A 189:         color: $bacgrountTr;\A 190:         text-decoration: none;\A 191:     }\A 192: }\A 193: .courier-index, .custom-index, .helpdesk-index{\A 194:   a{"; }
+  content: "Error: Undefined variable: \"$bacgrountTr\".\A         on line 196 of C:/OpenServer/domains/crm/frontend/web/sass/button.scss\A \A 191:         text-decoration: none;\A 192:     }\A 193: }\A 194: .courier-shipping{\A 195:     a{\A 196:         color: $bacgrountTr;\A 197:         text-decoration: none;\A 198:     }\A 199: }\A 200: .courier-index, .custom-index, .helpdesk-index{\A 201:   a{"; }
