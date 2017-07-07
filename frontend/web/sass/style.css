@@ -76,7 +76,7 @@ body {
 
 .footerLogin {
   position: relative;
-  top: -45px;
+  top: -15px;
   text-align: center;
   left: -22px;
   line-height: 14px; }
@@ -631,10 +631,6 @@ thead a {
 
 .todoist {
   margin-left: 111px; }
-
-.edit {
-  float: right;
-  margin-right: 10px; }
 
 .zakaz-index .modalDisain {
   float: right; }
