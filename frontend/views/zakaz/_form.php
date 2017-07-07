@@ -3,11 +3,8 @@
 use app\models\Zakaz;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use kartik\datetime\DateTimePicker;
 use kartik\datecontrol\DateControl;
 use kartik\file\FileInput;
-use app\models\Tovar;
-use yii\helpers\ArrayHelper;
 use yii\widgets\MaskedInput;
 
 /* @var $this yii\web\View */
@@ -47,7 +44,7 @@ use yii\widgets\MaskedInput;
                         'browseLabel' =>  'Загрузить файл',
                         'previewFileType' => 'any',
                         'maxFileCount' => 1,
-//                        'autoReplace' => false,
+                        'maxFileSize' => 25600,
                         'preferIconicPreview' => true,
                         'previewFileIconSettings' => ([
                             'doc' => '<i class="fa fa-file-word-o text-orange"></i>',
