@@ -466,7 +466,8 @@ thead a {
 
 .zakaz-shop .zakazSearch .shopSearch {
   margin-top: -45px;
-  margin-left: 158px; }
+  margin-left: 158px;
+  font-size: 11px; }
 .zakaz-shop .zakazSearch input {
   left: 5px;
   width: 168px; }

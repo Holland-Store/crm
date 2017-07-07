@@ -690,34 +690,35 @@ thead a {
 .zakaz-shop .zakazSearch .shopSearch {
   margin-top: -45px;
   margin-left: 158px;
+  font-size: 11px;
 }
-/* line 489, ../sass/gridview.scss */
+/* line 490, ../sass/gridview.scss */
 .zakaz-shop .zakazSearch input {
   left: 5px;
   width: 168px;
 }
-/* line 494, ../sass/gridview.scss */
+/* line 495, ../sass/gridview.scss */
 .zakaz-shop .shopZakaz {
   margin-top: 1px;
 }
-/* line 498, ../sass/gridview.scss */
+/* line 499, ../sass/gridview.scss */
 .zakaz-shop .zakazFile .table {
   background: #191412;
 }
 
-/* line 503, ../sass/gridview.scss */
+/* line 504, ../sass/gridview.scss */
 .shipping {
   color: #191412;
   font-weight: 700;
   margin-right: 4px;
 }
 
-/* line 508, ../sass/gridview.scss */
+/* line 509, ../sass/gridview.scss */
 .footerNav {
   margin-top: 27px;
   font-size: 24px;
 }
-/* line 511, ../sass/gridview.scss */
+/* line 512, ../sass/gridview.scss */
 .footerNav a {
   width: 135px;
   border-radius: 26px;
@@ -733,12 +734,12 @@ thead a {
   border: none;
 }
 
-/* line 526, ../sass/gridview.scss */
+/* line 527, ../sass/gridview.scss */
 .nav > li > a:hover, .nav > li > a:focus {
   background: #191412;
 }
 
-/* line 529, ../sass/gridview.scss */
+/* line 530, ../sass/gridview.scss */
 .nav-pills > li > a {
   border-radius: 26px;
 }
