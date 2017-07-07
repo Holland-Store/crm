@@ -12,15 +12,15 @@ use kartik\helpers\Html;
         'language' => 'ru',
         'options' => ['multiple' => false],
         'pluginOptions' => [
-            'uploadUrl' => Url::to(['zakaz/upload', 'id' => $model->id_zakaz]),
             'theme' => 'explorer',
             'showCaption' => false,
             'showRemove' => false,
-            'showUpload' => true,
+            'showUpload' => false,
             'showPreview' => true,
             'browseClass' => 'action fileInput',
             'previewFileType' => 'any',
             'maxFileCount' => 1,
+            'maxFileSize' => 25600,
             'preferIconicPreview' => true,
             'previewFileIconSettings' => ([
                 'doc' => '<i class="fa fa-file-word-o text-orange"></i>',
