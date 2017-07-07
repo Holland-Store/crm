@@ -96,17 +96,17 @@ use app\models\Zakaz;
 		<?= Detailview::widget([
 			'model' => $model,
 			'options' => ['class' => 'table detail-view'],
-			'template' => '<tr style="color:black;border: none;"><td{contentOptions} class="zakaz-view-kartik">{value}</td></tr></tr>',
+			'template' => '<tr class="trMaket"><td{contentOptions} class="zakaz-view-kartik">{value}</td></tr></tr>',
 			'attributes' => [
                 [
                     'attribute' => 'maket',
                     'format' =>'raw',
-                    'value' => $model->maket == null ? '<div style="margin-top: 44px"></div>' : Html::a('<span class="glyphicon glyphicon-saved imgZakaz" style="margin-top: 4px;margin-left: -33px;">', '@web/attachment/'.$model->maket, ['download' => true, 'data-pjax' => 0, 'title' => 'Готовый макет от дизайнера'])
+                    'value' => $model->maket == null ? '<div class="maket"></div>' : Html::a('<span class="glyphicon glyphicon-saved imgZakaz maketView">', '@web/attachment/'.$model->maket, ['download' => true, 'data-pjax' => 0, 'title' => 'Готовый макет от дизайнера'])
                 ],
 				[
 				    'attribute' => 'img',
                     'format' =>'raw',
-                    'value' => $model->img == null ? '<div></div>' : Html::a('<span class="glyphicon glyphicon-paperclip imgZakaz" style="margin-top: -10px;margin-left: -33px;"></span>', '@web/attachment/'.$model->img, ['download' => true, 'data-pjax' => 0, 'title' => 'Исходный файл от клиента'])
+                    'value' => $model->img == null ? '' : Html::a('<span class="glyphicon glyphicon-paperclip imgZakaz"></span>', '@web/attachment/'.$model->img, ['download' => true, 'data-pjax' => 0, 'title' => 'Исходный файл от клиента'])
 				],
 			],
 		]) ?>
@@ -123,8 +123,8 @@ use app\models\Zakaz;
         <?php if (Yii::$app->user->can('seeIspol')): ?>
             <div class="responsible_person-status">
                 <?php if ($model->status == Zakaz::STATUS_DECLINED_DISAIN or $model->status == Zakaz::STATUS_DECLINED_MASTER){
-                    echo '<div class="statusZakaz" style="background: #7c1111;margin-top: 15px;">Отклонено</div>
-<div style="width: 155px;">
+                    echo '<div class="statusZakaz declinedIspol">Отклонено</div>
+<div class="declinedIspol_div">
 <span class="responsible_person">По причине:</span><br>'.$model->declined.'</div>';
                 }
                 ?>
@@ -141,12 +141,11 @@ use app\models\Zakaz;
 </div>';
             }
             elseif($model->status == Zakaz::STATUS_DECLINED_DISAIN or $model->status == Zakaz::STATUS_DECLINED_MASTER){
-                echo '<div class="statusZakaz" style="background: #7c1111">Отклонено</div>
-<div style="width: 155px;position: relative;left: 63px;top: -1px;"">
+                echo '<div class="statusZakaz declined">Отклонено</div>
+<div class="declined_div">
 <span class="responsible_person">По причине:</span><br>'.$model->declined.'</div>';
             } elseif($model->status == Zakaz::STATUS_ADOPTED){
-//                echo Yii::$app->controller->renderPartial('accept', ['model' => $model]);
-                echo Html::submitButton('Назначить', ['class' => 'action actionApprove', 'style' => 'top: -16px;left: 139px;', 'value' => Url::to(['zakaz/accept', 'id' => $model->id_zakaz])]);
+                echo Html::submitButton('Назначить', ['class' => 'action actionApprove appoint', 'value' => Url::to(['zakaz/accept', 'id' => $model->id_zakaz])]);
             }
             ?>
         </div>
@@ -189,7 +188,7 @@ use app\models\Zakaz;
                         ],
                 ]) ?>
             <?php endif ?>
-            <?= Html::a('Задача', ['todoist/createzakaz', 'id_zakaz' => $model->id_zakaz], ['class' => 'btn btn-xs', 'style' => 'margin-left: 111px;']) ?>
+            <?= Html::a('Задача', ['todoist/createzakaz', 'id_zakaz' => $model->id_zakaz], ['class' => 'btn btn-xs todoist']) ?>
             <?php Modal::begin([
                 'header' => '<h2>Задание на доставку</h2>',
                 'class' => 'model-sm modalShipping',
