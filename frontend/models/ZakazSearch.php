@@ -5,7 +5,6 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Zakaz;
 
 
 /**
@@ -48,7 +47,11 @@ class ZakazSearch extends Zakaz
 
         switch ($role) {
             case 'master':
-                $query->andWhere(['status' => [Zakaz::STATUS_MASTER, Zakaz::STATUS_SUC_MASTER, Zakaz::STATUS_DECLINED_MASTER], 'action' => 1]);
+                $query->andWhere(['status' => [Zakaz::STATUS_MASTER, Zakaz::STATUS_DECLINED_MASTER], 'action' => 1]);
+                $sort = ['srok' => SORT_ASC];
+                break;
+            case 'masterSoglas':
+                $query->andWhere(['status' => Zakaz::STATUS_SUC_MASTER, 'action' => 1]);
                 $sort = ['srok' => SORT_ASC];
                 break;
             case 'disain':
