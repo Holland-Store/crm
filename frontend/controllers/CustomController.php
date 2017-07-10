@@ -88,6 +88,23 @@ class CustomController extends Controller
      */
     public function actionAdop()
     {
+        $data = Yii::$app->request->post('Custom', []);
+        $models = [new Custom()];
+        foreach (array_keys($data) as $index) {
+            $models[$index] = new Custom();
+        }
+// загружаем данные из запроса в массив созданных моделей
+        if (Model::loadMultiple($models, Yii::$app->request->post())) {
+            foreach ($models as $model) {
+                //сохраняем данные
+                if (!$model->save()){
+                    print_r($model->getErrors());
+                } else {
+                    $model->save();
+                }
+            }
+            return $this->redirect(['adop']);
+        }
         $searchModel = new CustomSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, 'adop');
         $notification = $this->findNotification();
@@ -95,6 +112,7 @@ class CustomController extends Controller
         return $this->render('adop', [
             'dataProvider' => $dataProvider,
             'notification' => $notification,
+            'models' => $models,
         ]);
     }
 
@@ -139,7 +157,7 @@ class CustomController extends Controller
         }
         return $this->render('create', [
            'models' => $models,
-            'notification' => $notification,
+           'notification' => $notification,
         ]);
     }
 
