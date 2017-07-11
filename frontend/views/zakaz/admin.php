@@ -8,8 +8,6 @@ use yii\bootstrap\Modal;
 use app\models\Zakaz;
 use app\models\Comment;
 use yii\bootstrap\ButtonDropdown;
-use yii\grid\SetColumn;
-use yii\helpers\Url;
 use yii\widgets\Pjax;
 
 
@@ -86,7 +84,7 @@ $this->title = 'Вce заказы';
         'headerRowOptions' => ['class' => 'headerTable'],
         'pjax' => true,
         'tableOptions' 	=> ['class' => 'table table-bordered tableSize'],
-        'rowOptions' => function($model, $key, $index, $grid){
+        'rowOptions' => function($model){
             if ($model->srok < date('Y-m-d H:i:s') && $model->status > Zakaz::STATUS_NEW ) {
                 return ['class' => 'trTable trTablePass italic trSrok'];
             } elseif ($model->srok < date('Y-m-d H:i:s') && $model->status == Zakaz::STATUS_NEW) {
@@ -256,7 +254,7 @@ $this->title = 'Вce заказы';
         'pjax' => true,
         'tableOptions'  => ['class' => 'table table-bordered tableSize'],
         'striped' => false,
-        'rowOptions' => function($model, $key, $index, $grid){
+        'rowOptions' => function($model){
             if ($model->srok < date('Y-m-d H:i:s')) {
                 return['class' => 'trTable trTablePass trNormal'];
             } else {
@@ -266,7 +264,7 @@ $this->title = 'Вce заказы';
         'columns' => [
             [
                 'class'=>'kartik\grid\ExpandRowColumn',
-                'contentOptions' => function($model, $key, $index, $grid){
+                'contentOptions' => function($model){
                     return ['id' => $model->id_zakaz, 'class' => 'border-left', 'style' => 'border:none'];
                 }, 
                 'width'=>'10px',
@@ -416,7 +414,7 @@ $this->title = 'Вce заказы';
         'columns' => [
             [
                 'class'=>'kartik\grid\ExpandRowColumn',
-                'contentOptions' => function($model, $key, $index, $grid){
+                'contentOptions' => function($model){
                     return ['id' => $model->id_zakaz, 'class' => 'border-left', 'style' => 'border:none'];
                 }, 
                 'width'=>'10px',
@@ -507,7 +505,7 @@ $this->title = 'Вce заказы';
             [
                 'attribute' => '',
                 'format' => 'raw',
-                'value' => function($model){
+                'value' => function(){
                     return '';
                 },
                 'contentOptions' => ['class' => 'textTr border-right tr90'],
