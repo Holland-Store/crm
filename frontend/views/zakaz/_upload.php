@@ -1,7 +1,6 @@
 <?php
 use kartik\file\FileInput;
 use kartik\form\ActiveForm;
-use yii\helpers\Url;
 use kartik\helpers\Html;
 ?>
 
@@ -33,6 +32,7 @@ use kartik\helpers\Html;
                 'jpg' => '<i class="fa fa-file-photo-o text-orange"></i>',
                 'png' => '<i class="fa fa-file-photo-o text-orange"></i>',
                 'gif' => '<i class="fa fa-file-photo-o text-orange"></i>',
+                'cdr' => '<i class="fa fa-file-photo-o text-orange"></i>',
             ]),
             'layoutTemplates' => [
                 'preview' => '<div class="file-preview {class}">
