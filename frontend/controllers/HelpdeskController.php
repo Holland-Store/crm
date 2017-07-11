@@ -45,6 +45,16 @@ class HelpdeskController extends Controller
 						'actions' => ['close'],
 						'allow' => true,
 						'roles' => ['system'],
+					],
+                    [
+						'actions' => ['approved'],
+						'allow' => true,
+						'roles' => ['admin', 'disain', 'master', 'zakup', 'shop'],
+					],
+                    [
+						'actions' => ['declined-help'],
+						'allow' => true,
+						'roles' => ['admin', 'disain', 'master', 'zakup', 'shop'],
 					]
 				]
 			]
@@ -142,7 +152,8 @@ class HelpdeskController extends Controller
     }
 
 	/**
-     * Close problem an existing Helpdesk model.
+     * in Approved an existing Helpdesk model.
+     * System fulfilled problem.
      * If close is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -150,12 +161,50 @@ class HelpdeskController extends Controller
     public function actionClose($id)
     {
 		if ($model = $this->findModel($id)) {
-            $model->status = 1;
-			$model->endDate = date('Y-m-d H:m:s');
+            $model->status = Helpdesk::STATUS_CHECKING;
             $model->save();
         }
 
 		return $this->redirect(['index']);
+    }
+
+    /**
+     * The customer clicked on to take
+     * Problem solved and stamped datetime
+     * if success redirected, the browser will be redirected to the 'index' page.
+     * @param $id
+     * @return \yii\web\Response
+     */
+    public function actionApproved($id)
+    {
+        $model = $this->findModel($id);
+        $model->status = Helpdesk::STATUS_APPROVED;
+        $model->endDate = date('Y-m-d H:m:s');
+        $model->save();
+
+        return $this->redirect(['index']);
+    }
+
+    /**
+     * Page for eclined problem
+     * if we receive s POST request, add model->status STATUS_DECLINED
+     * @param $id
+     * @return string|\yii\web\Response
+     */
+    public function actionDeclinedHelp($id)
+    {
+        $model = $this->findModel($id);
+
+        if ($model->load(Yii::$app->request->post())){
+            $model->status = Helpdesk::STATUS_DECLINED;
+            if (!$model->save()){
+                print_r($model->getErrors());
+            } else {
+                return $this->redirect(['index']);
+            }
+        }
+
+        return $this->renderAjax('declined-help', ['model' => $model]);
     }
 
     /**
