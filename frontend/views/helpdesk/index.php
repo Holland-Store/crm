@@ -1,10 +1,12 @@
 <?php
 
+use app\models\Helpdesk;
 use yii\bootstrap\ButtonDropdown;
+use yii\bootstrap\Modal;
 use yii\helpers\Html;
 use kartik\grid\GridView;
+use yii\helpers\Url;
 use yii\widgets\Pjax;
-use yii\bootstrap\Nav;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\HelpdeskSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -104,16 +106,25 @@ $this->title = 'Все поломки';
                 'value' => 'idUser.name',
                 'contentOptions' => ['class' => 'textTr tr90'],
                 'hAlign' => GridView::ALIGN_RIGHT,
+                'visible' => Yii::$app->user->can('system'),
+            ],
+            [
+                'attribute' => '',
+                'format' => 'raw',
+                'contentOptions' => ['class' => 'textTr tr90'],
+                'value' => function($model){
+                    return $model->status == Helpdesk::STATUS_CHECKING ? Html::a('Принять', ['approved', 'id' => $model->id]).''.Html::a('Отклонить', ['#'], ['class' => 'declinedHelp', 'value' => Url::to(['declined-help', 'id' => $model->id])]) : '';
+                },
+                'visible' => !Yii::$app->user->can('system')
             ],
             [
                 'attribute' => 'sotrud',
-                'contentOptions' => function($model){
-                    if (Yii::$app->user->can('system')){
-                        return ['class' => 'textTr tr50'];
-                    }  else {
-                        return ['class' => 'border-right textTr', 'style'=>'white-space: normal;'];
-                    }
-                }
+                'contentOptions' => ['class' => 'textTr tr50'],
+            ],
+            [
+                'attribute' => 'statusHelpName',
+                'contentOptions' => Yii::$app->user->can('system') ? ['class' => 'textTr tr90'] : ['class' => 'border-right textTr', 'style'=>'white-space: normal;'],
+                'hAlign' => GridView::ALIGN_LEFT,
             ],
 			[
                 'attribute' => '',
@@ -132,4 +143,12 @@ $this->title = 'Все поломки';
     ]); ?>
 </div>
 <?php Pjax::end(); ?>
+<?php Modal::begin([
+    'id' => 'declinedHelpModal',
+    'header' => '<h2>Укажите причину отказа:</h2>',
+]);
+
+echo '<div class="modalContent"></div>';
+
+Modal::end();?>
 
