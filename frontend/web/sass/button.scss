@@ -31,6 +31,11 @@ $orang: #f0ad4e;
     padding-left: 20px;
 }
 
+@mixin declined{
+  color: $bacgrountTr;
+  text-decoration: none;
+}
+
 .text-orange{
     color: $orang;
 }
@@ -193,8 +198,7 @@ $orang: #f0ad4e;
 }
 .courier-shipping{
     a{
-        color: $bacgrountTr;
-        text-decoration: none;
+        @include declined;
     }
 }
 .courier-index, .custom-index, .helpdesk-index{
@@ -203,8 +207,13 @@ $orang: #f0ad4e;
     text-decoration: none;
   }
   .declinedHelp{
-    color: $bacgrountTr;
-    text-decoration: none;
+    @include declined;
+  }
+  .declined{
+    @include declined;
+  }
+  .successHelp{
+    color: $colorGreen;
   }
 }
 .footer-view-zakaz{

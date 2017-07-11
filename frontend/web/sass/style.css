@@ -650,6 +650,11 @@ thead a {
 .courier-index .declinedHelp, .custom-index .declinedHelp, .helpdesk-index .declinedHelp {
   color: #802c2c;
   text-decoration: none; }
+.courier-index .declined, .custom-index .declined, .helpdesk-index .declined {
+  color: #802c2c;
+  text-decoration: none; }
+.courier-index .successHelp, .custom-index .successHelp, .helpdesk-index .successHelp {
+  color: #446505; }
 
 .footer-view-zakaz .done:hover {
   border: none;

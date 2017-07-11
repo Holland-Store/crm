@@ -1,24 +1,43 @@
 /*
 Error: Undefined variable: "$bacgrountTr".
-        on line 196 of C:/OpenServer/domains/crm/frontend/web/sass/button.scss
+        on line 35 of C:/OpenServer/domains/crm/frontend/web/sass/button.scss, in `declined'
+        from line 201 of C:/OpenServer/domains/crm/frontend/web/sass/button.scss
 
-191:         text-decoration: none;
-192:     }
-193: }
-194: .courier-shipping{
-195:     a{
-196:         color: $bacgrountTr;
-197:         text-decoration: none;
-198:     }
-199: }
-200: .courier-index, .custom-index, .helpdesk-index{
-201:   a{
+30:     line-height: 25px;
+31:     padding-left: 20px;
+32: }
+33: 
+34: @mixin declined{
+35:   color: $bacgrountTr;
+36:   text-decoration: none;
+37: }
+38: 
+39: .text-orange{
+40:     color: $orang;
 
 Backtrace:
-C:/OpenServer/domains/crm/frontend/web/sass/button.scss:196
+C:/OpenServer/domains/crm/frontend/web/sass/button.scss:35:in `declined'
+C:/OpenServer/domains/crm/frontend/web/sass/button.scss:201
 C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/script/tree/variable.rb:49:in `_perform'
 C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/script/tree/node.rb:58:in `perform'
 C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/tree/visitors/perform.rb:397:in `visit_prop'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/tree/visitors/base.rb:36:in `visit'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/tree/visitors/perform.rb:160:in `block in visit'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/stack.rb:79:in `block in with_base'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/stack.rb:115:in `with_frame'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/stack.rb:79:in `with_base'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/tree/visitors/perform.rb:160:in `visit'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/tree/visitors/perform.rb:366:in `block (4 levels) in visit_mixin'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/tree/visitors/perform.rb:366:in `map'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/tree/visitors/perform.rb:366:in `block (3 levels) in visit_mixin'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/tree/visitors/perform.rb:181:in `with_environment'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/tree/visitors/perform.rb:366:in `block (2 levels) in visit_mixin'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/tree/visitors/perform.rb:84:in `perform_arguments'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/tree/visitors/perform.rb:361:in `block in visit_mixin'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/stack.rb:98:in `block in with_mixin'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/stack.rb:115:in `with_frame'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/stack.rb:98:in `with_mixin'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/tree/visitors/perform.rb:349:in `visit_mixin'
 C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/tree/visitors/base.rb:36:in `visit'
 C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/tree/visitors/perform.rb:160:in `block in visit'
 C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/stack.rb:79:in `block in with_base'
@@ -78,4 +97,4 @@ C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/vendor/listen/lib/listen/adap
 body:before {
   white-space: pre;
   font-family: monospace;
-  content: "Error: Undefined variable: \"$bacgrountTr\".\A         on line 196 of C:/OpenServer/domains/crm/frontend/web/sass/button.scss\A \A 191:         text-decoration: none;\A 192:     }\A 193: }\A 194: .courier-shipping{\A 195:     a{\A 196:         color: $bacgrountTr;\A 197:         text-decoration: none;\A 198:     }\A 199: }\A 200: .courier-index, .custom-index, .helpdesk-index{\A 201:   a{"; }
+  content: "Error: Undefined variable: \"$bacgrountTr\".\A         on line 35 of C:/OpenServer/domains/crm/frontend/web/sass/button.scss, in `declined'\A         from line 201 of C:/OpenServer/domains/crm/frontend/web/sass/button.scss\A \A 30:     line-height: 25px;\A 31:     padding-left: 20px;\A 32: }\A 33: \A 34: @mixin declined{\A 35:   color: $bacgrountTr;\A 36:   text-decoration: none;\A 37: }\A 38: \A 39: .text-orange{\A 40:     color: $orang;"; }
