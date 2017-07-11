@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "helpdesk".
@@ -14,9 +15,15 @@ use Yii;
  * @property string $date
  * @property string $sotrud
  * @property string $date_end
+ * @property string $declined
  */
 class Helpdesk extends \yii\db\ActiveRecord
 {
+    const STATUS_NEW = 0;
+    const STATUS_CHECKING = 1;
+    const STATUS_APPROVED = 2;
+    const STATUS_DECLINED = 3;
+
     /**
      * @inheritdoc
      */
@@ -35,7 +42,7 @@ class Helpdesk extends \yii\db\ActiveRecord
             [['id_user', 'status'], 'integer'],
             ['id_user', 'default', 'value' => Yii::$app->user->getId()],
             ['status', 'default', 'value' => 0],
-            [['commetnt'], 'string'],
+            [['commetnt', 'declined'], 'string'],
             [['date', 'endDate'], 'safe'],
             [['sotrud'], 'string', 'max' => 50],
             [['id_user'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['id_user' => 'id']],
@@ -55,6 +62,7 @@ class Helpdesk extends \yii\db\ActiveRecord
             'date' => 'Дата',
             'sotrud' => 'Имя сотрудника',
             'dateEnd' => 'Date_end',
+            'declined' => 'Отклонено',
         ];
     }
     /**
@@ -63,5 +71,19 @@ class Helpdesk extends \yii\db\ActiveRecord
     public function getIdUser()
     {
         return $this->hasOne(User::className(), ['id' => 'id_user']);
+    }
+
+    public static function getStatusHelpArray()
+    {
+        return [
+            self::STATUS_NEW => 'Новый',
+            self::STATUS_CHECKING => 'На проверке',
+            self::STATUS_APPROVED => 'Одобрено',
+            self::STATUS_DECLINED => 'Отклонено',
+        ];
+    }
+    public function getStatusHelpName()
+    {
+        return ArrayHelper::getValue(self::getStatusHelpArray(), $this->status);
     }
 }
