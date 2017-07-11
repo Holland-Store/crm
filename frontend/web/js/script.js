@@ -28,6 +28,11 @@ $(document).ready(function(){
                 .find('.modalContent')
                 .load($(this).attr('value'));
         });
+        $('.declinedHelp').click(function () {
+            $('#declinedHelpModal').modal('show')
+                .find('.modalContent')
+                .load($(this).attr('value'));
+        });
        $("body").on("click", ".trNew", function () {
            var data = $(this).data("key");
            $.ajax({

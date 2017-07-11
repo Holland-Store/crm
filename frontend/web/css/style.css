@@ -951,14 +951,19 @@ thead a {
   color: #446505;
   text-decoration: none;
 }
+/* line 205, ../sass/button.scss */
+.courier-index .declinedHelp, .custom-index .declinedHelp, .helpdesk-index .declinedHelp {
+  color: #802c2c;
+  text-decoration: none;
+}
 
-/* line 208, ../sass/button.scss */
+/* line 212, ../sass/button.scss */
 .footer-view-zakaz .done:hover {
   border: none;
   background: #446505;
   color: white;
 }
-/* line 214, ../sass/button.scss */
+/* line 218, ../sass/button.scss */
 .footer-view-zakaz a {
   padding-left: 13px;
   padding-right: 13px;
@@ -980,7 +985,7 @@ thead a {
   color: #3a3331;
   background: #736a50;
 }
-/* line 221, ../sass/button.scss */
+/* line 225, ../sass/button.scss */
 .footer-view-zakaz a:hover {
   text-decoration: none;
   outline: 0;
@@ -988,7 +993,7 @@ thead a {
   background: #3a3331;
 }
 
-/* line 230, ../sass/button.scss */
+/* line 234, ../sass/button.scss */
 .zakaz-shippingForm button {
   height: 30px;
   margin-left: 15px;
@@ -998,11 +1003,11 @@ thead a {
   outline: 0;
 }
 
-/* line 240, ../sass/button.scss */
+/* line 244, ../sass/button.scss */
 .modal-content a {
   height: 30px;
 }
-/* line 243, ../sass/button.scss */
+/* line 247, ../sass/button.scss */
 .modal-content .fulfilled {
   width: 64%;
   margin-left: 11px;

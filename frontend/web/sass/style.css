@@ -647,6 +647,9 @@ thead a {
 .courier-index a, .custom-index a, .helpdesk-index a {
   color: #446505;
   text-decoration: none; }
+.courier-index .declinedHelp, .custom-index .declinedHelp, .helpdesk-index .declinedHelp {
+  color: #802c2c;
+  text-decoration: none; }
 
 .footer-view-zakaz .done:hover {
   border: none;
