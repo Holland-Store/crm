@@ -101,6 +101,11 @@ $this->title = 'Все поломки';
 				'format' => 'text',
 				'contentOptions'=>['style'=>'white-space: normal;'],
 			],
+//            [
+//                'attribute' => 'declined',
+//                'format' => 'raw',
+//                'contentOptions' => ['class' => 'textTr tr20'],
+//            ],
             [
                 'attribute' => 'id_user',
                 'value' => 'idUser.name',
@@ -123,15 +128,34 @@ $this->title = 'Все поломки';
             ],
             [
                 'attribute' => 'statusHelpName',
-                'contentOptions' => Yii::$app->user->can('system') ? ['class' => 'textTr tr90'] : ['class' => 'border-right textTr', 'style'=>'white-space: normal;'],
+                'format' => 'raw',
+                'contentOptions' => function($model){
+                    if ($model->status == Helpdesk::STATUS_CHECKING){
+                        return Yii::$app->user->can('system') ? ['class' => 'textTr successHelp tr90'] : ['class' => 'border-right successHelp textTr'];
+                        } else {
+                        return Yii::$app->user->can('system') ? ['class' => 'textTr tr90'] : ['class' => 'border-right textTr'];
+                    }
+                },
                 'hAlign' => GridView::ALIGN_LEFT,
+                'value' => function($model){
+                    if ($model->status == Helpdesk::STATUS_DECLINED){
+                        return Html::tag('span', Html::encode($model->statusHelpName), [
+                            'title' => $model->declined,
+                            'data-toggle' => 'popover',
+                            'data-placement' => 'top',
+                            'class' => 'declined',
+                        ]);
+                    } else {
+                        return $model->statusHelpName;
+                    }
+                }
             ],
 			[
                 'attribute' => '',
                 'format' => 'raw',
                 'contentOptions' => ['class' => 'border-right textTr'],
                 'value' => function($model) {
-					if($model->status == 0){
+					if($model->status == Helpdesk::STATUS_NEW or $model->status == Helpdesk::STATUS_DECLINED){
 						return Html::a('Решена', ['helpdesk/close', 'id' => $model->id]);
 					} else {
 						return '';
@@ -141,6 +165,14 @@ $this->title = 'Все поломки';
             ],
         ],
     ]); ?>
+    <?php $js = <<< 'SCRIPT'
+/* To initialize BS3 popovers set this below */
+$(function () { 
+    $("[data-toggle='popover']").popover(); 
+});
+SCRIPT;
+    // Register tooltip/popover initialization javascript
+    $this->registerJs($js); ?>
 </div>
 <?php Pjax::end(); ?>
 <?php Modal::begin([
@@ -151,4 +183,5 @@ $this->title = 'Все поломки';
 echo '<div class="modalContent"></div>';
 
 Modal::end();?>
+
 
