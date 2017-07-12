@@ -28,7 +28,7 @@ class RbacController extends Controller
         $seeDisain->description = 'Виднеется меню Дизайнера';
         $auth->add($seeDisain);
 
-		$seeAllIspol = $auth->createPremission('seeAllIspol');
+		$seeAllIspol = $auth->createPermission('seeAllIspol');
 		$seeAllIspol->descriptio = 'Виднеются всем кроме Админу';
 		$auth->add($seeAllIspol);
 
