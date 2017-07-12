@@ -6,10 +6,8 @@ return [
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
+        'cacheRbac' => [
+            'class' => 'yii\caching\ApcCache',
+        ]
     ],
-//	'aliases' => [
-//        '@YiiNodeSocket' => '@vendor/ratacibernetica/yii2-node-socket/lib/php',
-//        '@nodeWeb' => '@vendor/ratacibernetica/yii2-node-socket/lib/js',
-//        '@console'=>dirname(dirname(__DIR__)) . '/console',
-//    ],
 ];
