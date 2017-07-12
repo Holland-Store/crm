@@ -7,6 +7,9 @@ use app\rbac\ShopRule;
 
 class RbacController extends Controller
 {
+    /**
+     * role and prmission for user
+     */
     public function actionInit()
     {
         $auth = Yii::$app->authManager;
