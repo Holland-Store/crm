@@ -1,10 +1,13 @@
 <?php
 
+use app\models\Tovar;
 use yii\bootstrap\ButtonDropdown;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use kartik\grid\GridView;
 use yii\widgets\ActiveForm;
 use unclead\multipleinput\TabularInput;
+use kartik\widgets\Select2;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\CustomSearch */
@@ -26,13 +29,25 @@ $this->title = 'Все запросы';?>
         TabularInput::widget([
             'models' => $models,
             'columns' => [
+//                [
+//                    'name' => 'tovar',
+//                    'type' => \unclead\multipleinput\MultipleInputColumn::TYPE_TEXT_INPUT,
+//                    'title' => 'Товар',
+//                    'options' => [
+//                        'maxlength' => '50',
+//                        'placeholder' => 'Максимальное значение должно быть не больше 50 символов',
+//                    ]
+//                ],
                 [
                     'name' => 'tovar',
-                    'type' => \unclead\multipleinput\MultipleInputColumn::TYPE_TEXT_INPUT,
+                    'type' => Select2::className(),
                     'title' => 'Товар',
                     'options' => [
-                        'maxlength' => '50',
-                        'placeholder' => 'Максимальное значение должно быть не больше 50 символов',
+                        'data' => ArrayHelper::map(Tovar::find()->all(), 'id', 'name'),
+                        'pluginOptions' => [
+                            'allowClear' => true
+                        ],
+                        'options' => ['placeholder' => 'Выберите товар']
                     ]
                 ],
                 [
