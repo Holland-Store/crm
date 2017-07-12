@@ -46,9 +46,9 @@ class Counter extends Widget
         $this->view->params['scoreShipping'] = $shipping->andWhere(['<','status', Courier::DELIVERED])->count();
         $this->view->params['scoreTodoist'] = $todoist->andWhere(['id_user' => Yii::$app->user->id, 'activate' => 0])->count();
         if (Yii::$app->user->can('system')){
-            $this->view->params['scoreHelp'] = $helpdesk->andWhere(['status' => 0])->count();
+            $this->view->params['scoreHelp'] = $helpdesk->andWhere(['status' => [Helpdesk::STATUS_NEW,Helpdesk::STATUS_CHECKING,Helpdesk::STATUS_DECLINED]])->count();
         }else{
-            $this->view->params['scoreHelp'] = $helpdesk->andWhere(['id_user' => Yii::$app->user->id, 'status' => 0])->count();
+            $this->view->params['scoreHelp'] = $helpdesk->andWhere(['id_user' => Yii::$app->user->id, 'status' => [Helpdesk::STATUS_NEW,Helpdesk::STATUS_CHECKING,Helpdesk::STATUS_DECLINED]])->count();
         }
         $this->view->params['scoreCustomZakup'] = $custom->andWhere(['action' => 0])->count();
         $this->view->params['scoreCustom'] = $custom->andWhere(['id_user' => Yii::$app->user->id, 'action' => 0])->count();
