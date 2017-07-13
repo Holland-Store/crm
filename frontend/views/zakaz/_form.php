@@ -52,13 +52,16 @@ use yii\widgets\MaskedInput;
                             'xls' => '<i class="fa fa-file-excel-o text-orange"></i>',
                             'xlsx' => '<i class="fa fa-file-excel-o text-orange"></i>',
                             'ppt' => '<i class="fa fa-file-powerpoint-o text-orange"></i>',
+                            'pptx' => '<i class="fa fa-file-powerpoint-o text-orange"></i>',
                             'pdf' => '<i class="fa fa-file-pdf-o text-orange"></i>',
                             'zip' => '<i class="fa fa-file-archive-o text-orange"></i>',
                             'rar' => '<i class="fa fa-file-archive-o text-orange"></i>',
                             'txt' => '<i class="fa fa-file-text-o text-orange"></i>',
                             'jpg' => '<i class="fa fa-file-photo-o text-orange"></i>',
+                            'jpeg' => '<i class="fa fa-file-photo-o text-orange"></i>',
                             'png' => '<i class="fa fa-file-photo-o text-orange"></i>',
                             'gif' => '<i class="fa fa-file-photo-o text-orange"></i>',
+                            'cdr' => '<i class="fa fa-file-photo-o text-orange"></i>',
                         ]),
                         'layoutTemplates' => [
                             'preview' => '<div class="file-preview {class}">
