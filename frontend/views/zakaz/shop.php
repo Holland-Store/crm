@@ -138,7 +138,7 @@ $this->title = 'ВСЕ ЗАКАЗЫ';
                     'format' => 'raw',
                     'value' => function($model){
                         if ($model->status == Zakaz::STATUS_EXECUTE){
-                            return Html::a('Готово', ['close']);
+                            return Html::a('Готово', ['close', 'id' => $model->id_zakaz]);
                         } else {
                             return '';
                         }
