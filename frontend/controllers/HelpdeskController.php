@@ -68,7 +68,8 @@ class HelpdeskController extends Controller
     public function actionIndex()
     {
         $searchModel = new HelpdeskSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, 'work');
+        $dataProviderSoglas = $searchModel->search(Yii::$app->request->queryParams, 'soglas');
         $notification = $this->findNotification();
 
 
@@ -76,6 +77,7 @@ class HelpdeskController extends Controller
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'dataProviderSoglas' => $dataProviderSoglas,
             'notification' => $notification,
         ]);
     }
