@@ -103,10 +103,10 @@ $this->title = 'Вce заказы';
                     return ['id' => $model->id_zakaz, 'class' => 'border-left', 'style' => 'border:none'];
                 },                
 				'width'=>'10px',
-				'value' => function ($model, $key, $index) {
+				'value' => function () {
 					return GridView::ROW_COLLAPSED;
 				},
-				'detail'=>function ($model, $key, $index, $column) {
+				'detail'=>function ($model) {
                     $comment = new Comment();
 					return Yii::$app->controller->renderPartial('_zakaz', ['model'=> $model, 'comment' => $comment]);
 				},
@@ -214,7 +214,7 @@ $this->title = 'Вce заказы';
             [
                 'attribute' => '',
                 'format' => 'raw',
-                'value' => function($model){
+                'value' => function(){
                     return '';
                 },
                 'contentOptions' => ['class' => 'textTr border-right tr90'],
@@ -268,10 +268,10 @@ $this->title = 'Вce заказы';
                     return ['id' => $model->id_zakaz, 'class' => 'border-left', 'style' => 'border:none'];
                 }, 
                 'width'=>'10px',
-                'value' => function ($model, $key, $index) {
+                'value' => function () {
                     return GridView::ROW_COLLAPSED;
                 },
-                'detail'=>function ($model, $key, $index, $column) {
+                'detail'=>function ($model) {
                     $comment = new Comment();
                     return Yii::$app->controller->renderPartial('_zakaz', ['model'=>$model, 'comment' => $comment]);
                 },
@@ -389,10 +389,10 @@ $this->title = 'Вce заказы';
                     return ['id' => $model->id_zakaz, 'class' => 'border-left', 'style' => 'border:none'];
                 }, 
                 'width'=>'10px',
-                'value' => function ($model, $key, $index) {
+                'value' => function () {
                     return GridView::ROW_COLLAPSED;
                 },
-                'detail'=>function ($model, $key, $index, $column) {
+                'detail'=>function ($model) {
                     $comment = new Comment();
                     return Yii::$app->controller->renderPartial('_zakaz', ['model'=>$model, 'comment' => $comment]);
                 },
