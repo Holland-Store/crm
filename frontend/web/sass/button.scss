@@ -8,6 +8,7 @@ $colorText: rgba(204, 198, 198, 0.6);
 $colorButton: #3a3331;
 $colorGreen: #446505;
 $orang: #f0ad4e;
+$bacgrountTr: #802c2c;
 
 @mixin buttonZakaz{
     padding-left: 13px;
@@ -41,7 +42,6 @@ $orang: #f0ad4e;
 }
 .helpdesk-index{
   a{
-    padding-top: 30px;
     padding-left: 16px;
     text-decoration: none;
     &:hover{

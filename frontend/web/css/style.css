@@ -744,14 +744,13 @@ thead a {
   border-radius: 26px;
 }
 
-/* line 39, ../sass/button.scss */
+/* line 40, ../sass/button.scss */
 .text-orange {
   color: #f0ad4e;
 }
 
-/* line 43, ../sass/button.scss */
+/* line 44, ../sass/button.scss */
 .helpdesk-index a {
-  padding-top: 30px;
   padding-left: 16px;
   text-decoration: none;
 }
@@ -989,7 +988,7 @@ thead a {
   margin-top: 1px;
   float: none;
 }
-/* line 22, ../sass/button.scss */
+/* line 23, ../sass/button.scss */
 .footer-view-zakaz a:hover {
   color: #3a3331;
   background: #736a50;

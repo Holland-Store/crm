@@ -1,100 +1,281 @@
-/*
-Error: Undefined variable: "$bacgrountTr".
-        on line 35 of C:/OpenServer/domains/crm/frontend/web/sass/button.scss, in `declined'
-        from line 201 of C:/OpenServer/domains/crm/frontend/web/sass/button.scss
+/* line 40, ../sass/button.scss */
+.text-orange {
+  color: #f0ad4e;
+}
 
-30:     line-height: 25px;
-31:     padding-left: 20px;
-32: }
-33: 
-34: @mixin declined{
-35:   color: $bacgrountTr;
-36:   text-decoration: none;
-37: }
-38: 
-39: .text-orange{
-40:     color: $orang;
+/* line 44, ../sass/button.scss */
+.helpdesk-index a {
+  padding-left: 16px;
+  text-decoration: none;
+}
+/* line 47, ../sass/button.scss */
+.helpdesk-index a:hover {
+  color: white;
+}
 
-Backtrace:
-C:/OpenServer/domains/crm/frontend/web/sass/button.scss:35:in `declined'
-C:/OpenServer/domains/crm/frontend/web/sass/button.scss:201
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/script/tree/variable.rb:49:in `_perform'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/script/tree/node.rb:58:in `perform'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/tree/visitors/perform.rb:397:in `visit_prop'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/tree/visitors/base.rb:36:in `visit'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/tree/visitors/perform.rb:160:in `block in visit'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/stack.rb:79:in `block in with_base'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/stack.rb:115:in `with_frame'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/stack.rb:79:in `with_base'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/tree/visitors/perform.rb:160:in `visit'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/tree/visitors/perform.rb:366:in `block (4 levels) in visit_mixin'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/tree/visitors/perform.rb:366:in `map'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/tree/visitors/perform.rb:366:in `block (3 levels) in visit_mixin'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/tree/visitors/perform.rb:181:in `with_environment'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/tree/visitors/perform.rb:366:in `block (2 levels) in visit_mixin'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/tree/visitors/perform.rb:84:in `perform_arguments'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/tree/visitors/perform.rb:361:in `block in visit_mixin'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/stack.rb:98:in `block in with_mixin'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/stack.rb:115:in `with_frame'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/stack.rb:98:in `with_mixin'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/tree/visitors/perform.rb:349:in `visit_mixin'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/tree/visitors/base.rb:36:in `visit'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/tree/visitors/perform.rb:160:in `block in visit'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/stack.rb:79:in `block in with_base'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/stack.rb:115:in `with_frame'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/stack.rb:79:in `with_base'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/tree/visitors/perform.rb:160:in `visit'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/tree/visitors/perform.rb:433:in `block (2 levels) in visit_rule'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/tree/visitors/perform.rb:433:in `map'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/tree/visitors/perform.rb:433:in `block in visit_rule'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/tree/visitors/perform.rb:181:in `with_environment'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/tree/visitors/perform.rb:431:in `visit_rule'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/tree/visitors/base.rb:36:in `visit'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/tree/visitors/perform.rb:160:in `block in visit'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/stack.rb:79:in `block in with_base'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/stack.rb:115:in `with_frame'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/stack.rb:79:in `with_base'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/tree/visitors/perform.rb:160:in `visit'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/tree/visitors/perform.rb:433:in `block (2 levels) in visit_rule'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/tree/visitors/perform.rb:433:in `map'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/tree/visitors/perform.rb:433:in `block in visit_rule'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/tree/visitors/perform.rb:181:in `with_environment'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/tree/visitors/perform.rb:431:in `visit_rule'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/tree/visitors/base.rb:36:in `visit'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/tree/visitors/perform.rb:160:in `block in visit'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/stack.rb:79:in `block in with_base'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/stack.rb:115:in `with_frame'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/stack.rb:79:in `with_base'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/tree/visitors/perform.rb:160:in `visit'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/tree/visitors/base.rb:52:in `block in visit_children'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/tree/visitors/base.rb:52:in `map'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/tree/visitors/base.rb:52:in `visit_children'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/tree/visitors/perform.rb:169:in `block in visit_children'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/tree/visitors/perform.rb:181:in `with_environment'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/tree/visitors/perform.rb:168:in `visit_children'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/tree/visitors/base.rb:36:in `block in visit'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/tree/visitors/perform.rb:188:in `visit_root'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/tree/visitors/base.rb:36:in `visit'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/tree/visitors/perform.rb:159:in `visit'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/tree/visitors/perform.rb:8:in `visit'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/tree/root_node.rb:36:in `css_tree'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/tree/root_node.rb:20:in `render'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/engine.rb:281:in `render'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/compass-import-once-1.0.5/lib/compass/import-once/engine.rb:17:in `block in render'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/compass-import-once-1.0.5/lib/compass/import-once/engine.rb:29:in `with_import_scope'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/compass-import-once-1.0.5/lib/compass/import-once/engine.rb:16:in `render'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/plugin/compiler.rb:494:in `update_stylesheet'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/plugin/compiler.rb:215:in `block in update_stylesheets'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/plugin/compiler.rb:209:in `each'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/plugin/compiler.rb:209:in `update_stylesheets'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/plugin/compiler.rb:473:in `on_file_changed'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/lib/sass/plugin/compiler.rb:331:in `block in watch'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/vendor/listen/lib/listen/listener.rb:252:in `on_change'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/vendor/listen/lib/listen/listener.rb:290:in `block in initialize_adapter'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/vendor/listen/lib/listen/adapters/polling.rb:48:in `poll_changed_directories'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.4.24/vendor/listen/lib/listen/adapter.rb:299:in `block in start_poller'
-*/
-body:before {
-  white-space: pre;
-  font-family: monospace;
-  content: "Error: Undefined variable: \"$bacgrountTr\".\A         on line 35 of C:/OpenServer/domains/crm/frontend/web/sass/button.scss, in `declined'\A         from line 201 of C:/OpenServer/domains/crm/frontend/web/sass/button.scss\A \A 30:     line-height: 25px;\A 31:     padding-left: 20px;\A 32: }\A 33: \A 34: @mixin declined{\A 35:   color: $bacgrountTr;\A 36:   text-decoration: none;\A 37: }\A 38: \A 39: .text-orange{\A 40:     color: $orang;"; }
+/* line 52, ../sass/button.scss */
+.buttonAdd {
+  border-radius: 68px;
+  width: 74px;
+  height: 74px;
+  line-height: 2px;
+  font-size: 46px;
+  box-shadow: 5px 6px 20px 0px rgba(2, 2, 2, 0.48);
+  color: #fff;
+  background: #a90329;
+  background: -moz-radial-gradient(center, ellipse cover, #a90329 34%, #8f0222 67%, #6d0019 98%);
+  background: -webkit-radial-gradient(center, ellipse cover, #a90329 34%, #8f0222 67%, #6d0019 98%);
+  background: radial-gradient(ellipse at right top, #9e1818 34%, #791010 67%, #882828 98%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a90329', endColorstr='#6d0019',GradientType=1 );
+  border: 5px solid rgba(72, 26, 26, 0.51);
+}
+/* line 67, ../sass/button.scss */
+.buttonAdd:hover .buttonAdd:focus {
+  background: #791010;
+  color: #fff;
+}
+/* line 71, ../sass/button.scss */
+.buttonAdd .caret {
+  display: none;
+}
+
+/* line 75, ../sass/button.scss */
+.btn-group {
+  position: fixed;
+  top: 85%;
+  z-index: 1;
+  float: right;
+  left: 86%;
+}
+/* line 81, ../sass/button.scss */
+.btn-group .dropdown-menu {
+  top: -103px;
+  left: -27px;
+  font-size: 11px;
+  background: #302927;
+  min-width: 92px;
+  border: 2px solid rgba(204, 198, 198, 0.6);
+  border-radius: 9px;
+}
+/* line 89, ../sass/button.scss */
+.btn-group .dropdown-menu .divider {
+  margin: 0px 0px 0px 10px;
+  background: rgba(255, 255, 255, 0.07);
+  width: 64px;
+}
+/* line 94, ../sass/button.scss */
+.btn-group .dropdown-menu .dropdown-header {
+  padding: 0.4px 0;
+}
+/* line 97, ../sass/button.scss */
+.btn-group .dropdown-menu a {
+  color: rgba(204, 198, 198, 0.6);
+}
+/* line 99, ../sass/button.scss */
+.btn-group .dropdown-menu a:hover {
+  border-radius: 12px;
+  margin: 0px 8px 0px 7px;
+  padding: 3px 0px 3px 13px;
+  background-color: #191412;
+  color: #736a50;
+}
+
+/* line 109, ../sass/button.scss */
+.zakaz-form {
+  height: 30px;
+  line-height: 25px;
+  padding-left: 20px;
+}
+/* line 111, ../sass/button.scss */
+.zakaz-form .kv-file-content i {
+  font-size: 30px;
+}
+/* line 115, ../sass/button.scss */
+.zakaz-form .file-actions-cell {
+  display: none;
+}
+/* line 118, ../sass/button.scss */
+.zakaz-form .file-preview {
+  padding: 0px;
+}
+/* line 122, ../sass/button.scss */
+.zakaz-form .submitZakazForm {
+  float: right;
+  margin-top: -76px;
+  margin-right: 185px;
+}
+/* line 126, ../sass/button.scss */
+.zakaz-form .submitZakazForm button {
+  width: 111px;
+}
+
+/* line 133, ../sass/button.scss */
+#modalFile .zakaz-upload .fileInput {
+  height: 30px;
+  line-height: 25px;
+  padding-left: 20px;
+  text-align: center;
+}
+/* line 137, ../sass/button.scss */
+#modalFile .zakaz-upload .submitFile {
+  height: 30px;
+  line-height: 25px;
+  padding-left: 20px;
+  width: 100%;
+}
+
+/* line 143, ../sass/button.scss */
+.action {
+  padding-left: 13px;
+  padding-right: 13px;
+  font-size: 11px;
+  border: none;
+  background: #3a3331;
+  border-radius: 26px;
+  color: #736a50;
+  padding-top: 3px;
+  padding-bottom: 2px;
+  text-decoration: none;
+  outline: 0;
+}
+/* line 155, ../sass/button.scss */
+.action:hover {
+  background: #736a50;
+  color: #3a3331;
+}
+
+/* line 160, ../sass/button.scss */
+.actionCancel {
+  width: 78px;
+  position: relative;
+  left: 66px;
+  top: -1px;
+}
+/* line 165, ../sass/button.scss */
+.actionCancel:hover {
+  background: #802c2c;
+  color: white;
+}
+
+/* line 170, ../sass/button.scss */
+.actionApprove {
+  left: 64px;
+  top: -1px;
+  width: 79px;
+  position: relative;
+}
+/* line 175, ../sass/button.scss */
+.actionApprove:hover {
+  border: none;
+  background: #446505;
+  color: white;
+}
+
+/* line 181, ../sass/button.scss */
+.appoint {
+  top: -16px;
+  left: 139px;
+}
+
+/* line 185, ../sass/button.scss */
+.todoist {
+  margin-left: 111px;
+}
+
+/* line 189, ../sass/button.scss */
+.zakaz-index .modalDisain {
+  float: right;
+}
+
+/* line 194, ../sass/button.scss */
+.ispolShop a {
+  color: #446505;
+  text-decoration: none;
+}
+
+/* line 200, ../sass/button.scss */
+.courier-shipping a {
+  color: #802c2c;
+  text-decoration: none;
+}
+
+/* line 205, ../sass/button.scss */
+.courier-index a, .custom-index a, .helpdesk-index a {
+  color: #446505;
+  text-decoration: none;
+}
+/* line 209, ../sass/button.scss */
+.courier-index .declinedHelp, .custom-index .declinedHelp, .helpdesk-index .declinedHelp {
+  color: #802c2c;
+  text-decoration: none;
+}
+/* line 212, ../sass/button.scss */
+.courier-index .declined, .custom-index .declined, .helpdesk-index .declined {
+  color: #802c2c;
+  text-decoration: none;
+}
+/* line 215, ../sass/button.scss */
+.courier-index .successHelp, .custom-index .successHelp, .helpdesk-index .successHelp {
+  color: #446505;
+}
+
+/* line 221, ../sass/button.scss */
+.footer-view-zakaz .done:hover {
+  border: none;
+  background: #446505;
+  color: white;
+}
+/* line 227, ../sass/button.scss */
+.footer-view-zakaz a {
+  padding-left: 13px;
+  padding-right: 13px;
+  float: right;
+  margin-top: -10px;
+  margin-right: 18px;
+  font-size: 11px;
+  background: #3a3331;
+  border-radius: 26px;
+  color: #736a50;
+  background: none;
+  border: 1px solid #3a3331;
+  color: #3a3331;
+  margin-top: 1px;
+  float: none;
+}
+/* line 23, ../sass/button.scss */
+.footer-view-zakaz a:hover {
+  color: #3a3331;
+  background: #736a50;
+}
+/* line 234, ../sass/button.scss */
+.footer-view-zakaz a:hover {
+  text-decoration: none;
+  outline: 0;
+  color: #191412;
+  background: #3a3331;
+}
+
+/* line 243, ../sass/button.scss */
+.zakaz-shippingForm button {
+  height: 30px;
+  margin-left: 15px;
+  position: relative;
+  top: -43px;
+  left: 211px;
+  outline: 0;
+}
+
+/* line 253, ../sass/button.scss */
+.modal-content a {
+  height: 30px;
+}
+/* line 256, ../sass/button.scss */
+.modal-content .fulfilled {
+  width: 64%;
+  margin-left: 11px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-right: 146px;
+  padding-left: 130px;
+  text-decoration: none;
+}
