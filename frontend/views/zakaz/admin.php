@@ -284,13 +284,7 @@ $this->title = 'Вce заказы';
                 'attribute' => 'id_zakaz',
                 'value' => 'prefics',
                 'hAlign' => GridView::ALIGN_RIGHT,
-                'contentOptions' => function($model) {
-                    if ($model->id_unread == true){
-                        return ['class' => 'trNew tr70'];
-                    } else {
-                        return ['class' => 'textTr tr70'];
-                    }
-                },
+                'contentOptions' => ['class' => 'textTr tr70'],
             ],
             [
                 'attribute' => '',
@@ -312,24 +306,12 @@ $this->title = 'Вce заказы';
                 'format' => ['datetime', 'php:d M H:i'],
                 'value' => 'srok',
                 'hAlign' => GridView::ALIGN_RIGHT,
-                'contentOptions' => function($model) {
-                    if ($model->id_unread == true){
-                        return ['class' => 'trNew tr90'];
-                    } else {
-                        return ['class' => 'textTr tr90'];
-                    }
-                },
+                'contentOptions' => ['class' => 'textTr tr90'],
             ],
             [
                 'attribute' => 'minut',
                 'hAlign' => GridView::ALIGN_RIGHT,
-                'contentOptions' => function($model) {
-                    if ($model->id_unread == true){
-                        return ['class' => 'trNew tr10'];
-                    } else {
-                        return ['class' => 'textTr tr10'];
-                    }
-                },
+                'contentOptions' => ['class' => 'textTr tr10'],
                 'value' => function($model){
                     if ($model->minut == null){
                         return '';
@@ -342,13 +324,6 @@ $this->title = 'Вce заказы';
                 'attribute' => 'description',
                 'value' => function($model){
                     return StringHelper::truncate($model->description, 100);
-                },
-                'contentOptions' => function($model) {
-                    if ($model->id_unread == true){
-                        return ['class' => 'trNew'];
-                    } else {
-                        return '';
-                    }
                 },
             ],
             [
@@ -376,21 +351,17 @@ $this->title = 'Вce заказы';
                     return $model->oplata.' р.';
                 },
                 'hAlign' => GridView::ALIGN_RIGHT,
-                'contentOptions' => function($model) {
-                    if ($model->id_unread == true){
-                        return ['class' => 'trNew tr70'];
-                    } else {
-                        return ['class' => 'textTr tr70'];
-                    }
-                },
+                'contentOptions' => ['class' => 'textTr tr70'],
             ],
             [
                 'attribute' => 'statusName',
                 'label' => 'Отв-ный',
                 'contentOptions' => function($model) {
-                    if ($model->id_unread == true){
+                    if ($model->id_unread == true && $model->srok < date('Y-m-d H:i:s')){
                         return ['class' => 'border-right trNew'];
-                    } else{
+                    } elseif ($model->id_unread == true && $model->srok > date('Y-m-d H:i:s')){
+                        return ['class' => 'border-right success-ispol'];
+                    } else {
                         return ['class' => 'border-right textTr'];
                     }
                 },
