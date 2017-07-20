@@ -224,6 +224,11 @@ class HelpdeskController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
+    /**
+     * Find the Notification model
+     * If the user notification > 50, it shows 50+ notification
+     */
     protected function findNotification()
     {
         $notification = Notification::find()->where(['id_user' => Yii::$app->user->id, 'active' => true]);
