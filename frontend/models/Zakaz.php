@@ -43,6 +43,7 @@ use yii\db\ActiveRecord;
  * @property Tovar $idTovar
  * @property User $idSotrud
  * @property Courier $idShipping
+ *
  */
 class Zakaz extends ActiveRecord
 {
@@ -191,6 +192,10 @@ class Zakaz extends ActiveRecord
 //
 ////        return ArrayHelper::map($sotruds, 'id', 'fio');
 //    }
+
+    /**
+     * @return array
+     */
     public static function getStatusArray(){
         return [
             self::STATUS_NEW => 'Новый',
@@ -206,6 +211,10 @@ class Zakaz extends ActiveRecord
             self::STATUS_AUTSORS => 'Аутсорс',
         ];
     }
+
+    /**
+     * @return mixed
+     */
     public function getStatusName()
     {
         return ArrayHelper::getValue(self::getStatusArray(), $this->status);
@@ -218,10 +227,18 @@ class Zakaz extends ActiveRecord
             '2' => 'очень важно',
         ];
     }
+
+    /**
+     * @return mixed
+     */
     public function getPrioritetName()
     {
         return ArrayHelper::getValue(self::getPrioritetArray(), $this->prioritet);
     }
+
+    /**
+     * @return array
+     */
     public static function getStatusDisainArray()
     {
         return [
@@ -232,10 +249,18 @@ class Zakaz extends ActiveRecord
             self::STATUS_DISAINER_DECLINED => 'Отлонен',
         ];
     }
+
+    /**
+     * @return mixed
+     */
     public function getStatusDisainName()
     {
         return ArrayHelper::getValue(self::getStatusDisainArray(), $this->statusDisain);
     }
+
+    /**
+     * @return array
+     */
     public static function getStatusMasterArray()
     {
         return [
@@ -245,13 +270,17 @@ class Zakaz extends ActiveRecord
             self::STATUS_MASTER_DECLINED => 'Отклонен',
         ];
     }
+
+    /**
+     * @return mixed
+     */
     public function getStatusMasterName()
     {
         return ArrayHelper::getValue(self::getStatusMasterArray(), $this->statusMaster);
     }
 
     /**
-     * @param $id
+     * Upload file for page 'create' and 'update'
      * @return bool
      */
     public function upload()
@@ -271,11 +300,20 @@ class Zakaz extends ActiveRecord
         ];
     }
 
+    /**
+     * Creates a prefics at the beginning id_zakaz
+     * @return int|string
+     */
     public function getPrefics()
     {
         $list = self::getPreficsList();
         return (isset($list[$this->id_sotrud])) ? $list[$this->id_sotrud].'-'.$this->id_zakaz :         $this->id_zakaz;
     }
+
+    /**
+     * Upload the layout from the designer
+     * @return bool
+     */
     public function getUploadeFile()
     {
         //Выполнена работа дизайнером
@@ -284,6 +322,9 @@ class Zakaz extends ActiveRecord
             $this->file->saveAs('maket/Maket_'.$this->id_zakaz.'.'.$this->file->extension);
             $this->maket = 'Maket_'.$this->id_zakaz.'.'.$this->file->extension;
             $this->status = 4;
+            return true;
+        } else {
+            return false;
         }
     }
 }
