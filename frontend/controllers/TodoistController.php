@@ -275,6 +275,11 @@ class TodoistController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
+    /**
+     * Notification for user
+     * If notification >50, it writing 50+
+     */
     protected function findNotification()
     {
         $notification = Notification::find()->where(['id_user' => Yii::$app->user->id, 'active' => true]);
