@@ -3,6 +3,7 @@
 /* @var $this \yii\web\View */
 /* @var $content string */
 
+use frontend\components\Notifications;
 use yii\helpers\Html;
 use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
@@ -35,7 +36,7 @@ AppAsset::register($this);
 <?php echo '<h1 class="titleMain">'.Html::encode($this->title).'</h1>' ?>
     <?= Counter::widget() ?>
 <?php endif ?>
-<?php $counts = '<span class="glyphicon glyphicon-bell" style="font-size:21px"></span><span class="badge pull-right">'.$this->params['count'].'</span>'; ?>
+<?php //$counts = '<span class="glyphicon glyphicon-bell" style="font-size:21px"></span><span class="badge pull-right">'.$this->params['count'].'</span>'; ?>
     <?php
     // NavBar::begin([
     //     'brandLabel' => 'Holland',
@@ -69,7 +70,7 @@ AppAsset::register($this);
     //     'items' => $menuItems,
     // ]);
     // NavBar::end();
-    
+
     if (Yii::$app->user->isGuest) {
         echo '';
     } else {
@@ -82,29 +83,7 @@ AppAsset::register($this);
     }
     ?>
     <?php if (!Yii::$app->user->isGuest): ?>
-        <div class="notification-container hidden" id="notification-container">
-            <div class="notification-content">
-                <?php foreach($this->params['notifications'] as $notification){
-                $date = date('Y-m-d H:i:s', time());
-                    if ($notification->category == 0) {
-                        $notif = '<span class="glyphicon glyphicon-road"></span> '.$notification->name.'<br>';
-                    } elseif ($notification->category == 1) {
-                        $notif = '<span class="glyphicon glyphicon-ok"></span> '.$notification->name.'<br>';
-                    } elseif ($notification->category == 2) {
-                        $notif = '<span class="glyphicon glyphicon-file"></span> '.$notification->name.'<br>';
-                    } elseif ($notification->category == 4 && $notification->srok <= $date){
-                        $notif = 'Напоминание о заказе №'.$notification->id_zakaz.' '.$notification->srok;
-                    } elseif ($notification->category == 4 && $notification->srok >= $date){
-                        $notif = '';
-                    }
-                    echo Html::a($notif.'<br>', ['notification/notification', 'id' => $notification->id_zakaz], ['id' => $notification->id_zakaz, 'class' => 'zakaz', 'data-key' => $notification->id_zakaz]);
-                } 
-                ?>
-            </div>
-            <div class='notification-footer'>
-            <?php echo Html::a('Прочитать все напоминание', ['notification/index']) ?>
-            </div>
-        </div>  
+        <?= Notifications::widget()  ?>
     <?php endif ?>
 
 <?php if (Yii::$app->user->isGuest): ?>
