@@ -13,6 +13,7 @@ namespace app\models\client;
  * @property string $street
  * @property integer $home
  * @property integer $apartment
+ * @property string $address
  */
 class Client extends \yii\db\ActiveRecord
 {
