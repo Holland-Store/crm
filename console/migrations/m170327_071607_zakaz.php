@@ -26,12 +26,14 @@ class m170327_071607_zakaz extends Migration
                 'maket' => $this->string(50),
 				'time' => $this->integer(),
                 'statusDisain' => $this->integer(),
-                'data_start_disain' => $this->datetime(),
+                'statusMaster' => $this->integer(),
                 'name' => $this->string(50),
                 'phone' => $this->integer(11),
                 'email' => $this->string(50),
                 'comment' => $this->text(),
                 'id_shipping' => $this->integer(),
+                'declined' => $this->string(),
+                'id_unread' => $this->integer(),
             ]);
 
 		$this->createIndex('idx-zakaz-id_sotrud', 'zakaz', 'id_sotrud');

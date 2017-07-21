@@ -13,7 +13,8 @@ class m170510_145551_helpdesk extends Migration
                 'status' => $this->integer(),
                 'date' => $this->timestamp(),
                 'sotrud' => $this->string(50),
-                'date_end' => $this->datetime(),
+                'endDate' => $this->datetime(),
+                'declined' => $this->string(),
             ]);
 
 		$this->createIndex('idx-helpdesk-id_user', 'helpdesk', 'id_user');

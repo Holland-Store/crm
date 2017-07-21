@@ -9,6 +9,7 @@ class m170510_145631_courier extends Migration
         $this->createTable('courier',[
                 'id' => $this->primaryKey(),
 				'id_zakaz' => $this->integer(),
+                'date' => $this->date(),
                 'to' => $this->string(50),
                 'date_to' => $this->datetime(),
                 'from' => $this->string(50),

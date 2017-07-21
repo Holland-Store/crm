@@ -10,6 +10,8 @@ class m170327_071747_client extends Migration
                 'id'=>$this->primaryKey(),
                 'fio' => $this->string(86),
                 'phone' => $this->string()->notNull(),
+                'email' => $this->string(50)->unique(),
+                'address' => $this->string(150),
             ]);
     }
 

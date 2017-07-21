@@ -13,7 +13,7 @@ class m170524_074403_notification extends Migration
 				'id_zakaz' => $this->integer(),
 				'category' => $this->integer(),
 				'srok' => $this->datetime(),
-				'active' => $this->integet(),
+				'active' => $this->integer(),
             ]);
 
 		$this->createIndex('idx-notification-id_user', 'notification', 'id_user');

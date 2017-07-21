@@ -12,8 +12,6 @@ class m170510_145644_todoist extends Migration
                 'srok' => $this->date(),
                 'id_zakaz' => $this->integer(),
                 'id_user' => $this->integer(),
-                'status' => $this->integer(),
-                'typ' => $this->integer(),
                 'comment' => $this->string(),
                 'activate' => $this->integer(4),
             ]);
