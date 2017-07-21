@@ -1,14 +1,13 @@
 <?php
 
-namespace app\models;
+namespace app\models\client;
 
-use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Client;
+
 
 /**
- * ClientSearch represents the model behind the search form about `app\models\Client`.
+ * ClientSearch represents the model behind the search form about `app\models\client\Client`.
  */
 class ClientSearch extends Client
 {
@@ -19,7 +18,7 @@ class ClientSearch extends Client
     {
         return [
             [['id'], 'integer'],
-            [['fio', 'phone'], 'safe'],
+            [['fio', 'phone', 'email', 'address', 'street', 'home'], 'safe'],
         ];
     }
 
@@ -63,7 +62,10 @@ class ClientSearch extends Client
         ]);
 
         $query->andFilterWhere(['like', 'fio', $this->fio])
-            ->andFilterWhere(['like', 'phone', $this->phone]);
+            ->andFilterWhere(['like', 'phone', $this->phone])
+            ->andFilterWhere(['like', 'email', $this->email])
+            ->andFilterWhere(['like', 'street', $this->address])
+            ->orFilterWhere(['like', 'home', $this->address]);
 
         return $dataProvider;
     }
