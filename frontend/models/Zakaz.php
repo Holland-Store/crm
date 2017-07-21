@@ -33,13 +33,17 @@ use yii\db\ActiveRecord;
  * @property string $name
  * @property integer $phone
  * @property string $email
+ * @property integer $id_client,
  * @property string $comment
  * @property integer $id_shipping
  * @property string $declined
  * @property integer $id_unread
  *
+ * @property Comment[] $comments
  * @property Courier[] $couriers
+ * @property Notification[] $notifications
  * @property Todoist[] $todoists
+ * @property Client $idClient
  * @property Tovar $idTovar
  * @property User $idSotrud
  * @property Courier $idShipping
@@ -98,9 +102,9 @@ class Zakaz extends ActiveRecord
     public function rules()
     {
         return [
-            [['srok', 'number', 'description', 'phone'], 'required', 'on' => self::SCENARIO_DEFAULT],
+            [['srok', 'number', 'description', 'phone', 'id_client'], 'required', 'on' => self::SCENARIO_DEFAULT],
             ['declined', 'required', 'message' => 'Введите причину отказа', 'on'=> self::SCENARIO_DECLINED],
-            [['id_zakaz', 'id_tovar', 'oplata', 'fact_oplata', 'minut', 'time', 'number', 'status', 'action', 'id_sotrud', 'phone', 'id_shipping' ,'prioritet', 'statusDisain', 'statusMaster', 'id_unread'], 'integer'],
+            [['id_zakaz', 'id_tovar', 'oplata', 'fact_oplata', 'minut', 'time', 'number', 'status', 'action', 'id_sotrud', 'phone', 'id_client','id_shipping' ,'prioritet', 'statusDisain', 'statusMaster', 'id_unread'], 'integer'],
             [['srok', 'data', 'data-start-disain'], 'safe'],
             [['information', 'comment', 'search', 'declined'], 'string'],
             ['prioritet', 'default', 'value' => 0],
@@ -147,6 +151,7 @@ class Zakaz extends ActiveRecord
             'name' => 'Клиент',
             'phone' => 'Телефон',
             'email' => 'Email',
+            'id_client' => '№ клиента',
             'comment' => 'Комментарий',
             'id_shipping' => 'Доставка',
             'declined' => 'Причина отказа',
@@ -177,6 +182,14 @@ class Zakaz extends ActiveRecord
     public function getIdShipping()
     {
         return $this->hasOne(Courier::className(), ['id' => 'id_shipping']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getIdClient()
+    {
+        return $this->hasOne(Client::className(), ['id' => 'id_client']);
     }
 
 //    /**
