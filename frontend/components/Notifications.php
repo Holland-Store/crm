@@ -21,13 +21,12 @@ class Notifications extends Widget
 
     /**
      * Creates a window for the notification
-     * @method string renderCount()
      * @return string
      */
     public function renderItems()
     {
         $notifModel = Notification::find();
-        $notifications = $notifModel->where(['id_user' == Yii::$app->user->id, 'active' => true])->all();
+        $notifications = $notifModel->where(['id_user' => Yii::$app->user->id, 'active' => true])->all();
         $this->renderCount();
         foreach($notifications as $notification){
             $date = date('Y-m-d H:i:s', time());
@@ -59,7 +58,7 @@ class Notifications extends Widget
     public function renderCount()
     {
         $notifModel = Notification::find();
-        $notification = $notifModel->where(['id_user' == Yii::$app->user->id, 'active' => true])->count();
+        $notification = $notifModel->where(['id_user' => Yii::$app->user->id, 'active' => true])->count();
         if ($notification > 50) {
             $notifications = '50+';
         } elseif ($notification < 1) {
