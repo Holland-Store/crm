@@ -1,10 +1,9 @@
 <?php
 
-use yii\helpers\Html;
-
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Zakaz */
+/* @var $client app\models\Client */
 
 
 $this->title = 'Добавить заказ';
@@ -16,6 +15,7 @@ $this->title = 'Добавить заказ';
 
     <?= $this->render('_form', [
         'model' => $model,
+        'client' => $client,
     ]) ?>
 
 </div>

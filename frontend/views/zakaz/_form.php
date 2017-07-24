@@ -1,6 +1,9 @@
 <?php
 
+use app\models\Client;
 use app\models\Zakaz;
+use kartik\select2\Select2;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use kartik\datecontrol\DateControl;
@@ -10,6 +13,7 @@ use yii\widgets\MaskedInput;
 /* @var $this yii\web\View */
 /* @var $model app\models\Zakaz */
 /* @var $form yii\widgets\ActiveForm */
+/* @var  $client app\models\Client */
 ?>
 
 <div class="zakaz-form">
@@ -103,6 +107,15 @@ use yii\widgets\MaskedInput;
         <?= $form->field($model, 'email')->widget(MaskedInput::className(),[
             'clientOptions' => ['alias' => 'email']
         ])->label(false) ?>
+        </div>
+        <div class="col-xs-12">
+            <?= $form->field($client, 'phone')->widget(Select2::className(), [
+                    'data' => ArrayHelper::map(Client::find()->all(), 'id', 'phone'),
+                    'options' => ['placeholder' => 'Введите номер телефона'],
+                    'pluginOptions' => [
+                        'allowClear' => true,
+                    ]
+            ])?>
         </div>
     </div>
 

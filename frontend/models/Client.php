@@ -2,19 +2,22 @@
 
 namespace app\models;
 
-use Yii;
-
 /**
  * This is the model class for table "client".
  *
  * @property integer $id
  * @property string $fio
  * @property string $phone
+ * @property string $email
+ * @property string $street
+ * @property integer $home
+ * @property integer $apartment
  *
  * @property Zakaz[] $zakazs
  */
 class Client extends \yii\db\ActiveRecord
 {
+    public $address;
     /**
      * @inheritdoc
      */
@@ -30,9 +33,13 @@ class Client extends \yii\db\ActiveRecord
     {
         return [
             [['fio', 'phone'], 'required'],
-            [['id'], 'integer'],
+            [['home', 'apartment'], 'integer'],
             [['fio'], 'string', 'max' => 86],
             [['phone'], 'string', 'max' => 15],
+            [['email'], 'string', 'max' => 50],
+            [['street'], 'string', 'max' => 100],
+            [['phone'], 'unique'],
+            [['email'], 'unique'],
         ];
     }
 
@@ -43,8 +50,12 @@ class Client extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'fio' => 'Fio',
-            'phone' => 'Phone',
+            'fio' => 'Фио',
+            'phone' => 'Телефон',
+            'email' => 'Email',
+            'street' => 'Улица',
+            'home' => 'Дом',
+            'apartment' => 'Квартира',
         ];
     }
 

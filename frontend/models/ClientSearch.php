@@ -1,13 +1,13 @@
 <?php
 
-namespace app\models\client;
+namespace app\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 
 /**
- * ClientSearch represents the model behind the search form about `app\models\client\Client`.
+ * ClientSearch represents the model behind the search form about `app\models\Client`.
  */
 class ClientSearch extends Client
 {

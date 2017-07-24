@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use app\models\Client;
 use Yii;
 use app\models\Zakaz;
 use app\models\Courier;
@@ -285,6 +286,7 @@ class ZakazController extends Controller
     public function actionCreate()
     {
         $model = new Zakaz();
+        $client = new Client();
         $notification = $this->findNotification();
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
@@ -307,6 +309,7 @@ class ZakazController extends Controller
 
         return $this->render('create', [
             'model' => $model,
+            'client' => $client,
             'notification' => $notification,
         ]);
     }
