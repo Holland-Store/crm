@@ -51,6 +51,7 @@ use yii\db\ActiveRecord;
  */
 class Zakaz extends ActiveRecord
 {
+    /** @var Zakaz */
     public $file;
     public $search;
 
@@ -294,6 +295,7 @@ class Zakaz extends ActiveRecord
 
     /**
      * Upload file for page 'create' and 'update'
+     * @property Zakaz $file
      * @return bool
      */
     public function upload()
