@@ -2,7 +2,7 @@
 
 
 /* @var $this yii\web\View */
-/* @var $model app\models\client\Client */
+/* @var $model app\models\Client */
 
 $this->title = 'Создание клиента';
 $this->params['breadcrumbs'][] = ['label' => 'Clients', 'url' => ['index']];
