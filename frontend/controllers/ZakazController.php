@@ -295,6 +295,17 @@ class ZakazController extends Controller
                 $model->upload();
                 $model->img = time() . '.' . $model->file->extension;
             }
+            if ($model->status == Zakaz::STATUS_DISAIN or $model->status == Zakaz::STATUS_MASTER or $model->status == Zakaz::STATUS_AUTSORS) {
+                if ($model->status == Zakaz::STATUS_DISAIN) {
+                    $model->statusDisain = Zakaz::STATUS_DISAINER_NEW;
+                    $model->id_unread = 0;
+                } elseif ($model->status == Zakaz::STATUS_MASTER) {
+                    $model->statusMaster = Zakaz::STATUS_MASTER_NEW;
+                    $model->id_unread = 0;
+                } else {
+                    $model->id_unread = 0;
+                }
+            }
             if (!$model->save()) {
                 print_r($model->getErrors());
             }
@@ -332,7 +343,15 @@ class ZakazController extends Controller
                 $model->img = $model->id_zakaz . '.' . $model->file->extension;
             }
             if ($model->status == Zakaz::STATUS_DISAIN or $model->status == Zakaz::STATUS_MASTER or Zakaz::STATUS_AUTSORS) {
-                $model->id_unread = 0;
+                if ($model->status == Zakaz::STATUS_DISAIN) {
+                    $model->statusDisain = Zakaz::STATUS_DISAINER_NEW;
+                    $model->id_unread = 0;
+                } elseif ($model->status == Zakaz::STATUS_MASTER) {
+                    $model->statusMaster = Zakaz::STATUS_MASTER_NEW;
+                    $model->id_unread = 0;
+                } else {
+                    $model->id_unread = 0;
+                }
             }
             $model->validate();
             if (!$model->save()) {
