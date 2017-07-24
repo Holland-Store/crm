@@ -34,12 +34,11 @@ class Client extends \yii\db\ActiveRecord
         return [
             [['fio', 'phone'], 'required'],
             [['home', 'apartment'], 'integer'],
+            [['phone'], 'number'],
             [['fio'], 'string', 'max' => 86],
-            [['phone'], 'string', 'max' => 15],
             [['email'], 'string', 'max' => 50],
             [['street'], 'string', 'max' => 100],
             [['phone'], 'unique'],
-            [['email'], 'unique'],
         ];
     }
 
