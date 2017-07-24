@@ -5,6 +5,8 @@ use app\models\Zakaz;
 use kartik\select2\Select2;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
+use yii\helpers\Url;
+use yii\web\JsExpression;
 use yii\widgets\ActiveForm;
 use kartik\datecontrol\DateControl;
 use kartik\file\FileInput;
@@ -110,12 +112,19 @@ use yii\widgets\MaskedInput;
         </div>
         <div class="col-xs-12">
             <?= $form->field($client, 'phone')->widget(Select2::className(), [
-                    'data' => ArrayHelper::map(Client::find()->all(), 'id', 'phone'),
+                    'data' => ArrayHelper::map(Client::find()->all(), 'id', 'phone', 'fio'),
                     'options' => ['placeholder' => 'Введите номер телефона'],
                     'pluginOptions' => [
                         'allowClear' => true,
-                    ]
+                        'language' => [
+                            'noResults' => new JsExpression('function () { return "<a href=\"'. Url::to(['client/create']).'\">Добавить клиента</button>"; }'),
+                        ],
+                        'escapeMarkup' => new JsExpression('function (markup) {
+        return markup;
+    }')
+                    ],
             ])?>
+
         </div>
     </div>
 
