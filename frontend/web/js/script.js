@@ -33,6 +33,11 @@ $(document).ready(function(){
                 .find('.modalContent')
                 .load($(this).attr('value'));
         });
+        $('body').on('click', '.createClient', function(){
+            $('#modalCreateClient').modal('show')
+                .find('.modalContentClient')
+                .load($(this).attr('value'))
+        });
        $("body").on("click", ".trNew", function () {
            var data = $(this).data("key");
            $.ajax({
