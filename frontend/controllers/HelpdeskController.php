@@ -72,8 +72,6 @@ class HelpdeskController extends Controller
         $dataProviderSoglas = $searchModel->search(Yii::$app->request->queryParams, 'soglas');
         $notification = $this->findNotification();
 
-
-
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
