@@ -2,9 +2,11 @@
 
 namespace frontend\controllers;
 
+use app\models\Zakaz;
 use Yii;
 use app\models\Client;
 use app\models\ClientSearch;
+use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -51,8 +53,14 @@ class ClientController extends Controller
      */
     public function actionView($id)
     {
+        $model = $this->findModel($id);
+        $zakaz = Zakaz::find()->where(['id_client' => $id]);
+        $dataProvider = new ActiveDataProvider([
+            'query' => $zakaz,
+        ]);
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
+            'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -66,10 +74,14 @@ class ClientController extends Controller
         $model = new Client();
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            $model->save();
-            return $this->redirect(['view', 'id' => $model->id]);
+            if ($model->save()){
+                echo 1;
+            } else {
+                echo 0;
+            }
+//            return $this->redirect(['view', 'id' => $model->id]);
         } else {
-            return $this->render('create', [
+            return $this->renderAjax('create', [
                 'model' => $model,
             ]);
         }
