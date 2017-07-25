@@ -9,6 +9,7 @@ use app\models\Courier;
 use app\models\Comment;
 use app\models\Notification;
 use app\models\ZakazSearch;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -290,6 +291,11 @@ class ZakazController extends Controller
         $notification = $this->findNotification();
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            if (Yii::$app->request->get('id')){
+                $model->id_client = ArrayHelper::getValue(Yii::$app->request->get(), 'id');
+            } else {
+                $model->id_client = ArrayHelper::getValue(Yii::$app->request->post('Client'), 'id');
+            }
             $model->file = UploadedFile::getInstance($model, 'file');
             if ($model->file) {
                 $model->upload();
@@ -334,9 +340,10 @@ class ZakazController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $notification = $this->findNotification();
+        $client = new Client();
 
         if ($model->load(Yii::$app->request->post())) {
+            $model->id_client = ArrayHelper::getValue(Yii::$app->request->post('Client'), 'id');
             $model->file = UploadedFile::getInstance($model, 'file');
             if (isset($model->file)) {
                 $model->file->saveAs('attachment/' . $model->id_zakaz . '.' . $model->file->extension);
@@ -368,7 +375,7 @@ class ZakazController extends Controller
         }
         return $this->render('update', [
             'model' => $model,
-            'notification' => $notification,
+            'client' => $client,
         ]);
     }
 
