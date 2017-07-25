@@ -11,7 +11,7 @@ use yii\widgets\MaskedInput;
 
 <div class="client-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['id' => $model->formName()]); ?>
 
     <?= $form->field($model, 'fio')->textInput(['maxlength' => true]) ?>
 
@@ -36,3 +36,25 @@ use yii\widgets\MaskedInput;
     <?php ActiveForm::end(); ?>
 
 </div>
+<?php $script = <<<JS
+$('form#{$model->formName()}').on('beforeSubmit', function(e) {
+  var form = $(this);
+  $.post(
+      form.attr('action'),
+      form.serialize()
+  )
+    .done(function(result) {
+      if (result == 1)
+          {
+              $(document).find('#modalCreateClient').modal('hide');
+              $.pjax.reload({container: '#pjax-select'});
+          } else {
+            $('.client-form').html(result);
+          }
+    }).fail(function() {
+      console.log('server error');
+    });
+  return false;
+})
+JS;
+$this->registerJs($script);?>
