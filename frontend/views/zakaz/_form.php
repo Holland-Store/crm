@@ -111,9 +111,11 @@ use yii\widgets\MaskedInput;
         ])->label(false) ?>
         </div>
         <div class="col-xs-12">
+            <?php !$model->isNewRecord ? $client->id = $model->id_client : null ?>
             <?php if (Yii::$app->request->get('phone')) {
                 echo $form->field($client, 'id')->widget(Select2::className(), [
-                    'data' => [Yii::$app->request->get('phone')],
+                    'data' => ArrayHelper::map(Client::find()->all(), 'id', 'phone', 'fio'),
+                    'initValueText' => Yii::$app->request->get('id'),
                     'disabled' => true,
                 ]);
             } else {
