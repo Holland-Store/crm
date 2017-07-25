@@ -93,6 +93,7 @@ class ZakazSearch extends Zakaz
 
         // add conditions that should always apply here
 
+        /** @var string $sort */
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'sort' => [
