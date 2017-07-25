@@ -3,6 +3,7 @@
 use app\models\Client;
 use app\models\Zakaz;
 use kartik\select2\Select2;
+use yii\bootstrap\Modal;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -110,30 +111,32 @@ use yii\widgets\MaskedInput;
             'clientOptions' => ['alias' => 'email']
         ])->label(false) ?>
         </div>
+        <?php \yii\widgets\Pjax::begin(['id' => 'pjax-select']) ?>
         <div class="col-xs-12">
             <?php !$model->isNewRecord ? $client->id = $model->id_client : null ?>
             <?php if (Yii::$app->request->get('phone')) {
                 echo $form->field($client, 'id')->widget(Select2::className(), [
-                    'data' => ArrayHelper::map(Client::find()->all(), 'id', 'phone', 'fio'),
-                    'initValueText' => Yii::$app->request->get('id'),
+                    'data' => [Yii::$app->request->get('phone')],
                     'disabled' => true,
-                ]);
+                ])->label(false);
             } else {
                 echo $form->field($client, 'id')->widget(Select2::className(), [
                     'data' => ArrayHelper::map(Client::find()->all(), 'id', 'phone', 'fio'),
-                    'options' => ['placeholder' => 'Введите номер телефона'],
+                    'options' => ['placeholder' => 'Введите номер телефона', 'id' => 'clientCreate'],
                     'pluginOptions' => [
                         'allowClear' => true,
                         'language' => [
-                            'noResults' => new JsExpression('function () { return "<a href=\"' . Url::to(['client/create']) . '\">Добавить клиента</button>"; }'),
+//                            'noResults' => new JsExpression('function () { return "<a href=\"' . Url::to(['client/create']) . '\">Добавить клиента</a>"; }'),
+                            'noResults' => new JsExpression('function () { return "<button type=\"button\" class=\"btn btn-primary btn-xs createClient\" value=\"'.Url::to(['client/create']).'\">Добавить клиент</button>"; }'),
                         ],
                         'escapeMarkup' => new JsExpression('function (markup) {
         return markup;
     }')
                     ],
-                ]);
+                ])->label(false);
             }?>
         </div>
+        <?php \yii\widgets\Pjax::end() ?>
     </div>
 
     <div class="col-xs-2 moneyZakaz">
@@ -199,3 +202,9 @@ use yii\widgets\MaskedInput;
     </div>
     <?php ActiveForm::end(); ?>
 </div>
+<?php Modal::begin([
+    'id' => 'modalCreateClient',
+    'header' => '<h2>Создать клиента</h2>'
+]);
+echo '<div class="modalContentClient"></div>';
+Modal::end(); ?>
