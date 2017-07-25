@@ -2,7 +2,7 @@
 
 namespace app\models;
 
-use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "notification".
@@ -124,7 +124,7 @@ class Notification extends \yii\db\ActiveRecord
                 break;
             case '5'://оформление уведомление выполение работы дизайнера
                 $this->id_user = $id;
-                $this->name = 'Дизайнер выполнил работу №'.$zakaz.' '.$description;
+                $this->name = 'Дизайнер выполнил работу №'.$zakaz;
                 $this->id_zakaz = $zakaz;
                 $this->category = 1;
                 break;
