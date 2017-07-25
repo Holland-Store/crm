@@ -709,10 +709,9 @@ class ZakazController extends Controller
             return $this->redirect(['admin', '#' => $model->id_zakaz]);
         }
 
+        $image = $model->img;
         $searchModel = new ZakazSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, 'admin');
-        $image = $model->img;
-
         $dataProviderNew = $searchModel->search(Yii::$app->request->queryParams, 'adminNew');
         $dataProviderWork = $searchModel->search(Yii::$app->request->queryParams, 'adminWork');
         $dataProviderIspol = $searchModel->search(Yii::$app->request->queryParams, 'adminIspol');
