@@ -1,10 +1,13 @@
 <?php
 
+use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Client */
+/* @var $searchModel app\models\ZakazSearch */
+/* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = $model->fio;
 $this->params['breadcrumbs'][] = ['label' => 'Клиент', 'url' => ['index']];
@@ -12,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="client-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+<!--    <h1>--><?//= Html::encode($this->title) ?><!--</h1>-->
 
     <p>
         <?= Html::a('Редактировать', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
@@ -48,5 +51,26 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ],
     ]) ?>
+
+    <h3>Заказы</h3>
+    <?= GridView::widget([
+        'dataProvider' => $dataProvider,
+        'tableOptions' => ['class' => 'table table-bordered'],
+        'columns' => [
+            'id_zakaz',
+            'description',
+            [
+                'attribute' => 'statusName',
+                'label' => false,
+            ],
+            [
+                'attribute' => 'action',
+                'value' => function($zakaz){
+                    return $zakaz->action == 1 ? 'Активный' : 'Закрытый';
+                }
+            ]
+        ]
+    ])
+    ?>
 
 </div>
