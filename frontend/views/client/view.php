@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\client\Client */
+/* @var $model app\models\Client */
 
 $this->title = $model->fio;
 $this->params['breadcrumbs'][] = ['label' => 'Клиент', 'url' => ['index']];
@@ -23,6 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'method' => 'post',
             ],
         ]) ?>
+        <?= Html::a('Создать заказ', ['zakaz/create', 'phone' => $model->phone, 'id' => $model->id], ['class' => 'btn btn-success'])?>
     </p>
 
     <?= DetailView::widget([
