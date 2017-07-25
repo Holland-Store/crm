@@ -111,20 +111,26 @@ use yii\widgets\MaskedInput;
         ])->label(false) ?>
         </div>
         <div class="col-xs-12">
-            <?= $form->field($client, 'phone')->widget(Select2::className(), [
+            <?php if (Yii::$app->request->get('phone')) {
+                echo $form->field($client, 'id')->widget(Select2::className(), [
+                    'data' => [Yii::$app->request->get('phone')],
+                    'disabled' => true,
+                ]);
+            } else {
+                echo $form->field($client, 'id')->widget(Select2::className(), [
                     'data' => ArrayHelper::map(Client::find()->all(), 'id', 'phone', 'fio'),
                     'options' => ['placeholder' => 'Введите номер телефона'],
                     'pluginOptions' => [
                         'allowClear' => true,
                         'language' => [
-                            'noResults' => new JsExpression('function () { return "<a href=\"'. Url::to(['client/create']).'\">Добавить клиента</button>"; }'),
+                            'noResults' => new JsExpression('function () { return "<a href=\"' . Url::to(['client/create']) . '\">Добавить клиента</button>"; }'),
                         ],
                         'escapeMarkup' => new JsExpression('function (markup) {
         return markup;
     }')
                     ],
-            ])?>
-
+                ]);
+            }?>
         </div>
     </div>
 
