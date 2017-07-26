@@ -44,7 +44,7 @@ $('form#{$model->formName()}').on('beforeSubmit', function(e) {
       form.serialize()
   )
     .done(function(result) {
-      if (result == 1)
+      if (result == true)
           {
               $(document).find('#modalCreateClient').modal('hide');
               $.pjax.reload({container: '#pjax-select'});
