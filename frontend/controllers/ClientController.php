@@ -33,22 +33,22 @@ class ClientController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'action' => ['index'],
+                        'actions' => ['index'],
                         'allow' => true,
                         'roles' => ['program']
                     ],
                     [
-                        'action' => ['create'],
+                        'actions' => ['create'],
                         'allow' => true,
                         'roles' => ['shop', 'admin'],
                     ],
                     [
-                        'action' => ['update'],
+                        'actions' => ['update'],
                         'allow' => true,
                         'roles' => ['shop', 'admin'],
                     ],
                     [
-                        'action' => ['view'],
+                        'actions' => ['view'],
                         'allow' => true,
                         'roles' => ['shop', 'admin'],
                     ],
