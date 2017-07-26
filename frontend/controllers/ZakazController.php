@@ -270,7 +270,12 @@ class ZakazController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             $shipping->save();
             $model->id_shipping = $shipping->id;
-            $model->save();
+            if ($model->save()){
+                Yii::$app->session->addFlash('update', 'Успешно создана доставка');
+            } else {
+                print_r($model->getErrors());
+                Yii::$app->session->addFlash('errors', 'Произошла ошибка и доставка не была создана');
+            }
         }
 
         return $this->render('shipping', [
@@ -314,8 +319,11 @@ class ZakazController extends Controller
             }
             if (!$model->save()) {
                 print_r($model->getErrors());
+                Yii::$app->session->addFlash('errors', 'Произошла ошибка');
+            } else {
+                $model->save();
+                Yii::$app->session->addFlash('update', 'Успешно создан заказ');
             }
-            $model->save();
 
             if (Yii::$app->user->can('shop')) {
                 return $this->redirect(['shop']);
@@ -362,9 +370,11 @@ class ZakazController extends Controller
             }
             $model->validate();
             if (!$model->save()) {
+                Yii::$app->session->addFlash('errors', 'Произошла ошибка');
                 print_r($model->getErrors());
             } else {
                 $model->save();
+                Yii::$app->session->addFlash('update', 'Успешно отредактирован заказ');
             }
 
             if (Yii::$app->user->can('shop')) {
@@ -373,6 +383,7 @@ class ZakazController extends Controller
                 return $this->redirect(['admin']);
             }
         }
+
         return $this->render('update', [
             'model' => $model,
             'client' => $client,
@@ -397,8 +408,10 @@ class ZakazController extends Controller
         $notification->saveNotification;
         if ($model->save()) {
             return $this->redirect(['master']);
+            Yii::$app->session->addFlash('update', 'Заказ успешно выполнен');
         } else {
             print_r($model->getErrors());
+            Yii::$app->session->addFlash('errors', 'Произошла ошибка! Заказ не выполнен');
         }
     }
 
@@ -421,9 +434,11 @@ class ZakazController extends Controller
             $model->statusDisain = Zakaz::STATUS_DISAINER_PROCESS;
             $model->id_unread = true;
             if ($model->save()) {
+                Yii::$app->session->addFlash('update', 'Заказ успешно выполнен');
                 return $this->redirect(['disain', 'id' => $id]);
             } else {
                 print_r($model->getErrors());
+                Yii::$app->session->addFlash('errors', 'Произошла ошибка! Заказ не выполнен');
             }
         }
         return $this->renderAjax('_upload', [
@@ -443,8 +458,10 @@ class ZakazController extends Controller
         $model->action = 0;
         if (!$model->save()) {
             print_r($model->getErrors());
+            Yii::$app->session->addFlash('errors', 'Произошла ошибка!');
         } else {
             $model->save();
+            Yii::$app->session->addFlash('update', 'Заказ успешно закрылся');
         }
 
         $this->view->params['notifications'] = Notification::find()->where(['id_user' => Yii::$app->user->id, 'active' => true])->all();
@@ -461,6 +478,7 @@ class ZakazController extends Controller
         $model = $this->findModel($id);
         $model->action = 1;
         $model->save();
+        Yii::$app->session->addFlash('update', 'Заказ успешно активирован');
 
         return $this->redirect(['archive']);
     }
@@ -701,7 +719,12 @@ class ZakazController extends Controller
             }
             $model = Zakaz::findOne($shipping->id_zakaz);//Определяю заказ
             $model->id_shipping = $shipping->id;//Оформление доставку в таблице заказа
-            $model->save();
+            if ($model->save()){
+                Yii::$app->session->addFlash('update', 'Доставка успешна посталена');
+            } else {
+                Yii::$app->session->addFlash('errors', 'Произошла ошибка');
+            }
+
 
             $notifications->getByIdNotification(7, $shipping->id_zakaz);//оформление уведомлений
             $notifications->saveNotification;

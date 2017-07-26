@@ -107,9 +107,11 @@ class HelpdeskController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if($model->save()){
+                Yii::$app->session->addFlash('update', 'Запрос успешно создан');
                 return $this->redirect(['index', 'id' => $model->id]);
             } else {
                 print_r($model->getErrors());
+                Yii::$app->session->addFlash('errors', 'Произошла ошибка!');
             }
         }
         return $this->render('create', [
