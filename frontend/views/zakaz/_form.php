@@ -123,7 +123,7 @@ use yii\widgets\Pjax;
             } else {
                 echo $form->field($client, 'id')->widget(Select2::className(), [
                     'data' => ArrayHelper::map(Client::find()->all(), 'id', 'phone', 'fio'),
-                    'options' => ['placeholder' => 'Введите номер телефона', 'id' => 'clientCreate'],
+                    'options' => ['placeholder' => 'Введите номер телефона'],
                     'pluginOptions' => [
                         'allowClear' => true,
                         'language' => [
