@@ -373,7 +373,7 @@ $this->title = 'Вce заказы';
         <h3 class="titleTable">На закрытие</h3>
     </div>
     <div class="col-lg-12">
-        <?= /** @var TYPE_NAME $dataProviderIspol */
+        <?= /** @var string $dataProviderIspol */
     GridView::widget([
         'dataProvider' => $dataProviderIspol,
         'floatHeader' => true,
