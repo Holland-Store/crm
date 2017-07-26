@@ -29,6 +29,9 @@ class Client extends \yii\db\ActiveRecord
         return 'client';
     }
 
+    /**
+     * @return array
+     */
     public function scenarios()
     {
         return [

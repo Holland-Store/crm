@@ -89,6 +89,9 @@ class Zakaz extends ActiveRecord
         return 'zakaz';
     }
 
+    /**
+     * @return array
+     */
     public function scenarios()
     {
         return [
