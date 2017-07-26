@@ -130,13 +130,13 @@ AppAsset::register($this);
         <?php if (Yii::$app->session->hasFlash('update')) {
             echo Growl::widget([
                 'type' => Growl::TYPE_SUCCESS,
-                'body' => Yii::$app->session->getFlash('update'),
+                'body' => Yii::$app->session->removeFlash('update'),
             ]);
         } ?>
         <?php if (Yii::$app->session->hasFlash('errors')) {
             echo Growl::widget([
                 'type' => Growl::TYPE_DANGER,
-                'body' => Yii::$app->session->getFlash('update'),
+                'body' => Yii::$app->session->removeFlash('errors'),
             ]);
         } ?>
         <?= $content ?>
