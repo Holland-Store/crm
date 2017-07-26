@@ -18,6 +18,9 @@ namespace app\models;
 class Client extends \yii\db\ActiveRecord
 {
     public $address;
+
+    const SCENARIO_DEFAULT = 'default';
+    const SCENARIO_CREATE = 'create';
     /**
      * @inheritdoc
      */
@@ -26,13 +29,22 @@ class Client extends \yii\db\ActiveRecord
         return 'client';
     }
 
+    public function scenarios()
+    {
+        return [
+            self::SCENARIO_DEFAULT => ['id', 'fio', 'phone', 'emaail', 'home','street', 'apartment'],
+            self::SCENARIO_CREATE => ['id'],
+        ];
+    }
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['fio', 'phone'], 'required'],
+            [['id'], 'required', 'message' => 'Пожалуйста, заполните поле','on' => self::SCENARIO_CREATE],
+            [['fio', 'phone'], 'required', 'on' => self::SCENARIO_DEFAULT],
             [['home', 'apartment'], 'integer'],
             [['phone'], 'number'],
             [['fio'], 'string', 'max' => 86],
