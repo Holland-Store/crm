@@ -7,6 +7,7 @@ use Yii;
 use app\models\Client;
 use app\models\ClientSearch;
 use yii\data\ActiveDataProvider;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -26,6 +27,31 @@ class ClientController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'action' => ['index'],
+                        'allow' => true,
+                        'roles' => ['program']
+                    ],
+                    [
+                        'action' => ['create'],
+                        'allow' => true,
+                        'roles' => ['shop', 'admin'],
+                    ],
+                    [
+                        'action' => ['update'],
+                        'allow' => true,
+                        'roles' => ['shop', 'admin'],
+                    ],
+                    [
+                        'action' => ['view'],
+                        'allow' => true,
+                        'roles' => ['shop', 'admin'],
+                    ],
                 ],
             ],
         ];
@@ -75,9 +101,9 @@ class ClientController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->save()){
-                echo 1;
+                echo true;
             } else {
-                echo 0;
+                echo false;
             }
 //            return $this->redirect(['view', 'id' => $model->id]);
         } else {
