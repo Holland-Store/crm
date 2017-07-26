@@ -12,6 +12,7 @@ use yii\widgets\ActiveForm;
 use kartik\datecontrol\DateControl;
 use kartik\file\FileInput;
 use yii\widgets\MaskedInput;
+use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Zakaz */
@@ -111,7 +112,7 @@ use yii\widgets\MaskedInput;
             'clientOptions' => ['alias' => 'email']
         ])->label(false) ?>
         </div>
-        <?php \yii\widgets\Pjax::begin(['id' => 'pjax-select']) ?>
+        <?php Pjax::begin(['id' => 'pjax-select']) ?>
         <div class="col-xs-12">
             <?php !$model->isNewRecord ? $client->id = $model->id_client : null ?>
             <?php if (Yii::$app->request->get('phone')) {
@@ -136,7 +137,7 @@ use yii\widgets\MaskedInput;
                 ])->label(false);
             }?>
         </div>
-        <?php \yii\widgets\Pjax::end() ?>
+        <?php Pjax::end() ?>
     </div>
 
     <div class="col-xs-2 moneyZakaz">
