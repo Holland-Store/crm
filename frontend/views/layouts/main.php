@@ -4,6 +4,7 @@
 /* @var $content string */
 
 use app\models\Notification;
+use kartik\widgets\Growl;
 use yii\helpers\Html;
 use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
@@ -126,6 +127,18 @@ AppAsset::register($this);
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
         <?= Alert::widget() ?>
+        <?php if (Yii::$app->session->hasFlash('update')) {
+            echo Growl::widget([
+                'type' => Growl::TYPE_SUCCESS,
+                'body' => Yii::$app->session->getFlash('update'),
+            ]);
+        } ?>
+        <?php if (Yii::$app->session->hasFlash('errors')) {
+            echo Growl::widget([
+                'type' => Growl::TYPE_DANGER,
+                'body' => Yii::$app->session->getFlash('update'),
+            ]);
+        } ?>
         <?= $content ?>
     </div>
 </div>
