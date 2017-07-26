@@ -293,9 +293,9 @@ class ZakazController extends Controller
     {
         $model = new Zakaz();
         $client = new Client();
-        $notification = $this->findNotification();
+        $client->scenario = Client::SCENARIO_CREATE;
 
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+        if ($model->load(Yii::$app->request->post()) && $client->load(Yii::$app->request->post())) {
             if (Yii::$app->request->get('id')){
                 $model->id_client = ArrayHelper::getValue(Yii::$app->request->get(), 'id');
             } else {
@@ -317,25 +317,26 @@ class ZakazController extends Controller
                     $model->id_unread = 0;
                 }
             }
-            if (!$model->save()) {
-                print_r($model->getErrors());
-                Yii::$app->session->addFlash('errors', 'Произошла ошибка');
-            } else {
-                $model->save();
-                Yii::$app->session->addFlash('update', 'Успешно создан заказ');
-            }
+            if ($model->validate() && $client->validate()){
+                if (!$model->save()) {
+                    print_r($model->getErrors());
+                    Yii::$app->session->addFlash('errors', 'Произошла ошибка');
+                } else {
+                    $model->save();
+                    Yii::$app->session->addFlash('update', 'Успешно создан заказ');
+                }
 
-            if (Yii::$app->user->can('shop')) {
-                return $this->redirect(['shop']);
-            } elseif (Yii::$app->user->can('admin')) {
-                return $this->redirect(['admin']);
+                if (Yii::$app->user->can('shop')) {
+                    return $this->redirect(['shop']);
+                } elseif (Yii::$app->user->can('admin')) {
+                    return $this->redirect(['admin']);
+                }
             }
         }
 
         return $this->render('create', [
             'model' => $model,
             'client' => $client,
-            'notification' => $notification,
         ]);
     }
 
@@ -349,8 +350,9 @@ class ZakazController extends Controller
     {
         $model = $this->findModel($id);
         $client = new Client();
+        $client->scenario = Client::SCENARIO_CREATE;
 
-        if ($model->load(Yii::$app->request->post())) {
+        if ($model->load(Yii::$app->request->post()) && $client->load(Yii::$app->request->post())) {
             $model->id_client = ArrayHelper::getValue(Yii::$app->request->post('Client'), 'id');
             $model->file = UploadedFile::getInstance($model, 'file');
             if (isset($model->file)) {
@@ -368,19 +370,20 @@ class ZakazController extends Controller
                     $model->id_unread = 0;
                 }
             }
-            $model->validate();
-            if (!$model->save()) {
-                Yii::$app->session->addFlash('errors', 'Произошла ошибка');
-                print_r($model->getErrors());
-            } else {
-                $model->save();
-                Yii::$app->session->addFlash('update', 'Успешно отредактирован заказ');
-            }
+            if ($model->validate() && $client->validate()){
+                if (!$model->save()) {
+                    Yii::$app->session->addFlash('errors', 'Произошла ошибка');
+                    print_r($model->getErrors());
+                } else {
+                    $model->save();
+                    Yii::$app->session->addFlash('update', 'Успешно отредактирован заказ');
+                }
 
-            if (Yii::$app->user->can('shop')) {
-                return $this->redirect(['shop']);
-            } elseif (Yii::$app->user->can('admin')) {
-                return $this->redirect(['admin']);
+                if (Yii::$app->user->can('shop')) {
+                    return $this->redirect(['shop']);
+                } elseif (Yii::$app->user->can('admin')) {
+                    return $this->redirect(['admin']);
+                }
             }
         }
 
