@@ -78,6 +78,7 @@ $this->title = 'Вce заказы';
     </div>
     <div class="col-lg-12">
         <?=
+        /** @var string $dataProviderWork */
         GridView::widget([
         'dataProvider' => $dataProviderWork,
         'floatHeader' => true,
@@ -133,9 +134,9 @@ $this->title = 'Вce заказы';
                 'contentOptions' => ['class' => 'tr20'],
                 'value' => function($model){
                     if ($model->prioritet == 2) {
-                        return '<i class="fa fa-circle fa-red" aria-hidden="true"></i>';
+                        return '<i class="fa fa-circle fa-red"></i>';
                     } elseif ($model->prioritet == 1) {
-                        return '<i class="fa fa-circle fa-ping" aria-hidden="true"></i>';
+                        return '<i class="fa fa-circle fa-ping"></i>';
                     } else {
                         return '';
                     }
@@ -188,9 +189,9 @@ $this->title = 'Вce заказы';
                         return '';
                     } else {
                         if ($model->idShipping->status == Courier::DOSTAVKA or $model->idShipping->status == Courier::RECEIVE) {
-                            return '<i class="fa fa-truck" style="font-size: 13px;color: #f0ad4e;" aria-hidden="true"></i>';
+                            return '<i class="fa fa-truck" style="font-size: 13px;color: #f0ad4e;"></i>';
                         } elseif ($model->idShipping->status == Courier::DELIVERED){
-                            return '<i class="fa fa-truck" style="font-size: 13px;color: #191412;" aria-hidden="true"></i>';
+                            return '<i class="fa fa-truck" style="font-size: 13px;color: #191412;"></i>';
                         } else {
                             return '';
                         }
@@ -292,9 +293,9 @@ $this->title = 'Вce заказы';
                 'contentOptions' => ['class' => 'tr20'],
                 'value' => function($model){
                     if ($model->prioritet == 2) {
-                        return '<i class="fa fa-circle fa-red" aria-hidden="true"></i>';
+                        return '<i class="fa fa-circle fa-red"></i>';
                     } elseif ($model->prioritet == 1) {
-                        return '<i class="fa fa-circle fa-ping" aria-hidden="true"></i>';
+                        return '<i class="fa fa-circle fa-ping"></i>';
                     } else {
                         return '';
                     }
@@ -335,9 +336,9 @@ $this->title = 'Вce заказы';
                             return '';
                         } else {
                             if ($model->idShipping->status == Courier::DOSTAVKA or $model->idShipping->status == Courier::RECEIVE) {
-                                return '<i class="fa fa-truck" style="font-size: 13px;color: #f0ad4e;" aria-hidden="true"></i>';
+                                return '<i class="fa fa-truck" style="font-size: 13px;color: #f0ad4e;"></i>';
                             } elseif ($model->idShipping->status == Courier::DELIVERED){
-                                return '<i class="fa fa-truck" style="font-size: 13px;color: #191412;" aria-hidden="true"></i>';
+                                return '<i class="fa fa-truck" style="font-size: 13px;color: #191412;"></i>';
                             } else {
                                 return '';
                             }
@@ -413,9 +414,9 @@ $this->title = 'Вce заказы';
                 'contentOptions' => ['class' => 'tr20'],
                 'value' => function($model){
                     if ($model->prioritet == 2) {
-                        return '<i class="fa fa-circle fa-red" aria-hidden="true"></i>';
+                        return '<i class="fa fa-circle fa-red"></i>';
                     } elseif ($model->prioritet == 1) {
-                        return '<i class="fa fa-circle fa-ping" aria-hidden="true"></i>';
+                        return '<i class="fa fa-circle fa-ping"></i>';
                     } else {
                         return '';
                     }
@@ -456,9 +457,9 @@ $this->title = 'Вce заказы';
                         return '';
                     } else {
                         if ($model->idShipping->status == Courier::DOSTAVKA or $model->idShipping->status == Courier::RECEIVE) {
-                            return '<i class="fa fa-truck" style="font-size: 13px;color: #f0ad4e;" aria-hidden="true"></i>';
+                            return '<i class="fa fa-truck" style="font-size: 13px;color: #f0ad4e;"></i>';
                         } elseif ($model->idShipping->status == Courier::DELIVERED){
-                            return '<i class="fa fa-truck" style="font-size: 13px;color: #191412;" aria-hidden="true"></i>';
+                            return '<i class="fa fa-truck" style="font-size: 13px;color: #191412;"></i>';
                         } else {
                             return '';
                         }
