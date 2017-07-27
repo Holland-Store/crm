@@ -427,7 +427,7 @@ thead a {
 /* line 356, ../sass/gridview.scss */
 .table-bordered tbody tr .zakazInfo .comment-zakaz {
   overflow-y: auto;
-  height: 38px;
+  height: 3px;
   margin-top: 5px;
   color: #3a3331;
   background: #191412;

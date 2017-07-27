@@ -374,7 +374,7 @@ thead a {
     border-bottom: 14px solid #736a50; }
   .table-bordered tbody tr .zakazInfo .comment-zakaz {
     overflow-y: auto;
-    height: 38px;
+    height: 3px;
     margin-top: 5px;
     color: #3a3331;
     background: #191412;
@@ -512,6 +512,17 @@ thead a {
   text-decoration: none; }
   .helpdesk-index a:hover {
     color: white; }
+
+.commentButton {
+  padding-left: 13px;
+  padding-right: 13px;
+  float: right;
+  margin-top: -10px;
+  margin-right: 18px;
+  font-size: 11px;
+  background: #3a3331;
+  border-radius: 26px;
+  color: #736a50; }
 
 .buttonAdd {
   border-radius: 68px;
