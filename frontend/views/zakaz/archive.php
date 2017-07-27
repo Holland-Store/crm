@@ -1,9 +1,7 @@
 <?php
 
-use yii\helpers\Html;
+use app\models\Comment;
 use kartik\grid\GridView;
-use app\models\Zakaz;
-use dosamigos\datepicker\DatePicker;
 use yii\helpers\StringHelper;
 
 /* @var $this yii\web\View */
@@ -24,30 +22,21 @@ $this->title = 'Архив заказов';
         'headerRowOptions' => ['class' => 'headerTable'],
         'pjax' => true,
         'tableOptions' 	=> ['class' => 'table table-bordered tableSize'],
-        'rowOptions' => function($model, $key, $index, $grid){
-            if ($model->srok < date('Y-m-d') && $model->status > Zakaz::STATUS_NEW ) {
-                return ['class' => 'trTable trTablePass italic trSrok'];
-            } elseif ($model->srok < date('Y-m-d') && $model->status == Zakaz::STATUS_NEW) {
-                return['class' => 'trTable trTablePass bold trSrok trNew'];
-            } elseif ($model->srok > date('Y-m-d') && $model->status == Zakaz::STATUS_NEW){
-                return['class' => 'trTable bold trSrok trNew'];
-            } else {
-                return ['class' => 'trTable trNormal'];
-            }
-        },
+        'rowOptions' => ['class' => 'trTable trNormal'],
         'striped' => false,
         'columns' => [
             [
                 'class'=>'kartik\grid\ExpandRowColumn',
-                'contentOptions' => function($model, $index, $grid){
+                'contentOptions' => function($model){
                     return ['id' => $model->id_zakaz, 'class' => 'border-left', 'style' => 'border:none'];
                 },
                 'width'=>'10px',
-                'value' => function ($model, $key, $index) {
+                'value' => function () {
                     return GridView::ROW_COLLAPSED;
                 },
-                'detail'=>function ($model, $key, $index, $column) {
-                    return Yii::$app->controller->renderPartial('_zakaz', ['model'=> $model]);
+                'detail'=>function ($model) {
+                    $comment = new Comment();
+                    return Yii::$app->controller->renderPartial('_zakaz', ['model'=> $model, 'comment' => $comment]);
                 },
                 'enableRowClick' => true,
                 'expandOneOnly' => true,
@@ -66,9 +55,9 @@ $this->title = 'Архив заказов';
                 'contentOptions' => ['class' => 'tr20'],
                 'value' => function($model){
                     if ($model->prioritet == 2) {
-                        return '<i class="fa fa-circle fa-red" aria-hidden="true"></i>';
+                        return '<i class="fa fa-circle fa-red"></i>';
                     } elseif ($model->prioritet == 1) {
-                        return '<i class="fa fa-circle fa-ping" aria-hidden="true"></i>';
+                        return '<i class="fa fa-circle fa-ping"></i>';
                     } else {
                         return '';
                     }
@@ -99,9 +88,9 @@ $this->title = 'Архив заказов';
                 'contentOptions' => ['class' => 'tr50'],
                 'value' => function($model){
                     if ($model->idShipping->status == 0 or $model->idShipping->status == 1) {
-                        return '<i class="fa fa-truck" style="font-size: 13px;color: #f0ad4e;" aria-hidden="true"></i>';
+                        return '<i class="fa fa-truck" style="font-size: 13px;color: #f0ad4e;"></i>';
                     } elseif ($model->idShipping->status == 2){
-                        return '<i class="fa fa-truck" style="font-size: 13px;color: #191412;" aria-hidden="true"></i>';
+                        return '<i class="fa fa-truck" style="font-size: 13px;color: #191412;"></i>';
                     } else{return '';}
                 }
             ],
@@ -116,7 +105,7 @@ $this->title = 'Архив заказов';
             [
                 'attribute' => '',
                 'format' => 'raw',
-                'value' => function($model){
+                'value' => function(){
                     return '';
                 },
                 'contentOptions' => ['class' => 'textTr border-right tr20'],
