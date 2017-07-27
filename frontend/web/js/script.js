@@ -58,6 +58,6 @@ $(document).ready(function(){
                 url: "/frontend/web/zakaz/adopmaster?id="+data,
                 success: console.log('Успешно изменен статус '+data)
             })
-       })
+       });
 });
 
