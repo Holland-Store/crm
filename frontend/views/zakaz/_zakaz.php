@@ -1,11 +1,15 @@
 <?php
 use yii\helpers\Html;
+use yii\widgets\ActiveForm;
 use yii\widgets\DetailView;
 use yii\helpers\Url;
 use yii\bootstrap\Modal;
 use app\models\Courier;
 use app\models\Comment;
 use app\models\Zakaz;
+
+/* @var  $comment app\models\Comment */
+/** @var string $sotrud */
 ?>
 
 <div class="view-zakaz" style="color: black">
@@ -48,45 +52,45 @@ use app\models\Zakaz;
 </div>';
             }?>
         </div>
-<!--        --><?//= Html::buttonInput('Коммент', [
-//            'class' => 'btn btn-xs',
-//            'style' => '    padding-left: 13px;
-//                            padding-right: 13px;
-//                            float: right;
-//                            margin-top: -10px;
-//                            margin-right: 18px;
-//                            font-size: 11px;
-//                            background: #3a3331;
-//                            border-radius: 26px;
-//                            color: #736a50;']) ?>
-<!--        <div>-->
-<!--            --><?php //$formComment = ActiveForm::begin([
-//                    'id' => 'formComment',
-//            ]); ?>
-<!--            --><?php //if ($model->status == 3){
-//                $comment->sotrud = 3;
-//                $sotrud = $comment->sotrud;
-//            } elseif($model->status == 4){
-//                $comment->sotrud = 4;
-//                $sotrud = $comment->sotrud;
-//            }
-//            ?>
-<!--            <div class="col-lg-11">-->
-<!--                --><?//= $formComment->field($comment, 'comment')->textarea(['placeholder' => 'Комментарий', 'rows' => 1])->label(false) ?>
-<!--                --><?//= $formComment->field($comment, 'id_user')->hiddenInput(['value' => Yii::$app->user->getId()])->label(false)?>
-<!--                --><?//= $formComment->field($comment, 'sotrud')->hiddenInput(['value' => $sotrud])->label(false)?>
-<!--                --><?//= $formComment->field($comment, 'id_zakaz')->hiddenInput(['value' => $model->id_zakaz])->label(false)?>
-<!--            </div>-->
-<!--            <div class="col-lg-1">-->
-<!--                --><?//= Html::submitButton(' <span class="glyphicon glyphicon-send"></span>', ['class' => 'btn btn-primary', 'style' => '    color: white;
-//    font-size: 15px;
-//    margin-top: 0px;
-//    margin-left: -30px;
-//    border-radius: 45px;'])?>
-<!---->
-<!--            </div>-->
-<!--            --><?php //ActiveForm::end(); ?>
-<!--        </div>-->
+        <?= Html::buttonInput('Коммент', [
+            'class' => 'btn btn-xs',
+            'style' => '    padding-left: 13px;
+                            padding-right: 13px;
+                            float: right;
+                            margin-top: -10px;
+                            margin-right: 18px;
+                            font-size: 11px;
+                            background: #3a3331;
+                            border-radius: 26px;
+                            color: #736a50;']) ?>
+        <div>
+            <?php $formComment = ActiveForm::begin([
+                    'id' => 'formComment',
+            ]); ?>
+            <?php if ($model->status == 3){
+                $comment->sotrud = 3;
+                $sotrud = $comment->sotrud;
+            } elseif($model->status == 4){
+                $comment->sotrud = 4;
+                $sotrud = $comment->sotrud;
+            }
+            ?>
+            <div class="col-lg-11">
+                <?= $formComment->field($comment, 'comment')->textarea(['placeholder' => 'Комментарий', 'rows' => 1])->label(false) ?>
+                <?= $formComment->field($comment, 'id_user')->hiddenInput(['value' => Yii::$app->user->getId()])->label(false)?>
+                <?= $formComment->field($comment, 'sotrud')->hiddenInput(['value' => $sotrud])->label(false)?>
+                <?= $formComment->field($comment, 'id_zakaz')->hiddenInput(['value' => $model->id_zakaz])->label(false)?>
+            </div>
+            <div class="col-lg-1">
+                <?= Html::submitButton(' <span class="glyphicon glyphicon-send"></span>', ['class' => 'btn btn-primary', 'style' => '    color: white;
+    font-size: 15px;
+    margin-top: 0px;
+    margin-left: -30px;
+    border-radius: 45px;'])?>
+
+            </div>
+            <?php ActiveForm::end(); ?>
+        </div>
 	</div>
 	<div class="col-lg-1 zakazFile">
         <div class="zakazFile_block">
