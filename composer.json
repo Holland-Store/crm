@@ -33,7 +33,9 @@
         "kint-php/kint": "^2.1",
         "kartik-v/yii2-widget-datetimepicker": "*",
         "kartik-v/yii2-datecontrol": "dev-master",
-        "kartik-v/yii2-widgets": "^3.4"
+        "kartik-v/yii2-widgets": "^3.4",
+        "npm-asset/jquery": "^2.2",
+        "bower-asset/sweetalert": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
@@ -53,5 +55,11 @@
     },
     "scripts": {
         "post-install-cmd": "php init --env=Development --overwrite=n"
-    }
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    ]
 }
