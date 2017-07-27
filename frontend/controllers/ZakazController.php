@@ -476,6 +476,10 @@ class ZakazController extends Controller
         }
     }
 
+    /**
+     * @param $id
+     * @return \yii\web\Response
+     */
     public function actionRestore($id)
     {
         $model = $this->findModel($id);
