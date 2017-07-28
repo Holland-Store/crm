@@ -99,9 +99,10 @@ class ZakazSearch extends Zakaz
             'sort' => [
                 'defaultOrder' => $sort,
             ],
+            'pagination' => [
+                'pageSize' => 100,
+            ]
         ]);
-
-        $dataProvider->pagination = false;
 
         $this->load($params);
 
