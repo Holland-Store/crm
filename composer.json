@@ -35,7 +35,8 @@
         "kartik-v/yii2-datecontrol": "dev-master",
         "kartik-v/yii2-widgets": "^3.4",
         "npm-asset/jquery": "^2.2",
-        "bower-asset/sweetalert": "*"
+        "bower-asset/sweetalert": "*",
+        "sonko-dmitry/yii2-telegram-bot-api": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
