@@ -745,6 +745,7 @@ class ZakazController extends Controller
         $dataProviderNew = $searchModel->search(Yii::$app->request->queryParams, 'adminNew');
         $dataProviderWork = $searchModel->search(Yii::$app->request->queryParams, 'adminWork');
         $dataProviderIspol = $searchModel->search(Yii::$app->request->queryParams, 'adminIspol');
+        $dataProvider->pagination = false;
 
         return $this->render('admin', [
             'searchModel' => $searchModel,
