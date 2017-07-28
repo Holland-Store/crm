@@ -2,8 +2,7 @@
 
 namespace app\models;
 
-use Yii;
-
+use yii\db\ActiveRecord;
 /**
  * This is the model class for table "Comment".
  *
@@ -13,8 +12,12 @@ use Yii;
  * @property integer $id_zakaz
  * @property string $date
  * @property string $comment
+ *
+ * @property User $idUser
+ * @property User $sotrud0
+ * @property Zakaz $idZakaz
  */
-class Comment extends \yii\db\ActiveRecord
+class Comment extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -30,7 +33,7 @@ class Comment extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_zakaz', 'sotrud'], 'required'],
+            [['id_zakaz'], 'required'],
             [['id_user', 'sotrud', 'id_zakaz'], 'integer'],
             [['date'], 'safe'],
             [['comment'], 'string'],
@@ -53,5 +56,29 @@ class Comment extends \yii\db\ActiveRecord
             'date' => 'Date',
             'comment' => 'Comment',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getIdUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'id_user']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSotrud0()
+    {
+        return $this->hasOne(User::className(), ['id' => 'sotrud']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getIdZakaz()
+    {
+        return $this->hasOne(Zakaz::className(), ['id_zakaz' => 'id_zakaz']);
     }
 }
