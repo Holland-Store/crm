@@ -30,7 +30,8 @@ use app\models\Zakaz;
         <div class="divInform">
         <?= $model->information ?>
         </div>
-        <?php $comments = Comment::find()->where(['id_zakaz' => $model->id_zakaz])->all(); ?>
+        <?php \yii\widgets\Pjax::begin(['id' => 'commentPjax']) ?>
+        <?php $comments = Comment::find()->where(['id_zakaz' => $model->id_zakaz])->orderBy('date DESC')->all(); ?>
         <div class="comment-zakaz">
             <?php  foreach ($comments as $com){
                 switch ($com->id_user){
@@ -52,20 +53,13 @@ use app\models\Zakaz;
 </div>';
             }?>
         </div>
+        <?php \yii\widgets\Pjax::end(); ?>
         <?= Html::buttonInput('Коммент', [
-            'class' => 'btn btn-xs',
-            'style' => '    padding-left: 13px;
-                            padding-right: 13px;
-                            float: right;
-                            margin-top: -10px;
-                            margin-right: 18px;
-                            font-size: 11px;
-                            background: #3a3331;
-                            border-radius: 26px;
-                            color: #736a50;']) ?>
+            'class' => 'btn btn-xs commentButton']) ?>
         <div>
             <?php $formComment = ActiveForm::begin([
                     'id' => 'formComment',
+                    'action' => ['comment/create'],
             ]); ?>
             <?php if ($model->status == 3){
                 $comment->sotrud = 3;
@@ -218,3 +212,26 @@ use app\models\Zakaz;
         <?php endif ?>
 <!--            --><?//= Html::a('Чек', ['#'], ['class' => 'btn btn-xs', 'style' => 'float: right;margin-right: 71px;'])?>
     </div>
+<?php $script = <<<JS
+$('#formComment').on('beforeSubmit', function(e) {
+    // alert('Работает');
+  var form = $(this);
+  $.post(
+      form.attr('action'),
+      form.serialize()
+  )
+    .done(function(result) {
+      if (result == true)
+          {
+              $.pjax.reload({container: '#commentPjax'});
+              $('#formComment').trigger('reset');
+          } else {
+            return false
+          }
+    }).fail(function() {
+      console.log('server error');
+    });
+return false;
+})
+JS;
+$this->registerJS($script); ?>
