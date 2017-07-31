@@ -1,9 +1,7 @@
 <?php
 
-use yii\bootstrap\ButtonDropdown;
 use yii\helpers\Html;
 use kartik\grid\GridView;
-use yii\bootstrap\Nav;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\TodoistSearch */
@@ -50,7 +48,12 @@ $this->title = 'Все задачи';
                 'format' => 'raw',
                 'contentOptions' => ['class' => 'border-right textTr tr50'],
                 'value' => function($model){
-                    return Html::a('Выполнить', ['close', 'id' => $model->id]);
+                    return Html::a('Выполнить', ['close', 'id' => $model->id], [
+                            'data' => [
+                                    'confirm' => 'Вы действительно выполнили задачу?',
+                                    'method' => 'post',
+                            ]
+                    ]);
                 }
             ]
         ],
