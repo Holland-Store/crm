@@ -1,5 +1,6 @@
 <?php
 
+use app\models\Comment;
 use yii\helpers\StringHelper;
 use kartik\grid\GridView;
 use app\models\Zakaz;
@@ -8,6 +9,7 @@ use yii\widgets\Pjax;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\ZakazSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
+/* @var  $comment app\models\Comment */
 
 $this->title = 'Все заказы';
 ?>
@@ -40,7 +42,8 @@ $this->title = 'Все заказы';
                     return GridView::ROW_COLLAPSED;
                 },
                 'detail'=>function ($model) {
-                    return Yii::$app->controller->renderPartial('_zakaz', ['model'=> $model]);
+                    $comment = new Comment();
+                    return Yii::$app->controller->renderPartial('_zakaz', ['model'=> $model, 'comment' => $comment]);
                 },
                 'enableRowClick' => true,
                 'expandOneOnly' => true,
@@ -59,9 +62,9 @@ $this->title = 'Все заказы';
                 'contentOptions' => ['class' => 'tr20'],
                 'value' => function($model){
                     if ($model->prioritet == 2) {
-                        return '<i class="fa fa-circle fa-red" aria-hidden="true"></i>';
+                        return '<i class="fa fa-circle fa-red"></i>';
                     } elseif ($model->prioritet == 1) {
-                        return '<i class="fa fa-circle fa-ping" aria-hidden="true"></i>';
+                        return '<i class="fa fa-circle fa-ping"></i>';
                     } else {
                         return '';
                     }
@@ -109,7 +112,8 @@ $this->title = 'Все заказы';
     ]); ?>
 
     <h3>На согласование</h3>
-    <?= GridView::widget([
+    <?= /** @var string $dataProviderSoglas */
+    GridView::widget([
         'dataProvider' => $dataProviderSoglas,
         'floatHeader' => true,
         'headerRowOptions' => ['class' => 'headerTable'],
@@ -134,7 +138,8 @@ $this->title = 'Все заказы';
                     return GridView::ROW_COLLAPSED;
                 },
                 'detail'=>function ($model) {
-                    return Yii::$app->controller->renderPartial('_zakaz', ['model'=> $model]);
+                    $comment = new Comment();
+                    return Yii::$app->controller->renderPartial('_zakaz', ['model'=> $model, 'comment' => $comment]);
                 },
                 'enableRowClick' => true,
                 'expandOneOnly' => true,
@@ -153,9 +158,9 @@ $this->title = 'Все заказы';
                 'contentOptions' => ['class' => 'tr20'],
                 'value' => function($model){
                     if ($model->prioritet == 2) {
-                        return '<i class="fa fa-circle fa-red" aria-hidden="true"></i>';
+                        return '<i class="fa fa-circle fa-red"></i>';
                     } elseif ($model->prioritet == 1) {
-                        return '<i class="fa fa-circle fa-ping" aria-hidden="true"></i>';
+                        return '<i class="fa fa-circle fa-ping"></i>';
                     } else {
                         return '';
                     }
