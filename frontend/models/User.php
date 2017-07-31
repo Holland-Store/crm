@@ -2,7 +2,6 @@
 
 namespace app\models;
 
-use Yii;
 
 /**
  * This is the model class for table "user".
@@ -17,6 +16,7 @@ use Yii;
  * @property integer $created_at
  * @property integer $updated_at
  * @property string $name
+ * @property string #telegram_chat_id
  *
  * @property Zakaz[] $zakazs
  */
@@ -40,7 +40,7 @@ class User extends \yii\db\ActiveRecord
             [['status', 'created_at', 'updated_at'], 'integer'],
             [['username', 'password_hash', 'password_reset_token', 'email'], 'string', 'max' => 255],
             [['auth_key'], 'string', 'max' => 32],
-            [['name'], 'string', 'max' => 50],
+            [['name', 'telegram_chat_id'], 'string', 'max' => 50],
             [['username'], 'unique'],
             [['email'], 'unique'],
             [['password_reset_token'], 'unique'],
@@ -63,6 +63,7 @@ class User extends \yii\db\ActiveRecord
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'name' => 'Name',
+            'telegram_chat_id' => 'Telegram Chat Id',
         ];
     }
 
