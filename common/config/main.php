@@ -8,6 +8,6 @@ return [
         ],
         'cacheRbac' => [
             'class' => 'yii\caching\ApcCache',
-        ]
+        ],
     ],
 ];
