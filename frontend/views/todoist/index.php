@@ -89,7 +89,7 @@ $this->title = 'Все задачи';
                 'value' => function($model){
                     if ($model->id_zakaz != null) {
                         return Html::a($model->idZakaz->prefics, ['zakaz/view', 'id' => $model->id_zakaz]);
-                    } 
+                    }
                     return '';
                 },
                 'label' => 'Заказ',
