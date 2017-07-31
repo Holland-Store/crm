@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use app\models\User;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
@@ -183,6 +184,13 @@ class SiteController extends Controller
         return $this->render('signup', [
             'model' => $model,
         ]);
+    }
+
+    public function actionSetting($id)
+    {
+        $model = User::findOne($id);
+
+        return $this->render('setting', ['model' => $model]);
     }
 
     /**
