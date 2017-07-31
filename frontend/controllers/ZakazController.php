@@ -685,16 +685,16 @@ class ZakazController extends Controller
      */
     public function actionMaster()
     {
+        $comment = new Comment();
         $searchModel = new ZakazSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, 'master');
         $dataProviderSoglas = $searchModel->search(Yii::$app->request->queryParams, 'masterSoglas');
-        $notification = $this->findNotification();
 
         return $this->render('master', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'dataProviderSoglas' => $dataProviderSoglas,
-            'notification' => $notification,
+            'comment' => $comment,
         ]);
     }
 
