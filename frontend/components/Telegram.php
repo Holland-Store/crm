@@ -5,7 +5,7 @@ namespace frontend\components;
 use app\models\User;
 
 
-$output = json_decode(file_get_contents('php://input'), true);
+$output = file_get_contents('php://input');
 $message = $output['message'];
 $id = $message['chat']['id'];
 file_put_contents('logs.txt', $id);
