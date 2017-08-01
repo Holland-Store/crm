@@ -16,4 +16,3 @@ $model->telegram_chat_id = $id;
 $model->save();
 
 $webSite = 'https://api.telegram.org/bot'.$token;
-
