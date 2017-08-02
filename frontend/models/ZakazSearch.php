@@ -85,9 +85,11 @@ class ZakazSearch extends Zakaz
                 break;  
             case 'archive':
                 $query->andWhere(['action' => 0]);
+                $sort = ['data' => SORT_DESC];
                 break;
             case 'closeshop':
                 $query->andWhere(['id_sotrud' => Yii::$app->user->id, 'action' => 0]);
+                $sort = ['data' => SORT_DESC];
                 break;
         }
 
