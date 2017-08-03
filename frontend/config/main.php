@@ -51,6 +51,10 @@ return [
                 ],
             ],
         ],
+        'bot' => [
+            'class' => 'frontend\components\TelegramComponent',
+            'apiToken' => '414134665:AAHfOIdeikQD04NdKckL8wadhqzggvmSqw0',
+        ],
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
