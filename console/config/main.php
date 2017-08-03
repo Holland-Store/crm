@@ -28,10 +28,6 @@ return [
                 ],
             ],
         ],
-        'telegram' => [
-            'class' => 'aki\telegram\Telegram',
-            'botToken' => '414134665:AAHfOIdeikQD04NdKckL8wadhqzggvmSqw0',
-        ],
 //        'nodeSocket' => [
 //            'class' => '\YiiNodeSocket\NodeSocket',
 //		    'host' => 'localhost',
