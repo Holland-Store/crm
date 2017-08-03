@@ -189,8 +189,13 @@ class SiteController extends Controller
     public function actionSetting($id)
     {
         $model = User::findOne($id);
-
         return $this->render('setting', ['model' => $model]);
+
+    }
+
+    public function actionTelegram()
+    {
+        return $this->redirect('https://telegram.me/HollandSotrudbot');
     }
 
     /**
