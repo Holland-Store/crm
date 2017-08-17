@@ -1,8 +1,9 @@
 <?php
 use kartik\file\FileInput;
 use kartik\form\ActiveForm;
-use yii\helpers\Url;
 use kartik\helpers\Html;
+
+/* @var $model app\models\Zakaz */
 ?>
 
 <div class="zakaz-upload">
@@ -20,6 +21,7 @@ use kartik\helpers\Html;
             'browseClass' => 'action fileInput',
             'previewFileType' => 'any',
             'maxFileCount' => 1,
+            'maxFileSize' => 25600,
             'preferIconicPreview' => true,
             'previewFileIconSettings' => ([
                 'doc' => '<i class="fa fa-file-word-o text-orange"></i>',
@@ -32,6 +34,7 @@ use kartik\helpers\Html;
                 'jpg' => '<i class="fa fa-file-photo-o text-orange"></i>',
                 'png' => '<i class="fa fa-file-photo-o text-orange"></i>',
                 'gif' => '<i class="fa fa-file-photo-o text-orange"></i>',
+                'cdr' => '<i class="fa fa-file-photo-o text-orange"></i>',
             ]),
             'layoutTemplates' => [
                 'preview' => '<div class="file-preview {class}">

@@ -99,7 +99,7 @@ body {
 .table > tbody > tr.info > th,
 .table > tfoot > tr.info > th {
   background: #191412;
-  border-radius: 0px 0px 15px 15px; }
+  border-radius: 0 0 15px 15px; }
 
 .container {
   font-size: 11px; }
@@ -141,7 +141,7 @@ body {
     top: 40px;
     left: -56px;
     height: 30px;
-    border-radius: 16px 0px 0px 19px;
+    border-radius: 16px 0 0 19px;
     background: #302927;
     font-size: 11px;
     border: 1px solid rgba(204, 198, 198, 0.6); }
@@ -152,9 +152,9 @@ body {
   .zakazSearch .zakaz-search button {
     margin-top: -5px;
     height: 30px;
-    padding: 0px 23px 0px 13px;
+    padding: 0 23px 0 13px;
     margin-left: 98px;
-    border-radius: 0px 16px 16px 0px;
+    border-radius: 0 16px 16px 0;
     color: rgba(204, 198, 198, 0.6);
     background: #3a3331;
     border: 1px solid rgba(204, 198, 198, 0.6);
@@ -286,7 +286,7 @@ body {
   .responsible .price {
     font-weight: 100;
     color: rgba(204, 198, 198, 0.6);
-    margin-right: 0px;
+    margin-right: 0;
     margin-left: 36px;
     float: left; }
     .responsible .price:nth-of-type(1) {
@@ -295,7 +295,7 @@ body {
       margin-left: 64px; }
     .responsible .price:nth-of-type(3) {
       margin-right: 27px;
-      margin-left: 0px;
+      margin-left: 0;
       float: right; }
   .responsible .statusZakaz {
     width: 155px;
@@ -355,7 +355,7 @@ thead a {
     background: #736a50;
     color: #191412;
     border-radius: 8px;
-    padding: 5px 18px 0px 17px;
+    padding: 5px 18px 0 17px;
     border-top: 4px solid #736a50;
     border-right: 4px solid #736a50;
     border-left: 1px solid #736a50;
@@ -367,9 +367,9 @@ thead a {
     color: #3a3331;
     background: #191412;
     border-radius: 8px;
-    padding: 9px 18px 0px 17px;
-    border-left: 0px solid #191412;
-    border-top: 0px solid #191412;
+    padding: 9px 18px 0 17px;
+    border-left: 0 solid #191412;
+    border-top: 0 solid #191412;
     border-right: 3px solid #191412;
     border-bottom: 27px solid #191412; }
   .table-bordered tbody tr .zakazInfo ::-webkit-scrollbar {
@@ -394,7 +394,7 @@ thead a {
   padding-top: 11px;
   background: #302927;
   color: #736a50;
-  margin-top: 10px;
+  margin-top: 1px;
   margin-left: -20px; }
   .table-bordered tbody tr .imgZakaz:hover {
     color: #302927;
@@ -418,6 +418,8 @@ thead a {
 
 .detail-view {
   background-color: #191412; }
+  .detail-view tbody .trMaket {
+    border: 1px solid #191412; }
 
 .footerView {
   border-top: 1px solid rgba(48, 41, 39, 0.3);
@@ -431,7 +433,7 @@ thead a {
 
 .zakaz-index .detail-view tbody {
   background: #191412; }
-.zakaz-index .success-ispol {
+.zakaz-index tbody .success-ispol {
   color: #446505; }
 
 .zakaz-shop .zakazSearch .shopSearch {
@@ -489,7 +491,7 @@ thead a {
   height: 74px;
   line-height: 2px;
   font-size: 46px;
-  box-shadow: 5px 6px 20px 0px rgba(2, 2, 2, 0.48);
+  box-shadow: 5px 6px 20px 0 rgba(2, 2, 2, 0.48);
   color: #fff;
   background: #a90329;
   background: -moz-radial-gradient(center, ellipse cover, #a90329 34%, #8f0222 67%, #6d0019 98%);
@@ -518,7 +520,7 @@ thead a {
     border: 2px solid rgba(204, 198, 198, 0.6);
     border-radius: 9px; }
     .btn-group .dropdown-menu .divider {
-      margin: 0px 0px 0px 10px;
+      margin: 0 0 0 10px;
       background: rgba(255, 255, 255, 0.07);
       width: 64px; }
     .btn-group .dropdown-menu .dropdown-header {
@@ -527,8 +529,8 @@ thead a {
       color: rgba(204, 198, 198, 0.6); }
       .btn-group .dropdown-menu a:hover {
         border-radius: 12px;
-        margin: 0px 8px 0px 7px;
-        padding: 3px 0px 3px 13px;
+        margin: 0 8px 0 7px;
+        padding: 3px 0 3px 13px;
         background-color: #191412;
         color: #736a50; }
 
@@ -541,7 +543,7 @@ thead a {
   .zakaz-form .file-actions-cell {
     display: none; }
   .zakaz-form .file-preview {
-    padding: 0px; }
+    padding: 0; }
   .zakaz-form .submitZakazForm {
     float: right;
     margin-top: -76px;
@@ -710,10 +712,10 @@ thead a {
     display: none; }
   .form-group input::-webkit-input-placeholder {
     color: #191412;
-    text-indent: 0px;
+    text-indent: 0;
     transition: text-indent 0.3s ease; }
   .form-group input:focus::-webkit-input-placeholder {
-    text-indent: 550px;
+    text-indent: 500px;
     transition: text-indent 0.3s ease; }
 .form-group select {
   outline: 0;
@@ -756,10 +758,15 @@ thead a {
   margin-left: 19px; }
 
 .zakaz-form .input-group-addon {
-  padding: 0px 7px;
+  padding: 0 7px;
   background: #736a50;
   border: none;
   color: #000; }
+.zakaz-form .inputWidget-form {
+  width: 82px;
+  padding-right: 7%; }
+.zakaz-form .inputWidget-contact {
+  padding-left: 7%; }
 .zakaz-form #zakaz-number {
   padding-left: 9%;
   margin-left: -48px; }
@@ -795,7 +802,6 @@ thead a {
   margin-top: -45px;
   height: 30px;
   width: 99px;
-  height: 30px;
   margin-right: 26px; }
 
 #declinedModal input {
@@ -809,7 +815,6 @@ thead a {
   margin-top: -45px;
   height: 30px;
   width: 99px;
-  height: 30px;
   margin-right: 26px; }
 
 #modalFile .file-preview {
@@ -868,17 +873,26 @@ body {
   background: #3a3331;
   border-radius: 26px;
   color: #736a50;
-  width: 368px;
+  width: 462px;
   height: 36px; }
   .wrap .headerNav li a {
     color: rgba(204, 198, 198, 0.6); }
     .wrap .headerNav li a:hover {
       color: #736a50; }
+    .wrap .headerNav li a span {
+      color: rgba(204, 198, 198, 0.6);
+      background: rgba(58, 51, 49, 0);
+      padding-left: 1px;
+      font-size: 11px;
+      font-weight: 700; }
 .wrap .container {
   padding: 41px 15px 20px; }
-.wrap .nav-pills > li.active > a {
+.wrap .nav-pills > li.active a {
   background-color: #736a50;
   color: #302927; }
+  .wrap .nav-pills > li.active a span {
+    background-color: #736a50;
+    color: #302927; }
 
 .titleMain {
   font-size: 27px;

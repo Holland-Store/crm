@@ -4,7 +4,6 @@ namespace frontend\controllers;
 
 use Yii;
 use app\models\Notification;
-use app\models\NotificationSearch;
 use yii\web\Controller;
 use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
@@ -52,6 +51,7 @@ class NotificationController extends Controller
 
     /**
      * Lists all Notification models.
+     * @var string $notification
      * @return mixed
      */
     public function actionIndex()
@@ -60,8 +60,8 @@ class NotificationController extends Controller
         $model = Notification::find()->where(['id_user' => Yii::$app->user->id])->limit(50)->all();
 
         return $this->render('index', [
-                'model' => $model,
-            ]);
+            'model' => $model,
+        ]);
     }
 
 
@@ -110,17 +110,17 @@ class NotificationController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
-    }    
+    }
     protected function findNotification()
     {
         $notification = Notification::find()->where(['id_user' => Yii::$app->user->id, 'active' => true]);
         if($notification->count()>50){
-                $notifications = '50+';
-            } elseif ($notification->count()<1){
-                $notifications = '';
-            } else {
-                $notifications = $notification->count();
-            }
+            $notifications = '50+';
+        } elseif ($notification->count()<1){
+            $notifications = '';
+        } else {
+            $notifications = $notification->count();
+        }
 
         $this->view->params['notifications'] = $notification->all();
         $this->view->params['count'] =  $notifications;

@@ -32,24 +32,24 @@ class TodoistController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
-			'access' => [
-				'class' => AccessControl::className(),
-				'rules' => [
-					[
-    					'actions' => ['index'],
-    					'allow' => true,
-    					'roles' => ['admin', 'program'],
-					],
-					[
-    					'actions' => ['shop'],
-    					'allow' => true,
-    					'roles' => ['shop', 'zakup', 'master', 'disain', 'program'],
-					],
-					[
-    					'actions' => ['close'],
-    					'allow' => true,
-    					'roles' => ['shop', 'zakup', 'disain', 'master'],
-					],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['index'],
+                        'allow' => true,
+                        'roles' => ['admin', 'program'],
+                    ],
+                    [
+                        'actions' => ['shop'],
+                        'allow' => true,
+                        'roles' => ['shop', 'zakup', 'master', 'disain', 'program'],
+                    ],
+                    [
+                        'actions' => ['close'],
+                        'allow' => true,
+                        'roles' => ['shop', 'zakup', 'disain', 'master'],
+                    ],
                     [
                         'actions' => ['closetodoist'],
                         'allow' => true,
@@ -60,18 +60,18 @@ class TodoistController extends Controller
                         'allow' => true,
                         'roles' => ['admin', 'program'],
                     ],
-					[
-    					'actions' => ['createzakaz'],
-    					'allow' => true,
-    					'roles' => ['admin'],
-					],
-					[
-    					'actions' => ['create_shop'],
-    					'allow' => true,
-    					'roles' => ['shop'],
-					],
-				],
-			],
+                    [
+                        'actions' => ['createzakaz'],
+                        'allow' => true,
+                        'roles' => ['admin'],
+                    ],
+                    [
+                        'actions' => ['create_shop'],
+                        'allow' => true,
+                        'roles' => ['shop'],
+                    ],
+                ],
+            ],
         ];
     }
 
@@ -112,8 +112,8 @@ class TodoistController extends Controller
     public function actionShop()
     {
         $dataProvider = new ActiveDataProvider([
-			'query' => Todoist::find()->where(['id_user' => Yii::$app->user->id, 'activate' => 0])
-		]);
+            'query' => Todoist::find()->where(['id_user' => Yii::$app->user->id, 'activate' => 0])
+        ]);
 
         $notification = $this->findNotification();
 
@@ -148,9 +148,11 @@ class TodoistController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->save()){
+                Yii::$app->session->addFlash('update', 'Задача успешно создана');
                 return $this->redirect(['index', 'id' => $model->id]);
             } else {
                 print_r($model->getErrors());
+                Yii::$app->session->addFlash('errors', 'Произошла ошибка!');
             }
         } else {
             return $this->render('create', [
@@ -179,7 +181,7 @@ class TodoistController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['shop']);
         } elseif ($helpdesk->load(Yii::$app->request->post()) && $helpdesk->save()) {
-            return $this->redirect(['shop']); 
+            return $this->redirect(['shop']);
         } elseif (Model::loadMultiple($models, Yii::$app->request->post())) {
             foreach ($models as $custom) {
                 $custom->save();
@@ -229,11 +231,11 @@ class TodoistController extends Controller
         return $this->redirect(['index']);
     }
 
-    public function actionCreatezakaz($id_zakaz)
+    public function actionCreatezakaz()
     {
         $model = new Todoist();
-        
-         $notification = $this->findNotification();
+
+        $notification = $this->findNotification();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index', 'id' => $model->id]);
@@ -242,7 +244,7 @@ class TodoistController extends Controller
         }
     }
 
-	/**
+    /**
      * Closse an existing Todoist model.
      * If close is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
@@ -251,8 +253,9 @@ class TodoistController extends Controller
     public function actionClose($id)
     {
         $model = $this->findModel($id);
-		$model->activate = 1;
-		$model->save();
+        $model->activate = 1;
+        $model->save();
+        Yii::$app->session->addFlash('update', 'Задача успешно закрылась');
 
         return $this->redirect(['shop']);
     }
@@ -276,12 +279,12 @@ class TodoistController extends Controller
     {
         $notification = Notification::find()->where(['id_user' => Yii::$app->user->id, 'active' => true]);
         if($notification->count()>50){
-                $notifications = '50+';
-            } elseif ($notification->count()<1){
-                $notifications = '';
-            } else {
-                $notifications = $notification->count();
-            }
+            $notifications = '50+';
+        } elseif ($notification->count()<1){
+            $notifications = '';
+        } else {
+            $notifications = $notification->count();
+        }
 
         $this->view->params['notifications'] = $notification->all();
         $this->view->params['count'] =  $notifications;

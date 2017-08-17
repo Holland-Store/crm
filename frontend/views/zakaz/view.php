@@ -2,14 +2,6 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-use app\models\Zakaz;
-use app\models\Courier;
-use app\models\Notification;
-use app\models\Todoist;
-use yii\widgets\ActiveForm;
-use yii\bootstrap\Modal;
-use yii\helpers\Url;
-use yii\bootstrap\Alert;
 use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
@@ -97,22 +89,5 @@ $this->title = $model->id_zakaz;
         ],
     ]) ?>
         </div>
-
-        <?php if (Yii::$app->user->can('disain')) { ?>
-        <div class="col-xs-12">
-            <div class="col-xs-3">
-                <?php $form = ActiveForm::begin([
-            'options' => 
-            [
-                'class' => 'file',
-                'enctype' => 'multipart/form-data'
-            ]
-        ]); ?>
-                <?= $form->field($model, 'file')->fileinput(['class' => 'fileInput']) ?>
-            </div>
-            <?= Html::submitButton('Готово', ['class' => 'btn btn-success btn-lg col-xs-9']) ?>
-                <?php ActiveForm::end(); ?>
-        </div>
-        <?php } ?>
         <?php Pjax::end(); ?>
     </div>

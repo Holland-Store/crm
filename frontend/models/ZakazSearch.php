@@ -5,7 +5,6 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Zakaz;
 
 
 /**
@@ -48,11 +47,20 @@ class ZakazSearch extends Zakaz
 
         switch ($role) {
             case 'master':
-                $query->andWhere(['status' => [Zakaz::STATUS_MASTER, Zakaz::STATUS_SUC_MASTER, Zakaz::STATUS_DECLINED_MASTER], 'action' => 1]);
+                $query->andWhere(['status' => [Zakaz::STATUS_MASTER, Zakaz::STATUS_DECLINED_MASTER], 'action' => 1]);
+                $sort = ['srok' => SORT_ASC];
+                break;
+            case 'masterSoglas':
+                $query->andWhere(['status' => Zakaz::STATUS_SUC_MASTER, 'action' => 1]);
                 $sort = ['srok' => SORT_ASC];
                 break;
             case 'disain':
-                $query->andWhere(['status' => [Zakaz::STATUS_DISAIN, Zakaz::STATUS_SUC_DISAIN,Zakaz::STATUS_DECLINED_DISAIN], 'action' => 1]);
+                $query->andWhere(['status' => [Zakaz::STATUS_DISAIN,Zakaz::STATUS_DECLINED_DISAIN], 'statusDisain' => [Zakaz::STATUS_DISAINER_NEW, Zakaz::STATUS_DISAINER_WORK, Zakaz::STATUS_DISAINER_DECLINED], 'action' => 1]);
+                $sort = ['srok' => SORT_ASC];
+                break;
+            case 'disainSoglas':
+                $query->andWhere(['status' => Zakaz::STATUS_DISAIN, 'statusDisain' => Zakaz::STATUS_DISAINER_SOGLAS, 'action' => 1])
+                    ->orWhere(['status' => Zakaz::STATUS_SUC_DISAIN, 'action' => 1]);
                 $sort = ['srok' => SORT_ASC];
                 break;
             case 'shopWork':
@@ -65,7 +73,7 @@ class ZakazSearch extends Zakaz
                 break;
             case 'admin':
                 $query->andWhere(['status' => [Zakaz::STATUS_DISAIN, Zakaz::STATUS_MASTER, Zakaz::STATUS_AUTSORS, Zakaz::STATUS_SUC_MASTER, Zakaz::STATUS_SUC_DISAIN, Zakaz::STATUS_DECLINED_DISAIN, Zakaz::STATUS_DECLINED_MASTER], 'action' => 1]);
-                $sort = ['id_unread' => SORT_DESC];
+                $sort = ['status' => SORT_DESC];
                 break;
             case 'adminWork':
                 $query->andWhere(['status' => [Zakaz::STATUS_NEW, Zakaz::STATUS_ADOPTED, Zakaz::STATUS_REJECT], 'action' => 1]);
@@ -74,17 +82,20 @@ class ZakazSearch extends Zakaz
             case 'adminIspol':
                 $query->andWhere(['status' => Zakaz::STATUS_EXECUTE, 'action' => 1]);
                 $sort = ['srok' => SORT_DESC];
-                break;  
+                break;
             case 'archive':
                 $query->andWhere(['action' => 0]);
+                $sort = ['data' => SORT_DESC];
                 break;
             case 'closeshop':
                 $query->andWhere(['id_sotrud' => Yii::$app->user->id, 'action' => 0]);
+                $sort = ['data' => SORT_DESC];
                 break;
         }
 
         // add conditions that should always apply here
 
+        /** @var string $sort */
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'sort' => [
@@ -92,7 +103,7 @@ class ZakazSearch extends Zakaz
             ],
         ]);
 
-        $dataProvider->pagination = false;
+        // $dataProvider->pagination = false;
 
         $this->load($params);
 
@@ -120,11 +131,11 @@ class ZakazSearch extends Zakaz
                 ->orFilterWhere(['like', 'information', $this->search])
                 ->orFilterWhere(['like', 'name', $this->search]);
         } else {
-        $query->andFilterWhere(['like', 'prioritet', $this->prioritet])
-            ->andFilterWhere(['like', 'status', $this->status])
-            ->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'phone', $this->phone])
-            ->andFilterWhere(['like', 'email', $this->email]);
+            $query->andFilterWhere(['like', 'prioritet', $this->prioritet])
+                ->andFilterWhere(['like', 'status', $this->status])
+                ->andFilterWhere(['like', 'name', $this->name])
+                ->andFilterWhere(['like', 'phone', $this->phone])
+                ->andFilterWhere(['like', 'email', $this->email]);
         }
 
         return $dataProvider;

@@ -4,12 +4,7 @@ namespace app\models;
 
 use Yii;
 use yii\helpers\ArrayHelper;
-use app\models\User;
-use app\models\Tovar;
-use app\models\Notification;
-use app\models\Client;
 use yii\db\ActiveRecord;
-use yii\web\UploadedFile;
 
 /**
  * This is the model class for table "zakaz".
@@ -23,8 +18,8 @@ use yii\web\UploadedFile;
  * @property integer $status
  * @property integer $action
  * @property integer $id_tovar
- * @property integer $oplata
- * @property integer $fact_oplata
+ * @property double $oplata
+ * @property double $fact_oplata
  * @property integer $number
  * @property string $data
  * @property string $description
@@ -104,8 +99,12 @@ class Zakaz extends ActiveRecord
         return [
             [['srok', 'number', 'description', 'phone'], 'required', 'on' => self::SCENARIO_DEFAULT],
             ['declined', 'required', 'message' => 'Введите причину отказа', 'on'=> self::SCENARIO_DECLINED],
-            [['id_zakaz', 'id_tovar', 'oplata', 'fact_oplata', 'minut', 'time', 'number', 'status', 'action', 'id_sotrud', 'phone', 'id_shipping' ,'prioritet', 'statusDisain', 'statusMaster', 'id_unread'], 'integer'],
+            [['id_zakaz', 'id_tovar', 'minut', 'time', 'number', 'status', 'action', 'id_sotrud', 'phone', 'id_shipping' ,'prioritet', 'statusDisain', 'statusMaster', 'id_unread'], 'integer'],
             [['srok', 'data', 'data-start-disain'], 'safe'],
+            [['oplata', 'fact_oplata'], 'filter', 'filter' => function($value){
+                return str_replace(' ', '', $value);
+            }],
+            [['oplata', 'fact_oplata'], 'number'],
             [['information', 'comment', 'search', 'declined'], 'string'],
             ['prioritet', 'default', 'value' => 0],
             ['status', 'default', 'value' => self::STATUS_NEW],
@@ -183,19 +182,19 @@ class Zakaz extends ActiveRecord
         return $this->hasOne(Courier::className(), ['id' => 'id_shipping']);
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-
-    public static function getSotrudList()
-    {
-        $sotruds = Otdel::find()
-        ->select(['otdel.id','otdel.fio'])
-        ->join('JOIN','zakaz', 'zakaz.id_sotrud = otdel.id')
-        ->all();
-
-        return ArrayHelper::map($sotruds, 'id', 'fio');
-    }
+//    /**
+//     * @return \yii\db\ActiveQuery
+//     */
+//
+//    public static function getSotrudList()
+//    {
+//        $sotruds = Otdel::find()
+//        ->select(['otdel.id','otdel.fio'])
+//        ->join('JOIN','zakaz', 'zakaz.id_sotrud = otdel.id')
+//        ->all();
+//
+////        return ArrayHelper::map($sotruds, 'id', 'fio');
+//    }
     public static function getStatusArray(){
         return [
             self::STATUS_NEW => 'Новый',
@@ -263,7 +262,7 @@ class Zakaz extends ActiveRecord
     {
         if($this->validate()){
             $this->file->saveAs('attachment/'.time().'.'.$this->file->extension);
-        return true;
+            return true;
         } else {return false;}
     }
     public static function getPreficsList()
@@ -283,18 +282,12 @@ class Zakaz extends ActiveRecord
     }
     public function getUploadeFile()
     {
-        $notification = new Notification();
-
-//        if ($this->validate()){
-        if($this->file = UploadedFile::getInstance($this, 'file')){//Выполнена работа дизайнером
-            $zakaz = $this->id_zakaz;
-            $description = $this->description;
-            
+        //Выполнена работа дизайнером
+        if($this->validate())
+        {
             $this->file->saveAs('maket/Maket_'.$this->id_zakaz.'.'.$this->file->extension);
             $this->maket = 'Maket_'.$this->id_zakaz.'.'.$this->file->extension;
             $this->status = 4;
-            $notification->getByIdNotification(5, $zakaz);
-            $notification->saveNotification;
         }
     }
 }

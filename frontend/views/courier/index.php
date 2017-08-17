@@ -2,10 +2,8 @@
 
 use yii\helpers\Html;
 use app\models\Courier;
-use app\models\Zakaz;
 use kartik\grid\GridView;
 use yii\bootstrap\Nav;
-use yii\widgets\ActiveForm;
 use yii\widgets\Pjax;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\CourierSearch */
@@ -15,8 +13,6 @@ $this->title = 'Все доставки';
 ?>
 <?php Pjax::begin(); ?>
 <div class="courier-index">
-
-    <h1><?= Html::encode($this->title) ?></h1>
 
     <!-- <div class="form-group" style="font-size: 16px;">
     <?php //ActiveForm::begin(); ?>
@@ -69,7 +65,7 @@ $this->title = 'Все доставки';
             ],
             [
                 'format' => 'raw',
-                'value' => function($model, $key){
+                'value' => function($model){
                     if ($model->status == Courier::DOSTAVKA) {
                         return Html::a('Забрать', ['make', 'id' => $model->id]);
                     } elseif($model->status == Courier::RECEIVE) {

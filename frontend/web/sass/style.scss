@@ -12,6 +12,7 @@
 
 $display: none;
 $bodyBackground: #302927;
+$titleMain: rgba(204, 198, 198, 0.6);
 
 @mixin border-bottom($color) {
     border-bottom: 1px solid $color;
@@ -72,7 +73,7 @@ body{
         background: $colorButton;
         border-radius: $border-radius;
         color: $colorH3;
-        width: 368px;
+        width: 462px;
         height: 36px;
         li{
             a{
@@ -80,6 +81,13 @@ body{
                  &:hover{
                     color: $colorH3;
                 }
+              span{
+                color: $titleMain;
+                background: rgba(58, 51, 49, 0);
+                padding-left: 1px;
+                font-size: 11px;
+                font-weight: 700;
+              }
             }
         }
 
@@ -87,9 +95,15 @@ body{
     .container{
       padding: 41px 15px 20px;
     }
-    .nav-pills > li.active > a{
-        background-color: $colorH3;
-        color: $bodyBackground;
+    .nav-pills > li.active{
+        a{
+          background-color: $colorH3;
+          color: $bodyBackground;
+          span{
+            background-color: $colorH3;
+            color: $bodyBackground;
+          }
+        }
     }
 }
 .titleMain{

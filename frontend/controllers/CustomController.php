@@ -11,9 +11,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
-use yii\data\ActiveDataProvider;
 use yii\web\Response;
-use yii\widgets\ActiveForm;
 
 
 /**
@@ -33,14 +31,14 @@ class CustomController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
-			'access' => [
-				'class' => AccessControl::className(),
-				'rules' => [
-					[
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
                         'actions' => ['index'],
                         'allow' => true,
                         'roles' => ['zakup', 'program'],
-					],
+                    ],
                     [
                         'actions' => ['create'],
                         'allow' => true,
@@ -56,13 +54,13 @@ class CustomController extends Controller
                         'allow' => true,
                         'roles' => ['seeAdop'],
                     ],
-					[
+                    [
                         'actions' => ['adop'],
                         'allow' => true,
                         'roles' => ['seeAdop'],
-					],
-				],
-			],
+                    ],
+                ],
+            ],
         ];
     }
 
@@ -76,24 +74,45 @@ class CustomController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, 'zakup');
         $notification = $this->findNotification();
 
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'notification' => $notification,
         ]);
     }
 
-	/**
+    /**
      * Lists all Custom models for shop.
      * @return mixed
      */
     public function actionAdop()
     {
+        $data = Yii::$app->request->post('Custom', []);
+        $models = [new Custom()];
+        foreach (array_keys($data) as $index) {
+            $models[$index] = new Custom();
+        }
+// загружаем данные из запроса в массив созданных моделей
+        if (Model::loadMultiple($models, Yii::$app->request->post())) {
+            foreach ($models as $model) {
+                //сохраняем данные
+                if (!$model->save()){
+                    print_r($model->getErrors());
+                } else {
+                    $model->save();
+                }
+            }
+            return $this->redirect(['adop']);
+        }
         $searchModel = new CustomSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, 'adop');
         $notification = $this->findNotification();
 
         return $this->render('adop', [
             'dataProvider' => $dataProvider,
+            'notification' => $notification,
+            'models' => $models,
         ]);
     }
 
@@ -135,11 +154,11 @@ class CustomController extends Controller
                 }
             }
             return $this->redirect(['adop']);
-        } else {
-            return $this->render('create', [
-               'models' => $models,
-            ]);
         }
+        return $this->render('create', [
+            'models' => $models,
+            'notification' => $notification,
+        ]);
     }
 
 
@@ -185,7 +204,6 @@ class CustomController extends Controller
         } else {
             print_r($model->getErrors());
         }
-
     }
     /**
      * Close an existing Custom model.
@@ -195,8 +213,6 @@ class CustomController extends Controller
      */
     public function actionClose($id)
     {
-        $notification = $this->findNotification();
-        
         $model = $this->findModel($id);
         $model->action = 1;
         $model->date_end = date('Y-m-d H:i:s');
@@ -229,12 +245,12 @@ class CustomController extends Controller
     {
         $notification = Notification::find()->where(['id_user' => Yii::$app->user->id, 'active' => true]);
         if($notification->count()>50){
-                $notifications = '50+';
-            } elseif ($notification->count()<1){
-                $notifications = '';
-            } else {
-                $notifications = $notification->count();
-            }
+            $notifications = '50+';
+        } elseif ($notification->count()<1){
+            $notifications = '';
+        } else {
+            $notifications = $notification->count();
+        }
 
         $this->view->params['notifications'] = $notification->all();
         $this->view->params['count'] =  $notifications;

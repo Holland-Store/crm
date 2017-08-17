@@ -2,7 +2,6 @@
 
 namespace app\models;
 
-use Yii;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -10,7 +9,7 @@ use yii\helpers\ArrayHelper;
  *
  * @property integer $id
  * @property integer $id_zakaz
- * @property srting $date
+ * @property string $date
  * @property string $to
  * @property string $data_to
  * @property string $from
@@ -73,7 +72,7 @@ class Courier extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'id_zakaz' => 'Заказ',
-			'date' => 'Срок',
+            'date' => 'Срок',
             'to' => 'Откуда',
             'data_to' => 'Data To',
             'from' => 'Куда',

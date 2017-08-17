@@ -11,6 +11,7 @@ use yii\bootstrap\ButtonDropdown;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\ZakazSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
+/** @var $dataProviderExecute yii\data\ActiveDataProvider*/
 
 $this->title = 'ВСЕ ЗАКАЗЫ';
 ?>
@@ -79,14 +80,14 @@ $this->title = 'ВСЕ ЗАКАЗЫ';
             'columns' => [
                 [
                     'class'=>'kartik\grid\ExpandRowColumn',
-                    'contentOptions' => function($model, $key, $index, $grid){
+                    'contentOptions' => function($model){
                         return ['id' => $model->id_zakaz, 'class' => 'border-left', 'style' => 'border:none'];
                     },
                     'width'=>'10px',
-                    'value' => function ($model, $key, $index) {
+                    'value' => function () {
                         return GridView::ROW_COLLAPSED;
                     },
-                    'detail'=>function ($model, $key, $index, $column) {
+                    'detail'=>function ($model) {
                         return Yii::$app->controller->renderPartial('_zakaz', ['model'=>$model]);
                     },
                     'enableRowClick' => true,
@@ -128,7 +129,7 @@ $this->title = 'ВСЕ ЗАКАЗЫ';
                 [
                     'attribute' => 'oplata',
                     'value' => function($model){
-                        return $model->oplata.' р.';
+                        return number_format($model->oplata, 0,',', ' ').' р.';
                     },
                     'hAlign' => GridView::ALIGN_RIGHT,
                     'contentOptions' => ['class' => 'textTr tr70'],
@@ -138,7 +139,7 @@ $this->title = 'ВСЕ ЗАКАЗЫ';
                     'format' => 'raw',
                     'value' => function($model){
                         if ($model->status == Zakaz::STATUS_EXECUTE){
-                            return Html::a('Готово', ['close']);
+                            return Html::a('Готово', ['close', 'id' => $model->id_zakaz]);
                         } else {
                             return '';
                         }
@@ -163,14 +164,14 @@ $this->title = 'ВСЕ ЗАКАЗЫ';
         'columns' => [
             [
                 'class'=>'kartik\grid\ExpandRowColumn',
-                'contentOptions' => function($model, $key, $index, $grid){
+                'contentOptions' => function($model){
                     return ['id' => $model->id_zakaz, 'class' => 'border-left', 'style' => 'border:none'];
                 },
                 'width'=>'10px',
-                'value' => function ($model, $key, $index) {
+                'value' => function () {
                     return GridView::ROW_COLLAPSED;
                 },
-                'detail'=>function ($model, $key, $index, $column) {
+                'detail'=>function ($model) {
                     return Yii::$app->controller->renderPartial('_zakaz', ['model'=>$model]);
                 },
                 'enableRowClick' => true,
@@ -212,7 +213,7 @@ $this->title = 'ВСЕ ЗАКАЗЫ';
             [
                 'attribute' => 'oplata',
                 'value' => function($model){
-                    return $model->oplata.' р.';
+                    return number_format($model->oplata, 0,',', ' ').' р.';
                 },
                 'hAlign' => GridView::ALIGN_RIGHT,
                 'contentOptions' => ['class' => 'textTr tr70'],

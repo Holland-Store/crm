@@ -33,9 +33,9 @@ class TovarController extends Controller
                 'only' => ['index', 'create', 'update', 'delete', 'view'],
                 'rules' => [
                     [
-                    'allow' => true,
-                    'actions' => ['index', 'create', 'update', 'delete', 'view'],
-                    'roles' => ['@']
+                        'allow' => true,
+                        'actions' => ['index', 'create', 'update', 'delete', 'view'],
+                        'roles' => ['@']
                     ],
                 ]
             ],

@@ -27,14 +27,14 @@ return [
                 ],
             ],
         ],
-//        'nodeSocket' => [
-//            'class' => '\YiiNodeSocket\NodeSocket',
-//		    'host' => 'localhost',
-//		    'allowedServerAddresses' => [
-//		        "localhost",
-//		        "127.0.0.1"
-//		    ],
-//        ],
+        'nodeSocket' => [
+            'class' => '\YiiNodeSocket\NodeSocket',
+		    'host' => 'localhost',
+		    'allowedServerAddresses' => [
+		        "localhost",
+		        "127.0.0.1"
+		    ],
+        ],
     ],
     'params' => $params,
 ];

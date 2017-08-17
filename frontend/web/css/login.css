@@ -9,7 +9,7 @@ body {
   background: rgba(255, 255, 255, 0.04);
   height: 126px;
   margin-top: 32px;
-  padding: 18px 0px 0px 101px;
+  padding: 18px 0 0 101px;
 }
 /* line 30, ../sass/login.scss */
 .headerLogin h1 {
@@ -71,7 +71,6 @@ body {
   border-radius: 26px;
   font-size: 11px;
   height: 30px;
-  font-size: 11px;
   color: #999265;
   background: #3a3331;
   outline: 0;
@@ -101,7 +100,7 @@ body {
 /* line 109, ../sass/login.scss */
 .footerLogin {
   position: relative;
-  top: -45px;
+  top: -15px;
   text-align: center;
   left: -22px;
   line-height: 14px;

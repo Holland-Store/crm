@@ -2,7 +2,8 @@
 
 namespace app\models;
 
-use Yii;
+
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "notification".
@@ -69,7 +70,7 @@ class Notification extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Zakaz::className(), ['id_zakaz' => 'id_zakaz']);
     }
-    
+
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -79,7 +80,7 @@ class Notification extends \yii\db\ActiveRecord
     }
     public function getSaveNotification()
     {
-		$this->srok = null;
+        $this->srok = null;
         $this->active = true;
         $this->save();
     }
@@ -124,7 +125,7 @@ class Notification extends \yii\db\ActiveRecord
                 break;
             case '5'://оформление уведомление выполение работы дизайнера
                 $this->id_user = $id;
-                $this->name = 'Дизайнер выполнил работу №'.$zakaz.' '.$description;
+                $this->name = 'Дизайнер выполнил работу №'.$zakaz;
                 $this->id_zakaz = $zakaz;
                 $this->category = 1;
                 break;

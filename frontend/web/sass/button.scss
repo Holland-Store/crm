@@ -7,6 +7,7 @@ $colButtonHover: #191412;
 $colorText: rgba(204, 198, 198, 0.6);
 $colorButton: #3a3331;
 $colorGreen: #446505;
+$bacgrountTr: #802c2c;
 $orang: #f0ad4e;
 
 @mixin buttonZakaz{
@@ -50,7 +51,7 @@ $orang: #f0ad4e;
     height: 74px;
     line-height: 2px;
     font-size: 46px;
-    box-shadow: 5px 6px 20px 0px rgba(2, 2, 2, 0.48);
+    box-shadow: 5px 6px 20px 0 rgba(2, 2, 2, 0.48);
     color: #fff;
     background: #a90329;
     background: -moz-radial-gradient(center, ellipse cover, #a90329 34%, #8f0222 67%, #6d0019 98%);
@@ -82,7 +83,7 @@ $orang: #f0ad4e;
         border: 2px solid $colorText;
         border-radius: 9px;
         .divider{
-            margin: 0px 0px 0px 10px;
+            margin: 0 0 0 10px;
             background: rgba(255, 255, 255, 0.07);
             width: 64px;
         }
@@ -93,8 +94,8 @@ $orang: #f0ad4e;
             color: $titleMain;
             &:hover{
                 border-radius: 12px;
-                margin: 0px 8px 0px 7px;
-                padding: 3px 0px 3px 13px;
+                margin: 0 8px 0 7px;
+                padding: 3px 0 3px 13px;
                 background-color: $colButtonHover;
                 color: $colorH3;
             }
@@ -111,7 +112,7 @@ $orang: #f0ad4e;
         display: none;
     }
     .file-preview{
-        padding: 0px;
+        padding: 0;
     }
     @include fileInput;
     .submitZakazForm{
@@ -164,7 +165,7 @@ $orang: #f0ad4e;
 }
 .actionApprove{
     left:64px;
-    top:-1px;
+    top: -1px;
     width:79px;
     position: relative;
     &:hover{

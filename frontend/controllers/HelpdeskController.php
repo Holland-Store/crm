@@ -6,6 +6,8 @@ use Yii;
 use app\models\Helpdesk;
 use app\models\HelpdeskSearch;
 use app\models\Notification;
+use app\models\User;
+use yii\base\Exception;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -28,26 +30,36 @@ class HelpdeskController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
-			'access' => [
-				'class' => AccessControl::className(),
-				'rules' => [
-					[
-    					'actions' => ['index'],
-    					'allow' => true,
-    					'roles' => ['@'],
-					],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['index'],
+                        'allow' => true,
+                        'roles' => ['admin', 'disain', 'master', 'system', 'zakup', 'shop'],
+                    ],
                     [
                         'actions' => ['create'],
                         'allow' => true,
-                        'roles' => ['@'],
+                        'roles' => ['admin', 'disain', 'master', 'zakup', 'shop'],
                     ],
-					[
-						'actions' => ['close'],
-						'allow' => true,
-						'roles' => ['system'],
-					]
-				]
-			]
+                    [
+                        'actions' => ['close'],
+                        'allow' => true,
+                        'roles' => ['system'],
+                    ],
+                    [
+                        'actions' => ['approved'],
+                        'allow' => true,
+                        'roles' => ['admin', 'disain', 'master', 'zakup', 'shop'],
+                    ],
+                    [
+                        'actions' => ['declined-help'],
+                        'allow' => true,
+                        'roles' => ['admin', 'disain', 'master', 'zakup', 'shop'],
+                    ]
+                ]
+            ]
         ];
     }
 
@@ -58,13 +70,17 @@ class HelpdeskController extends Controller
     public function actionIndex()
     {
         $searchModel = new HelpdeskSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, 'work');
+        $dataProviderSoglas = $searchModel->search(Yii::$app->request->queryParams, 'soglas');
         $notification = $this->findNotification();
+
 
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'dataProviderSoglas' => $dataProviderSoglas,
+            'notification' => $notification,
         ]);
     }
 
@@ -76,9 +92,10 @@ class HelpdeskController extends Controller
     public function actionView($id)
     {
         $notification = $this->findNotification();
-        
+
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'notification' => $notification,
         ]);
     }
 
@@ -90,19 +107,27 @@ class HelpdeskController extends Controller
     public function actionCreate()
     {
         $model = new Helpdesk();
+        $user = User::findOne(['id' => User::USER_SYSTEM]);
         $notification = $this->findNotification();
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if($model->save()){
+                try{
+                    Yii::$app->session->addFlash('update', 'Заявка успешно создана');
+                    \Yii::$app->bot->sendMessage($user->telegram_chat_id, 'Назначена заявка на поломку '.$model->commetnt);
+                }catch (Exception $e){
+                    $e->getMessage();
+                }
                 return $this->redirect(['index', 'id' => $model->id]);
             } else {
                 print_r($model->getErrors());
+                Yii::$app->session->addFlash('errors', 'Произошла ошибка!');
             }
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
         }
+        return $this->render('create', [
+            'model' => $model,
+            'notification' => $notification,
+        ]);
     }
 
     /**
@@ -118,11 +143,11 @@ class HelpdeskController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index', 'id' => $model->id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
         }
+        return $this->render('update', [
+            'model' => $model,
+            'notification' => $notification,
+        ]);
     }
 
     /**
@@ -138,21 +163,67 @@ class HelpdeskController extends Controller
         return $this->redirect(['index']);
     }
 
-	/**
-     * Close problem an existing Helpdesk model.
+    /**
+     * in Approved an existing Helpdesk model.
+     * System fulfilled problem.
      * If close is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
      */
     public function actionClose($id)
     {
-		if ($model = $this->findModel($id)) {
-            $model->status = 1;
-			$model->endDate = date('Y-m-d H:m:s');
+        if ($model = $this->findModel($id)) {
+            $model->status = Helpdesk::STATUS_CHECKING;
             $model->save();
         }
 
-		return $this->redirect(['index']);
+        return $this->redirect(['index']);
+    }
+
+    /**
+     * The customer clicked on to take
+     * Problem solved and stamped datetime
+     * if success redirected, the browser will be redirected to the 'index' page.
+     * @param $id
+     * @return \yii\web\Response
+     */
+    public function actionApproved($id)
+    {
+        $model = $this->findModel($id);
+        $model->status = Helpdesk::STATUS_APPROVED;
+        $model->endDate = date('Y-m-d H:m:s');
+        $model->save();
+        Yii::$app->session->addFlash('update', 'Заявка была закрыта');
+
+        return $this->redirect(['index']);
+    }
+
+    /**
+     * Page for eclined problem
+     * if we receive s POST request, add model->status STATUS_DECLINED
+     * @param $id
+     * @return string|\yii\web\Response
+     */
+    public function actionDeclinedHelp($id)
+    {
+        $model = $this->findModel($id);
+        $user = User::findOne(['id' => User::USER_SYSTEM]);
+
+        if ($model->load(Yii::$app->request->post())){
+            $model->status = Helpdesk::STATUS_DECLINED;
+            if (!$model->save()){
+                print_r($model->getErrors());
+            } else {
+                try{
+                    \Yii::$app->bot->sendMessage($user->telegram_chat_id, 'Отклонена поломку '.$model->commetnt.' По причине: '.$model->declined);
+                }catch (Exception $e){
+                    $e->getMessage();
+                }
+                return $this->redirect(['index']);
+            }
+        }
+
+        return $this->renderAjax('declined-help', ['model' => $model]);
     }
 
     /**
@@ -174,12 +245,12 @@ class HelpdeskController extends Controller
     {
         $notification = Notification::find()->where(['id_user' => Yii::$app->user->id, 'active' => true]);
         if($notification->count()>50){
-                $notifications = '50+';
-            } elseif ($notification->count()<1){
-                $notifications = '';
-            } else {
-                $notifications = $notification->count();
-            }
+            $notifications = '50+';
+        } elseif ($notification->count()<1){
+            $notifications = '';
+        } else {
+            $notifications = $notification->count();
+        }
 
         $this->view->params['notifications'] = $notification->all();
         $this->view->params['count'] =  $notifications;

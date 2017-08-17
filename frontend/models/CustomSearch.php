@@ -5,7 +5,6 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Custom;
 
 /**
  * CustomSearch represents the model behind the search form about `app\models\Custom`.
@@ -42,11 +41,11 @@ class CustomSearch extends Custom
     public function search($params, $index)
     {
         $query = Custom::find();
-		if($index == 'zakup'){
-			$query->where(['action' => 0]);
-		} else {
+        if($index == 'zakup'){
+            $query->where(['action' => 0]);
+        } else {
             $query->where(['id_user' => Yii::$app->user->id]);
-		}
+        }
 
         // add conditions that should always apply here
 

@@ -3,20 +3,20 @@
 namespace frontend\controllers;
 
 use Yii;
-use app\models\Unread;
 use app\models\Zakaz;
 use app\models\Courier;
 use app\models\Comment;
 use app\models\Notification;
 use app\models\ZakazSearch;
+use app\models\User;
+use yii\db\Exception;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
-use app\rbac\AuthorRule;
-use console\controllers\RbacController;
 use yii\data\ActiveDataProvider;
 use yii\web\UploadedFile;
+
 /**
  * ZakazController implements the CRUD actions for Zakaz model.
  */
@@ -171,6 +171,11 @@ class ZakazController extends Controller
                         'actions' => ['fulfilled'],
                         'allow' => true,
                         'roles' => ['admin']
+                    ],
+                    [
+                        'actions' => ['reconcilation'],
+                        'allow' => true,
+                        'roles' => ['disain']
                     ]
                 ],
             ],
@@ -188,6 +193,7 @@ class ZakazController extends Controller
 
         return $this->render('index', [
             'model' => $model,
+            'notification' => $notification,
         ]);
     }
 
@@ -204,22 +210,22 @@ class ZakazController extends Controller
         $reminder = new Notification();
         $zakaz = $model->id_zakaz;
         $notification = $this->findNotification();
-        
+
 
         if ($shipping->load(Yii::$app->request->post())) {
-			$shipping->save();
+            $shipping->save();
             $model->id_shipping = $shipping->id;//Оформление доставки
             $model->save();
 
             $notifications->getByIdNotification(7, $zakaz);
             $notifications->saveNotification;
-            
+
 //            return $this->redirect(['view', 'id' => $model->id_zakaz]);
         }
-        
-        if($reminder->load(Yii::$app->request->post())){
+
+        if ($reminder->load(Yii::$app->request->post())) {
             $reminder->getReminder($zakaz);
-            if($reminder->validate() && $reminder->save()){
+            if ($reminder->validate() && $reminder->save()) {
                 Yii::$app->session->setFlash('success', 'Напоминание было создана');
             } else {
                 Yii::$app->session->setFlash('error', 'Извините. Напоминание не было создана');
@@ -232,7 +238,7 @@ class ZakazController extends Controller
             $model->uploadeFile;//Выполнение работы дизайнером и оформление уведомление
             $model->validate();
             $model->save();
-            
+
             if ($model->status == 3) {
                 $notifications->getByIdNotification(4, $model->id_zakaz);
                 $notifications->saveNotification;
@@ -253,60 +259,36 @@ class ZakazController extends Controller
         ]);
     }
 
-//    /** Uploade file in directory 'attachment/*' */
-//    public function actionUploade($id){
-//        $model = $this->findModel($id);
-////        $model->scenario = Zakaz::SCENARIO_DEFAULT;
-//        $notification = $this->findNotification();
-//
-//        if ($model->load(Yii::$app->request->post())) {
-//            if ($model->validate()) {
-//                $model->file = UploadedFile::getInstance($model, 'file');
-//                if ($model->upload()) {
-//                    $model->img = time() . '.' . $model->file->extension;
-//                }
-//                if (!$model->save()) {
-//                    print_r($model->getErrors());
-//                } else {
-//                    $model->save();
-//                }
-//            } else {
-//                $errors = $model->errors;
-//                return $this->render('update', [
-//                    'model' => $model,
-//                ]);
-//            }
-//
-//            if (Yii::$app->user->can('shop')) {
-//                return $this->redirect(['shop']);
-//            } elseif (Yii::$app->user->can('admin')) {
-//                return $this->redirect(['admin', '#' => $id]);
-//            }
-//        } else {
-//            return $this->render('update', [
-//                'model' => $model,
-//            ]);
-//        }
-//    }
-
     /**
      * appointed shipping in courier
      * @param $id
+     * @property mixed prefics
      * @return string
      */
     public function actionShipping($id)
     {
         $model = $this->findModel($id);
+        $user = User::findOne(['id' => User::USER_ADMIN]);
         $shipping = new Courier();
-        if ($model->load(Yii::$app->request->post() && $shipping->save())){
+        if ($model->load(Yii::$app->request->post())) {
+            $shipping->save();
             $model->id_shipping = $shipping->id;
-            $model->save();
-        } else {
-            return $this->render('shipping', [
-                'model' => $model,
-                'shipping' => $shipping,
-            ]);
+            if (!$model->save()) {
+                print_r($model->getErrors());
+            } else {
+                $model->save();
+                try{
+                    \Yii::$app->bot->sendMessage($user->telegram_chat_id, 'Назначена доставка '.$model->prefics);
+                }catch (Exception $e){
+                    $e->getMessage();
+                }
+            }
         }
+
+        return $this->render('shipping', [
+            'model' => $model,
+            'shipping' => $shipping,
+        ]);
     }
 
     /**
@@ -317,28 +299,43 @@ class ZakazController extends Controller
     public function actionCreate()
     {
         $model = new Zakaz();
+        $user = User::findOne(['id' => User::USER_ADMIN]);
         $notification = $this->findNotification();
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $model->file = UploadedFile::getInstance($model, 'file');
-            if($model->file){
-            $model->upload();
-            $model->img = time().'.'.$model->file->extension;
+            if ($model->file) {
+                $model->upload();
+                $model->img = time() . '.' . $model->file->extension;
             }
-            if (!$model->save()){
+            if (!$model->save()) {
                 print_r($model->getErrors());
-            } $model->save();
+                Yii::$app->session->addFlash('errors', 'Произошла ошибка!');
+            } else {
+                $model->save();
+                Yii::$app->session->addFlash('update', 'Успешно создан заказ '.$model->prefics);
+                try{
+                    if($model->status == Zakaz::STATUS_DISAIN){
+                        $user = User::findOne(['id' => 4]);
+                        \Yii::$app->bot->sendMessage($user->telegram_chat_id, 'Назначен заказ '.$model->prefics.' '.$model->description);
+                    }
+                    \Yii::$app->bot->sendMessage($user->telegram_chat_id, 'Создан заказ '.$model->prefics.' '.$model->description);
+                }catch (Exception $e){
+                    $e->getMessage();
+                }
+            }
 
             if (Yii::$app->user->can('shop')) {
                 return $this->redirect(['shop']);
             } elseif (Yii::$app->user->can('admin')) {
-               return $this->redirect(['admin']);
-           }
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+                return $this->redirect(['admin']);
+            }
         }
+
+        return $this->render('create', [
+            'model' => $model,
+            'notification' => $notification,
+        ]);
     }
 
     /**
@@ -354,38 +351,36 @@ class ZakazController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
             $model->file = UploadedFile::getInstance($model, 'file');
-            if(isset($model->file))
-            {
-                $model->file->saveAs('attachment/'.$model->id_zakaz.'.'.$model->file->extension);
-                $model->img = $model->id_zakaz.'.'.$model->file->extension;
+            if (isset($model->file)) {
+                $model->file->saveAs('attachment/' . $model->id_zakaz . '.' . $model->file->extension);
+                $model->img = $model->id_zakaz . '.' . $model->file->extension;
             }
-            if ($model->status == Zakaz::STATUS_DISAIN or $model->status == Zakaz::STATUS_MASTER){
-                if ($model->status == Zakaz::STATUS_DISAIN){
-                    $model->statusDisain = Zakaz::STATUS_DISAINER_NEW;
-                    $model->id_unread = 0;
-                } else {
-                    $model->statusMaster = Zakaz::STATUS_MASTER_NEW;
-                    $model->id_unread = 0;
-                }
-
+            if ($model->status == Zakaz::STATUS_DISAIN or $model->status == Zakaz::STATUS_MASTER or Zakaz::STATUS_AUTSORS) {
+                $model->id_unread = 0;
             }
             $model->validate();
-            if (!$model->save()){
+            if (!$model->save()) {
                 print_r($model->getErrors());
+                Yii::$app->session->addFlash('errors', 'Произошла ошибка!');
             } else {
+                if($model->status == Zakaz::STATUS_DISAIN){
+                    $user = User::findOne(['id' => User::USER_DISAINER]);
+                    \Yii::$app->bot->sendMessage($user->telegram_chat_id, 'Назначен заказ '.$model->prefics.' '.$model->description);
+                }
                 $model->save();
+                Yii::$app->session->addFlash('update', 'Успешно отредактирован заказ');
             }
 
             if (Yii::$app->user->can('shop')) {
                 return $this->redirect(['shop']);
             } elseif (Yii::$app->user->can('admin')) {
-               return $this->redirect(['admin']);
-           }
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+                return $this->redirect(['admin']);
+            }
         }
+        return $this->render('update', [
+            'model' => $model,
+            'notification' => $notification,
+        ]);
     }
 
     /**
@@ -397,45 +392,63 @@ class ZakazController extends Controller
     public function actionCheck($id)//Мастер выполнил свою работу
     {
         $model = $this->findModel($id);
+        $user = User::findOne(['id' => User::USER_ADMIN]);
         $notification = new Notification();
-        $notifications = $this->findNotification();
 
         $model->status = Zakaz::STATUS_SUC_MASTER;
         $model->statusMaster = Zakaz::STATUS_MASTER_PROCESS;
         $model->id_unread = true;
         $notification->getByIdNotification(8, $id);
         $notification->saveNotification;
-        if ($model->save()){
+        if ($model->save()) {
+            try{
+                Yii::$app->session->addFlash('update', 'Заказ отправлен на проверку');
+                \Yii::$app->bot->sendMessage($user->telegram_chat_id, 'Мастер выполнил работу '.$model->prefics.' '.$model->description);
+            }catch (Exception $e){
+                $e->getMessage();
+            }
             return $this->redirect(['master']);
         } else {
             print_r($model->getErrors());
+            Yii::$app->session->addFlash('errors', 'Произошла ошибка!');
         }
     }
 
     /**
-     * Disain filfilled zakaz
+     * Disain fulfilled zakaz
      * @param $id
      * @return string
      */
     public function actionUploadedisain($id)
     {
         $model = $this->findModel($id);
+        $user = User::findOne(['id' => User::USER_ADMIN]);
 
-        if ($model->load(Yii::$app->request->post())){
+        if ($model->load(Yii::$app->request->post())) {
+            $model->file = UploadedFile::getInstance($model, 'file');
             //Выполнение работы дизайнером
-            $model->uploadeFile;
+            if (isset($model->file)) {
+                $model->uploadeFile;
+            }
             $model->status = Zakaz::STATUS_SUC_DISAIN;
             $model->statusDisain = Zakaz::STATUS_DISAINER_PROCESS;
             $model->id_unread = true;
             if ($model->save()) {
+                try{
+                    Yii::$app->session->addFlash('update', 'Заказ отправлен на проверку');
+                    \Yii::$app->bot->sendMessage($user->telegram_chat_id, 'Дизайнер выполнил работу '.$model->prefics.' '.$model->description);
+                }catch (Exception $e){
+                    $e->getMessage();
+                }
                 return $this->redirect(['disain', 'id' => $id]);
             } else {
                 print_r($model->getErrors());
+                Yii::$app->session->addFlash('errors', 'Произошла ошибка!');
             }
         }
-            return $this->renderAjax('_upload', [
-                'model' => $model
-            ]);
+        return $this->renderAjax('_upload', [
+            'model' => $model
+        ]);
     }
 
     /**
@@ -448,24 +461,25 @@ class ZakazController extends Controller
     {
         $model = $this->findModel($id);
         $model->action = 0;
-        if (!$model->save()){
+        if (!$model->save()) {
+            Yii::$app->session->addFlash('errors', 'Произошла ошибка');
             print_r($model->getErrors());
         } else {
             $model->save();
+            Yii::$app->session->addFlash('update', 'Заказ успешно закрылся №'.$model->prefics);
         }
 
-        $this->view->params['notifications'] = Notification::find()->where(['id_user' => Yii::$app->user->id, 'active' => true])->all();
+//        $this->view->params['notifications'] = Notification::find()->where(['id_user' => Yii::$app->user->id, 'active' => true])->all();
 
         if (Yii::$app->user->can('shop')) {
-                return $this->redirect(['shop']);
-            } elseif (Yii::$app->user->can('admin')) {
-               return $this->redirect(['admin']);
-           }
+            return $this->redirect(['shop']);
+        } elseif (Yii::$app->user->can('admin')) {
+            return $this->redirect(['admin']);
+        }
     }
+
     public function actionRestore($id)
     {
-        $notification = $this->findNotification();
-
         $model = $this->findModel($id);
         $model->action = 1;
         $model->save();
@@ -496,6 +510,7 @@ class ZakazController extends Controller
         $model->statusDisain = Zakaz::STATUS_DISAINER_WORK;
         $model->save();
     }
+
     /**
      * New zakaz become in status wokr for master
      * @param $id
@@ -519,8 +534,32 @@ class ZakazController extends Controller
         $model = $this->findModel($id);
         $model->status = Zakaz::STATUS_EXECUTE;
         $model->id_unread = 0;
-        if ($model->save()){
+        if ($model->save()) {
+            Yii::$app->session->addFlash('update', 'Выполнен заказ №'.$model->prefics);
             return $this->redirect(['admin']);
+        } else {
+            print_r($model->getErrors());
+            Yii::$app->session->addFlash('errors', 'Произошла ошибка!');
+        }
+    }
+
+    /**
+     * Zakaz the disainer
+     * if success then redirected zakaz/disain
+     * @param $id
+     * @return \yii\web\Response
+     */
+    public function actionReconcilation($id)
+    {
+        $model = $this->findModel($id);
+
+        if ($model->statusDisain == Zakaz::STATUS_DISAINER_SOGLAS) {
+            $model->statusDisain = Zakaz::STATUS_DISAINER_WORK;
+        } else {
+            $model->statusDisain = Zakaz::STATUS_DISAINER_SOGLAS;
+        }
+        if ($model->save()) {
+            return $this->redirect(['disain']);
         } else {
             print_r($model->getErrors());
         }
@@ -539,8 +578,10 @@ class ZakazController extends Controller
         return $this->render('archive', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'notification' => $notification,
         ]);
     }
+
     /** All close zakaz in shop */
     public function actionClosezakaz()
     {
@@ -551,22 +592,25 @@ class ZakazController extends Controller
         return $this->render('closezakaz', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'notification' => $notification,
         ]);
     }
+
     /** All fulfilled disain */
     public function actionReady()
     {
         $searchModel = new ZakazSearch();
         $dataProvider = new ActiveDataProvider([
-                'query' => Zakaz::find()->andWhere(['status' => Zakaz::STATUS_SUC_DISAIN, 'action' => 1]),
-                'sort' => ['defaultOrder' => ['srok' => SORT_DESC]] 
-            ]);
+            'query' => Zakaz::find()->andWhere(['status' => Zakaz::STATUS_SUC_DISAIN, 'action' => 1]),
+            'sort' => ['defaultOrder' => ['srok' => SORT_DESC]]
+        ]);
         $notification = $this->findNotification();
 
         return $this->render('ready', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            ]);
+            'notification' => $notification,
+        ]);
     }
 
     /**
@@ -576,8 +620,6 @@ class ZakazController extends Controller
      */
     public function actionStatusdisain($id)
     {
-        $notification = $this->findNotification();
-
         $model = $this->findModel($id);
         $model->statusDisain = Zakaz::STATUS_DISAINER_WORK;
         $model->save();
@@ -613,6 +655,7 @@ class ZakazController extends Controller
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'dataProviderExecute' => $dataProviderExecute,
+            'notification' => $notification,
         ]);
     }
 
@@ -624,11 +667,14 @@ class ZakazController extends Controller
     {
         $searchModel = new ZakazSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, 'disain');
+        $dataProviderSoglas = $searchModel->search(Yii::$app->request->queryParams, 'disainSoglas');
         $notification = $this->findNotification();
 
         return $this->render('disain', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'dataProviderSoglas' => $dataProviderSoglas,
+            'notification' => $notification,
         ]);
     }
 
@@ -640,17 +686,21 @@ class ZakazController extends Controller
     {
         $searchModel = new ZakazSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, 'master');
+        $dataProviderSoglas = $searchModel->search(Yii::$app->request->queryParams, 'masterSoglas');
         $notification = $this->findNotification();
 
         return $this->render('master', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'dataProviderSoglas' => $dataProviderSoglas,
+            'notification' => $notification,
         ]);
     }
 
     /**
      * All zakaz existing in Admin
      * @return string|\yii\web\Response
+     * @property mixed prefics
      * windows Admin
      */
     public function actionAdmin()
@@ -660,24 +710,36 @@ class ZakazController extends Controller
         $model = new Zakaz();
         $comment = new Comment();
         $shipping = new Courier();
+        $user = User::findOne(['id' => User::USER_COURIER]);
 
-        if ($comment->load(Yii::$app->request->post())){
-            if ($comment->save()){
+        if ($comment->load(Yii::$app->request->post())) {
+            if ($comment->save()) {
                 return $this->redirect(['admin']);
             } else {
                 print_r($comment->getErrors());
             }
         }
 
-        if ($shipping->load(Yii::$app->request->post()))
-        {
+        if ($shipping->load(Yii::$app->request->post())) {
             $shipping->save();//сохранение доставка
-            if (!$shipping->save()){
+            if (!$shipping->save()) {
                 Yii::warning($shipping->getErrors());
             }
             $model = Zakaz::findOne($shipping->id_zakaz);//Определяю заказ
             $model->id_shipping = $shipping->id;//Оформление доставку в таблице заказа
-            $model->save();
+            if (!$model->save()) {
+                print_r($model->getErrors());
+                Yii::$app->session->addFlash('errors', 'Произошла ошибка!');
+            } else {
+                $model->save();
+                Yii::$app->session->addFlash('update', 'Доставка успешно  создана');
+                try{
+                    \Yii::$app->bot->sendMessage($user->telegram_chat_id, 'Назначена доставка '.$model->prefics);
+                }catch (Exception $e){
+                    $e->getMessage();
+                }
+            }
+
 
             $notifications->getByIdNotification(7, $shipping->id_zakaz);//оформление уведомлений
             $notifications->saveNotification;
@@ -692,6 +754,8 @@ class ZakazController extends Controller
         $dataProviderNew = $searchModel->search(Yii::$app->request->queryParams, 'adminNew');
         $dataProviderWork = $searchModel->search(Yii::$app->request->queryParams, 'adminWork');
         $dataProviderIspol = $searchModel->search(Yii::$app->request->queryParams, 'adminIspol');
+        $dataProvider->pagination = false;
+
 
         return $this->render('admin', [
             'searchModel' => $searchModel,
@@ -700,6 +764,7 @@ class ZakazController extends Controller
             'dataProviderWork' => $dataProviderWork,
             'dataProviderIspol' => $dataProviderIspol,
             'image' => $image,
+            'shipping' => $shipping,
             'notification' => $notification,
         ]);
     }
@@ -715,10 +780,16 @@ class ZakazController extends Controller
     {
         $model = $this->findModel($id);
         $model->scenario = Zakaz::SCENARIO_DECLINED;
+        if ($model->status == Zakaz::STATUS_SUC_DISAIN) {
+            $user_id = User::USER_DISAINER;
+        } else {
+            $user_id = User::USER_MASTER;
+        }
+        $user = User::findOne(['id' => $user_id]);
 
-        if($model->load(Yii::$app->request->post())){
+        if ($model->load(Yii::$app->request->post())) {
             if ($model->validate()) {
-                if ($model->status == Zakaz::STATUS_SUC_DISAIN){
+                if ($model->status == Zakaz::STATUS_SUC_DISAIN) {
                     $model->status = Zakaz::STATUS_DECLINED_DISAIN;
                     $model->statusDisain = Zakaz::STATUS_DISAINER_DECLINED;
                     $model->id_unread = 0;
@@ -729,12 +800,18 @@ class ZakazController extends Controller
                 }
                 if (!$model->save()) {
                     print_r($model->getErrors());
+                    Yii::$app->session->addFlash('errors', 'Проищошла ошибка!');
                 } else {
                     $model->save();
+                    Yii::$app->session->addFlash('update', 'Работа была отклонена!');
+                    try {
+                        \Yii::$app->bot->sendMessage($user->telegram_chat_id, 'Отклонен заказ ' . $model->prefics . ' По причине: ' . $model->declined);
+                    } catch (Exception $e) {
+                        $e->getMessage();
+                    }
                 }
                 return $this->redirect(['admin', '#' => $model->id_zakaz]);
             } else {
-                $errors = $model->errors;
                 return $this->renderAjax('_declined', ['model' => $model]);
             }
         } else {
@@ -746,27 +823,48 @@ class ZakazController extends Controller
      * * Zakaz accept admin and in appoint
      * if success then redirected view admin
      * @param $id
+     * @var number $user_id
      * @return string|\yii\web\Response
      */
     public function actionAccept($id)
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post())){
-            if ($model->validate()){
-                $model->id_unread = 0;
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->validate()) {
+                if ($model->status == Zakaz::STATUS_DISAIN or $model->status == Zakaz::STATUS_MASTER or $model->status == Zakaz::STATUS_AUTSORS) {
+                    if ($model->status == Zakaz::STATUS_DISAIN) {
+                        $model->statusDisain = Zakaz::STATUS_DISAINER_NEW;
+                        $model->id_unread = 0;
+                        $user_id = User::USER_DISAINER;
+                    } elseif ($model->status == Zakaz::STATUS_MASTER) {
+                        $model->statusMaster = Zakaz::STATUS_MASTER_NEW;
+                        $model->id_unread = 0;
+                        $user_id = User::USER_MASTER;
+                    } else {
+                        $model->id_unread = 0;
+                    }
+                }
                 if ($model->save()) {
+                    if($model->status == Zakaz::STATUS_DISAIN){
+                        $user = User::findOne(['id' => $user_id]);
+                        try{
+                            Yii::$app->session->addFlash('update', 'Работа была принята');
+                            \Yii::$app->bot->sendMessage($user->telegram_chat_id, 'Назначен заказ '.$model->prefics.' '.$model->description);
+                        }catch (Exception $e){
+                            $e->getMessage();
+                        }
+                    }
                     return $this->redirect(['admin', 'id' => $id]);
                 } else {
                     print_r($model->getErrors());
+                    Yii::$app->session->addFlash('errors', 'Произошла ошибка!');
                 }
             } else {
-               $errors = $model->errors;
-               return $this->renderAjax('accept', ['model' => $model]);
+                return $this->renderAjax('accept', ['model' => $model]);
             }
-        } else {
-            return $this->renderAjax('accept', ['model' => $model]);
         }
+        return $this->renderAjax('accept', ['model' => $model]);
     }
 
     /**
@@ -774,12 +872,13 @@ class ZakazController extends Controller
      * @param $id
      * @return string
      */
-    public function actionZakaz($id){
+    public function actionZakaz($id)
+    {
         $model = $this->findModel($id);
 
         return $this->renderPartial('_zakaz', [
             'model' => $model,
-            ]);
+        ]);
     }
     /** END Block admin in gridview*/
     /**
@@ -797,28 +896,30 @@ class ZakazController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
     protected function findShipping($id)
     {
         if (($shipping = Courier::findOne($id)) !== null) {
             return $shipping;
         } else {
             throw new NotFoundHttpException("The requested page does not exist.");
-            
+
         }
     }
+
     protected function findNotification()
     {
         $notifModel = Notification::find();
         $notification = $notifModel->where(['id_user' => Yii::$app->user->id, 'active' => true]);
-        if($notification->count()>50){
-                $notifications = '50+';
-            } elseif ($notification->count()<1){
-                $notifications = '';
-            } else {
-                $notifications = $notification->count();
-            }
+        if ($notification->count() > 50) {
+            $notifications = '50+';
+        } elseif ($notification->count() < 1) {
+            $notifications = '';
+        } else {
+            $notifications = $notification->count();
+        }
 
         $this->view->params['notifications'] = $notification->all();
-        $this->view->params['count'] =  $notifications;
+        $this->view->params['count'] = $notifications;
     }
 }

@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use app\models\User;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
@@ -92,7 +93,7 @@ class SiteController extends Controller
             'program' => ['zakaz/program'],
             'zakup' => ['custom/index'],
             'system' => ['helpdesk/index'],
-            ];
+        ];
 
         if (!Yii::$app->user->isGuest) {
             foreach ($routes as $key => $value) {
@@ -183,6 +184,17 @@ class SiteController extends Controller
         return $this->render('signup', [
             'model' => $model,
         ]);
+    }
+
+    public function actionSetting($id)
+    {
+        $model = User::findOne($id);
+        return $this->render('setting', ['model' => $model]);
+    }
+
+    public function actionTelegram()
+    {
+        return $this->redirect('https://telegram.me/HollandSotrudbot');
     }
 
     /**

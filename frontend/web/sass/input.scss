@@ -25,7 +25,6 @@ $colPlaceholder: #191412;
     margin-top: -45px;
     height: 30px;
     width: 99px;
-    height: 30px;
     margin-right: 26px;
   }
 }
@@ -63,11 +62,12 @@ $colPlaceholder: #191412;
     }
     &::-webkit-input-placeholder {
       color:$colPlaceholder;
-      text-indent: 0px;   transition: text-indent 0.3s ease;
+      text-indent: 0;
+      transition: text-indent 0.3s ease;
     }
     &:focus{
       &::-webkit-input-placeholder{
-        text-indent: 550px; transition: text-indent 0.3s ease;
+        text-indent: 500px; transition: text-indent 0.3s ease;
       }
     }
   }
@@ -110,10 +110,17 @@ $colPlaceholder: #191412;
 }
 .zakaz-form{
   .input-group-addon{
-    padding: 0px 7px;
+    padding: 0 7px;
     background: $gold;
     border: none;
     color: #000;
+  }
+  .inputWidget-form{
+    width: 82px;
+    padding-right: 7%;
+  }
+  .inputWidget-contact{
+    padding-left: 7%;
   }
   #zakaz-number{
     padding-left: 9%;

@@ -1,8 +1,9 @@
 Options +FollowSymLinks
 IndexIgnore */*
 
-RewriteEngine on
-
+RewriteEngine On
+#RewriteCond %{HTTP:X-Forwarded-Protocol} !=https
+#RewriteRule .* https://%{SERVER_NAME}%{REQUEST_URI} [R=301,L]
 # if a directory or a file exists, use it directly
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d

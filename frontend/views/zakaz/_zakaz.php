@@ -1,14 +1,17 @@
 <?php
-use kartik\file\FileInput;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use yii\helpers\Url;
 use yii\bootstrap\Modal;
 use app\models\Courier;
-use yii\bootstrap\ActiveForm;
 use app\models\Comment;
 use app\models\Zakaz;
+
+/* @var $this yii\web\View */
+/* @var $shipping app\models\Courier */
+/* @var $model app\models\Zakaz */
 ?>
+
 
 <div class="view-zakaz" style="color: black">
 	<div class="col-lg-2 anketaZakaz">
@@ -20,7 +23,8 @@ use app\models\Zakaz;
 
         <span class="anketaZakaz_from">Клиент:</span>
         <div><?= $model->name ?></div>
-        <div><?= $model->phone ?></div>
+        <div><?php $s = $model->phone;
+        echo $s[0].' ('.$s[1].$s[2].$s[3].') '.$s[4].$s[5].$s[6].'-'.$s[7].$s[8].'-'.$s[9].$s[10]; ?></div>
         <div><?= $model->email ?></div>
 	    </div>
     </div>
@@ -31,20 +35,22 @@ use app\models\Zakaz;
         <?php $comments = Comment::find()->where(['id_zakaz' => $model->id_zakaz])->all(); ?>
         <div class="comment-zakaz">
             <?php  foreach ($comments as $com){
-                if ($com->id_user == Yii::$app->user->id){
-                    $user = 'Я';
-                } elseif ($com->id_user == 3){
-                    $user = 'Дизайнер';
-                } elseif ($com->id_user == 4){
-                    $user = 'Мастер';
-                } elseif ($com->id_user == 5){
-                    $user = 'Админ';
+                switch ($com->id_user){
+                    case Yii::$app->user->id;
+                        $user = 'Я';
+                        break;
+                    case (3);
+                        $user = 'Дизайнер';
+                        break;
+                    case (4):
+                        $user = 'Мастер';
+                        break;
                 }
                 echo  '
 <div style="display: block;">
-    <div style="width: 62px;float: left;text-align: right;padding-right: 10px;">'.$user.':</div>
-    <div style="width: 446px;float: left;color: #505050">'.$com->comment.'</div>
-    <div style="float: left;">'.date('d.m H:i', strtotime($com->date)).'</div>
+    <div class="userCommit">'.$user.':</div>
+    <div class="comment">'.$com->comment.'</div>
+    <div class="dateCommit">'.date('d.m H:i', strtotime($com->date)).'</div>
 </div>';
             }?>
         </div>
@@ -96,27 +102,35 @@ use app\models\Zakaz;
 		<?= Detailview::widget([
 			'model' => $model,
 			'options' => ['class' => 'table detail-view'],
-			'template' => '<tr style="color:black;border: none;"><td{contentOptions} class="zakaz-view-kartik">{value}</td></tr></tr>',
+			'template' => '<tr class="trMaket"><td{contentOptions} class="zakaz-view-kartik">{value}</td></tr></tr>',
 			'attributes' => [
                 [
                     'attribute' => 'maket',
                     'format' =>'raw',
-                    'value' => $model->maket == null ? '<div style="margin-top: 44px"></div>' : Html::a('<span class="glyphicon glyphicon-saved imgZakaz" style="margin-top: 4px;margin-left: -33px;">', '@web/attachment/'.$model->img, ['download' => true, 'data-pjax' => 0, 'title' => 'Готовый макет от дизайнера'])
+                    'value' => $model->maket == null ? '<div class="maket"></div>' : Html::a('<span class="glyphicon glyphicon-saved imgZakaz maketView">', '@web/maket/'.$model->maket, ['download' => true, 'data-pjax' => 0, 'title' => 'Готовый макет от дизайнера'])
                 ],
 				[
 				    'attribute' => 'img',
                     'format' =>'raw',
-                    'value' => $model->img == null ? '<div></div>' : Html::a('<span class="glyphicon glyphicon-paperclip imgZakaz" style="margin-top: -10px;margin-left: -33px;"></span>', '@web/attachment/'.$model->img, ['download' => true, 'data-pjax' => 0, 'title' => 'Исходный файл от клиента'])
+                    'value' => $model->img == null ? '' : Html::a('<span class="glyphicon glyphicon-paperclip imgZakaz"></span>', '@web/attachment/'.$model->img, ['download' => true, 'data-pjax' => 0, 'title' => 'Исходный файл от клиента'])
 				],
 			],
 		]) ?>
 	</div>
     <div class="responsible">
+        <?php if (Yii::$app->user->can('disain')): ?>
+            <?php if ($model->status == Zakaz::STATUS_DISAIN && $model->statusDisain == Zakaz::STATUS_DISAINER_WORK): ?>
+            Согласование с клиентом: <?= Html::a('Отправить', ['reconcilation', 'id' => $model->id_zakaz], ['class' => 'action']) ?>
+            <?php endif ?>
+            <?php if ($model->status == Zakaz::STATUS_DISAIN && $model->statusDisain == Zakaz::STATUS_DISAINER_SOGLAS): ?>
+                Согласование с клиентом: <?= Html::a('Снять', ['reconcilation', 'id' => $model->id_zakaz], ['class' => 'action']) ?>
+            <?php endif ?>
+        <?php endif ?>
         <?php if (Yii::$app->user->can('seeIspol')): ?>
             <div class="responsible_person-status">
                 <?php if ($model->status == Zakaz::STATUS_DECLINED_DISAIN or $model->status == Zakaz::STATUS_DECLINED_MASTER){
-                    echo '<div class="statusZakaz" style="background: #7c1111;margin-top: 15px;">Отклонено</div>
-<div style="width: 155px;">
+                    echo '<div class="statusZakaz declinedIspol">Отклонено</div>
+<div class="declinedIspol_div">
 <span class="responsible_person">По причине:</span><br>'.$model->declined.'</div>';
                 }
                 ?>
@@ -133,12 +147,11 @@ use app\models\Zakaz;
 </div>';
             }
             elseif($model->status == Zakaz::STATUS_DECLINED_DISAIN or $model->status == Zakaz::STATUS_DECLINED_MASTER){
-                echo '<div class="statusZakaz" style="background: #7c1111">Отклонено</div>
-<div style="width: 155px;position: relative;left: 63px;top: -1px;"">
+                echo '<div class="statusZakaz declined">Отклонено</div>
+<div class="declined_div">
 <span class="responsible_person">По причине:</span><br>'.$model->declined.'</div>';
             } elseif($model->status == Zakaz::STATUS_ADOPTED){
-//                echo Yii::$app->controller->renderPartial('accept', ['model' => $model]);
-                echo Html::submitButton('Назначить', ['class' => 'action actionApprove', 'style' => 'top: -16px;left: 139px;', 'value' => Url::to(['zakaz/accept', 'id' => $model->id_zakaz])]);
+                echo Html::submitButton('Назначить', ['class' => 'action actionApprove appoint', 'value' => Url::to(['zakaz/accept', 'id' => $model->id_zakaz])]);
             }
             ?>
         </div>
@@ -148,11 +161,11 @@ use app\models\Zakaz;
             <span class="responsible_person namePrice">Оплачено:</span>
             <span class="responsible_person namePrice">К доплате:</span>
             <span class="responsible_person namePrice">Всего:</span>
-            <div class="responsible_person price"><?= $model->fact_oplata.'р.' ?></div>
+            <div class="responsible_person price"><?= number_format($model->fact_oplata, 0, ',', ' ').'р.' ?></div>
             <div class="responsible_person price"><?php if($model->oplata != null){?>
-                <?php echo $model->oplata - $model->fact_oplata.'р.'; ?>
+                <?php echo number_format($model->oplata - $model->fact_oplata, 0, ',', ' ').'р.'; ?>
             <?php } ?></div>
-            <div class="responsible_person price"><?= $model->oplata.'р.' ?></div>
+            <div class="responsible_person price"><?= number_format($model->oplata, 0, ',', ' ').'р.' ?></div>
         </div>
     </div>
     <div class="col-lg-12 footerView"></div>
@@ -181,7 +194,7 @@ use app\models\Zakaz;
                         ],
                 ]) ?>
             <?php endif ?>
-            <?= Html::a('Задача', ['todoist/createzakaz', 'id_zakaz' => $model->id_zakaz], ['class' => 'btn btn-xs', 'style' => 'margin-left: 111px;']) ?>
+            <?= Html::a('Задача', ['todoist/createzakaz', 'id_zakaz' => $model->id_zakaz], ['class' => 'btn btn-xs todoist']) ?>
             <?php Modal::begin([
                 'header' => '<h2>Задание на доставку</h2>',
                 'class' => 'model-sm modalShipping',
@@ -191,6 +204,7 @@ use app\models\Zakaz;
                     'label' => 'Доставка',
                 ]
             ]);
+            
             $shipping = new Courier();
             echo $this->render('shipping', [
                 'shipping' => $shipping,
@@ -207,4 +221,3 @@ use app\models\Zakaz;
         <?php endif ?>
 <!--            --><?//= Html::a('Чек', ['#'], ['class' => 'btn btn-xs', 'style' => 'float: right;margin-right: 71px;'])?>
     </div>
-</div>

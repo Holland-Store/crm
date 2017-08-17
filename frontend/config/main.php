@@ -12,8 +12,8 @@ return [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
-	'modules' => [
-	    'gridview' =>  ['class' => '\kartik\grid\Module'],
+    'modules' => [
+        'gridview' =>  ['class' => '\kartik\grid\Module'],
         'datecontrol' => [
             'class' => '\kartik\datecontrol\Module',
             'displaySettings' => [
@@ -28,7 +28,7 @@ return [
             ],
         ],
 
-	],
+    ],
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-frontend',
@@ -54,27 +54,30 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        
+        'bot' => [
+            'class' => 'frontend\components\TelegramComponent',
+            'apiToken' => '411890271:AAGOEkFv8aZSMnNNMK2qmKG5X94Cr4JtxS8',
+        ],
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-				'admin' => 'zakaz/admin',
-				'view/<id:\d+>' => 'zakaz/view',
-				'disain' => 'zakaz/disain',
-				'master' => 'zakaz/master',
-				'shop' => 'zakaz/shop',
-				'courier' => 'courier/index',
-				'todoist' => 'todoist/index',
-				'helpdesk' => 'helpdesk/index',
-				'custom' => 'custom/index',
-				'versia' => 'zakaz/index',
-				'create' => 'zakaz/create',
-				'updete/<id:\d+>' => 'zakaz/update',
-				'login' => 'site/login',
-				'logout' => 'site/logout',
-				'createzakaz/<id_zakaz:\d+>' => 'todoist/createzakaz',
-				'view-todoist/<id:\d+>' => 'todoist/view',
+                'admin' => 'zakaz/admin',
+                'view/<id:\d+>' => 'zakaz/view',
+                'disain' => 'zakaz/disain',
+                'master' => 'zakaz/master',
+                'shop' => 'zakaz/shop',
+                'courier' => 'courier/index',
+                'todoist' => 'todoist/index',
+                'helpdesk' => 'helpdesk/index',
+                'custom' => 'custom/index',
+                'versia' => 'zakaz/index',
+                'create' => 'zakaz/create',
+                'updete/<id:\d+>' => 'zakaz/update',
+                'login' => 'site/login',
+                'logout' => 'site/logout',
+                'createzakaz/<id_zakaz:\d+>' => 'todoist/createzakaz',
+                'view-todoist/<id:\d+>' => 'todoist/view',
             ],
         ],
     ],

@@ -4,13 +4,13 @@ namespace frontend\controllers;
 
 use Yii;
 use app\models\Courier;
-use app\models\Zakaz;
+use app\models\User;
 use app\models\Notification;
 use app\models\CourierSearch;
+use yii\db\Exception;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\AccessControl;
-// use console\controllers\RbacController;
 use yii\filters\VerbFilter;
 use yii\data\ActiveDataProvider;
 
@@ -30,41 +30,41 @@ class CourierController extends Controller
                 'actions' => [
                     'delete' => ['POST'],
                 ],
-           ],
-           'access' => [
+            ],
+            'access' => [
                 'class' => AccessControl::className(),
                 // 'only' => ['index'],
                 'rules' => [
-                   [
-                       'actions' => ['index'],
-                       'allow' => true,
-                       'roles' => ['courier', 'program'],
-                   ],
-                   [
+                    [
+                        'actions' => ['index'],
+                        'allow' => true,
+                        'roles' => ['courier', 'program'],
+                    ],
+                    [
                         'actions' => ['ready'],
                         'allow' => true,
                         'roles' => ['courier', 'program'],
-                   ],
-                   [
+                    ],
+                    [
                         'actions' => ['make'],
                         'allow' => true,
                         'roles' => ['courier', 'program'],
-                   ],
-                   [
+                    ],
+                    [
                         'actions' => ['delivered'],
                         'allow' => true,
                         'roles' => ['courier', 'program'],
-                   ],
-                   [
+                    ],
+                    [
                         'actions' => ['shipping'],
                         'allow' => true,
                         'roles' => ['admin', 'program'],
-                   ],
-                   [
+                    ],
+                    [
                         'actions' => ['deletes'],
                         'allow' => true,
                         'roles' => ['admin', 'program'],
-                   ],
+                    ],
                 ],
             ],
         ];
@@ -83,19 +83,21 @@ class CourierController extends Controller
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'notification' => $notification,
         ]);
     }
     public function actionReady()
     {
         $courier = Courier::find();
-		$notification = $this->findNotification();
+        $notification = $this->findNotification();
         $dataProvider = new ActiveDataProvider([
             'query' => $courier->andWhere(['>', 'data_from', '0000-00-00 00:00:00']),
             'pagination' => ['pageSize' => 50,]
-            ]);
-        
+        ]);
+
         return $this->render('ready', [
             'dataProvider' => $dataProvider,
+            'notification' => $notification,
         ]);
     }
     /** View for admin scans all active shipping */
@@ -112,6 +114,7 @@ class CourierController extends Controller
         return $this->render('shipping', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'notification' => $notification,
         ]);
     }
 
@@ -123,8 +126,20 @@ class CourierController extends Controller
     public function actionDeletes($id)
     {
         $model =  $this->findModel($id);
-        $model->status = 3;
-        $model->save();
+        $user = User::findOne(['id' => User::USER_COURIER]);
+        $model->status = Courier::CANCEL;
+        if(!$model->save()){
+            print_r($model->getErrors());
+            Yii::$app->session->addFlash('errors', 'Произошла ошибка!');
+        } else {
+            $model->save();
+            Yii::$app->session->addFlash('update', 'Доставка былаа отклонена');
+            try{
+                \Yii::$app->bot->sendMessage($user->telegram_chat_id, 'Отменена доставка '.$model->idZakaz->prefics);
+            }catch (Exception $e){
+                $e->getMessage();
+            }
+        }
 
         return $this->redirect(['shipping']);
     }
@@ -157,11 +172,10 @@ class CourierController extends Controller
             } else {
                 print_r($model->getErrors());
             }
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
         }
+        return $this->render('create', [
+            'model' => $model,
+        ]);
     }
 
     /**
@@ -250,12 +264,12 @@ class CourierController extends Controller
     {
         $notification = Notification::find()->where(['id_user' => Yii::$app->user->id, 'active' => true]);
         if($notification->count()>50){
-                $notifications = '50+';
-            } elseif ($notification->count()<1){
-                $notifications = '';
-            } else {
-                $notifications = $notification->count();
-            }
+            $notifications = '50+';
+        } elseif ($notification->count()<1){
+            $notifications = '';
+        } else {
+            $notifications = $notification->count();
+        }
 
         $this->view->params['notifications'] = $notification->all();
         $this->view->params['count'] =  $notifications;

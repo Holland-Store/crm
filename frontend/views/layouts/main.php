@@ -3,14 +3,14 @@
 /* @var $this \yii\web\View */
 /* @var $content string */
 
+use app\models\Notification;
+use kartik\widgets\Growl;
 use yii\helpers\Html;
-use yii\bootstrap\Nav;
-use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use common\widgets\Alert;
-use yii\helpers\Url;
-use app\models\Notification;
+use frontend\components\Counter;
+//use app\models\Notification;
 
 AppAsset::register($this);
 ?>
@@ -28,33 +28,20 @@ AppAsset::register($this);
         'type' => 'image/x-icon',
         'href' => '/frontend/web/favicon.ico',
     ]);?>
+    <?php $notifModel = Notification::find();
+    $notifications = $notifModel->where(['id_user' => Yii::$app->user->id, 'active' => true]);
+    $this->params['notifications'] = $notifications->all();
+    $this->params['counter'] = $notifications->count(); ?>
 </head>
 <body>
 <?php $this->beginBody() ?>
-
 <div class="wrap">
 <?php if (!Yii::$app->user->isGuest): ?>
     <div class="logo"></div>
 <?php echo '<h1 class="titleMain">'.Html::encode($this->title).'</h1>' ?>
-<?php echo Nav::widget([
-    'options' => ['class' => 'nav nav-pills headerNav'],
-    'items' => [
-    ['label' => 'Заказы', 'url' => ['zakaz/admin'], 'visible' => Yii::$app->user->can('seeAdmin')],
-    ['label' => 'Заказы', 'url' => ['zakaz/disain'], 'visible' => Yii::$app->user->can('disain')],
-    ['label' => 'Заказы', 'url' => ['zakaz/master'], 'visible' => Yii::$app->user->can('master')],
-    ['label' => 'Заказы', 'url' => ['zakaz/shop'], 'visible' => Yii::$app->user->can('seeShop')],
-    ['label' => 'Доставки', 'url' => ['courier/index'], 'visible' => Yii::$app->user->can('courier')],
-    ['label' => 'Задачи', 'url' => ['todoist/index'], 'visible' => Yii::$app->user->can('admin')],
-    ['label' => 'Поломки', 'url' => ['helpdesk/index'], 'visible' => !Yii::$app->user->isGuest],
-    ['label' => 'Закупки', 'url' => ['custom/adop'], 'visible' => Yii::$app->user->can('seeAdop')],
-    ['label' => 'Доставки', 'url' => ['courier/shipping'], 'visible' => Yii::$app->user->can('admin')],
-    ['label' => 'Закупки', 'url' => ['custom/index'], 'visible' => Yii::$app->user->can('zakup')],
-    ['label' => 'Задачи', 'url' => ['todoist/shop'], 'visible' => Yii::$app->user->can('todoist')],
-//    ['label' => 'Help Desk', 'url' => ['helpdesk/index'], 'visible' => Yii::$app->user->can('todoist')],
-    ],
-]); ?>
+    <?= Counter::widget() ?>
 <?php endif ?>
-<?php $counts = '<span class="glyphicon glyphicon-bell" style="font-size:21px"></span><span class="badge pull-right">'.$this->params['count'].'</span>'; ?>
+    <?php $counts = '<span class="glyphicon glyphicon-bell" style="font-size:21px"></span><span class="badge pull-right">'.$this->params['count'].'</span>'; ?>
     <?php
     // NavBar::begin([
     //     'brandLabel' => 'Holland',
@@ -88,14 +75,14 @@ AppAsset::register($this);
     //     'items' => $menuItems,
     // ]);
     // NavBar::end();
-    
+
     if (Yii::$app->user->isGuest) {
         echo '';
     } else {
         echo Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(
                 '<span>'.Yii::$app->user->identity->name.'</span> <span class="glyphicon glyphicon-off exit"></span>',
-                ['class' => 'btn btn-link logout']
+                ['class' => 'btn btn-link logout', 'title' => 'Выход']
             )
             . Html::endForm();
     }
@@ -116,15 +103,15 @@ AppAsset::register($this);
                     } elseif ($notification->category == 4 && $notification->srok >= $date){
                         $notif = '';
                     }
-
-                   echo Html::a($notif.'<br>', ['notification/notification', 'id' => $notification->id_zakaz], ['id' => $notification->id_zakaz, 'class' => 'zakaz', 'data-key' => $notification->id_zakaz]);            
-                } 
+                    /** @var string $notif */
+                    echo Html::a($notif.'<br>', ['notification/notification', 'id' => $notification->id_zakaz], ['id' => $notification->id_zakaz, 'class' => 'zakaz', 'data-key' => $notification->id_zakaz]);
+                }
                 ?>
             </div>
             <div class='notification-footer'>
             <?php echo Html::a('Прочитать все напоминание', ['notification/index']) ?>
             </div>
-        </div>  
+        </div>
     <?php endif ?>
 
 <?php if (Yii::$app->user->isGuest): ?>
@@ -140,17 +127,21 @@ AppAsset::register($this);
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
         <?= Alert::widget() ?>
+        <?php if (Yii::$app->session->hasFlash('update')) {
+            echo Growl::widget([
+                'type' => Growl::TYPE_SUCCESS,
+                'body' => Yii::$app->session->removeFlash('update'),
+            ]);
+        } ?>
+        <?php if (Yii::$app->session->hasFlash('errors')) {
+            echo Growl::widget([
+                'type' => Growl::TYPE_DANGER,
+                'body' => Yii::$app->session->removeFlash('errors'),
+            ]);
+        } ?>
         <?= $content ?>
     </div>
 </div>
-
-<!-- <footer class="footer">
-    <div class="container">
-        <p class="pull-left">&copy; Holland <?= date('Y'); ?> <?= Html::a('version 2.0', ['zakaz/index']) ?></p>
-
-        <!-- <p class="pull-right"><?= Yii::powered() ?></p> -->
-    <!--</div>
-</footer> -->
 <?php if (Yii::$app->user->isGuest): ?>
     <footer>
         <div class="footerLogin">

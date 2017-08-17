@@ -2,7 +2,6 @@
 
 namespace app\models;
 
-use Yii;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -21,10 +20,10 @@ use yii\helpers\ArrayHelper;
  */
 class Todoist extends \yii\db\ActiveRecord
 {
-	const MOSCOW = 2;
-	const PUSHKIN = 6;
-	const SIBIR = 9;
-	const ZAKUP = 10;
+    const MOSCOW = 2;
+    const PUSHKIN = 6;
+    const SIBIR = 9;
+    const ZAKUP = 10;
     /**
      * @inheritdoc
      */
@@ -71,7 +70,7 @@ class Todoist extends \yii\db\ActiveRecord
         return $this->hasOne(Zakaz::className(), ['id_zakaz' => 'id_zakaz']);
     }
 
-	/**
+    /**
      * @return \yii\db\ActiveQuery
      */
     public function getIdUser()
@@ -79,24 +78,24 @@ class Todoist extends \yii\db\ActiveRecord
         return $this->hasOne(User::className(), ['id' => 'id_user']);
     }
 
-	public static function getIdUserArray()
-	{
-		return [
-			self::MOSCOW => 'Московский',
-			self::PUSHKIN => 'Пушкина',
-			self::SIBIR => 'Сибирский',
-			self::ZAKUP => 'Закупки',
-		];
-	}
-	public function getIdUserName()
-	{
-		return ArrayHelper::getValue(self::getIdUser(), $this->id_user);
-	}
+    public static function getIdUserArray()
+    {
+        return [
+            self::MOSCOW => 'Московский',
+            self::PUSHKIN => 'Пушкина',
+            self::SIBIR => 'Сибирский',
+            self::ZAKUP => 'Закупки',
+        ];
+    }
+    public function getIdUserName()
+    {
+        return ArrayHelper::getValue(self::getIdUser(), $this->id_user);
+    }
     public static function getTodoistArray()
     {
         return [
-            '0' => 'Выполнен',
-            '1' => 'Активный',
+            '0' => 'Активный',
+            '1' => 'Выполнен',
         ];
     }
     public function getTodoistName()

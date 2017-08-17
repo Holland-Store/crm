@@ -3,14 +3,56 @@
 use yii\bootstrap\ButtonDropdown;
 use yii\helpers\Html;
 use kartik\grid\GridView;
-use yii\bootstrap\Nav;
+use yii\widgets\ActiveForm;
+use unclead\multipleinput\TabularInput;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\CustomSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
+/** @var $models app\models\Custom */
 
 $this->title = 'Все запросы';?>
 <div class="custom-index">
+
+    <?php $form = ActiveForm::begin([
+        'enableAjaxValidation'      => true,
+        'enableClientValidation'    => false,
+        'validateOnChange'          => false,
+        'validateOnSubmit'          => true,
+        'validateOnBlur'            => false,
+    ]); ?>
+    <div id="customForm">
+
+        <?= TabularInput::widget([
+            'models' => $models,
+            'columns' => [
+                [
+                    'name' => 'tovar',
+                    'type' => \unclead\multipleinput\MultipleInputColumn::TYPE_TEXT_INPUT,
+                    'title' => 'Товар',
+                    'options' => [
+                        'maxlength' => '50',
+                        'placeholder' => 'Максимальное значение должно быть не больше 50 символов',
+                    ]
+                ],
+                [
+                    'name' => 'number',
+                    'type' => 'textInput',
+                    'title' => 'Кол-во',
+                    'options' => [
+                        'type' => 'number',
+                        'min' => '0'
+                    ]
+                ],
+            ],
+        ]) ?>
+
+    </div>
+    <div class="form-group">
+        <?= Html::submitButton('Создать', ['class' => 'btn btn-success']) ?>
+    </div>
+
+    <?php ActiveForm::end(); ?>
 
     <p>
         <?php echo ButtonDropdown::widget([
@@ -87,6 +129,9 @@ $this->title = 'Все запросы';?>
                 'attribute' => 'number',
                 'hAlign' => GridView::ALIGN_RIGHT,
                 'contentOptions' => ['class' => 'textTr tr50'],
+                'value' => function($model){
+                    return $model->number == null ? '' : $model->number;
+                }
             ],
             [
                 'attribute' => 'action',

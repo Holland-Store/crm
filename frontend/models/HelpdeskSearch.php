@@ -5,7 +5,6 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Helpdesk;
 
 /**
  * HelpdeskSearch represents the model behind the search form about `app\models\Helpdesk`.
@@ -39,10 +38,18 @@ class HelpdeskSearch extends Helpdesk
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params, $status)
     {
         $query = Helpdesk::find();
-        Yii::$app->user->can('system') ? $query = $query->where(['status' => 0]) : $query = $query->where(['id_user' => Yii::$app->user->id, 'status' => 0]);
+        if (Yii::$app->user->can('system') && $status == 'work'){
+            $query = $query->where(['status' => [Helpdesk::STATUS_NEW, Helpdesk::STATUS_DECLINED]]);
+        } elseif(Yii::$app->user->can('system') && $status == 'soglas'){
+            $query = $query->where(['status' => Helpdesk::STATUS_CHECKING]);
+        } elseif(!Yii::$app->user->can('system') && $status == 'work') {
+            $query = $query->where(['id_user' => Yii::$app->user->id, 'status' => [Helpdesk::STATUS_NEW, Helpdesk::STATUS_DECLINED]]);
+        } else {
+            $query = $query->where(['id_user' => Yii::$app->user->id, 'status' => Helpdesk::STATUS_CHECKING]);
+        }
 
         // add conditions that should always apply here
 

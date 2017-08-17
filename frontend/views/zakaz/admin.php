@@ -8,14 +8,14 @@ use yii\bootstrap\Modal;
 use app\models\Zakaz;
 use app\models\Comment;
 use yii\bootstrap\ButtonDropdown;
-use yii\grid\SetColumn;
-use yii\helpers\Url;
 use yii\widgets\Pjax;
 
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\ZakazSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
+/** @var $dataProviderWork yii\data\ActiveDataProvider */
+/** @var $dataProviderIspol yii\data\ActiveDataProvider*/
 
 $this->title = 'Вce заказы';
 ?>
@@ -79,14 +79,13 @@ $this->title = 'Вce заказы';
             </div>
     </div>
     <div class="col-lg-12">
-        <?=
-        GridView::widget([
+        <?= GridView::widget([
         'dataProvider' => $dataProviderWork,
         'floatHeader' => true,
         'headerRowOptions' => ['class' => 'headerTable'],
         'pjax' => true,
         'tableOptions' 	=> ['class' => 'table table-bordered tableSize'],
-        'rowOptions' => function($model, $key, $index, $grid){
+        'rowOptions' => function($model){
             if ($model->srok < date('Y-m-d H:i:s') && $model->status > Zakaz::STATUS_NEW ) {
                 return ['class' => 'trTable trTablePass italic trSrok'];
             } elseif ($model->srok < date('Y-m-d H:i:s') && $model->status == Zakaz::STATUS_NEW) {
@@ -105,10 +104,10 @@ $this->title = 'Вce заказы';
                     return ['id' => $model->id_zakaz, 'class' => 'border-left', 'style' => 'border:none'];
                 },                
 				'width'=>'10px',
-				'value' => function ($model, $key, $index) {
+				'value' => function () {
 					return GridView::ROW_COLLAPSED;
 				},
-				'detail'=>function ($model, $key, $index, $column) {
+				'detail'=>function ($model) {
                     $comment = new Comment();
 					return Yii::$app->controller->renderPartial('_zakaz', ['model'=> $model, 'comment' => $comment]);
 				},
@@ -135,9 +134,9 @@ $this->title = 'Вce заказы';
                 'contentOptions' => ['class' => 'tr20'],
                 'value' => function($model){
                     if ($model->prioritet == 2) {
-                        return '<i class="fa fa-circle fa-red" aria-hidden="true"></i>';
+                        return '<i class="fa fa-circle fa-red"></i>';
                     } elseif ($model->prioritet == 1) {
-                        return '<i class="fa fa-circle fa-ping" aria-hidden="true"></i>';
+                        return '<i class="fa fa-circle fa-ping"></i>';
                     } else {
                         return '';
                     }
@@ -190,9 +189,9 @@ $this->title = 'Вce заказы';
                         return '';
                     } else {
                         if ($model->idShipping->status == Courier::DOSTAVKA or $model->idShipping->status == Courier::RECEIVE) {
-                            return '<i class="fa fa-truck" style="font-size: 13px;color: #f0ad4e;" aria-hidden="true"></i>';
+                            return '<i class="fa fa-truck" style="font-size: 13px;color: #f0ad4e;"></i>';
                         } elseif ($model->idShipping->status == Courier::DELIVERED){
-                            return '<i class="fa fa-truck" style="font-size: 13px;color: #191412;" aria-hidden="true"></i>';
+                            return '<i class="fa fa-truck" style="font-size: 13px;color: #191412;"></i>';
                         } else {
                             return '';
                         }
@@ -202,7 +201,7 @@ $this->title = 'Вce заказы';
             [
                 'attribute' => 'oplata',
                 'value' => function($model){
-                    return $model->oplata.' р.';
+                    return number_format($model->oplata, 0,',', ' ').' р.';
                 },
                 'hAlign' => GridView::ALIGN_RIGHT,
                 'contentOptions' => function($model) {
@@ -216,7 +215,7 @@ $this->title = 'Вce заказы';
             [
                 'attribute' => '',
                 'format' => 'raw',
-                'value' => function($model){
+                'value' => function(){
                     return '';
                 },
                 'contentOptions' => ['class' => 'textTr border-right tr90'],
@@ -256,7 +255,7 @@ $this->title = 'Вce заказы';
         'pjax' => true,
         'tableOptions'  => ['class' => 'table table-bordered tableSize'],
         'striped' => false,
-        'rowOptions' => function($model, $key, $index, $grid){
+        'rowOptions' => function($model){
             if ($model->srok < date('Y-m-d H:i:s')) {
                 return['class' => 'trTable trTablePass trNormal'];
             } else {
@@ -266,164 +265,14 @@ $this->title = 'Вce заказы';
         'columns' => [
             [
                 'class'=>'kartik\grid\ExpandRowColumn',
-                'contentOptions' => function($model, $key, $index, $grid){
+                'contentOptions' => function($model){
                     return ['id' => $model->id_zakaz, 'class' => 'border-left', 'style' => 'border:none'];
                 }, 
                 'width'=>'10px',
-                'value' => function ($model, $key, $index) {
+                'value' => function () {
                     return GridView::ROW_COLLAPSED;
                 },
-                'detail'=>function ($model, $key, $index, $column) {
-                    $comment = new Comment();
-                    return Yii::$app->controller->renderPartial('_zakaz', ['model'=>$model, 'comment' => $comment]);
-                },
-                'enableRowClick' => true,
-                'expandOneOnly' => true,
-                'expandIcon' => ' ',
-                'collapseIcon' => ' ',
-            ],
-            [
-                'attribute' => 'id_zakaz',
-                'value' => 'prefics',
-                'hAlign' => GridView::ALIGN_RIGHT,
-                'contentOptions' => function($model) {
-                    if ($model->id_unread == true){
-                        return ['class' => 'trNew tr70'];
-                    } else {
-                        return ['class' => 'textTr tr70'];
-                    }
-                },
-            ],
-            [
-                'attribute' => '',
-                'format' => 'raw',
-                'contentOptions' => ['class' => 'tr20'],
-                'value' => function($model){
-                    if ($model->prioritet == 2) {
-                        return '<i class="fa fa-circle fa-red" aria-hidden="true"></i>';
-                    } elseif ($model->prioritet == 1) {
-                        return '<i class="fa fa-circle fa-ping" aria-hidden="true"></i>';
-                    } else {
-                        return '';
-                    }
-
-                }
-            ],
-            [
-                'attribute' => 'srok',
-                'format' => ['datetime', 'php:d M H:i'],
-                'value' => 'srok',
-                'hAlign' => GridView::ALIGN_RIGHT,
-                'contentOptions' => function($model) {
-                    if ($model->id_unread == true){
-                        return ['class' => 'trNew tr90'];
-                    } else {
-                        return ['class' => 'textTr tr90'];
-                    }
-                },
-            ],
-            [
-                'attribute' => 'minut',
-                'hAlign' => GridView::ALIGN_RIGHT,
-                'contentOptions' => function($model) {
-                    if ($model->id_unread == true){
-                        return ['class' => 'trNew tr10'];
-                    } else {
-                        return ['class' => 'textTr tr10'];
-                    }
-                },
-                'value' => function($model){
-                    if ($model->minut == null){
-                        return '';
-                    } else {
-                        return $model->minut;
-                    }
-                }
-            ],
-            [
-                'attribute' => 'description',
-                'value' => function($model){
-                    return StringHelper::truncate($model->description, 100);
-                },
-                'contentOptions' => function($model) {
-                    if ($model->id_unread == true){
-                        return ['class' => 'trNew'];
-                    } else {
-                        return '';
-                    }
-                },
-            ],
-            [
-                    'attribute' => 'id_shipping',
-                    'format' => 'raw',
-                    'contentOptions' => ['class' => 'tr50'],
-                    'value' => function($model){
-                        if ($model->id_shipping == null or $model->id_shipping == null){
-                            return '';
-                        } else {
-                            if ($model->idShipping->status == Courier::DOSTAVKA or $model->idShipping->status == Courier::RECEIVE) {
-                                return '<i class="fa fa-truck" style="font-size: 13px;color: #f0ad4e;" aria-hidden="true"></i>';
-                            } elseif ($model->idShipping->status == Courier::DELIVERED){
-                                return '<i class="fa fa-truck" style="font-size: 13px;color: #191412;" aria-hidden="true"></i>';
-                            } else {
-                                return '';
-                            }
-                        }
-                    }
-            ],
-            [
-                'attribute' => 'oplata',
-                'headerOptions' => ['width' => '70'],
-                'value' => function($model){
-                    return $model->oplata.' р.';
-                },
-                'hAlign' => GridView::ALIGN_RIGHT,
-                'contentOptions' => function($model) {
-                    if ($model->id_unread == true){
-                        return ['class' => 'trNew tr70'];
-                    } else {
-                        return ['class' => 'textTr tr70'];
-                    }
-                },
-            ],
-            [
-                'attribute' => 'statusName',
-                'label' => 'Отв-ный',
-                'contentOptions' => function($model) {
-                    if ($model->id_unread == true){
-                        return ['class' => 'border-right trNew'];
-                    } else{
-                        return ['class' => 'border-right textTr'];
-                    }
-                },
-            ],
-        ],
-    ]); ?>
-    </div>
-    <div class="col-lg-12">
-        <h3 class="titleTable">На закрытие</h3>
-    </div>
-    <div class="col-lg-12">
-        <?= /** @var TYPE_NAME $dataProviderIspol */
-    GridView::widget([
-        'dataProvider' => $dataProviderIspol,
-        'floatHeader' => true,
-        'headerRowOptions' => ['class' => 'headerTable'],
-        'pjax' => true,
-        'striped' => false,
-        'tableOptions' => ['class' => 'table table-bordered tableSize'],
-        'rowOptions' => ['class' => 'trTable srok trNormal'],
-        'columns' => [
-            [
-                'class'=>'kartik\grid\ExpandRowColumn',
-                'contentOptions' => function($model, $key, $index, $grid){
-                    return ['id' => $model->id_zakaz, 'class' => 'border-left', 'style' => 'border:none'];
-                }, 
-                'width'=>'10px',
-                'value' => function ($model, $key, $index) {
-                    return GridView::ROW_COLLAPSED;
-                },
-                'detail'=>function ($model, $key, $index, $column) {
+                'detail'=>function ($model) {
                     $comment = new Comment();
                     return Yii::$app->controller->renderPartial('_zakaz', ['model'=>$model, 'comment' => $comment]);
                 },
@@ -444,9 +293,129 @@ $this->title = 'Вce заказы';
                 'contentOptions' => ['class' => 'tr20'],
                 'value' => function($model){
                     if ($model->prioritet == 2) {
-                        return '<i class="fa fa-circle fa-red" aria-hidden="true"></i>';
+                        return '<i class="fa fa-circle fa-red"></i>';
                     } elseif ($model->prioritet == 1) {
-                        return '<i class="fa fa-circle fa-ping" aria-hidden="true"></i>';
+                        return '<i class="fa fa-circle fa-ping"></i>';
+                    } else {
+                        return '';
+                    }
+
+                }
+            ],
+            [
+                'attribute' => 'srok',
+                'format' => ['datetime', 'php:d M H:i'],
+                'value' => 'srok',
+                'hAlign' => GridView::ALIGN_RIGHT,
+                'contentOptions' => ['class' => 'textTr tr90'],
+            ],
+            [
+                'attribute' => 'minut',
+                'hAlign' => GridView::ALIGN_RIGHT,
+                'contentOptions' => ['class' => 'textTr tr10'],
+                'value' => function($model){
+                    if ($model->minut == null){
+                        return '';
+                    } else {
+                        return $model->minut;
+                    }
+                }
+            ],
+            [
+                'attribute' => 'description',
+                'value' => function($model){
+                    return StringHelper::truncate($model->description, 100);
+                },
+            ],
+            [
+                    'attribute' => 'id_shipping',
+                    'format' => 'raw',
+                    'contentOptions' => ['class' => 'tr50'],
+                    'value' => function($model){
+                        if ($model->id_shipping == null or $model->id_shipping == null){
+                            return '';
+                        } else {
+                            if ($model->idShipping->status == Courier::DOSTAVKA or $model->idShipping->status == Courier::RECEIVE) {
+                                return '<i class="fa fa-truck" style="font-size: 13px;color: #f0ad4e;"></i>';
+                            } elseif ($model->idShipping->status == Courier::DELIVERED){
+                                return '<i class="fa fa-truck" style="font-size: 13px;color: #191412;"></i>';
+                            } else {
+                                return '';
+                            }
+                        }
+                    }
+            ],
+            [
+                'attribute' => 'oplata',
+                'headerOptions' => ['width' => '70'],
+                'value' => function($model){
+                    return number_format($model->oplata,0, ',', ' ').' р.';
+                },
+                'hAlign' => GridView::ALIGN_RIGHT,
+                'contentOptions' => ['class' => 'textTr tr70'],
+            ],
+            [
+                'attribute' => 'statusName',
+                'label' => 'Отв-ный',
+                'contentOptions' => function($model) {
+                    if ($model->id_unread == true && $model->srok < date('Y-m-d H:i:s')){
+                        return ['class' => 'border-right trNew'];
+                    } elseif ($model->id_unread == true && $model->srok > date('Y-m-d H:i:s')){
+                        return ['class' => 'border-right success-ispol'];
+                    } else {
+                        return ['class' => 'border-right textTr'];
+                    }
+                },
+            ],
+        ],
+    ]); ?>
+    </div>
+    <div class="col-lg-12">
+        <h3 class="titleTable">На закрытие</h3>
+    </div>
+    <div class="col-lg-12">
+        <?= GridView::widget([
+        'dataProvider' => $dataProviderIspol,
+        'floatHeader' => true,
+        'headerRowOptions' => ['class' => 'headerTable'],
+        'pjax' => true,
+        'striped' => false,
+        'tableOptions' => ['class' => 'table table-bordered tableSize'],
+        'rowOptions' => ['class' => 'trTable srok trNormal'],
+        'columns' => [
+            [
+                'class'=>'kartik\grid\ExpandRowColumn',
+                'contentOptions' => function($model){
+                    return ['id' => $model->id_zakaz, 'class' => 'border-left', 'style' => 'border:none'];
+                }, 
+                'width'=>'10px',
+                'value' => function () {
+                    return GridView::ROW_COLLAPSED;
+                },
+                'detail'=>function ($model) {
+                    $comment = new Comment();
+                    return Yii::$app->controller->renderPartial('_zakaz', ['model'=>$model, 'comment' => $comment]);
+                },
+                'enableRowClick' => true,
+                'expandOneOnly' => true,
+                'expandIcon' => ' ',
+                'collapseIcon' => ' ',
+            ],
+            [
+                'attribute' => 'id_zakaz',
+                'value' => 'prefics',
+                'hAlign' => GridView::ALIGN_RIGHT,
+                'contentOptions' => ['class' => 'textTr tr70'],
+            ],
+            [
+                'attribute' => '',
+                'format' => 'raw',
+                'contentOptions' => ['class' => 'tr20'],
+                'value' => function($model){
+                    if ($model->prioritet == 2) {
+                        return '<i class="fa fa-circle fa-red"></i>';
+                    } elseif ($model->prioritet == 1) {
+                        return '<i class="fa fa-circle fa-ping"></i>';
                     } else {
                         return '';
                     }
@@ -487,9 +456,9 @@ $this->title = 'Вce заказы';
                         return '';
                     } else {
                         if ($model->idShipping->status == Courier::DOSTAVKA or $model->idShipping->status == Courier::RECEIVE) {
-                            return '<i class="fa fa-truck" style="font-size: 13px;color: #f0ad4e;" aria-hidden="true"></i>';
+                            return '<i class="fa fa-truck" style="font-size: 13px;color: #f0ad4e;"></i>';
                         } elseif ($model->idShipping->status == Courier::DELIVERED){
-                            return '<i class="fa fa-truck" style="font-size: 13px;color: #191412;" aria-hidden="true"></i>';
+                            return '<i class="fa fa-truck" style="font-size: 13px;color: #191412;"></i>';
                         } else {
                             return '';
                         }
@@ -499,7 +468,7 @@ $this->title = 'Вce заказы';
             [
                 'attribute' => 'oplata',
                 'value' => function($model){
-                    return $model->oplata.' р.';
+                    return number_format($model->oplata,0, ',', ' ').' р.';
                 },
                 'hAlign' => GridView::ALIGN_RIGHT,
                 'contentOptions' => ['class' => 'textTr tr70'],
@@ -507,7 +476,7 @@ $this->title = 'Вce заказы';
             [
                 'attribute' => '',
                 'format' => 'raw',
-                'value' => function($model){
+                'value' => function(){
                     return '';
                 },
                 'contentOptions' => ['class' => 'textTr border-right tr90'],

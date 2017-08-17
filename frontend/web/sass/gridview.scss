@@ -18,6 +18,7 @@ $width90:90px;
 $border-left: 19px 0px 0px 19px;
 $border-right: 0px 19px 18px 0px;
 $colorH3: #736a50;
+$success: #446505;
 
 //Кнопка архив
 $colorText: rgba(204, 198, 198, 0.6);
@@ -28,8 +29,6 @@ $border-radius: 26px;
 $bacgrountTr: #802c2c;
 $backgroundComment: #1f1b1a;
 $bodyBackground: #302927;
-$success: #446505;
-$orangeDostavka: #f0ad4e;
 
 @mixin border-bottom($color) {
     border-bottom: 1px solid $color;
@@ -51,7 +50,7 @@ $orangeDostavka: #f0ad4e;
 .table > tbody > tr.info > th,
 .table > tfoot > tr.info > th {
     background: $colButtonHover;
-    border-radius: 0px 0px 15px 15px;
+    border-radius: 0 0 15px 15px;
 }
 
 .container{
@@ -100,7 +99,7 @@ $orangeDostavka: #f0ad4e;
                 top: 40px;
                 left: -56px;
                 height: 30px;
-                border-radius: 16px 0px 0px 19px;
+                border-radius: 16px 0 0 19px;
                 background: #302927;
                 font-size: $font-size;
                 @include border($colorText);
@@ -114,9 +113,9 @@ $orangeDostavka: #f0ad4e;
                 @extend .button;
                 margin-top: -5px;
                 height: 30px;
-                padding: 0px 23px 0px 13px;
+                padding: 0 23px 0 13px;
                 margin-left: 98px;
-                border-radius: 0px 16px 16px 0px;
+                border-radius: 0 16px 16px 0;
                 color: $colorText;
                 background: $colorButton;
                 @include border($colorText);
@@ -165,7 +164,7 @@ $orangeDostavka: #f0ad4e;
     }
     .table .trNew{
         font-weight: bold;
-        color: $colButtonHover;
+        color: #191412;
     }
     .reminder{
         position: relative;
@@ -241,7 +240,7 @@ $orangeDostavka: #f0ad4e;
       .price{
         font-weight: $italic;
         color: $colorText;
-        margin-right: 0px;
+        margin-right: 0;
         margin-left: 36px;
         float: left;
         &:nth-of-type(1){
@@ -252,7 +251,7 @@ $orangeDostavka: #f0ad4e;
         }
         &:nth-of-type(3){
           margin-right: 27px;
-          margin-left: 0px;
+          margin-left: 0;
           float: right;
         }
       }
@@ -326,7 +325,7 @@ $orangeDostavka: #f0ad4e;
                 background: $colorH3;
                 color: $colButtonHover;
                 border-radius: 8px;
-                padding: 5px 18px 0px 17px;
+                padding: 5px 18px 0 17px;
                 border-top: 4px solid $colorH3;
                 border-right: 4px solid $colorH3;
                 border-left: 1px solid $colorH3;
@@ -339,9 +338,9 @@ $orangeDostavka: #f0ad4e;
                 color: $colorButton;
                 background: $colButtonHover;
                 border-radius: 8px;
-                padding: 9px 18px 0px 17px;
-                border-left: 0px solid $colButtonHover;
-                border-top: 0px solid $colButtonHover;
+                padding: 9px 18px 0 17px;
+                border-left: 0 solid $colButtonHover;
+                border-top: 0 solid $colButtonHover;
                 border-right: 3px solid $colButtonHover;
                 border-bottom: 27px solid $colButtonHover;
               }
@@ -376,7 +375,7 @@ $orangeDostavka: #f0ad4e;
               padding-top: 11px;
               background: $bodyBackground;
               color: $colorH3;
-              margin-top: 10px;
+              margin-top: 1px;
               margin-left: -20px;
               &:hover{
                 color: $bodyBackground;
@@ -411,6 +410,11 @@ $orangeDostavka: #f0ad4e;
     }
     .detail-view{
         background-color: $colButtonHover;
+        tbody{
+          .trMaket{
+            @include border($colButtonHover);
+          }
+        }
     }
     .footerView{
         border-top: 1px solid rgba(48, 41, 39, 0.3);
@@ -429,8 +433,10 @@ $orangeDostavka: #f0ad4e;
       background: $colButtonHover;
     }
   }
-  .success-ispol{
-    color: $success;
+  tbody{
+    .success-ispol{
+      color: $success;
+    }
   }
 }
 .zakaz-shop{
