@@ -47,5 +47,8 @@ $( document ).ready( function() {
                 success: console.log( "Успешно изменен статус " + data )
             } );
        });
+       $( 'body' ).on( 'click', '.buttonComment', function() {
+           $('.CommentForm').toggleClass('CommentForm-visible');
+       });
 });
 

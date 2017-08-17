@@ -89,6 +89,9 @@ $colPlaceholder: #191412;
       font-size: 11px;
     }
   }
+  .inputComment{
+    height: 31px;
+  }
   .inputForm{
     @include inputForm;
   }

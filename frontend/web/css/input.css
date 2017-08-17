@@ -23,12 +23,12 @@
   text-indent: 0;
   transition: text-indent 0.3s ease;
 }
-/* line 68, ../sass/input.scss */
+/* line 69, ../sass/input.scss */
 .form-group input:focus::-webkit-input-placeholder {
   text-indent: 500px;
   transition: text-indent 0.3s ease;
 }
-/* line 73, ../sass/input.scss */
+/* line 74, ../sass/input.scss */
 .form-group select {
   outline: 0;
   width: 86%;
@@ -37,10 +37,11 @@
   border: none;
   border-radius: 26px;
   font-size: 11px;
+  border: none;
   height: 26px;
   color: #000;
 }
-/* line 81, ../sass/input.scss */
+/* line 82, ../sass/input.scss */
 .form-group textarea {
   outline: 0;
   width: 86%;
@@ -51,12 +52,16 @@
   font-size: 11px;
   height: 66px;
 }
-/* line 86, ../sass/input.scss */
+/* line 87, ../sass/input.scss */
 .form-group textarea::-webkit-input-placeholder {
   color: #191412;
   font-size: 11px;
 }
-/* line 91, ../sass/input.scss */
+/* line 92, ../sass/input.scss */
+.form-group .inputComment {
+  height: 31px;
+}
+/* line 95, ../sass/input.scss */
 .form-group .inputForm {
   outline: 0;
   width: 86%;
@@ -64,59 +69,59 @@
   background: #736a50;
   border: none;
 }
-/* line 94, ../sass/input.scss */
+/* line 98, ../sass/input.scss */
 .form-group .help-block {
   color: rgba(171, 100, 24, 0.99);
 }
 
-/* line 99, ../sass/input.scss */
+/* line 103, ../sass/input.scss */
 .zakaz-shippingForm input {
   width: 55%;
   margin-left: 15px;
 }
-/* line 103, ../sass/input.scss */
+/* line 107, ../sass/input.scss */
 .zakaz-shippingForm .inputForm {
   width: 38%;
 }
-/* line 106, ../sass/input.scss */
+/* line 110, ../sass/input.scss */
 .zakaz-shippingForm .help-block {
   margin-left: 19px;
 }
 
-/* line 111, ../sass/input.scss */
+/* line 115, ../sass/input.scss */
 .zakaz-form .input-group-addon {
   padding: 0 7px;
   background: #736a50;
   border: none;
   color: #000;
 }
-/* line 117, ../sass/input.scss */
+/* line 121, ../sass/input.scss */
 .zakaz-form .inputWidget-form {
   width: 82px;
   padding-right: 7%;
 }
-/* line 121, ../sass/input.scss */
+/* line 125, ../sass/input.scss */
 .zakaz-form .inputWidget-contact {
   padding-left: 7%;
 }
-/* line 124, ../sass/input.scss */
+/* line 128, ../sass/input.scss */
 .zakaz-form #zakaz-number {
   padding-left: 9%;
   margin-left: -48px;
 }
-/* line 128, ../sass/input.scss */
+/* line 132, ../sass/input.scss */
 .zakaz-form #zakaz-phone, .zakaz-form #zakaz-email {
   width: 109px;
 }
-/* line 131, ../sass/input.scss */
+/* line 135, ../sass/input.scss */
 .zakaz-form #zakaz-sotrud_name {
   width: 69%;
 }
-/* line 134, ../sass/input.scss */
+/* line 138, ../sass/input.scss */
 .zakaz-form #zakaz-name, .zakaz-form #zakaz-oplata, .zakaz-form #zakaz-fact_oplata {
   padding-left: 7%;
 }
-/* line 137, ../sass/input.scss */
+/* line 141, ../sass/input.scss */
 .zakaz-form #zakaz-srok-disp {
   width: 123px;
 }
@@ -136,16 +141,16 @@
 .zakaz-form .file-preview .file-footer-buttons {
   display: none;
 }
-/* line 141, ../sass/input.scss */
+/* line 145, ../sass/input.scss */
 .zakaz-form button {
   height: 30px;
 }
-/* line 144, ../sass/input.scss */
+/* line 148, ../sass/input.scss */
 .zakaz-form select {
   width: 70%;
 }
 
-/* line 149, ../sass/input.scss */
+/* line 153, ../sass/input.scss */
 #acceptdModal select {
   width: 64%;
   margin-left: 11px;
@@ -162,7 +167,7 @@
   margin-right: 26px;
 }
 
-/* line 155, ../sass/input.scss */
+/* line 159, ../sass/input.scss */
 #declinedModal input {
   width: 64%;
   margin-left: 11px;
@@ -196,16 +201,16 @@
   display: none;
 }
 
-/* line 163, ../sass/input.scss */
+/* line 167, ../sass/input.scss */
 .datetimepicker {
   margin-top: 19px;
 }
-/* line 165, ../sass/input.scss */
+/* line 169, ../sass/input.scss */
 .datetimepicker table {
   color: #000;
 }
 
-/* line 170, ../sass/input.scss */
+/* line 174, ../sass/input.scss */
 .modal-dialog h2 {
   margin-left: 15px;
 }

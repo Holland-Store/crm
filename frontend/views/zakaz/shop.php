@@ -1,5 +1,6 @@
 <?php
 
+use app\models\Comment;
 use yii\bootstrap\Nav;
 use yii\helpers\StringHelper;
 use yii\helpers\Html;
@@ -88,7 +89,8 @@ $this->title = 'ВСЕ ЗАКАЗЫ';
                         return GridView::ROW_COLLAPSED;
                     },
                     'detail'=>function ($model) {
-                        return Yii::$app->controller->renderPartial('_zakaz', ['model'=>$model]);
+                        $comment = new Comment();
+                        return Yii::$app->controller->renderPartial('_zakaz', ['model'=>$model, 'comment' => $comment]);
                     },
                     'enableRowClick' => true,
                     'expandOneOnly' => true,
@@ -172,7 +174,8 @@ $this->title = 'ВСЕ ЗАКАЗЫ';
                     return GridView::ROW_COLLAPSED;
                 },
                 'detail'=>function ($model) {
-                    return Yii::$app->controller->renderPartial('_zakaz', ['model'=>$model]);
+                    $comment = new Comment();
+                    return Yii::$app->controller->renderPartial('_zakaz', ['model'=>$model, 'comment' => $comment]);
                 },
                 'enableRowClick' => true,
                 'expandOneOnly' => true,

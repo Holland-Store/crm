@@ -372,6 +372,10 @@ thead a {
     border-top: 0 solid #191412;
     border-right: 3px solid #191412;
     border-bottom: 27px solid #191412; }
+  .table-bordered tbody tr .zakazInfo .CommentForm {
+    visibility: hidden; }
+  .table-bordered tbody tr .zakazInfo .CommentForm-visible {
+    visibility: visible; }
   .table-bordered tbody tr .zakazInfo ::-webkit-scrollbar {
     width: 4px; }
   .table-bordered tbody tr .zakazInfo ::-webkit-scrollbar-track {
@@ -599,6 +603,16 @@ thead a {
 
 .zakaz-index .modalDisain {
   float: right; }
+.zakaz-index .buttonComment {
+  padding-left: 13px;
+  padding-right: 13px;
+  float: right;
+  margin-top: -10px;
+  margin-right: 18px;
+  font-size: 11px;
+  background: #3a3331;
+  border-radius: 26px;
+  color: #736a50; }
 
 .ispolShop a {
   color: #446505;
@@ -740,6 +754,8 @@ thead a {
   .form-group textarea::-webkit-input-placeholder {
     color: #191412;
     font-size: 11px; }
+.form-group .inputComment {
+  height: 31px; }
 .form-group .inputForm {
   outline: 0;
   width: 86%;

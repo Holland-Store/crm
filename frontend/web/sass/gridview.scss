@@ -344,6 +344,13 @@ $bodyBackground: #302927;
                 border-right: 3px solid $colButtonHover;
                 border-bottom: 27px solid $colButtonHover;
               }
+              .CommentForm{
+                visibility: hidden;
+              }
+              .CommentForm-visible{
+                visibility: visible;
+              }
+
               ::-webkit-scrollbar {
                 width: 4px;
               }

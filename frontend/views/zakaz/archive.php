@@ -1,5 +1,6 @@
 <?php
 
+use app\models\Comment;
 use kartik\grid\GridView;
 use yii\helpers\StringHelper;
 
@@ -34,7 +35,8 @@ $this->title = 'Архив заказов';
                     return GridView::ROW_COLLAPSED;
                 },
                 'detail'=>function ($model) {
-                    return Yii::$app->controller->renderPartial('_zakaz', ['model'=> $model]);
+                    $comment = new Comment();
+                    return Yii::$app->controller->renderPartial('_zakaz', ['model'=>$model, 'comment' => $comment]);
                 },
                 'enableRowClick' => true,
                 'expandOneOnly' => true,

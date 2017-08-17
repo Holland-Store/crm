@@ -176,32 +176,44 @@
 .zakaz-index .modalDisain {
   float: right;
 }
+/* line 181, ../sass/button.scss */
+.zakaz-index .buttonComment {
+  padding-left: 13px;
+  padding-right: 13px;
+  float: right;
+  margin-top: -10px;
+  margin-right: 18px;
+  font-size: 11px;
+  background: #3a3331;
+  border-radius: 26px;
+  color: #736a50;
+}
 
-/* line 183, ../sass/button.scss */
+/* line 194, ../sass/button.scss */
 .ispolShop a {
   color: #446505;
   text-decoration: none;
 }
 
-/* line 189, ../sass/button.scss */
+/* line 200, ../sass/button.scss */
 .courier-shipping a {
   color: #802c2c;
   text-decoration: none;
 }
 
-/* line 195, ../sass/button.scss */
+/* line 206, ../sass/button.scss */
 .courier-index a, .custom-index a, .helpdesk-index a {
   color: #446505;
   text-decoration: none;
 }
 
-/* line 202, ../sass/button.scss */
+/* line 213, ../sass/button.scss */
 .footer-view-zakaz .done:hover {
   border: none;
   background: #446505;
   color: white;
 }
-/* line 208, ../sass/button.scss */
+/* line 219, ../sass/button.scss */
 .footer-view-zakaz a {
   padding-left: 13px;
   padding-right: 13px;
@@ -223,7 +235,7 @@
   color: #3a3331;
   background: #736a50;
 }
-/* line 215, ../sass/button.scss */
+/* line 226, ../sass/button.scss */
 .footer-view-zakaz a:hover {
   text-decoration: none;
   outline: 0;
@@ -231,7 +243,7 @@
   background: #3a3331;
 }
 
-/* line 224, ../sass/button.scss */
+/* line 235, ../sass/button.scss */
 .zakaz-shippingForm button {
   height: 30px;
   margin-left: 15px;
@@ -241,11 +253,11 @@
   outline: 0;
 }
 
-/* line 234, ../sass/button.scss */
+/* line 245, ../sass/button.scss */
 .modal-content a {
   height: 30px;
 }
-/* line 237, ../sass/button.scss */
+/* line 248, ../sass/button.scss */
 .modal-content .fulfilled {
   width: 64%;
   margin-left: 11px;
