@@ -105,11 +105,13 @@ use yii\widgets\Pjax;
         <div class="col-xs-12">
         <?= $form->field($model, 'phone')->widget(MaskedInput::className(),[
             'mask' => '89999999999',
+            'options' => ['placeholder' => 'Телефон', 'class' => 'inputWidget-contact'],
         ])->label(false) ?>
         </div>
          <div class="col-xs-12">
         <?= $form->field($model, 'email')->widget(MaskedInput::className(),[
-            'clientOptions' => ['alias' => 'email']
+            'clientOptions' => ['alias' => 'email'],
+            'options' => ['placeholder' => 'Email', 'class' => 'inputWidget-contact'],
         ])->label(false) ?>
         </div>
         <?php Pjax::begin(['id' => 'pjax-select']) ?>
@@ -143,10 +145,24 @@ use yii\widgets\Pjax;
     <div class="col-xs-2 moneyZakaz">
         <h3>Оплата</h3>
         <div class="col-xs-10">
-            <?= $form->field($model, 'oplata')->textInput(['type' => 'number', 'min' => '0', 'placeholder' => 'Всего', 'class' => 'inputForm'])->label(false) ?>
+            <?= $form->field($model, 'oplata')->widget(MaskedInput::className(), [
+                'clientOptions' => [
+                    'alias' => 'decimal',
+                    'groupSeparator' => ' ',
+                    'autoGroup' => true,
+                ],
+                'options' => ['placeholder' => 'Cтоимость', 'class' => 'inputWidget-form'],
+            ])->label(false) ?>
         </div>
         <div class="col-xs-10">
-         <?= $form->field($model, 'fact_oplata')->textInput(['type' => 'number', 'min' => '0', 'placeholder' => 'Предоплата', 'class' => 'inputForm'])->label(false) ?>
+            <?= $form->field($model, 'fact_oplata')->widget(MaskedInput::className(), [
+                'clientOptions' => [
+                    'alias' => 'decimal',
+                    'groupSeparator' => ' ',
+                    'autoGroup' => true,
+                ],
+                'options' => ['placeholder' => 'Предоплата', 'class' => 'inputWidget-form'],
+            ])->label(false) ?>
         </div>
         <div class="col-xs-10">
             <?php if($model->oplata != null){?>
@@ -166,6 +182,9 @@ use yii\widgets\Pjax;
                         'type'=>DateControl::FORMAT_DATETIME,
                         'displayFormat' => 'php:d M Y H:i',
                         'saveFormat' => 'php:Y-m-d H:i:s',
+                        'widgetOptions' => [
+                            'options' => ['placeholder' => 'Cрок']
+                        ],
                     ])->label(false);?>
             </div>
             <?php if (Yii::$app->user->can('admin')): ?> 
