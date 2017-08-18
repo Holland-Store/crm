@@ -99,7 +99,7 @@ body {
 .table > tbody > tr.info > th,
 .table > tfoot > tr.info > th {
   background: #191412;
-  border-radius: 0px 0px 15px 15px; }
+  border-radius: 0 0 15px 15px; }
 
 .container {
   font-size: 11px; }
@@ -141,7 +141,7 @@ body {
     top: 40px;
     left: -56px;
     height: 30px;
-    border-radius: 16px 0px 0px 19px;
+    border-radius: 16px 0 0 19px;
     background: #302927;
     font-size: 11px;
     border: 1px solid rgba(204, 198, 198, 0.6); }
@@ -152,9 +152,9 @@ body {
   .zakazSearch .zakaz-search button {
     margin-top: -5px;
     height: 30px;
-    padding: 0px 23px 0px 13px;
+    padding: 0 23px 0 13px;
     margin-left: 98px;
-    border-radius: 0px 16px 16px 0px;
+    border-radius: 0 16px 16px 0;
     color: rgba(204, 198, 198, 0.6);
     background: #3a3331;
     border: 1px solid rgba(204, 198, 198, 0.6);
@@ -286,7 +286,7 @@ body {
   .responsible .price {
     font-weight: 100;
     color: rgba(204, 198, 198, 0.6);
-    margin-right: 0px;
+    margin-right: 0;
     margin-left: 36px;
     float: left; }
     .responsible .price:nth-of-type(1) {
@@ -295,7 +295,7 @@ body {
       margin-left: 64px; }
     .responsible .price:nth-of-type(3) {
       margin-right: 27px;
-      margin-left: 0px;
+      margin-left: 0;
       float: right; }
   .responsible .statusZakaz {
     width: 155px;
@@ -367,23 +367,27 @@ thead a {
     background: #736a50;
     color: #191412;
     border-radius: 8px;
-    padding: 5px 18px 0px 17px;
+    padding: 5px 18px 0 17px;
     border-top: 4px solid #736a50;
     border-right: 4px solid #736a50;
     border-left: 1px solid #736a50;
     border-bottom: 14px solid #736a50; }
   .table-bordered tbody tr .zakazInfo .comment-zakaz {
     overflow-y: auto;
-    height: 3px;
+    height: 75px;
     margin-top: 5px;
     color: #3a3331;
     background: #191412;
     border-radius: 8px;
-    padding: 9px 18px 0px 17px;
-    border-left: 0px solid #191412;
-    border-top: 0px solid #191412;
+    padding: 9px 18px 0 17px;
+    border-left: 0 solid #191412;
+    border-top: 0 solid #191412;
     border-right: 3px solid #191412;
     border-bottom: 27px solid #191412; }
+  .table-bordered tbody tr .zakazInfo .CommentForm {
+    visibility: hidden; }
+  .table-bordered tbody tr .zakazInfo .CommentForm-visible {
+    visibility: visible; }
   .table-bordered tbody tr .zakazInfo ::-webkit-scrollbar {
     width: 4px; }
   .table-bordered tbody tr .zakazInfo ::-webkit-scrollbar-track {
@@ -766,7 +770,7 @@ thead a {
     display: none; }
   .form-group input::-webkit-input-placeholder {
     color: #191412;
-    text-indent: 0px;
+    text-indent: 0;
     transition: text-indent 0.3s ease; }
   .form-group input:focus::-webkit-input-placeholder {
     text-indent: 550px;
@@ -794,6 +798,8 @@ thead a {
   .form-group textarea::-webkit-input-placeholder {
     color: #191412;
     font-size: 11px; }
+.form-group .inputComment {
+  height: 31px; }
 .form-group .inputForm {
   outline: 0;
   width: 86%;
@@ -812,10 +818,15 @@ thead a {
   margin-left: 19px; }
 
 .zakaz-form .input-group-addon {
-  padding: 0px 7px;
+  padding: 0 7px;
   background: #736a50;
   border: none;
   color: #000; }
+.zakaz-form .inputWidget-form {
+  width: 82px;
+  padding-right: 7%; }
+.zakaz-form .inputWidget-contact {
+  padding-left: 7%; }
 .zakaz-form #zakaz-number {
   padding-left: 9%;
   margin-left: -48px; }
@@ -851,7 +862,6 @@ thead a {
   margin-top: -45px;
   height: 30px;
   width: 99px;
-  height: 30px;
   margin-right: 26px; }
 
 #declinedModal input {
@@ -865,7 +875,6 @@ thead a {
   margin-top: -45px;
   height: 30px;
   width: 99px;
-  height: 30px;
   margin-right: 26px; }
 
 #modalFile .file-preview {

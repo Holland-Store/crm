@@ -13,7 +13,7 @@ body {
   background: rgba(255, 255, 255, 0.04);
   height: 126px;
   margin-top: 32px;
-  padding: 18px 0px 0px 101px;
+  padding: 18px 0 0 101px;
 }
 /* line 30, ../sass/login.scss */
 .headerLogin h1 {
@@ -75,7 +75,6 @@ body {
   border-radius: 26px;
   font-size: 11px;
   height: 30px;
-  font-size: 11px;
   color: #999265;
   background: #3a3331;
   outline: 0;
@@ -134,7 +133,7 @@ body {
 .table > tbody > tr.info > th,
 .table > tfoot > tr.info > th {
   background: #191412;
-  border-radius: 0px 0px 15px 15px;
+  border-radius: 0 0 15px 15px;
 }
 
 /* line 62, ../sass/gridview.scss */
@@ -196,7 +195,7 @@ body {
   top: 40px;
   left: -56px;
   height: 30px;
-  border-radius: 16px 0px 0px 19px;
+  border-radius: 16px 0 0 19px;
   background: #302927;
   font-size: 11px;
   border: 1px solid rgba(204, 198, 198, 0.6);
@@ -211,9 +210,9 @@ body {
 .zakazSearch .zakaz-search button {
   margin-top: -5px;
   height: 30px;
-  padding: 0px 23px 0px 13px;
+  padding: 0 23px 0 13px;
   margin-left: 98px;
-  border-radius: 0px 16px 16px 0px;
+  border-radius: 0 16px 16px 0;
   color: rgba(204, 198, 198, 0.6);
   background: #3a3331;
   border: 1px solid rgba(204, 198, 198, 0.6);
@@ -231,14 +230,14 @@ body {
 /* line 139, ../sass/gridview.scss */
 .border-left {
   width: 10px;
-  border-radius: 19px 0px 0px 19px;
+  border-radius: 19px 0 0 19px;
   border: none;
 }
 
 /* line 145, ../sass/gridview.scss */
 .border-right {
   width: 90px;
-  border-radius: 0px 19px 18px 0px;
+  border-radius: 0 19px 18px 0;
   border: none;
 }
 
@@ -415,7 +414,7 @@ body {
 .responsible .price {
   font-weight: 100;
   color: rgba(204, 198, 198, 0.6);
-  margin-right: 0px;
+  margin-right: 0;
   margin-left: 36px;
   float: left;
 }
@@ -430,7 +429,7 @@ body {
 /* line 258, ../sass/gridview.scss */
 .responsible .price:nth-of-type(3) {
   margin-right: 27px;
-  margin-left: 0px;
+  margin-left: 0;
   float: right;
 }
 /* line 264, ../sass/gridview.scss */
@@ -540,7 +539,7 @@ thead a {
   background: #736a50;
   color: #191412;
   border-radius: 8px;
-  padding: 5px 18px 0px 17px;
+  padding: 5px 18px 0 17px;
   border-top: 4px solid #736a50;
   border-right: 4px solid #736a50;
   border-left: 1px solid #736a50;
@@ -554,47 +553,55 @@ thead a {
   color: #3a3331;
   background: #191412;
   border-radius: 8px;
-  padding: 9px 18px 0px 17px;
-  border-left: 0px solid #191412;
-  border-top: 0px solid #191412;
+  padding: 9px 18px 0 17px;
+  border-left: 0 solid #191412;
+  border-top: 0 solid #191412;
   border-right: 3px solid #191412;
   border-bottom: 27px solid #191412;
 }
 /* line 369, ../sass/gridview.scss */
+.table-bordered tbody tr .zakazInfo .CommentForm {
+  visibility: hidden;
+}
+/* line 372, ../sass/gridview.scss */
+.table-bordered tbody tr .zakazInfo .CommentForm-visible {
+  visibility: visible;
+}
+/* line 375, ../sass/gridview.scss */
 .table-bordered tbody tr .zakazInfo ::-webkit-scrollbar {
   width: 4px;
 }
-/* line 374, ../sass/gridview.scss */
+/* line 380, ../sass/gridview.scss */
 .table-bordered tbody tr .zakazInfo ::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   -webkit-border-radius: 10px;
   border-radius: 10px;
 }
-/* line 381, ../sass/gridview.scss */
+/* line 387, ../sass/gridview.scss */
 .table-bordered tbody tr .zakazInfo ::-webkit-scrollbar-thumb {
   -webkit-border-radius: 10px;
   border-radius: 10px;
   background: #3a3331;
   -webkit-box-shadow: inset 0 0 5px #3a3331;
 }
-/* line 387, ../sass/gridview.scss */
+/* line 393, ../sass/gridview.scss */
 .table-bordered tbody tr .zakazInfo ::-webkit-scrollbar-thumb:window-inactive {
   background: #3a3331;
 }
-/* line 391, ../sass/gridview.scss */
+/* line 397, ../sass/gridview.scss */
 .table-bordered tbody tr .detail-view {
   background-color: #191412;
 }
-/* line 393, ../sass/gridview.scss */
+/* line 399, ../sass/gridview.scss */
 .table-bordered tbody tr .detail-view .trMaket {
   color: black;
   border: none;
 }
-/* line 396, ../sass/gridview.scss */
+/* line 402, ../sass/gridview.scss */
 .table-bordered tbody tr .detail-view .trMaket .maket {
   margin-top: 44px;
 }
-/* line 399, ../sass/gridview.scss */
+/* line 405, ../sass/gridview.scss */
 .table-bordered tbody tr .detail-view .trMaket .imgZakaz {
   font-size: 18px;
   height: 39px;
@@ -607,46 +614,46 @@ thead a {
   margin-top: -5px;
   margin-left: -33px;
 }
-/* line 410, ../sass/gridview.scss */
+/* line 416, ../sass/gridview.scss */
 .table-bordered tbody tr .detail-view .trMaket .imgZakaz:hover {
   color: #302927;
   background: #736a50;
 }
-/* line 415, ../sass/gridview.scss */
+/* line 421, ../sass/gridview.scss */
 .table-bordered tbody tr .detail-view .trMaket .maketView {
   margin-top: 4px;
   margin-left: -33px;
 }
 
-/* line 424, ../sass/gridview.scss */
+/* line 430, ../sass/gridview.scss */
 .tableSize {
   font-size: 11px;
 }
 
-/* line 427, ../sass/gridview.scss */
+/* line 433, ../sass/gridview.scss */
 .summary {
   display: none;
 }
 
-/* line 430, ../sass/gridview.scss */
+/* line 436, ../sass/gridview.scss */
 .borderSrok {
   border-bottom: 1px solid #000;
 }
 
-/* line 434, ../sass/gridview.scss */
+/* line 440, ../sass/gridview.scss */
 .table-bordered > tbody .trTable {
   border-bottom: 1px solid #423836;
 }
-/* line 438, ../sass/gridview.scss */
+/* line 444, ../sass/gridview.scss */
 .table-bordered > tbody .trSrok:hover {
   background: #3c3432;
 }
-/* line 443, ../sass/gridview.scss */
+/* line 449, ../sass/gridview.scss */
 .table-bordered > tbody .trNormal:hover {
   background: #3c3432;
 }
 
-/* line 448, ../sass/gridview.scss */
+/* line 454, ../sass/gridview.scss */
 .footerView {
   border-top: 1px solid rgba(48, 41, 39, 0.3);
   width: 95.5%;
@@ -655,70 +662,70 @@ thead a {
   top: -28px;
 }
 
-/* line 456, ../sass/gridview.scss */
+/* line 462, ../sass/gridview.scss */
 .footer-view-zakaz {
   margin-top: -22px;
 }
 
-/* line 461, ../sass/gridview.scss */
+/* line 467, ../sass/gridview.scss */
 .zakaz-index .detail-view tbody {
   background: #191412;
 }
-/* line 465, ../sass/gridview.scss */
+/* line 471, ../sass/gridview.scss */
 .zakaz-index .success-ispol {
   color: #446505;
 }
-/* line 468, ../sass/gridview.scss */
+/* line 474, ../sass/gridview.scss */
 .zakaz-index .userCommit {
   width: 62px;
   float: left;
   text-align: right;
   padding-right: 10px;
 }
-/* line 474, ../sass/gridview.scss */
+/* line 480, ../sass/gridview.scss */
 .zakaz-index .comment {
   width: 446px;
   float: left;
   color: #505050;
 }
-/* line 479, ../sass/gridview.scss */
+/* line 485, ../sass/gridview.scss */
 .zakaz-index .dateCommit {
   float: left;
 }
 
-/* line 485, ../sass/gridview.scss */
+/* line 491, ../sass/gridview.scss */
 .zakaz-shop .zakazSearch .shopSearch {
   margin-top: -45px;
   margin-left: 158px;
   font-size: 11px;
 }
-/* line 490, ../sass/gridview.scss */
+/* line 496, ../sass/gridview.scss */
 .zakaz-shop .zakazSearch input {
   left: 5px;
   width: 168px;
 }
-/* line 495, ../sass/gridview.scss */
+/* line 501, ../sass/gridview.scss */
 .zakaz-shop .shopZakaz {
   margin-top: 1px;
 }
-/* line 499, ../sass/gridview.scss */
+/* line 505, ../sass/gridview.scss */
 .zakaz-shop .zakazFile .table {
   background: #191412;
 }
 
-/* line 504, ../sass/gridview.scss */
+/* line 510, ../sass/gridview.scss */
 .shipping {
   color: #191412;
   font-weight: 700;
   margin-right: 4px;
 }
 
-/* line 509, ../sass/gridview.scss */
+/* line 515, ../sass/gridview.scss */
 .footerNav {
   margin-top: 27px;
   font-size: 24px;
 }
-/* line 512, ../sass/gridview.scss */
+/* line 518, ../sass/gridview.scss */
 .footerNav a {
   width: 135px;
   border-radius: 26px;
@@ -734,12 +741,12 @@ thead a {
   border: none;
 }
 
-/* line 527, ../sass/gridview.scss */
+/* line 533, ../sass/gridview.scss */
 .nav > li > a:hover, .nav > li > a:focus {
   background: #191412;
 }
 
-/* line 530, ../sass/gridview.scss */
+/* line 536, ../sass/gridview.scss */
 .nav-pills > li > a {
   border-radius: 26px;
 }
@@ -779,7 +786,7 @@ thead a {
   height: 74px;
   line-height: 2px;
   font-size: 46px;
-  box-shadow: 5px 6px 20px 0px rgba(2, 2, 2, 0.48);
+  box-shadow: 5px 6px 20px 0 rgba(2, 2, 2, 0.48);
   color: #fff;
   background: #a90329;
   background: -moz-radial-gradient(center, ellipse cover, #a90329 34%, #8f0222 67%, #6d0019 98%);
@@ -818,7 +825,7 @@ thead a {
 }
 /* line 100, ../sass/button.scss */
 .btn-group .dropdown-menu .divider {
-  margin: 0px 0px 0px 10px;
+  margin: 0 0 0 10px;
   background: rgba(255, 255, 255, 0.07);
   width: 64px;
 }
@@ -833,8 +840,8 @@ thead a {
 /* line 110, ../sass/button.scss */
 .btn-group .dropdown-menu a:hover {
   border-radius: 12px;
-  margin: 0px 8px 0px 7px;
-  padding: 3px 0px 3px 13px;
+  margin: 0 8px 0 7px;
+  padding: 3px 0 3px 13px;
   background-color: #191412;
   color: #736a50;
 }
@@ -855,7 +862,7 @@ thead a {
 }
 /* line 129, ../sass/button.scss */
 .zakaz-form .file-preview {
-  padding: 0px;
+  padding: 0;
 }
 /* line 133, ../sass/button.scss */
 .zakaz-form .submitZakazForm {
@@ -988,13 +995,13 @@ thead a {
 .footer-view-zakaz a {
   padding-left: 13px;
   padding-right: 13px;
-  float: right;
-  margin-top: -10px;
+  /*float: right;*/
+  /*margin-top: -10px;*/
   margin-right: 18px;
   font-size: 11px;
   background: #3a3331;
   border-radius: 26px;
-  color: #736a50;
+  /*color: #736a50;*/
   background: none;
   border: 1px solid #3a3331;
   color: #3a3331;
@@ -1067,11 +1074,11 @@ thead a {
 }
 /* line 18, ../sass/modal.scss */
 #acceptdModal .modal-content .modal-header h2 {
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
 /* line 22, ../sass/modal.scss */
 #acceptdModal .modal-content .modal-body {
-  padding-top: 0px;
+  padding-top: 0;
 }
 
 /* line 12, ../sass/modal.scss */
@@ -1084,11 +1091,11 @@ thead a {
 }
 /* line 18, ../sass/modal.scss */
 #declinedModal .modal-content .modal-header h2 {
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
 /* line 22, ../sass/modal.scss */
 #declinedModal .modal-content .modal-body {
-  padding-top: 0px;
+  padding-top: 0;
 }
 
 /* line 50, ../sass/modal.scss */
@@ -1104,15 +1111,15 @@ thead a {
 }
 /* line 58, ../sass/modal.scss */
 .footer-view-zakaz .modal-content .modal-body {
-  padding: 0px;
+  padding: 0;
 }
 
-/* line 48, ../sass/input.scss */
+/* line 47, ../sass/input.scss */
 #login-form input {
   padding-left: 5%;
 }
 
-/* line 53, ../sass/input.scss */
+/* line 52, ../sass/input.scss */
 .form-group input {
   border-radius: 26px;
   font-size: 11px;
@@ -1122,22 +1129,22 @@ thead a {
   border: none;
   outline: 0;
 }
-/* line 61, ../sass/input.scss */
+/* line 60, ../sass/input.scss */
 .form-group input::-webkit-inner-spin-button {
   display: none;
 }
-/* line 64, ../sass/input.scss */
+/* line 63, ../sass/input.scss */
 .form-group input::-webkit-input-placeholder {
   color: #191412;
-  text-indent: 0px;
+  text-indent: 0;
   transition: text-indent 0.3s ease;
 }
-/* line 69, ../sass/input.scss */
+/* line 68, ../sass/input.scss */
 .form-group input:focus::-webkit-input-placeholder {
   text-indent: 550px;
   transition: text-indent 0.3s ease;
 }
-/* line 74, ../sass/input.scss */
+/* line 73, ../sass/input.scss */
 .form-group select {
   outline: 0;
   width: 86%;
@@ -1146,11 +1153,10 @@ thead a {
   border: none;
   border-radius: 26px;
   font-size: 11px;
-  border: none;
   height: 26px;
   color: #000;
 }
-/* line 82, ../sass/input.scss */
+/* line 81, ../sass/input.scss */
 .form-group textarea {
   outline: 0;
   width: 86%;
@@ -1161,12 +1167,16 @@ thead a {
   font-size: 11px;
   height: 66px;
 }
-/* line 87, ../sass/input.scss */
+/* line 86, ../sass/input.scss */
 .form-group textarea::-webkit-input-placeholder {
   color: #191412;
   font-size: 11px;
 }
-/* line 92, ../sass/input.scss */
+/* line 91, ../sass/input.scss */
+.form-group .inputComment {
+  height: 31px;
+}
+/* line 94, ../sass/input.scss */
 .form-group .inputForm {
   outline: 0;
   width: 86%;
@@ -1174,79 +1184,88 @@ thead a {
   background: #736a50;
   border: none;
 }
-/* line 95, ../sass/input.scss */
+/* line 97, ../sass/input.scss */
 .form-group .help-block {
   color: rgba(171, 100, 24, 0.99);
 }
 
-/* line 100, ../sass/input.scss */
+/* line 102, ../sass/input.scss */
 .zakaz-shippingForm input {
   width: 55%;
   margin-left: 15px;
 }
-/* line 104, ../sass/input.scss */
+/* line 106, ../sass/input.scss */
 .zakaz-shippingForm .inputForm {
   width: 38%;
 }
-/* line 107, ../sass/input.scss */
+/* line 109, ../sass/input.scss */
 .zakaz-shippingForm .help-block {
   margin-left: 19px;
 }
 
-/* line 112, ../sass/input.scss */
+/* line 114, ../sass/input.scss */
 .zakaz-form .input-group-addon {
-  padding: 0px 7px;
+  padding: 0 7px;
   background: #736a50;
   border: none;
   color: #000;
 }
-/* line 118, ../sass/input.scss */
+/* line 120, ../sass/input.scss */
+.zakaz-form .inputWidget-form {
+  width: 82px;
+  padding-right: 7%;
+}
+/* line 124, ../sass/input.scss */
+.zakaz-form .inputWidget-contact {
+  padding-left: 7%;
+}
+/* line 127, ../sass/input.scss */
 .zakaz-form #zakaz-number {
   padding-left: 9%;
   margin-left: -48px;
 }
-/* line 122, ../sass/input.scss */
+/* line 131, ../sass/input.scss */
 .zakaz-form #zakaz-phone, .zakaz-form #zakaz-email {
   width: 109px;
 }
-/* line 125, ../sass/input.scss */
+/* line 134, ../sass/input.scss */
 .zakaz-form #zakaz-sotrud_name {
   width: 69%;
 }
-/* line 128, ../sass/input.scss */
+/* line 137, ../sass/input.scss */
 .zakaz-form #zakaz-name, .zakaz-form #zakaz-oplata, .zakaz-form #zakaz-fact_oplata {
   padding-left: 7%;
 }
-/* line 131, ../sass/input.scss */
+/* line 140, ../sass/input.scss */
 .zakaz-form #zakaz-srok-disp {
   width: 123px;
 }
-/* line 33, ../sass/input.scss */
+/* line 32, ../sass/input.scss */
 .zakaz-form .file-preview {
   border: none;
 }
-/* line 35, ../sass/input.scss */
+/* line 34, ../sass/input.scss */
 .zakaz-form .file-preview .close {
   display: none;
 }
-/* line 38, ../sass/input.scss */
+/* line 37, ../sass/input.scss */
 .zakaz-form .file-preview .file-actions-cell {
   display: none;
 }
-/* line 41, ../sass/input.scss */
+/* line 40, ../sass/input.scss */
 .zakaz-form .file-preview .file-footer-buttons {
   display: none;
 }
-/* line 135, ../sass/input.scss */
+/* line 144, ../sass/input.scss */
 .zakaz-form button {
   height: 30px;
 }
-/* line 138, ../sass/input.scss */
+/* line 147, ../sass/input.scss */
 .zakaz-form select {
   width: 70%;
 }
 
-/* line 143, ../sass/input.scss */
+/* line 152, ../sass/input.scss */
 #acceptdModal select {
   width: 64%;
   margin-left: 11px;
@@ -1260,11 +1279,10 @@ thead a {
   margin-top: -45px;
   height: 30px;
   width: 99px;
-  height: 30px;
   margin-right: 26px;
 }
 
-/* line 149, ../sass/input.scss */
+/* line 158, ../sass/input.scss */
 #declinedModal input {
   width: 64%;
   margin-left: 11px;
@@ -1278,37 +1296,36 @@ thead a {
   margin-top: -45px;
   height: 30px;
   width: 99px;
-  height: 30px;
   margin-right: 26px;
 }
 
-/* line 33, ../sass/input.scss */
+/* line 32, ../sass/input.scss */
 #modalFile .file-preview {
   border: none;
 }
-/* line 35, ../sass/input.scss */
+/* line 34, ../sass/input.scss */
 #modalFile .file-preview .close {
   display: none;
 }
-/* line 38, ../sass/input.scss */
+/* line 37, ../sass/input.scss */
 #modalFile .file-preview .file-actions-cell {
   display: none;
 }
-/* line 41, ../sass/input.scss */
+/* line 40, ../sass/input.scss */
 #modalFile .file-preview .file-footer-buttons {
   display: none;
 }
 
-/* line 157, ../sass/input.scss */
+/* line 166, ../sass/input.scss */
 .datetimepicker {
   margin-top: 19px;
 }
-/* line 159, ../sass/input.scss */
+/* line 168, ../sass/input.scss */
 .datetimepicker table {
   color: #000;
 }
 
-/* line 164, ../sass/input.scss */
+/* line 173, ../sass/input.scss */
 .modal-dialog h2 {
   margin-left: 15px;
 }
