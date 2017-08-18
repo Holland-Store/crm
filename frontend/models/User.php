@@ -17,12 +17,23 @@ namespace app\models;
  * @property integer $updated_at
  * @property string $name
  * @property string $telegram_chat_id
- * @property string $telegram_token
+ * @property string $token
  *
  * @property Zakaz[] $zakazs
  */
 class User extends \yii\db\ActiveRecord
 {
+    const USER_ADMIN = 5;
+    const USER_MASTER = 3;
+    const USER_DISAYNER = 4;
+    const USER_SYSTEM = 11;
+    const USER_ZAKUP = 10;
+    const USER_COURIER = 7;
+    const USER_MOSCOW = 2;
+    const USER_PUSHKIN = 6;
+    const USER_SIBER = 9;
+    const USER_CHETAEVA = 12;
+
     /**
      * @inheritdoc
      */
