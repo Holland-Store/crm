@@ -108,8 +108,12 @@ class Zakaz extends ActiveRecord
         return [
             [['srok', 'number', 'description', 'phone', 'id_client'], 'required', 'on' => self::SCENARIO_DEFAULT],
             ['declined', 'required', 'message' => 'Введите причину отказа', 'on'=> self::SCENARIO_DECLINED],
-            [['id_zakaz', 'id_tovar', 'oplata', 'fact_oplata', 'minut', 'time', 'number', 'status', 'action', 'id_sotrud', 'phone', 'id_client','id_shipping' ,'prioritet', 'statusDisain', 'statusMaster', 'id_unread'], 'integer'],
+            [['id_zakaz', 'id_tovar', 'minut', 'time', 'number', 'status', 'action', 'id_sotrud', 'phone', 'id_client','id_shipping' ,'prioritet', 'statusDisain', 'statusMaster', 'id_unread'], 'integer'],
             [['srok', 'data', 'data-start-disain'], 'safe'],
+            [['oplata', 'fact_oplata'], 'filter', 'filter' => function($value){
+                return str_replace(' ', '', $value);
+            }],
+            [['oplata', 'fact_oplata'], 'number'],
             [['information', 'comment', 'search', 'declined'], 'string'],
             ['prioritet', 'default', 'value' => 0],
             ['status', 'default', 'value' => self::STATUS_NEW],
