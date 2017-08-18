@@ -37,6 +37,9 @@ $(document).ready(function(){
                success: console.log('Успешно изменен статус')
            })
        });
+        $( "body" ).on( "click", ".commentButton", function() {
+            $( ".CommentForm" ).toggleClass( "CommentForm-visible" );
+        });
        $("body").on("click", ".trNewDisain", function () {
             var data = $(this).data("key");
             $.ajax({
