@@ -151,8 +151,7 @@ class TodoistController extends Controller
                 return $this->redirect(['index', 'id' => $model->id]);
                 Yii::$app->session->addFlash('update', 'Задача успешна создана');
             } else {
-                print_r($model->getErrors());
-                Yii::$app->session->addFlash('errors', 'Произошла ошибка!');
+                Yii::$app->session->addFlash('errors', 'Произошла ошибка! '.$model->getErrors());
             }
         }
         return $this->render('create', [

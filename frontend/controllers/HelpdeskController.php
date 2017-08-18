@@ -2,10 +2,13 @@
 
 namespace frontend\controllers;
 
+use app\models\User;
+use app\models\Zakaz;
 use Yii;
 use app\models\Helpdesk;
 use app\models\HelpdeskSearch;
 use app\models\Notification;
+use yii\base\Exception;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -103,15 +106,20 @@ class HelpdeskController extends Controller
     public function actionCreate()
     {
         $model = new Helpdesk();
+        $user = User::findOne(['id' => User::USER_SYSTEM]);
         $notification = $this->findNotification();
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if($model->save()){
-                Yii::$app->session->addFlash('update', 'Запрос успешно создан');
-                return $this->redirect(['index', 'id' => $model->id]);
+                try{
+                    Yii::$app->session->addFlash('update', 'Заявка успешно создана');
+                    Yii::$app->bot->sendMessage($user->telegram_chat_id, 'Назначена заявка на поломку '.$model->commetnt);
+                    return $this->redirect(['index', 'id' => $model->id]);
+                }catch (Exception $e){
+                    $e->getMessage();
+                };
             } else {
-                print_r($model->getErrors());
-                Yii::$app->session->addFlash('errors', 'Произошла ошибка!');
+                $this->flashErrors();
             }
         }
         return $this->render('create', [
@@ -183,6 +191,7 @@ class HelpdeskController extends Controller
         $model->status = Helpdesk::STATUS_APPROVED;
         $model->endDate = date('Y-m-d H:m:s');
         $model->save();
+        Yii::$app->session->addFlash('update', 'Заявка была закрыта');
 
         return $this->redirect(['index']);
     }
@@ -196,13 +205,19 @@ class HelpdeskController extends Controller
     public function actionDeclinedHelp($id)
     {
         $model = $this->findModel($id);
+        $user = User::findOne(['id' => User::USER_SYSTEM]);
 
         if ($model->load(Yii::$app->request->post())){
             $model->status = Helpdesk::STATUS_DECLINED;
             if (!$model->save()){
-                print_r($model->getErrors());
+               $this->flashErrors($id);
             } else {
-                return $this->redirect(['index']);
+                try{
+                    Yii::$app->bot->sendMessage($user->telegram_chat_id, 'Отклонена поломку '.$model->commetnt.' По причине: '.$model->declined);
+                    return $this->redirect(['index']);
+                }catch (Exception $e){
+                    $e->getMessage();
+                }
             }
         }
 
@@ -223,6 +238,15 @@ class HelpdeskController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+    /**
+     * @param null $id
+     */
+    private function flashErrors($id = null)
+    {
+        $id == null ? $model = new Zakaz() : $this->findModel($id);
+        Yii::$app->session->addFlash('errors', 'Произошла ошибка! '.$model->getErrors());
     }
 
     /**

@@ -102,10 +102,10 @@ class ClientController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->save()){
                 echo true;
+                Yii::$app->session->addFlash('update', 'Кликент успешно создан');
             } else {
                 echo false;
             }
-//            return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->renderAjax('create', [
                 'model' => $model,

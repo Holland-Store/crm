@@ -2,10 +2,13 @@
 
 namespace frontend\controllers;
 
+use app\models\User;
+use app\models\Zakaz;
 use Yii;
 use app\models\Courier;
 use app\models\Notification;
 use app\models\CourierSearch;
+use yii\base\Exception;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\AccessControl;
@@ -124,8 +127,19 @@ class CourierController extends Controller
     public function actionDeletes($id)
     {
         $model =  $this->findModel($id);
-        $model->status = 3;
-        $model->save();
+        $user = User::findOne(['id' => User::USER_COURIER]);
+        $model->status = Courier::CANCEL;
+        if(!$model->save()){
+            $this->flashErrors($id);
+        } else {
+            try{
+                $model->save();
+                Yii::$app->session->addFlash('update', 'Доставка былаа отклонена');
+                Yii::$app->bot->sendMessage($user->telegram_chat_id, 'Отменена доставка '.$model->idZakaz->prefics);
+            }catch (Exception $e){
+                $e->getMessage();
+            }
+        }
 
         return $this->redirect(['shipping']);
     }
@@ -154,9 +168,10 @@ class CourierController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->save()){
+                Yii::$app->session->addFlash('update', 'Доставка былаа отклонена');
                 return $this->redirect(['view', 'id' => $model->id]);
             } else {
-                print_r($model->getErrors());
+                $this->flashErrors();
             }
         }
         return $this->render('create', [
@@ -246,6 +261,16 @@ class CourierController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
+    /**
+     * @param null $id
+     */
+    private function flashErrors($id = null)
+    {
+        $id == null ? $model = new Zakaz() : $this->findModel($id);
+        Yii::$app->session->addFlash('errors', 'Произошла ошибка! '.$model->getErrors());
+    }
+
     protected function findNotification()
     {
         $notification = Notification::find()->where(['id_user' => Yii::$app->user->id, 'active' => true]);

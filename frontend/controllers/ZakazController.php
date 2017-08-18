@@ -3,12 +3,14 @@
 namespace frontend\controllers;
 
 use app\models\Client;
+use app\models\User;
 use Yii;
 use app\models\Zakaz;
 use app\models\Courier;
 use app\models\Comment;
 use app\models\Notification;
 use app\models\ZakazSearch;
+use yii\base\Exception;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -16,6 +18,7 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\data\ActiveDataProvider;
 use yii\web\UploadedFile;
+
 /**
  * ZakazController implements the CRUD actions for Zakaz model.
  */
@@ -267,14 +270,20 @@ class ZakazController extends Controller
     {
         $model = $this->findModel($id);
         $shipping = new Courier();
+        $user = User::findOne(['id' => User::USER_ADMIN]);
         if ($model->load(Yii::$app->request->post())) {
             $shipping->save();
             $model->id_shipping = $shipping->id;
             if ($model->save()){
-                Yii::$app->session->addFlash('update', 'Успешно создана доставка');
+                try{
+                    \Yii::$app->bot->sendMessage($user->telegram_chat_id, 'Назначена доставка '.$model->prefics);
+                    Yii::$app->session->addFlash('update', 'Успешно создана доставка');
+                }catch (Exception $e){
+                    $e->getMessage();
+                }
+
             } else {
-                print_r($model->getErrors());
-                Yii::$app->session->addFlash('errors', 'Произошла ошибка и доставка не была создана');
+                $this->flashErrors($id);
             }
         }
 
@@ -293,6 +302,7 @@ class ZakazController extends Controller
     {
         $model = new Zakaz();
         $client = new Client();
+        $user = User::findOne(['id' => User::USER_ADMIN]);
         $client->scenario = Client::SCENARIO_CREATE;
 
         if ($model->load(Yii::$app->request->post()) && $client->load(Yii::$app->request->post())) {
@@ -319,11 +329,19 @@ class ZakazController extends Controller
             }
             if ($model->validate() && $client->validate()){
                 if (!$model->save()) {
-                    print_r($model->getErrors());
-                    Yii::$app->session->addFlash('errors', 'Произошла ошибка');
+                    $this->flashErrors();
                 } else {
                     $model->save();
                     Yii::$app->session->addFlash('update', 'Успешно создан заказ');
+                    try{
+                        if($model->status == Zakaz::STATUS_DISAIN){
+                            $user = User::findOne(['id' => User::USER_DISAYNER]);
+                            \Yii::$app->bot->sendMessage($user->telegram_chat_id, 'Назначен заказ '.$model->prefics.' '.$model->description);
+                        }
+                        \Yii::$app->bot->sendMessage($user->telegram_chat_id, 'Создан заказ '.$model->prefics.' '.$model->description);
+                    }catch (Exception $e){
+                        $e->getMessage();
+                    }
                 }
 
                 if (Yii::$app->user->can('shop')) {
@@ -372,9 +390,12 @@ class ZakazController extends Controller
             }
             if ($model->validate() && $client->validate()){
                 if (!$model->save()) {
-                    Yii::$app->session->addFlash('errors', 'Произошла ошибка');
-                    print_r($model->getErrors());
+                    $this->flashErrors($id);
                 } else {
+                    if($model->status == Zakaz::STATUS_DISAIN){
+                        $user = User::findOne(['id' => User::USER_DISAYNER]);
+                        \Yii::$app->bot->sendMessage($user->telegram_chat_id, 'Назначен заказ '.$model->prefics.' '.$model->description);
+                    }
                     $model->save();
                     Yii::$app->session->addFlash('update', 'Успешно отредактирован заказ');
                 }
@@ -403,6 +424,7 @@ class ZakazController extends Controller
     {
         $model = $this->findModel($id);
         $notification = new Notification();
+        $user = User::findOne(['id' => User::USER_ADMIN]);
 
         $model->status = Zakaz::STATUS_SUC_MASTER;
         $model->statusMaster = Zakaz::STATUS_MASTER_PROCESS;
@@ -410,11 +432,15 @@ class ZakazController extends Controller
         $notification->getByIdNotification(8, $id);
         $notification->saveNotification;
         if ($model->save()) {
-            return $this->redirect(['master']);
-            Yii::$app->session->addFlash('update', 'Заказ успешно выполнен');
+            try{
+                Yii::$app->session->addFlash('update', 'Заказ отправлен на проверку');
+                Yii::$app->bot->sendMessage($user->telegram_chat_id, 'Мастер выполнил работу '.$model->prefics.' '.$model->description);
+                return $this->redirect(['master']);
+            }catch (Exception $e){
+                $e->getMessage();
+            }
         } else {
-            print_r($model->getErrors());
-            Yii::$app->session->addFlash('errors', 'Произошла ошибка! Заказ не выполнен');
+            $this->flashErrors($id);
         }
     }
 
@@ -426,6 +452,7 @@ class ZakazController extends Controller
     public function actionUploadedisain($id)
     {
         $model = $this->findModel($id);
+        $user = User::findOne(['id' => User::USER_ADMIN]);
 
         if ($model->load(Yii::$app->request->post())) {
             $model->file = UploadedFile::getInstance($model, 'file');
@@ -437,11 +464,15 @@ class ZakazController extends Controller
             $model->statusDisain = Zakaz::STATUS_DISAINER_PROCESS;
             $model->id_unread = true;
             if ($model->save()) {
-                Yii::$app->session->addFlash('update', 'Заказ успешно выполнен');
-                return $this->redirect(['disain', 'id' => $id]);
+                try{
+                    Yii::$app->session->addFlash('update', 'Заказ отправлен на проверку');
+                    Yii::$app->bot->sendMessage($user->telegram_chat_id, 'Дизайнер выполнил работу '.$model->prefics.' '.$model->description);
+                    return $this->redirect(['disain', 'id' => $id]);
+                }catch (Exception $e){
+                    $e->getMessage();
+                }
             } else {
-                print_r($model->getErrors());
-                Yii::$app->session->addFlash('errors', 'Произошла ошибка! Заказ не выполнен');
+                $this->flashErrors($id);
             }
         }
         return $this->renderAjax('_upload', [
@@ -460,8 +491,7 @@ class ZakazController extends Controller
         $model = $this->findModel($id);
         $model->action = 0;
         if (!$model->save()) {
-            print_r($model->getErrors());
-            Yii::$app->session->addFlash('errors', 'Произошла ошибка!');
+            $this->flashErrors($id);
         } else {
             $model->save();
             Yii::$app->session->addFlash('update', 'Заказ успешно закрылся');
@@ -538,9 +568,10 @@ class ZakazController extends Controller
         $model->status = Zakaz::STATUS_EXECUTE;
         $model->id_unread = 0;
         if ($model->save()) {
+            Yii::$app->session->addFlash('update', 'Выполнен заказ №'.$model->prefics);
             return $this->redirect(['admin']);
         } else {
-            print_r($model->getErrors());
+            $this->flashErrors($id);
         }
     }
 
@@ -562,7 +593,7 @@ class ZakazController extends Controller
         if ($model->save()) {
             return $this->redirect(['disain']);
         } else {
-            print_r($model->getErrors());
+            $this->flashErrors($id);
         }
     }
 
@@ -701,6 +732,7 @@ class ZakazController extends Controller
     /**
      * All zakaz existing in Admin
      * @return string|\yii\web\Response
+     * @property mixed prefics
      * windows Admin
      */
     public function actionAdmin()
@@ -710,26 +742,32 @@ class ZakazController extends Controller
         $model = new Zakaz();
         $comment = new Comment();
         $shipping = new Courier();
+        $user = User::findOne(['id' => User::USER_COURIER]);
 
         if ($comment->load(Yii::$app->request->post())) {
             if ($comment->save()) {
                 return $this->redirect(['admin']);
             } else {
-                print_r($comment->getErrors());
+                $this->flashErrors();
             }
         }
 
         if ($shipping->load(Yii::$app->request->post())) {
             $shipping->save();//сохранение доставка
             if (!$shipping->save()) {
-                Yii::warning($shipping->getErrors());
+                $this->flashErrors();
             }
             $model = Zakaz::findOne($shipping->id_zakaz);//Определяю заказ
             $model->id_shipping = $shipping->id;//Оформление доставку в таблице заказа
             if ($model->save()){
-                Yii::$app->session->addFlash('update', 'Доставка успешна посталена');
+                try{
+                    Yii::$app->session->addFlash('update', 'Доставка успешно создана');
+                    Yii::$app->bot->sendMessage($user->telegram_chat_id, 'Назначена доставка '.$model->prefics);
+                }catch (Exception $e){
+                    $e->getMessage();
+                }
             } else {
-                Yii::$app->session->addFlash('errors', 'Произошла ошибка');
+                $this->flashErrors();
             }
 
 
@@ -769,6 +807,12 @@ class ZakazController extends Controller
     {
         $model = $this->findModel($id);
         $model->scenario = Zakaz::SCENARIO_DECLINED;
+        if ($model->status == Zakaz::STATUS_SUC_DISAIN) {
+            $user_id = 4;
+        } else {
+            $user_id = 3;
+        }
+        $user = User::findOne(['id' => $user_id]);
 
         if ($model->load(Yii::$app->request->post())) {
             if ($model->validate()) {
@@ -782,9 +826,15 @@ class ZakazController extends Controller
                     $model->id_unread = 0;
                 }
                 if (!$model->save()) {
-                    print_r($model->getErrors());
+                    $this->flashErrors($id);
                 } else {
-                    $model->save();
+                    try {
+                        $model->save();
+                        Yii::$app->session->addFlash('update', 'Работа была отклонена!');
+                        Yii::$app->bot->sendMessage($user->telegram_chat_id, 'Отклонен заказ ' . $model->prefics . ' По причине: ' . $model->declined);
+                    } catch (Exception $e) {
+                        $e->getMessage();
+                    }
                 }
                 return $this->redirect(['admin', '#' => $model->id_zakaz]);
             } else {
@@ -811,17 +861,28 @@ class ZakazController extends Controller
                     if ($model->status == Zakaz::STATUS_DISAIN) {
                         $model->statusDisain = Zakaz::STATUS_DISAINER_NEW;
                         $model->id_unread = 0;
+                        $user_id = User::USER_DISAYNER;
                     } elseif ($model->status == Zakaz::STATUS_MASTER) {
                         $model->statusMaster = Zakaz::STATUS_MASTER_NEW;
                         $model->id_unread = 0;
+                        $user_id = User::USER_MASTER;
                     } else {
                         $model->id_unread = 0;
                     }
                 }
                 if ($model->save()) {
-                    return $this->redirect(['admin', 'id' => $id]);
+                    if($model->status == Zakaz::STATUS_DISAIN){
+                        $user = User::findOne(['id' => $user_id]);
+                        try{
+                            Yii::$app->session->addFlash('update', 'Работа была принята');
+                            Yii::$app->bot->sendMessage($user->telegram_chat_id, 'Назначен заказ '.$model->prefics.' '.$model->description);
+                            return $this->redirect(['admin', 'id' => $id]);
+                        }catch (Exception $e){
+                            $e->getMessage();
+                        }
+                    }
                 } else {
-                    print_r($model->getErrors());
+                    $this->flashErrors($id);
                 }
             } else {
                 return $this->renderAjax('accept', ['model' => $model]);
@@ -868,6 +929,15 @@ class ZakazController extends Controller
             throw new NotFoundHttpException("The requested page does not exist.");
 
         }
+    }
+
+    /**
+     * @param null $id
+     */
+    private function flashErrors($id = null)
+    {
+        $id == null ? $model = new Zakaz() : $this->findModel($id);
+        Yii::$app->session->addFlash('errors', 'Произошла ошибка! '.$model->getErrors());
     }
 
     protected function findNotification()

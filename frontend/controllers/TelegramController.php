@@ -2,37 +2,58 @@
 
 namespace frontend\controllers;
 
-use app\models\User;
-use yii\db\Exception;
+use yii\filters\AccessControl;
 use yii\web\Controller;
+use frontend\models\Telegram;
 
-/**
- * Telegram controller
- */
 class TelegramController extends Controller
 {
-    public function actionWebhook()
+    public function beforeAction($action)
     {
-        try{
-            \Yii::$app->bot->setWebhook(['url' => ['index']]);
-        } catch (Exception $e){
-            $e->getMessage();
-        }
+        $this->enableCsrfValidation = ($action->id !== "webhook");
+        return parent::beforeAction($action);
     }
 
-    public function actionIndex()
+    public function behaviors()
     {
-        try{
-            $content = json_decode(file_get_contents('php://input'));
-            $chatId = $content['callback_query']['message']['chat']['id'];
-            file_put_contents('logs.txt', $chatId);
-//             \Yii::$app->bot->sendMessage(119296878, 'Hello World');
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['webhook'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['?'],
+                    ],
+                ],
+            ],
+        ];
+    }
 
-            $user = User::findOne(\Yii::$app->user->id);
-            $user->telegram_chat_id = $chatId;
-            $user->save();
-        } catch (Exception $e){
-            $e->getMessage();
+    public function actionWebhook()
+    {
+        $data = json_decode(file_get_contents('php://input'), true);
+        // file_put_contents('logs.txt', $content);
+        if(isset($data['message']['chat']['id']))
+        {
+            $chatId = $data['message']['chat']['id'];
+            file_put_contents('logs.txt', $chatId);
+            $message = isset($data['message']['text']) ? $data['message']['text'] : false;
+
+            $send = false;
+
+            if (strpos($message, '/start') !== false) {
+                $explode = explode(' ', $message);
+                $token = isset($explode[1]) ? $explode[1] : false;
+                $data = [
+                    'raw' => $token,
+                    'chat_id' => $chatId,
+                ];
+                $send = Telegram::start($data);
+            } else {
+                $send = 'Комманда не найдена. Если Вы уверены в том, что ошибка, обратитесь в тех поддержку';
+            }
+            $send = $send ? '' : 'Что-то пошло не по плану. Обратитесь в тех.поддержку';
         }
     }
 }
