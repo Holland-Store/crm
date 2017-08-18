@@ -6,9 +6,11 @@ use app\models\User;
 use yii\db\Exception;
 use yii\web\Controller;
 
+/**
+ * Telegram controller
+ */
 class TelegramController extends Controller
 {
-    public $TOKEN = '414134665:AAHfOIdeikQD04NdKckL8wadhqzggvmSqw0';
     public function actionWebhook()
     {
         try{
