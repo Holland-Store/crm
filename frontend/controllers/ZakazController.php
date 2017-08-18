@@ -786,6 +786,7 @@ class ZakazController extends Controller
         $dataProvider->pagination = false;
 
         return $this->render('admin', [
+            'comment' => $comment,
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'dataProviderNew' => $dataProviderNew,
@@ -899,9 +900,11 @@ class ZakazController extends Controller
     public function actionZakaz($id)
     {
         $model = $this->findModel($id);
+        $comment = new Comment();
 
         return $this->renderPartial('_zakaz', [
             'model' => $model,
+            'comment' => $comment,
         ]);
     }
     /** END Block admin in gridview*/
