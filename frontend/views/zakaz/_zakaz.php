@@ -7,6 +7,8 @@ use yii\bootstrap\Modal;
 use app\models\Courier;
 use app\models\Comment;
 use app\models\Zakaz;
+use app\models\User;
+use yii\widgets\Pjax;
 
 /* @var  $comment app\models\Comment */
 /** @var string $sotrud */
@@ -30,7 +32,7 @@ use app\models\Zakaz;
         <div class="divInform">
         <?= $model->information ?>
         </div>
-        <?php \yii\widgets\Pjax::begin(['id' => 'commentPjax']) ?>
+        <?php Pjax::begin(['id' => 'commentPjax']) ?>
         <?php $comments = Comment::find()->where(['id_zakaz' => $model->id_zakaz])->orderBy('date DESC')->all(); ?>
         <div class="comment-zakaz">
             <?php  foreach ($comments as $com){
@@ -38,10 +40,10 @@ use app\models\Zakaz;
                     case Yii::$app->user->id;
                         $user = 'Я';
                         break;
-                    case (3);
+                    case (User::USER_DISAYNER);
                         $user = 'Дизайнер';
                         break;
-                    case (4):
+                    case (User::USER_MASTER):
                         $user = 'Мастер';
                         break;
                 }
@@ -53,24 +55,24 @@ use app\models\Zakaz;
 </div>';
             }?>
         </div>
-        <?php \yii\widgets\Pjax::end(); ?>
+        <?php Pjax::end(); ?>
         <?= Html::buttonInput('Коммент', [
             'class' => 'btn btn-xs commentButton']) ?>
-        <div>
+        <div class="CommentForm">
             <?php $formComment = ActiveForm::begin([
                     'id' => 'formComment',
                     'action' => ['comment/create'],
             ]); ?>
-            <?php if ($model->status == 3){
-                $comment->sotrud = 3;
+            <?php if ($model->status == Zakaz::STATUS_DISAIN){
+                $comment->sotrud = User::USER_MASTER;
                 $sotrud = $comment->sotrud;
-            } elseif($model->status == 4){
-                $comment->sotrud = 4;
+            } elseif($model->status == Zakaz::STATUS_MASTER){
+                $comment->sotrud = User::USER_DISAYNER;
                 $sotrud = $comment->sotrud;
             }
             ?>
             <div class="col-lg-11">
-                <?= $formComment->field($comment, 'comment')->textarea(['placeholder' => 'Комментарий', 'rows' => 1])->label(false) ?>
+                <?= $formComment->field($comment, 'comment')->textarea(['placeholder' => 'Комментарий', 'rows' => 1, 'class' => 'inputComment'])->label(false) ?>
                 <?= $formComment->field($comment, 'id_user')->hiddenInput(['value' => Yii::$app->user->getId()])->label(false)?>
                 <?= $formComment->field($comment, 'sotrud')->hiddenInput(['value' => $sotrud])->label(false)?>
                 <?= $formComment->field($comment, 'id_zakaz')->hiddenInput(['value' => $model->id_zakaz])->label(false)?>
@@ -153,11 +155,11 @@ use app\models\Zakaz;
             <span class="responsible_person namePrice">Оплачено:</span>
             <span class="responsible_person namePrice">К доплате:</span>
             <span class="responsible_person namePrice">Всего:</span>
-            <div class="responsible_person price"><?= $model->fact_oplata.'р.' ?></div>
+            <div class="responsible_person price"><?= number_format($model->fact_oplata, 0, ',', ' ').'р.' ?></div>
             <div class="responsible_person price"><?php if($model->oplata != null){?>
-                <?php echo $model->oplata - $model->fact_oplata.'р.'; ?>
+                <?php echo number_format($model->oplata - $model->fact_oplata, 0, ',', ' ').'р.'; ?>
             <?php } ?></div>
-            <div class="responsible_person price"><?= $model->oplata.'р.' ?></div>
+            <div class="responsible_person price"><?= number_format($model->oplata, 0, ',', ' ').'р.'    ?></div>
         </div>
     </div>
     <div class="col-lg-12 footerView"></div>
