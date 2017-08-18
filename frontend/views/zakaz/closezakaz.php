@@ -1,5 +1,6 @@
 <?php
 
+use app\models\Comment;
 use yii\helpers\Html;
 use kartik\grid\GridView;
 use yii\helpers\StringHelper;
@@ -33,7 +34,8 @@ $this->title = 'Закрытые заказы';
                         return GridView::ROW_COLLAPSED;
                     },
                     'detail'=>function ($model) {
-                        return Yii::$app->controller->renderPartial('_zakaz', ['model'=> $model]);
+                        $comment = new Comment();
+                        return Yii::$app->controller->renderPartial('_zakaz', ['model'=>$model, 'comment' => $comment]);
                     },
                     'enableRowClick' => true,
                     'expandOneOnly' => true,
@@ -93,9 +95,7 @@ $this->title = 'Закрытые заказы';
                 ],
                 [
                     'attribute' => 'oplata',
-                    'value' => function($model){
-                        return $model->oplata.' р.';
-                    },
+                    'value' => 'money',
                     'hAlign' => GridView::ALIGN_RIGHT,
                     'contentOptions' => ['class' => 'textTr tr50'],
                 ],

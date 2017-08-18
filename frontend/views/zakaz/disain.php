@@ -1,5 +1,6 @@
 <?php
 
+use app\models\Comment;
 use yii\bootstrap\Modal;
 use yii\bootstrap\Nav;
 use yii\helpers\StringHelper;
@@ -10,6 +11,7 @@ use yii\widgets\Pjax;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\ZakazSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
+/* @var $dataProviderSoglas yii\data\ActiveDataProvider */
 
 $this->title = 'Все заказы';
 ?>
@@ -43,7 +45,8 @@ $this->title = 'Все заказы';
                     return GridView::ROW_COLLAPSED;
                 },
                 'detail'=>function ($model) {
-                    return Yii::$app->controller->renderPartial('_zakaz', ['model'=> $model]);
+                    $comment = new Comment();
+                    return Yii::$app->controller->renderPartial('_zakaz', ['model'=>$model, 'comment' => $comment]);
                 },
                 'enableRowClick' => true,
                 'expandOneOnly' => true,
@@ -62,9 +65,9 @@ $this->title = 'Все заказы';
                 'contentOptions' => ['class' => 'tr20'],
                 'value' => function($model){
                     if ($model->prioritet == 2) {
-                        return '<i class="fa fa-circle fa-red" aria-hidden="true"></i>';
+                        return '<i class="fa fa-circle fa-red"></i>';
                     } elseif ($model->prioritet == 1) {
-                        return '<i class="fa fa-circle fa-ping" aria-hidden="true"></i>';
+                        return '<i class="fa fa-circle fa-ping"></i>';
                     } else {
                         return '';
                     }
@@ -98,9 +101,7 @@ $this->title = 'Все заказы';
             ],
             [
                 'attribute' => 'oplata',
-                'value' => function($model){
-                    return $model->oplata.' р.';
-                },
+                'value' => 'money',
                 'hAlign' => GridView::ALIGN_RIGHT,
                 'contentOptions' => ['class' => 'textTr tr70'],
             ],
@@ -148,7 +149,8 @@ $this->title = 'Все заказы';
                     return GridView::ROW_COLLAPSED;
                 },
                 'detail'=>function ($model) {
-                    return Yii::$app->controller->renderPartial('_zakaz', ['model'=> $model]);
+                    $comment = new Comment();
+                    return Yii::$app->controller->renderPartial('_zakaz', ['model'=>$model, 'comment' => $comment]);
                 },
                 'enableRowClick' => true,
                 'expandOneOnly' => true,
@@ -167,9 +169,9 @@ $this->title = 'Все заказы';
                 'contentOptions' => ['class' => 'tr20'],
                 'value' => function($model){
                     if ($model->prioritet == 2) {
-                        return '<i class="fa fa-circle fa-red" aria-hidden="true"></i>';
+                        return '<i class="fa fa-circle fa-red"></i>';
                     } elseif ($model->prioritet == 1) {
-                        return '<i class="fa fa-circle fa-ping" aria-hidden="true"></i>';
+                        return '<i class="fa fa-circle fa-ping"></i>';
                     } else {
                         return '';
                     }
@@ -203,9 +205,7 @@ $this->title = 'Все заказы';
             ],
             [
                 'attribute' => 'oplata',
-                'value' => function($model){
-                    return $model->oplata.' р.';
-                },
+                'value' => 'money',
                 'hAlign' => GridView::ALIGN_RIGHT,
                 'contentOptions' => ['class' => 'textTr tr70'],
             ],

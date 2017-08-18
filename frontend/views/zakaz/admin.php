@@ -200,9 +200,7 @@ $this->title = 'Вce заказы';
             ],
             [
                 'attribute' => 'oplata',
-                'value' => function($model){
-                    return $model->oplata.' р.';
-                },
+                'value' => 'money',
                 'hAlign' => GridView::ALIGN_RIGHT,
                 'contentOptions' => function($model) {
                     if ($model->status == Zakaz::STATUS_NEW){
@@ -348,9 +346,7 @@ $this->title = 'Вce заказы';
             [
                 'attribute' => 'oplata',
                 'headerOptions' => ['width' => '70'],
-                'value' => function($model){
-                    return $model->oplata.' р.';
-                },
+                'value' => 'money',
                 'hAlign' => GridView::ALIGN_RIGHT,
                 'contentOptions' => ['class' => 'textTr tr70'],
             ],
@@ -468,9 +464,7 @@ $this->title = 'Вce заказы';
             ],
             [
                 'attribute' => 'oplata',
-                'value' => function($model){
-                    return $model->oplata.' р.';
-                },
+                'value' => 'money',
                 'hAlign' => GridView::ALIGN_RIGHT,
                 'contentOptions' => ['class' => 'textTr tr70'],
             ],

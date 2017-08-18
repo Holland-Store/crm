@@ -98,9 +98,7 @@ $this->title = 'Все заказы';
             ],
             [
                 'attribute' => 'oplata',
-                'value' => function($model){
-                    return $model->oplata.' р.';
-                },
+                'value' => 'money',
                 'hAlign' => GridView::ALIGN_RIGHT,
                 'contentOptions' => ['class' => 'textTr tr70'],
             ],
