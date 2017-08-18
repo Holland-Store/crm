@@ -332,6 +332,11 @@ class Zakaz extends ActiveRecord
         return (isset($list[$this->id_sotrud])) ? $list[$this->id_sotrud].'-'.$this->id_zakaz :         $this->id_zakaz;
     }
 
+    public function getMoney()
+    {
+        return number_format($this->oplata, 0,',', ' ').' р.';
+    }
+
     /**
      * Upload the layout from the designer
      * @return bool
