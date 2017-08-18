@@ -24,7 +24,11 @@ use yii\widgets\Pjax;
 
         <span class="anketaZakaz_from">Клиент:</span>
         <div><?= $model->name ?></div>
-        <div><?= $model->phone ?></div>
+        <div>
+            <?php $s = $model->phone;
+                echo $s[0].' ('.$s[1].$s[2].$s[3].') '.$s[4].$s[5].$s[6].'-'.$s[7].$s[8].'-'.$s[9].$s[10];
+            ?>
+        </div>
         <div><?= $model->email ?></div>
 	    </div>
     </div>
