@@ -36,7 +36,8 @@
         "kartik-v/yii2-widgets": "^3.4",
         "npm-asset/jquery": "^2.2",
         "bower-asset/sweetalert": "*",
-        "sonko-dmitry/yii2-telegram-bot-api": "*"
+        "sonko-dmitry/yii2-telegram-bot-api": "*",
+        "ratacibernetica/yii2-node-socket": "^1.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
