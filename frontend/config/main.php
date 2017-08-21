@@ -10,7 +10,7 @@ $params = array_merge(
 return [
     'id' => 'app-frontend',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log'],
+    'bootstrap' => ['log', 'nodeSocket'],
     'controllerNamespace' => 'frontend\controllers',
 	'modules' => [
 	    'gridview' =>  ['class' => '\kartik\grid\Module'],
@@ -58,7 +58,18 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-
+        'nodeSocket' => [
+            'class' => '\YiiNodeSocket\NodeSocket',
+            'host' => 'localhost',
+            'allowedServerAddresses' => [
+                "localhost",
+                "127.0.0.1"
+            ],
+            'origin' => '*:*',
+            'sessionVarName' => 'PHPSESSID',
+            'port' => 3001,
+            'socketLogFile' => '/var/log/node-socket.log',
+        ],
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
