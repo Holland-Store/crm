@@ -18,5 +18,4 @@ $this->title = 'Заказ: ' . $model->id_zakaz;
         'model' => $model,
         'client' => $client,
     ]) ?>
-
 </div>
