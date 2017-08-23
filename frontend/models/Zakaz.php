@@ -47,6 +47,7 @@ use yii\db\ActiveRecord;
  * @property Tovar $idTovar
  * @property User $idSotrud
  * @property Courier $idShipping
+ * @property mixed $tags
  *
  */
 class Zakaz extends ActiveRecord
@@ -54,6 +55,7 @@ class Zakaz extends ActiveRecord
     /** @var Zakaz */
     public $file;
     public $search;
+    public $tags_array;
 
     const STATUS_NEW = 0;
     const STATUS_EXECUTE = 1;
@@ -109,7 +111,7 @@ class Zakaz extends ActiveRecord
             [['srok', 'number', 'description', 'phone', 'id_client'], 'required', 'on' => self::SCENARIO_DEFAULT],
             ['declined', 'required', 'message' => 'Введите причину отказа', 'on'=> self::SCENARIO_DECLINED],
             [['id_zakaz', 'id_tovar', 'minut', 'time', 'number', 'status', 'action', 'id_sotrud', 'phone', 'id_client','id_shipping' ,'prioritet', 'statusDisain', 'statusMaster', 'id_unread'], 'integer'],
-            [['srok', 'data', 'data-start-disain'], 'safe'],
+            [['srok', 'data', 'data-start-disain', 'tags_array'], 'safe'],
             [['oplata', 'fact_oplata'], 'filter', 'filter' => function($value){
                 return str_replace(' ', '', $value);
             }],
@@ -165,6 +167,7 @@ class Zakaz extends ActiveRecord
             'declined' => 'Причина отказа',
             'id_unread' => 'Id unread',
             'search' => 'Search',
+            'tags_array' => 'Тэги',
         ];
     }
 
@@ -198,6 +201,22 @@ class Zakaz extends ActiveRecord
     public function getIdClient()
     {
         return $this->hasOne(Client::className(), ['id' => 'id_client']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getZakazTag()
+    {
+        return $this->hasMany(ZakazTag::className(), ['zakaz_id' => 'id_zakaz']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTags()
+    {
+        return $this->hasMany(Tag::className(), ['id' => 'tag_id'])->via('zakazTag');
     }
 
 //    /**
@@ -315,10 +334,11 @@ class Zakaz extends ActiveRecord
     public static function getPreficsList()
     {
         return [
-            '2' => 'M',
-            '6' => 'P',
+            User::USER_MOSCOW => 'M',
+            User::USER_PUSHKIN => 'P',
             '8' => 'T',
-            '9' => 'S',
+            User::USER_SIBER => 'S',
+            User::USER_CHETAEVA => 'C'
         ];
     }
 
@@ -329,7 +349,7 @@ class Zakaz extends ActiveRecord
     public function getPrefics()
     {
         $list = self::getPreficsList();
-        return (isset($list[$this->id_sotrud])) ? $list[$this->id_sotrud].'-'.$this->id_zakaz :         $this->id_zakaz;
+        return (isset($list[$this->id_sotrud])) ? $list[$this->id_sotrud].'-'.$this->id_zakaz : $this->id_zakaz;
     }
 
     public function getMoney()
@@ -353,5 +373,10 @@ class Zakaz extends ActiveRecord
         } else {
             return false;
         }
+    }
+
+    public function afterFind()
+    {
+        return $this->tags_array = $this->tags;
     }
 }
