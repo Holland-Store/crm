@@ -13,10 +13,14 @@ use yii\widgets\MaskedInput;
 
     <?php $form = ActiveForm::begin(['id' => $model->formName()]); ?>
 
-    <?= $form->field($model, 'fio')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'last_name')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'patronymic')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'phone')->widget(MaskedInput::className(),[
-        'mask' => '89999999999',
+        'mask' => '8(999)999-99-99',
     ]) ?>
 
     <?= $form->field($model, 'email')->widget(MaskedInput::className(), [
@@ -48,6 +52,7 @@ $('form#{$model->formName()}').on('beforeSubmit', function(e) {
           {
               $(document).find('#modalCreateClient').modal('hide');
               $.pjax.reload({container: '#pjax-select'});
+              sweetAlert("Клиент был создан", "Теперь вы можете увидеть данного клиента в списке","success");
           } else {
             $('.client-form').html(result);
           }
