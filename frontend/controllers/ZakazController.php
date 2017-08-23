@@ -4,6 +4,7 @@ namespace frontend\controllers;
 
 use app\models\Client;
 use app\models\User;
+use app\models\ZakazTag;
 use Yii;
 use app\models\Zakaz;
 use app\models\Courier;
@@ -392,6 +393,19 @@ class ZakazController extends Controller
                 if (!$model->save()) {
                     $this->flashErrors($id);
                 } else {
+                    $arr = ArrayHelper::map($model->tags, 'id', 'id');
+                    foreach (Yii::$app->request->post('Zakaz')['tags_array'] as $one){
+                        if (!in_array($one, $arr)){
+                            $tag = new ZakazTag();
+                            $tag->zakaz_id = $id;
+                            $tag->tag_id = $one;
+                            $tag->save();
+                        }
+                        if (isset($arr[$one])){
+                            unset($arr[$one]);
+                        }
+                    }
+                    ZakazTag::deleteAll(['tag_id' => $arr]);
                     if($model->status == Zakaz::STATUS_DISAIN){
                         $user = User::findOne(['id' => User::USER_DISAYNER]);
                         \Yii::$app->bot->sendMessage($user->telegram_chat_id, 'Назначен заказ '.$model->prefics.' '.$model->description);
@@ -732,7 +746,6 @@ class ZakazController extends Controller
     /**
      * All zakaz existing in Admin
      * @return string|\yii\web\Response
-     * @property mixed prefics
      * windows Admin
      */
     public function actionAdmin()
@@ -761,6 +774,7 @@ class ZakazController extends Controller
             $model->id_shipping = $shipping->id;//Оформление доставку в таблице заказа
             if ($model->save()){
                 try{
+                    /** @var $model \app\models\Zakaz */
                     Yii::$app->session->addFlash('update', 'Доставка успешно создана');
                     Yii::$app->bot->sendMessage($user->telegram_chat_id, 'Назначена доставка '.$model->prefics);
                 }catch (Exception $e){
@@ -873,6 +887,7 @@ class ZakazController extends Controller
                 }
                 if ($model->save()) {
                     if($model->status == Zakaz::STATUS_DISAIN){
+                        /** @var $user_id \app\models\User */
                         $user = User::findOne(['id' => $user_id]);
                         try{
                             Yii::$app->session->addFlash('update', 'Работа была принята');
@@ -939,6 +954,7 @@ class ZakazController extends Controller
      */
     private function flashErrors($id = null)
     {
+        /** @var $model \app\models\Zakaz */
         $id == null ? $model = new Zakaz() : $this->findModel($id);
         Yii::$app->session->addFlash('errors', 'Произошла ошибка! '.$model->getErrors());
     }
