@@ -1,12 +1,12 @@
 <?php
-
 namespace app\models;
-
 /**
  * This is the model class for table "client".
  *
  * @property integer $id
- * @property string $fio
+ * @property string $last_name
+ * @property string $name
+ * @property string $patronymic
  * @property string $phone
  * @property string $email
  * @property string $street
@@ -28,7 +28,6 @@ class Client extends \yii\db\ActiveRecord
     {
         return 'client';
     }
-
     /**
      * @return array
      */
@@ -39,7 +38,6 @@ class Client extends \yii\db\ActiveRecord
             self::SCENARIO_CREATE => ['id'],
         ];
     }
-
     /**
      * @inheritdoc
      */
@@ -47,16 +45,18 @@ class Client extends \yii\db\ActiveRecord
     {
         return [
             [['id'], 'required', 'message' => 'Пожалуйста, заполните поле','on' => self::SCENARIO_CREATE],
-            [['fio', 'phone'], 'required', 'on' => self::SCENARIO_DEFAULT],
+            [['name', 'phone'], 'required', 'on' => self::SCENARIO_DEFAULT],
             [['home', 'apartment'], 'integer'],
             [['phone'], 'number'],
-            [['fio'], 'string', 'max' => 86],
+            [['phone'], 'filter', 'filter' => function($value){
+                return str_replace(['(', ')', '-'], '', $value);
+            }],
+            [['last_name', 'name', 'patronymic'], 'string', 'max' => 86],
             [['email'], 'string', 'max' => 50],
             [['street'], 'string', 'max' => 100],
             [['phone'], 'unique'],
         ];
     }
-
     /**
      * @inheritdoc
      */
@@ -64,20 +64,27 @@ class Client extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'fio' => 'Фио',
+            'last_name' => 'Фамилия',
+            'name' => 'Имя',
+            'patronymic' => 'Отчество',
             'phone' => 'Телефон',
             'email' => 'Email',
             'street' => 'Улица',
             'home' => 'Дом',
             'apartment' => 'Квартира',
+            'fioClient' => 'ФИО',
         ];
     }
-
     /**
      * @return \yii\db\ActiveQuery
      */
     public function getZakazs()
     {
         return $this->hasMany(Zakaz::className(), ['id_client' => 'id']);
+    }
+
+    public function getFioClient()
+    {
+        return $this->last_name.' '.$this->name.' '.$this->patronymic;
     }
 }
