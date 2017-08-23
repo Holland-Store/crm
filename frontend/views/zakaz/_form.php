@@ -1,6 +1,7 @@
 <?php
 
 use app\models\Client;
+use app\models\Tag;
 use app\models\Zakaz;
 use kartik\select2\Select2;
 use yii\bootstrap\Modal;
@@ -129,7 +130,6 @@ use yii\widgets\Pjax;
                     'pluginOptions' => [
                         'allowClear' => true,
                         'language' => [
-//                            'noResults' => new JsExpression('function () { return "<a href=\"' . Url::to(['client/create']) . '\">Добавить клиента</a>"; }'),
                             'noResults' => new JsExpression('function () { return "<button type=\"button\" class=\"btn btn-primary btn-xs createClient\" value=\"'.Url::to(['client/create']).'\">Добавить клиент</button>"; }'),
                         ],
                         'escapeMarkup' => new JsExpression('function (markup) {
@@ -211,6 +211,24 @@ use yii\widgets\Pjax;
                 <?= $form->field($model, 'sotrud_name')->textInput(['placeholder' => 'Сотрудник', 'class' => 'inputForm'])->label(false) ?>
             </div>
             <?php endif ?>
+    </div>
+
+    <div class="col-lg-2">
+        <?= $form->field($model, 'tags_array')->widget(Select2::className(), [
+                    'data' => ArrayHelper::map(Tag::find()->all(), 'id', 'name'),
+                    'language' => 'ru',
+                    'options' => [
+//                        'value' => $model->tags,
+                        'placeholder' => 'Выберите тэг',
+                        'multiple' => true
+                    ],
+                    'pluginOptions' => [
+                        'allowClear' => true,
+                        'tags' => true,
+                        'maximumInputLength' => 10,
+                    ],
+                ]);
+        ?>
     </div>
 
     <!-- <?= $form->field($model, 'id_sotrud')->hiddenInput(['value' => Yii::$app->user->id])->label(false) ?> -->
