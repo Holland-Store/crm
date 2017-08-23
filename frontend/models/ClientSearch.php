@@ -11,6 +11,7 @@ use yii\data\ActiveDataProvider;
  */
 class ClientSearch extends Client
 {
+    public $fioClient;
     /**
      * @inheritdoc
      */
@@ -18,7 +19,7 @@ class ClientSearch extends Client
     {
         return [
             [['id'], 'integer'],
-            [['fio', 'phone', 'email', 'address', 'street', 'home'], 'safe'],
+            [['last_name', 'name', 'patronymic', 'fioClient','phone', 'email', 'address', 'street', 'home'], 'safe'],
         ];
     }
 
@@ -48,6 +49,26 @@ class ClientSearch extends Client
             'query' => $query,
         ]);
 
+        $dataProvider->setSort([
+           'attributes' => [
+               'id' => [
+                   'default' => SORT_ASC,
+               ],
+               'fioClient' => [
+                   'asc' => ['last_name' => SORT_ASC],
+                   'desc' => ['last_name' => SORT_DESC],
+                   'label' => 'ФИО',
+               ],
+               'phone',
+               'email',
+               'address' => [
+                   'asc' => ['street' => SORT_ASC],
+                   'desc' => ['street' => SORT_DESC],
+                   'label' => 'Адрес',
+               ],
+           ]
+        ]);
+
         $this->load($params);
 
         if (!$this->validate()) {
@@ -61,7 +82,9 @@ class ClientSearch extends Client
             'id' => $this->id,
         ]);
 
-        $query->andFilterWhere(['like', 'fio', $this->fio])
+        $query->andFilterWhere(['like', 'last_name', $this->fioClient])
+            ->orFilterWhere(['like', 'name', $this->fioClient])
+            ->orFilterWhere(['like', 'patronymic', $this->fioClient])
             ->andFilterWhere(['like', 'phone', $this->phone])
             ->andFilterWhere(['like', 'email', $this->email])
             ->andFilterWhere(['like', 'street', $this->address])
