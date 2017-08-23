@@ -125,7 +125,7 @@ use yii\widgets\Pjax;
                 ])->label(false);
             } else {
                 echo $form->field($client, 'id')->widget(Select2::className(), [
-                    'data' => ArrayHelper::map(Client::find()->all(), 'id', 'phone', 'fio'),
+                    'data' => ArrayHelper::map(Client::find()->all(), 'id', 'phone', 'fioClient'),
                     'options' => ['placeholder' => 'Введите номер телефона'],
                     'pluginOptions' => [
                         'allowClear' => true,
