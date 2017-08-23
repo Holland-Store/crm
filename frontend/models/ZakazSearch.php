@@ -38,12 +38,24 @@ class ZakazSearch extends Zakaz
      * Creates data provider instance with search query applied
      *
      * @param array $params
-     *
      * @return ActiveDataProvider
      */
     public function search($params, $role)
     {
-        $query = Zakaz::find();
+        $query = Zakaz::find()->with(['idShipping', 'idSotrud', 'tags']);
+
+        // add conditions that should always apply here
+
+        /** @var string $sort */
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'sort' => [
+                'defaultOrder' => $sort,
+            ],
+            'pagination' => [
+                'pageSize' => 100,
+            ]
+        ]);
 
         switch ($role) {
             case 'master':
@@ -60,7 +72,7 @@ class ZakazSearch extends Zakaz
                 break;
             case 'disainSoglas':
                 $query->andWhere(['status' => Zakaz::STATUS_DISAIN, 'statusDisain' => Zakaz::STATUS_DISAINER_SOGLAS, 'action' => 1])
-                ->orWhere(['status' => Zakaz::STATUS_SUC_DISAIN, 'action' => 1]);
+                    ->orWhere(['status' => Zakaz::STATUS_SUC_DISAIN, 'action' => 1]);
                 $sort = ['srok' => SORT_ASC];
                 break;
             case 'shopWork':
@@ -82,7 +94,7 @@ class ZakazSearch extends Zakaz
             case 'adminIspol':
                 $query->andWhere(['status' => Zakaz::STATUS_EXECUTE, 'action' => 1]);
                 $sort = ['srok' => SORT_DESC];
-                break;  
+                break;
             case 'archive':
                 $query->andWhere(['action' => 0]);
                 $sort = ['data' => SORT_DESC];
@@ -92,19 +104,6 @@ class ZakazSearch extends Zakaz
                 $sort = ['data' => SORT_DESC];
                 break;
         }
-
-        // add conditions that should always apply here
-
-        /** @var string $sort */
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-            'sort' => [
-                'defaultOrder' => $sort,
-            ],
-            'pagination' => [
-                'pageSize' => 100,
-            ]
-        ]);
 
         $this->load($params);
 
