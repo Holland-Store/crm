@@ -37,7 +37,7 @@ use yii\widgets\Pjax;
         <?= $model->information ?>
         </div>
         <?php Pjax::begin(['id' => 'commentPjax']) ?>
-        <?php $comments = Comment::find()->where(['id_zakaz' => $model->id_zakaz])->orderBy('date DESC')->all(); ?>
+        <?php $comments = Comment::find()->where(['id_zakaz' => $model->id_zakaz])->orderBy('date DESC')->all() ?>
         <div class="comment-zakaz">
             <?php  foreach ($comments as $com){
                 switch ($com->id_user){
