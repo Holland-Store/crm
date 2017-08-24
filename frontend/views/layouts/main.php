@@ -4,6 +4,7 @@
 /* @var $content string */
 
 use app\models\Notification;
+use kartik\popover\PopoverX;
 use kartik\widgets\Growl;
 use yii\helpers\Html;
 use yii\widgets\Breadcrumbs;
@@ -83,10 +84,26 @@ AppAsset::register($this);
         echo '';
     } else {
         echo Html::beginForm(['/site/logout'], 'post')
-            . Html::submitButton(
-                '<span>'.Yii::$app->user->identity->name.'</span> <span class="glyphicon glyphicon-off exit"></span>',
-                ['class' => 'btn btn-link logout', 'title' => 'Выход']
-            )
+            . PopoverX::widget([
+                'header' => '<i class="glyphicon glyphicon-lock"></i>Учетная запись',
+                'closeButton' => ['label' => false],
+                'placement' => PopoverX::ALIGN_BOTTOM,
+                'toggleButton' => ['label'=>'<span>'.Yii::$app->user->identity->name.'</span> <span class="glyphicon glyphicon-off exit"></span>', 'class' => 'btn btn-link logout'],
+                'content' => Html::a('Настройки', ['/site/setting', 'id' => Yii::$app->user->identity->id]).'<br>'.Html::submitButton('Выход'),
+                ])
+//                '<span>'.Yii::$app->user->identity->name.'</span> <span class="glyphicon glyphicon-off exit"></span>',
+//                [
+//                    'class' => 'btn btn-link logout',
+//                    'title' => 'Выход',
+//                ]
+//            )
+//            . Html::submitButton(
+//                '<span>'.Yii::$app->user->identity->name.'</span> <span class="glyphicon glyphicon-off exit"></span>',
+//                [
+//                    'class' => 'btn btn-link logout',
+//                    'title' => 'Выход',
+//                ]
+//            )
             . Html::endForm();
     }
     ?>
