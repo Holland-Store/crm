@@ -34,7 +34,7 @@ class Client extends \yii\db\ActiveRecord
     public function scenarios()
     {
         return [
-            self::SCENARIO_DEFAULT => ['id', 'fio', 'phone', 'emaail', 'home','street', 'apartment'],
+            self::SCENARIO_DEFAULT => ['id', 'last_name', 'name', 'patronymic', 'phone', 'email', 'home','street', 'apartment'],
             self::SCENARIO_CREATE => ['id'],
         ];
     }
@@ -47,10 +47,8 @@ class Client extends \yii\db\ActiveRecord
             [['id'], 'required', 'message' => 'Пожалуйста, заполните поле','on' => self::SCENARIO_CREATE],
             [['name', 'phone'], 'required', 'on' => self::SCENARIO_DEFAULT],
             [['home', 'apartment'], 'integer'],
-            [['phone'], 'number'],
-            [['phone'], 'filter', 'filter' => function($value){
-                return str_replace(['(', ')', '-'], '', $value);
-            }],
+            [['phone'], 'string'],
+            ['phone', 'match', 'pattern' => '/^(8)[(](\d{3})[)](\d{3})[-](\d{2})[-](\d{2})/', 'message' => 'Телефона, должно быть в формате 8(XXX)XXX-XX-XX'],
             [['last_name', 'name', 'patronymic'], 'string', 'max' => 86],
             [['email'], 'string', 'max' => 50],
             [['street'], 'string', 'max' => 100],
