@@ -208,23 +208,8 @@ class ZakazController extends Controller
     public function actionView($id)
     {
         $model = $this->findModel($id);
-        $notifications = new Notification();
-        $shipping = new Courier();
         $reminder = new Notification();
         $zakaz = $model->id_zakaz;
-        $notification = $this->findNotification();
-
-
-        if ($shipping->load(Yii::$app->request->post())) {
-            $shipping->save();
-            $model->id_shipping = $shipping->id;//Оформление доставки
-            $model->save();
-
-            $notifications->getByIdNotification(7, $zakaz);
-            $notifications->saveNotification;
-
-//            return $this->redirect(['view', 'id' => $model->id_zakaz]);
-        }
 
         if ($reminder->load(Yii::$app->request->post())) {
             $reminder->getReminder($zakaz);
@@ -237,27 +222,8 @@ class ZakazController extends Controller
             return $this->redirect(['view', 'id' => $model->id_zakaz]);
         }
 
-        if ($model->load(Yii::$app->request->post())) {
-            $model->uploadeFile;//Выполнение работы дизайнером и оформление уведомление
-            $model->validate();
-            $model->save();
-
-            if ($model->status == 3) {
-                $notifications->getByIdNotification(4, $model->id_zakaz);
-                $notifications->saveNotification;
-            } elseif ($model->status == 6) {
-                $notifications->getByIdNotification(3, $model->id_zakaz);
-                $notifications->saveNotification;
-            }
-
-            return $this->redirect(['view', 'id' => $model->id_zakaz]);
-        }
-        $this->view->params['notifications'] = Notification::find()->where(['id_user' => Yii::$app->user->getId(), 'active' => true])->all();
-
         return $this->render('view', [
             'model' => $this->findModel($id),
-            'notification' => $notification,
-            'shipping' => $shipping,
             'reminder' => $reminder,
         ]);
     }
