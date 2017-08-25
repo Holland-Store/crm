@@ -68,7 +68,7 @@ return [
             'origin' => '*:*',
             'sessionVarName' => 'PHPSESSID',
             'port' => 3001,
-            'socketLogFile' => '/var/log/node-socket.log',
+            'socketLogFile' => '/runtime/logs/node-socket.log',
         ],
         'urlManager' => [
             'enablePrettyUrl' => true,
