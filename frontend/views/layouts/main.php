@@ -13,8 +13,6 @@ use common\widgets\Alert;
 use frontend\components\Counter;
 use YiiNodeSocket\Assets\NodeSocketAssets;
 
-//use app\models\Notification;
-
 NodeSocketAssets::register($this);
 AppAsset::register($this);
 ?>
@@ -83,20 +81,19 @@ AppAsset::register($this);
     if (Yii::$app->user->isGuest) {
         echo '';
     } else {
-        echo Html::beginForm(['/site/logout'], 'post')
-            . PopoverX::widget([
+        PopoverX::begin([
                 'header' => '<i class="glyphicon glyphicon-lock"></i>Учетная запись',
                 'closeButton' => ['label' => false],
                 'placement' => PopoverX::ALIGN_BOTTOM,
                 'toggleButton' => ['label'=>'<span>'.Yii::$app->user->identity->name.'</span> <span class="glyphicon glyphicon-off exit"></span>', 'class' => 'btn btn-link logout'],
-                'content' => Html::a('Настройки', ['/site/setting', 'id' => Yii::$app->user->identity->id]).'<br>'.Html::submitButton('Выход'),
-                ])
-//                '<span>'.Yii::$app->user->identity->name.'</span> <span class="glyphicon glyphicon-off exit"></span>',
-//                [
-//                    'class' => 'btn btn-link logout',
-//                    'title' => 'Выход',
-//                ]
-//            )
+                ]);
+        echo Html::a('Настройки', ['/site/setting', 'id' => Yii::$app->user->identity->id]).'<br>';
+
+        echo Html::beginForm(['/site/logout'], 'post');
+        echo Html::submitButton('Выход '.Html::tag('span', '', ['class' => 'glyphicon glyphicon-lock']), ['class' => 'btn btn-primary']);
+        echo Html::endForm();
+
+        PopoverX::end();
 //            . Html::submitButton(
 //                '<span>'.Yii::$app->user->identity->name.'</span> <span class="glyphicon glyphicon-off exit"></span>',
 //                [
@@ -104,7 +101,7 @@ AppAsset::register($this);
 //                    'title' => 'Выход',
 //                ]
 //            )
-            . Html::endForm();
+            ;
     }
     ?>
     <?php if (!Yii::$app->user->isGuest): ?>
