@@ -11,9 +11,7 @@ use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use common\widgets\Alert;
 use frontend\components\Counter;
-use YiiNodeSocket\Assets\NodeSocketAssets;
 
-NodeSocketAssets::register($this);
 AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>

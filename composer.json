@@ -1,4 +1,4 @@
-{
+    {
     "name": "yiisoft/yii2-app-advanced",
     "description": "Yii 2 Advanced Project Template",
     "keywords": ["yii2", "framework", "advanced", "project template"],
@@ -37,7 +37,6 @@
         "npm-asset/jquery": "^2.2",
         "bower-asset/sweetalert": "*",
         "sonko-dmitry/yii2-telegram-bot-api": "*",
-        "ratacibernetica/yii2-node-socket": "^1.0",
         "kartik-v/yii2-popover-x": "*"
     },
     "require-dev": {

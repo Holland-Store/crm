@@ -336,6 +336,7 @@ class ZakazController extends Controller
         $model = $this->findModel($id);
         $client = new Client();
         $client->scenario = Client::SCENARIO_CREATE;
+        $user = User::findOne(['id' => User::USER_DISAYNER]);
 
         if ($model->load(Yii::$app->request->post()) && $client->load(Yii::$app->request->post())) {
             $model->id_client = ArrayHelper::getValue(Yii::$app->request->post('Client'), 'id');
@@ -359,24 +360,25 @@ class ZakazController extends Controller
                 if (!$model->save()) {
                     $this->flashErrors($id);
                 } else {
-                    $arr = ArrayHelper::map($model->tags, 'id', 'id');
-                    foreach (Yii::$app->request->post('Zakaz')['tags_array'] as $one){
-                        if (!in_array($one, $arr)){
-                            $tag = new ZakazTag();
-                            $tag->zakaz_id = $id;
-                            $tag->tag_id = $one;
-                            $tag->save();
-                        }
-                        if (isset($arr[$one])){
-                            unset($arr[$one]);
-                        }
-                    }
-                    ZakazTag::deleteAll(['tag_id' => $arr]);
-                    if($model->status == Zakaz::STATUS_DISAIN){
-                        $user = User::findOne(['id' => User::USER_DISAYNER]);
-                        \Yii::$app->bot->sendMessage($user->telegram_chat_id, 'Назначен заказ '.$model->prefics.' '.$model->description);
-                    }
                     $model->save();
+                    $arr = ArrayHelper::map($model->tags, 'id', 'id');
+                    if (Yii::$app->request->post('Zakaz')['tags_array']){
+                        foreach (Yii::$app->request->post('Zakaz')['tags_array'] as $one){
+                            if (!in_array($one, $arr)){
+                                $tag = new ZakazTag();
+                                $tag->zakaz_id = $id;
+                                $tag->tag_id = $one;
+                                $tag->save();
+                            }
+                            if (isset($arr[$one])){
+                                unset($arr[$one]);
+                            }
+                        }
+                        ZakazTag::deleteAll(['tag_id' => $arr]);
+                    }
+                    if($model->status == Zakaz::STATUS_DISAIN && $user->telegram_chat_id){
+                        Yii::$app->bot->sendMessage($user->telegram_chat_id, 'Назначен заказ '.$model->prefics.' '.$model->description);
+                    }
                     Yii::$app->session->addFlash('update', 'Успешно отредактирован заказ');
                 }
 
@@ -852,9 +854,9 @@ class ZakazController extends Controller
                     }
                 }
                 if ($model->save()) {
-                    if($model->status == Zakaz::STATUS_DISAIN){
-                        /** @var $user_id \app\models\User */
-                        $user = User::findOne(['id' => $user_id]);
+                    /** @var $user_id \app\models\User */
+                    $user = User::findOne(['id' => $user_id]);
+                    if($model->status == Zakaz::STATUS_DISAIN && $user->telegram_chat_id){
                         try{
                             Yii::$app->session->addFlash('update', 'Работа была принята');
                             Yii::$app->bot->sendMessage($user->telegram_chat_id, 'Назначен заказ '.$model->prefics.' '.$model->description);

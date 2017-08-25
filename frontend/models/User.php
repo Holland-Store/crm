@@ -80,19 +80,6 @@ class User extends \yii\db\ActiveRecord
         ];
     }
 
-    public function behaviors()
-    {
-        return [
-          'channel' => [
-              'class' => '\YiiNodeSocket\Behaviors\ArChannel',
-              'updateOnSave' => true,
-          ],
-           'subscriber' => [
-               'class' => '\YiiNodeSocket\Behaviors\ArSubscriber',
-           ]
-        ];
-    }
-
     /**
      * @return \yii\db\ActiveQuery
      */

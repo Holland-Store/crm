@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "6da278bd6d0be4e8c66311cf9400ba8d",
+    "content-hash": "2c17a2f32499ba277d4162c6aade3f9a",
     "packages": [
         {
             "name": "2amigos/yii2-date-picker-widget",
@@ -2924,46 +2924,6 @@
             ]
         },
         {
-            "name": "oncesk/elephant.io",
-            "version": "v2.0.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/oncesk/elephant.io.git",
-                "reference": "5dcf6c06105ce8fc5a7caf36c64ff79ca9dd7993"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/oncesk/elephant.io/zipball/5dcf6c06105ce8fc5a7caf36c64ff79ca9dd7993",
-                "reference": "5dcf6c06105ce8fc5a7caf36c64ff79ca9dd7993",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0"
-            },
-            "type": "lib",
-            "autoload": {
-                "psr-0": {
-                    "ElephantIO": "lib/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL"
-            ],
-            "authors": [
-                {
-                    "name": "Ludovic Barreca"
-                }
-            ],
-            "description": "Send events to socket.io though PHP",
-            "keywords": [
-                "Socket.io",
-                "nodejs",
-                "websocket"
-            ],
-            "time": "2015-01-19T09:22:49+00:00"
-        },
-        {
             "name": "phpdocumentor/reflection-common",
             "version": "1.0",
             "source": {
@@ -3658,39 +3618,6 @@
                 "psr-3"
             ],
             "time": "2016-10-10T12:19:37+00:00"
-        },
-        {
-            "name": "ratacibernetica/yii2-node-socket",
-            "version": "v1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ratacibernetica/yii2-node-socket.git",
-                "reference": "c49c34842bac7c5c9aef57369f419d521069b27c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ratacibernetica/yii2-node-socket/zipball/c49c34842bac7c5c9aef57369f419d521069b27c",
-                "reference": "c49c34842bac7c5c9aef57369f419d521069b27c",
-                "shasum": ""
-            },
-            "require": {
-                "oncesk/elephant.io": "*"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "YiiNodeSocket\\": "lib/php/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "authors": [
-                {
-                    "name": "Martin Roldan Araujo",
-                    "email": "yo@ratacibernetica.com"
-                }
-            ],
-            "description": "This is a fork of oncesk/yii-node-socket",
-            "time": "2015-10-02T15:46:11+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",

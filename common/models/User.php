@@ -26,9 +26,6 @@ class User extends ActiveRecord implements IdentityInterface
 {
     const STATUS_DELETED = 0;
     const STATUS_ACTIVE = 10;
-    const EVENT_BEFORE_LOGIN = 'beforeLogin';
-    const EVENT_BEFORE_LOGOUT = 'beforeLogout';
-    const EVENT_AFTER_LOGIN = 'afterLogin';
 
 
     /**
@@ -189,18 +186,5 @@ class User extends ActiveRecord implements IdentityInterface
     public function removePasswordResetToken()
     {
         $this->password_reset_token = null;
-    }
-    protected function afterLogin($fromCookie) {
-        $frame = \Yii::$app->nodeSocket->getFrameFactory()->createAuthenticationFrame();
-        $frame->setUserId(Yii::$app->user->id);
-        $frame->send();
-    }
-
-    public function beforeLogin() {
-
-    }
-
-    public function beforeLogout() {
-
     }
 }

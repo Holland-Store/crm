@@ -39,3 +39,6 @@ socket.on('updateBoard', function (data) {
     // do any action
 });
 
+socket.on('message', function (message) {
+    console.log(message.text);
+});
