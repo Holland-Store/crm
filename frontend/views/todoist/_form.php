@@ -37,6 +37,8 @@ use dosamigos\datepicker\DatePicker;
 
     <?= $form->field($model, 'comment')->textarea(['rows' => 6]) ?>
 
+    <?= $form->field($model, 'id_sotrud_put')->hiddenInput(['value' => Yii::$app->user->id])->label(false) ?>
+
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Создать' : 'Редактировать', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
