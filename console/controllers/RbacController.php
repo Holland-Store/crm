@@ -127,5 +127,7 @@ class RbacController extends Controller
         $auth->assign($shop, 2);
         $auth->assign($shop, 6);
         $auth->assign($prog, 1);
+        $auth->assign($admin, 13);
+        $auth->assign($admin, 14);
     }
 }
