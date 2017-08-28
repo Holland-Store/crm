@@ -1,6 +1,7 @@
 <?php
 namespace console\controllers;
 
+use app\models\User;
 use Yii;
 use yii\console\Controller;
 use app\rbac\ShopRule;
@@ -14,7 +15,7 @@ class RbacController extends Controller
     {
         $auth = Yii::$app->authManager;
 
-        $rule = new ShopRule;
+        $rule = new ShopRule();
         $auth->add($rule);
 
         $updateZakaz = $auth->createPermission('updateZakaz');
@@ -118,16 +119,16 @@ class RbacController extends Controller
 		$auth->addChild($prog, $zakup);
 		$auth->addChild($prog, $system);
 
-		$auth->assign($zakup, 8);
-		$auth->assign($system, 9);
-        $auth->assign($courier, 7);
-        $auth->assign($admin, 5);
-        $auth->assign($disain, 3);
-        $auth->assign($master, 4);
+		$auth->assign($zakup, User::USER_ZAKUP);
+		$auth->assign($system, User::USER_SYSTEM);
+        $auth->assign($courier, User::USER_COURIER);
+        $auth->assign($admin, User::USER_ADMIN);
+        $auth->assign($disain, User::USER_DISAYNER);
+        $auth->assign($master, User::USER_MASTER);
         $auth->assign($shop, 2);
         $auth->assign($shop, 6);
-        $auth->assign($prog, 1);
-        $auth->assign($admin, 13);
-        $auth->assign($admin, 14);
+        $auth->assign($prog, User::USER_PROGRAM);
+        $auth->assign($admin, User::USER_DAMIR);
+        $auth->assign($admin, User::USER_ALBERT);
     }
 }
