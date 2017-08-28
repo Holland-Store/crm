@@ -23,6 +23,7 @@ namespace app\models;
  */
 class User extends \yii\db\ActiveRecord
 {
+    const USER_PROGRAM = 1;
     const USER_ADMIN = 5;
     const USER_MASTER = 3;
     const USER_DISAYNER = 4;
@@ -33,6 +34,8 @@ class User extends \yii\db\ActiveRecord
     const USER_PUSHKIN = 6;
     const USER_SIBER = 9;
     const USER_CHETAEVA = 12;
+    const USER_DAMIR = 13;
+    const USER_ALBERT = 14;
 
     /**
      * @inheritdoc
