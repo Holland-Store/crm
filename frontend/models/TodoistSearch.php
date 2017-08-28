@@ -5,7 +5,6 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Todoist;
 
 /**
  * TodoistSearch represents the model behind the search form about `app\models\Todoist`.
@@ -41,21 +40,33 @@ class TodoistSearch extends Todoist
      */
     public function search($params, $index)
     {
-        $query = Todoist::find();
-        switch ($index) {
-            case 'close':
-                $query = $query->where(['activate' => 1]);
-                break;
-            case 'admin':
-                $query = $query->where(['activate' => 0]);
-                break;
-        }
+        $query = Todoist::find()->with(['idZakaz', 'idUser']);
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
+
+        switch ($index) {
+            case 'close':
+                $query = $query->where(['activate' => 1]);
+                break;
+            case 'admin-their':
+                $query = $query->andWhere(['activate' => 0, 'id_sotrud_put' => User::USER_ADMIN]);
+                break;
+            case 'admin-alien':
+                $query = $query->andWhere(['<>', 'id_sotrud_put', User::USER_ADMIN])
+                                ->andWhere(['activate' => 0]);
+                break;
+            case 'shop-their':
+                $query = $query->andWhere(['<>', 'id_sotrud_put', User::USER_ADMIN])
+                    ->andWhere(['id_sotrud_put' => Yii::$app->user->id, 'activate' => 0]);
+                break;
+            case 'shop-alien':
+                $query = $query->where(['id_user' => Yii::$app->user->id, 'activate' => 0]);
+                break;
+        }
 
         $this->load($params);
 
