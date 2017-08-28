@@ -2,7 +2,7 @@
 
 namespace app\models;
 
-use Yii;
+use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -13,13 +13,15 @@ use yii\helpers\ArrayHelper;
  * @property string $srok
  * @property integer $id_zakaz
  * @property integer $id_user
+ * @property integer $id_sotrud_put
  * @property string $comment
  * @property integer $activate
  *
  * @property Zakaz $idZakaz
  * @property User $idUser
+ * @property User $idSotrudPut
  */
-class Todoist extends \yii\db\ActiveRecord
+class Todoist extends ActiveRecord
 {
 	const MOSCOW = 2;
 	const PUSHKIN = 6;
@@ -41,9 +43,11 @@ class Todoist extends \yii\db\ActiveRecord
         return [
             [['srok', 'comment'], 'required'],
             [['srok', 'date'], 'safe'],
-            [['id_zakaz', 'id_user', 'activate'], 'integer'],
+            [['id_zakaz', 'id_user', 'id_sotrud_put','activate'], 'integer'],
             [['comment'], 'string'],
+            [['id_sotrud_put'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['id_sotrud_put' => 'id']],
             [['id_zakaz'], 'exist', 'skipOnError' => true, 'targetClass' => Zakaz::className(), 'targetAttribute' => ['id_zakaz' => 'id_zakaz']],
+            [['id_user'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['id_user' => 'id']],
         ];
     }
 
@@ -58,6 +62,7 @@ class Todoist extends \yii\db\ActiveRecord
             'srok' => 'Срок',
             'id_zakaz' => 'Заказ',
             'id_user' => 'Назначение',
+            'id_sotrud_put' => 'Сотрудник поставил',
             'comment' => 'Доп.указание',
             'activate' => 'Статус',
         ];
@@ -77,6 +82,14 @@ class Todoist extends \yii\db\ActiveRecord
     public function getIdUser()
     {
         return $this->hasOne(User::className(), ['id' => 'id_user']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getIdSotrudPut()
+    {
+        return $this->hasOne(User::className(), ['id' => 'id_sotrud_put']);
     }
 
 	public static function getIdUserArray()
