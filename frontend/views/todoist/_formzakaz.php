@@ -1,5 +1,7 @@
 <?php
 
+use app\models\User;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use dosamigos\datepicker\DatePicker;
@@ -24,14 +26,12 @@ use dosamigos\datepicker\DatePicker;
 
     <?= $form->field($model, 'id_zakaz')->hiddenInput(['value' => Yii::$app->request->get('id_zakaz')])->label(false) ?>
 
-    <?= $form->field($model, 'id_user')->dropDownList([
-        '2' => 'Московский',
-        '6' => 'Пушкина',
-		'9' => 'Сибирский',
-		'4' => 'Дизайнер',
-		'3' => 'Мастер',
-		'10' => 'Закупки',
-        ]
+    <?= $form->field($model, 'id_user')->dropDownList(
+            ArrayHelper::map(User::find()->andWhere(['<>', 'id', User::USER_PROGRAM])
+            ->andWhere(['<>', 'id', User::USER_DAMIR])
+            ->andWhere(['<>', 'id', User::USER_ALBERT])
+            ->all(),
+            'id', 'name')
     ) ?>
 
     <?= $form->field($model, 'comment')->textarea(['rows' => 6]) ?>
