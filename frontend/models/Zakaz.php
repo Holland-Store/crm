@@ -331,16 +331,6 @@ class Zakaz extends ActiveRecord
         return true;
         } else {return false;}
     }
-    public static function getPreficsList()
-    {
-        return [
-            User::USER_MOSCOW => 'M',
-            User::USER_PUSHKIN => 'P',
-            '8' => 'T',
-            User::USER_SIBER => 'S',
-            User::USER_CHETAEVA => 'C'
-        ];
-    }
 
     /**
      * Creates a prefics at the beginning id_zakaz
@@ -348,8 +338,8 @@ class Zakaz extends ActiveRecord
      */
     public function getPrefics()
     {
-        $list = self::getPreficsList();
-        return (isset($list[$this->id_sotrud])) ? $list[$this->id_sotrud].'-'.$this->id_zakaz : $this->id_zakaz;
+        $this->id_sotrud != User::USER_ADMIN && $this->id_sotrud != User::USER_DAMIR && User::USER_ALBERT  ? $prefics = $this->idSotrud->username[0] : $prefics = false;
+        return $prefics != false ? strtoupper($prefics).'-'.$this->id_zakaz : $this->id_zakaz;
     }
 
     public function getMoney()
