@@ -152,17 +152,6 @@ $this->title = 'Все задачи';
                     'contentOptions' => ['class' => 'textTr tr70'],
                 ],
                 [
-                    'attribute' => 'id_user',
-                    'value' => function($model){
-                        if ($model->id_user == null){
-                            return '';
-                        } else {
-                            return $model->idUser->name;
-                        }
-                    },
-                    'contentOptions' => ['class' => 'tr70 textTr'],
-                ],
-                [
                     'attribute' => 'id_sotrud_put',
                     'value' => function($model){
                         return $model->idSotrudPut->name;
