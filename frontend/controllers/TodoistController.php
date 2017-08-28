@@ -12,7 +12,6 @@ use app\models\TodoistSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 
 /**
@@ -82,12 +81,14 @@ class TodoistController extends Controller
     public function actionIndex()
     {
         $searchModel = new TodoistSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, 'admin');
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, 'admin-their');
+        $dataProviderAlien = $searchModel->search(Yii::$app->request->queryParams, 'admin-alien');
         $notification = $this->findNotification();
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'dataProviderAlien' => $dataProviderAlien,
             'notifivation' => $notification,
         ]);
     }
@@ -113,13 +114,14 @@ class TodoistController extends Controller
      */
     public function actionShop()
     {
-        $dataProvider = new ActiveDataProvider([
-			'query' => Todoist::find()->where(['id_user' => Yii::$app->user->id, 'activate' => 0])
-		]);
+        $searchModel = new TodoistSearch();
+        $dataProviderTheir = $searchModel->search(Yii::$app->request->queryParams, 'shop-their');
+        $dataProviderAlien = $searchModel->search(Yii::$app->request->queryParams, 'shop-alien');
         $notification = $this->findNotification();
 
         return $this->render('shop', [
-            'dataProvider' => $dataProvider,
+            'dataProviderTheir' => $dataProviderTheir,
+            'dataProviderAlien' => $dataProviderAlien,
             'notification' => $notification,
         ]);
     }
