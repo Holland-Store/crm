@@ -1,4 +1,11 @@
-
-var conn = new WebSocket('ws://localhost:8080');
-conn.onmessage = function(e) { console.log(e.data); };
-conn.onopen = function() { conn.send({"idUser":'+yiiConfig["idUser"]+'}); };
+var conn = new ab.Session('ws://127.0.0.1:8080',
+        function () {
+            conn.subscribe('eventMonitoring', function (topic, data) {
+                console.log(data);
+            });
+        },
+        function () {
+            console.log(console.warn('WebSocket connection closes'));
+        },
+        {'skipSubprotocolCheck': true}
+    );
