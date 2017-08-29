@@ -38,7 +38,8 @@
         "bower-asset/sweetalert": "*",
         "sonko-dmitry/yii2-telegram-bot-api": "*",
         "kartik-v/yii2-popover-x": "*",
-        "cboden/ratchet": "^0.3.6"
+        "cboden/ratchet": "^0.3.6",
+        "react/zmq": "^0.3.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
