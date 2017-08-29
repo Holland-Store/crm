@@ -10,46 +10,68 @@ namespace console\models;
 
 
 use Ratchet\ConnectionInterface;
-use Ratchet\MessageComponentInterface;
+use Ratchet\Wamp\Topic;
+use Ratchet\Wamp\WampServerInterface;
+use yii\helpers\Html;
 
-class SocketServer implements MessageComponentInterface
+class SocketServer implements WampServerInterface
 {
-    protected $clients;
+    protected $subscribedTopic = [];
 
-    public function __construct() {
-        $this->clients = new \SplObjectStorage;
-    }
-
-    public function onOpen(ConnectionInterface $conn) {
-        // Store the new connection to send messages to later
-        $this->clients->attach($conn);
-
-        echo "New connection! ({$conn->resourceId})\n";
-    }
-
-    public function onMessage(ConnectionInterface $from, $msg) {
-        $numRecv = count($this->clients) - 1;
-        echo sprintf('Connection %d sending message "%s" to %d other connection%s' . "\n"
-            , $from->resourceId, $msg, $numRecv, $numRecv == 1 ? '' : 's');
-
-        foreach ($this->clients as $client) {
-            if ($from !== $client) {
-                // The sender is not the receiver, send to each client connected
-                $client->send($msg);
-            }
+    public function onSubscribe(ConnectionInterface $conn, $topic)
+    {
+        $subject = $topic->getId();
+        if (!array_key_exists($subject, $this->subscribedTopic)){
+            $this->subscribedTopic[$subject] = $topic;
         }
     }
 
-    public function onClose(ConnectionInterface $conn) {
-        // The connection is closed, remove it, as we can no longer send it messages
-        $this->clients->detach($conn);
+    public function onPushEventData($event)
+    {
+        $eventData = json_decode($event, true);
+        if (!array_key_exists($eventData['subscribeKey'], $this->subscribedTopic)){
+            return;
+        }
 
-        echo "Connection {$conn->resourceId} has disconnected\n";
+        $topic = $this->subscribedTopic[$eventData['subscribeKey']];
+
+        if ($topic instanceof Topic) {
+            foreach ($eventData as $eventField => &$fieldValue)
+                $fieldValue = Html::encode($fieldValue);
+
+            $topic->broadcast($eventData);
+        } else {
+            return;
+        }
     }
 
-    public function onError(ConnectionInterface $conn, \Exception $e) {
-        echo "An error has occurred: {$e->getMessage()}\n";
+    public function onCall(ConnectionInterface $conn, $id, $topic, array $params)
+    {
+        $conn->callError($id, $topic, 'You are not allowed to make calls')->close();
+    }
 
+    public function onPublish(ConnectionInterface $conn, $topic, $event, array $exclude, array $eligible)
+    {
         $conn->close();
+    }
+
+    public function onUnSubscribe(ConnectionInterface $conn, $topic)
+    {
+
+    }
+
+    public function onOpen(ConnectionInterface $conn)
+    {
+
+    }
+
+    public function onClose(ConnectionInterface $conn)
+    {
+
+    }
+
+    public function onError(ConnectionInterface $conn, \Exception $e)
+    {
+
     }
 }
