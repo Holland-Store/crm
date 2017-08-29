@@ -18,8 +18,19 @@ namespace app\models;
  * @property string $name
  * @property string $telegram_chat_id
  * @property string $token
+ * @property string $address
+ * @property integer $otdel_id
+ * @property string $phone
  *
  * @property Zakaz[] $zakazs
+ * @property Comment[] $comments
+ * @property Comment[] $comments0
+ * @property Custom[] $customs
+ * @property Helpdesk[] $helpdesks
+ * @property Notification[] $notifications
+ * @property Todoist[] $todoists
+ * @property Todoist[] $todoists0
+ * @property Otdel $otdel
  */
 class User extends \yii\db\ActiveRecord
 {
@@ -53,12 +64,14 @@ class User extends \yii\db\ActiveRecord
         return [
             [['username', 'auth_key', 'password_hash', 'email', 'created_at', 'updated_at', 'name'], 'required'],
             [['status', 'created_at', 'updated_at'], 'integer'],
+            [['phone'], 'number'],
             [['username', 'password_hash', 'password_reset_token', 'email'], 'string', 'max' => 255],
             [['auth_key'], 'string', 'max' => 32],
-            [['name', 'telegram_chat_id', 'telegram_token'], 'string', 'max' => 50],
+            [['name', 'telegram_chat_id', 'telegram_token', 'address'], 'string', 'max' => 50],
             [['username'], 'unique'],
             [['email'], 'unique'],
             [['password_reset_token'], 'unique'],
+            [['otdel_id'], 'exist', 'skipOnError' => true, 'targetClass' => Otdel::className(), 'targetAttribute' => ['otdel_id' => 'id']],
         ];
     }
 
@@ -80,7 +93,74 @@ class User extends \yii\db\ActiveRecord
             'name' => 'Name',
             'telegram_chat_id' => 'Chat Id',
             'telegram_token' => 'Token',
+            'address' => 'Address',
+            'otdel_id' => 'Otdel ID',
+            'phone' => 'Phone',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getComments()
+    {
+        return $this->hasMany(Comment::className(), ['id_user' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getComments0()
+    {
+        return $this->hasMany(Comment::className(), ['sotrud' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCustoms()
+    {
+        return $this->hasMany(Custom::className(), ['id_user' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getHelpdesks()
+    {
+        return $this->hasMany(Helpdesk::className(), ['id_user' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getNotifications()
+    {
+        return $this->hasMany(Notification::className(), ['id_user' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTodoists()
+    {
+        return $this->hasMany(Todoist::className(), ['id_sotrud_put' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTodoists0()
+    {
+        return $this->hasMany(Todoist::className(), ['id_user' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getIdOtdel()
+    {
+        return $this->hasOne(Otdel::className(), ['id' => 'otdel_id']);
     }
 
     /**
