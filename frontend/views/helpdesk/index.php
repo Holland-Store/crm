@@ -10,6 +10,7 @@ use yii\widgets\Pjax;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\HelpdeskSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
+/* @var $dataProviderSoglas yii\data\ActiveDataProvider */
 
 $this->title = 'Все поломки';
 ?>
@@ -67,7 +68,7 @@ $this->title = 'Все поломки';
                         [
                             'label' => 'Задачи',
                             'url' => ['todoist/create'],
-                            'visible' => Yii::$app->user->can('admin'),
+//                            'visible' => Yii::$app->user->can('admin'),
                         ],
                     ]
                 ]
