@@ -60,6 +60,11 @@ $this->title = 'ВСЕ ЗАКАЗЫ';
                         'class' => 'divider'
                     ]
                 ],
+                [
+                    'label' => 'Задачи',
+                    'url' => ['todoist/create'],
+//                            'visible' => Yii::$app->user->can('admin'),
+                ],
             ]
         ]
     ]); ?>
