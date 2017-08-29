@@ -12,7 +12,7 @@ use kartik\grid\GridView;
 $this->title = 'Все задачи';
 ?>
 <div class="todoist-index">
-
+    <?= Html::a('Создать', ['create'], ['class' => 'btn btn-success btn-sm']) ?>
     <div class="col-lg-12">
         <h3><?= Html::encode('Свои') ?></h3>
     </div>
