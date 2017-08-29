@@ -1,8 +1,8 @@
 <?php
 /* @vat $this \yii\web\View */
 
-//use yii\widgets\DetailView;
 use kartik\detail\DetailView;
+use yii\helpers\ArrayHelper;
 
 /* @var $model \app\models\User */
 ?>
@@ -21,6 +21,17 @@ use kartik\detail\DetailView;
         'headingOptions' => ['template' => '{title}']
     ],
     'attributes' => [
-        'email:email'
+        'email:email',
+        'address:text',
+        'phone',
+        [
+            'attribute' => 'otdel_id',
+            'value' =>  ArrayHelper::getValue($model, 'idOtdel.name')
+        ],
+        [
+            'attribute' => 'otdel_id',
+            'value' =>  ArrayHelper::getValue($model, 'idOtdel.id'),
+            'label' => '№ отдела',
+        ],
     ]
 ]) ?>
