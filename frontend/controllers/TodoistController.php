@@ -57,7 +57,7 @@ class TodoistController extends Controller
                     [
                         'actions' => ['create'],
                         'allow' => true,
-                        'roles' => ['admin', 'program'],
+                        'roles' => ['@'],
                     ],
 					[
     					'actions' => ['createzakaz'],
