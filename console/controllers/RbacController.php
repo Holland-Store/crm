@@ -15,7 +15,7 @@ class RbacController extends Controller
     {
         $auth = Yii::$app->authManager;
 
-        $rule = new ShopRule();
+        $rule = new ShopRule;
         $auth->add($rule);
 
         $updateZakaz = $auth->createPermission('updateZakaz');
@@ -66,7 +66,7 @@ class RbacController extends Controller
 
         $todoist = $auth->createPermission('todoist');
         $todoist->description = 'Видят задачник';
-        $auth->add($todoist);        
+        $auth->add($todoist);
 
         $admin = $auth->createRole('admin');
         $auth->add($admin);
