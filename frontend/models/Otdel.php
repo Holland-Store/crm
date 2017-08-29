@@ -8,13 +8,9 @@ use Yii;
  * This is the model class for table "otdel".
  *
  * @property integer $id
- * @property string $fio
- * @property string $otdel
- * @property string $thePost
- * @property integer $user_id
+ * @property string $name
  *
- * @property User $user
- * @property Zakaz[] $zakazs
+ * @property User[] $users
  */
 class Otdel extends \yii\db\ActiveRecord
 {
@@ -32,11 +28,8 @@ class Otdel extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'fio', 'otdel', 'thePost', 'user_id'], 'required'],
-            [['id', 'user_id'], 'integer'],
-            [['fio'], 'string', 'max' => 255],
-            [['otdel', 'thePost'], 'string', 'max' => 50],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
+            [['name'], 'required'],
+            [['name'], 'string', 'max' => 86],
         ];
     }
 
@@ -47,26 +40,15 @@ class Otdel extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'fio' => 'Fio',
-            'otdel' => 'Otdel',
-            'thePost' => 'The Post',
-            'user_id' => 'User ID',
+            'name' => 'Name',
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getUser()
+    public function getUsers()
     {
-        return $this->hasOne(User::className(), ['id' => 'user_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getZakazs()
-    {
-        return $this->hasMany(Zakaz::className(), ['id_sotrud' => 'id']);
+        return $this->hasMany(User::className(), ['otdel_id' => 'id']);
     }
 }
