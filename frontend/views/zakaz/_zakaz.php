@@ -192,7 +192,9 @@ use yii\widgets\Pjax;
                         ],
                 ]) ?>
             <?php endif ?>
+        <?php endif ?>
             <?= Html::a('Задача', ['todoist/createzakaz', 'id_zakaz' => $model->id_zakaz], ['class' => 'btn btn-xs todoist']) ?>
+        <?php if (Yii::$app->user->can('admin')): ?>
             <?php Modal::begin([
                 'header' => '<h2>Задание на доставку</h2>',
                 'class' => 'model-sm modalShipping',
