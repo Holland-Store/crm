@@ -30,6 +30,7 @@ use dosamigos\datepicker\DatePicker;
             ArrayHelper::map(User::find()->andWhere(['<>', 'id', User::USER_ALBERT])
             ->andWhere(['<>', 'id', User::USER_DAMIR])
             ->andWhere(['<>', 'id', User::USER_PROGRAM])
+            ->andWhere(['<>', 'id', 8])
             ->all(),
             'id', 'name'),
         ['prompt' => 'Выберите кому назначить']
