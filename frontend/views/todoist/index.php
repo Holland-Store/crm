@@ -156,8 +156,21 @@ $this->title = 'Все задачи';
                     'value' => function($model){
                         return $model->idSotrudPut->name;
                     },
-                    'contentOptions' => ['class' => 'border-right textTr'],
+                    'contentOptions' => ['class' => 'textTr tr50'],
                 ],
+                [
+                    'attribute' => '',
+                    'format' => 'raw',
+                    'contentOptions' => ['class' => 'border-right textTr tr50 ispolShop'],
+                    'value' => function($model){
+                        return Html::a('Выполнить', ['close', 'id' => $model->id], [
+                            'data' => [
+                                'confirm' => 'Вы действительно выполнили задачу?',
+                                'method' => 'post',
+                            ]
+                        ]);
+                    }
+                ]
             ],
         ]); ?>
     </div>
