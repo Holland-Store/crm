@@ -150,8 +150,8 @@ class TodoistController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->save()){
-                return $this->redirect(['index', 'id' => $model->id]);
                 Yii::$app->session->addFlash('update', 'Задача успешна создана');
+                $this->findView();
             } else {
                 Yii::$app->session->addFlash('errors', 'Произошла ошибка! '.$model->getErrors());
             }
@@ -240,7 +240,7 @@ class TodoistController extends Controller
         $notification = $this->findNotification();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index', 'id' => $model->id]);
+            $this->findView();
         }
         return $this->render('createzakaz', [
             'model' => $model,
@@ -296,5 +296,14 @@ class TodoistController extends Controller
 
         $this->view->params['notifications'] = $notification->all();
         $this->view->params['count'] =  $notifications;
+    }
+
+    protected function findView()
+    {
+        if (Yii::$app->user->can('admin')){
+            return $this->redirect(['index']);
+        } else {
+            return $this->redirect(['shop']);
+        }
     }
 }
