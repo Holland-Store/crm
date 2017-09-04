@@ -374,4 +374,51 @@ class Zakaz extends ActiveRecord
     {
         return $this->tags_array = $this->tags;
     }
+
+    public function unread($status = null, $statusIspol = null, $role = null, $id_unread)
+    {
+        switch ($status){
+            case 'suc':
+                if ($role == 'disain'){
+                    $this->status = self::STATUS_SUC_DISAIN;
+                } else {
+                    $this->status = self::STATUS_SUC_MASTER;
+                }
+                break;
+            case 'declined':
+                if ($role == 'disain'){
+                    $this->status = self::STATUS_DECLINED_DISAIN;
+                } else {
+                    $this->status = self::STATUS_DECLINED_MASTER;
+                }
+                break;
+            case 'execute':
+                $this->status = self::STATUS_EXECUTE;
+                break;
+        }
+        switch ($statusIspol){
+            case 'new':
+                if ($role == 'disain'){
+                    $this->statusDisain = self::STATUS_DISAINER_NEW;
+                } else {
+                    $this->statusMaster = self::STATUS_MASTER_NEW;
+                }
+                break;
+            case 'suc':
+                if ($role == 'disain'){
+                    $this->statusDisain = self::STATUS_DISAINER_PROCESS;
+                } else {
+                    $this->statusMaster = self::STATUS_MASTER_PROCESS;
+                }
+                break;
+            case 'declined':
+                if ($role == 'disain'){
+                    $this->statusDisain = self::STATUS_DISAINER_DECLINED;
+                } else {
+                    $this->statusMaster = self::STATUS_MASTER_DECLINED;
+                }
+                break;
+        }
+        $this->id_unread = $id_unread;
+    }
 }
