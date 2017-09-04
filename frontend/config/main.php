@@ -53,7 +53,7 @@ return [
         ],
         'bot' => [
             'class' => 'frontend\components\TelegramComponent',
-            'apiToken' => '414134665:AAHfOIdeikQD04NdKckL8wadhqzggvmSqw0',
+            'apiToken' => '411890271:AAGOEkFv8aZSMnNNMK2qmKG5X94Cr4JtxS8',
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
