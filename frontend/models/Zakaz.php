@@ -13,6 +13,7 @@ use yii\db\ActiveRecord;
  * @property string $srok
  * @property integer $minut
  * @property integer $id_sotrud
+ * @property integer $id_shop
  * @property string $sotrud_name
  * @property integer $prioritet
  * @property integer $status
@@ -38,6 +39,7 @@ use yii\db\ActiveRecord;
  * @property integer $id_shipping
  * @property string $declined
  * @property integer $id_unread
+ * @property string $renouncement
  *
  * @property Comment[] $comments
  * @property Courier[] $couriers
@@ -98,7 +100,7 @@ class Zakaz extends ActiveRecord
     {
         return [
             self::SCENARIO_DECLINED => ['declined', 'required'],
-            self::SCENARIO_DEFAULT => ['srok', 'number', 'description', 'phone', 'id_sotrud','sotrud_name', 'status', 'id_tovar', 'oplata', 'fact_oplata', 'number', 'statusDisain', 'statusMaster', 'img', 'id_shipping', 'id_tovar', 'id_unread', 'information', 'data', 'prioritet', 'phone', 'email', 'name', 'maket', 'time'],
+            self::SCENARIO_DEFAULT => ['srok', 'number', 'description', 'phone', 'id_sotrud','sotrud_name', 'status', 'id_tovar', 'oplata', 'fact_oplata', 'number', 'statusDisain', 'statusMaster', 'img', 'id_shipping', 'id_tovar', 'id_unread', 'information', 'data', 'prioritet', 'phone', 'email', 'name', 'maket', 'time', 'renouncement'],
         ];
     }
 
@@ -110,7 +112,7 @@ class Zakaz extends ActiveRecord
         return [
             [['srok', 'number', 'description', 'phone', 'id_client'], 'required', 'on' => self::SCENARIO_DEFAULT],
             ['declined', 'required', 'message' => 'Введите причину отказа', 'on'=> self::SCENARIO_DECLINED],
-            [['id_zakaz', 'id_tovar', 'minut', 'time', 'number', 'status', 'action', 'id_sotrud', 'phone', 'id_client','id_shipping' ,'prioritet', 'statusDisain', 'statusMaster', 'id_unread'], 'integer'],
+            [['id_zakaz', 'id_tovar', 'minut', 'time', 'number', 'status', 'action', 'id_sotrud', 'id_shop','phone', 'id_client','id_shipping' ,'prioritet', 'statusDisain', 'statusMaster', 'id_unread'], 'integer'],
             [['srok', 'data', 'data-start-disain', 'tags_array'], 'safe'],
             [['oplata', 'fact_oplata'], 'filter', 'filter' => function($value){
                 return str_replace(' ', '', $value);
@@ -122,12 +124,13 @@ class Zakaz extends ActiveRecord
             ['id_sotrud', 'default', 'value' => Yii::$app->user->getId()],
             ['data', 'default', 'value' => date('Y-m-d H:i:s')],
             [['description'], 'string', 'max' => 500],
+            ['renouncement','string', 'max' => 250],
             [['email', 'name', 'img', 'maket', 'sotrud_name'],'string', 'max' => 50],
             [['file'], 'file', 'skipOnEmpty' => true],
             [['id_sotrud'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['id_sotrud' => 'id']],
             [['id_tovar'], 'exist', 'skipOnError' => true, 'targetClass' => Tovar::className(), 'targetAttribute' => ['id_tovar' => 'id']],
             [['id_shipping'], 'exist', 'skipOnError' => true, 'targetClass' => Courier::className(), 'targetAttribute' => ['id_shipping' => 'id']],
-            // [['id_client'], 'exist', 'skipOnError' => true, 'targetClass' => Client::className(), 'targetAttribute' => ['id_client' => 'id']],
+            [['id_client'], 'exist', 'skipOnError' => true, 'targetClass' => Client::className(), 'targetAttribute' => ['id_client' => 'id']],
         ];
     }
 
@@ -141,6 +144,7 @@ class Zakaz extends ActiveRecord
             'srok' => 'Срок',
             'minut' => 'Часы',
             'id_sotrud' => 'Магазин',
+            'id_shop' => 'Магазин',
             'sotrud_name' => 'Сотрудник',
             'prioritet' => 'Приоритет',
             'status' => 'Этап',
@@ -166,6 +170,7 @@ class Zakaz extends ActiveRecord
             'id_shipping' => 'Доставка',
             'declined' => 'Причина отказа',
             'id_unread' => 'Id unread',
+            'renouncement' => 'Отказано',
             'search' => 'Search',
             'tags_array' => 'Тэги',
         ];
