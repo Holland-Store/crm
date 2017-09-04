@@ -222,6 +222,7 @@ use yii\widgets\Pjax;
             ]);
             $declinedClient = ActiveForm::begin([
                 'action' => ['renouncement', 'id' => $model->id_zakaz],
+                'id' => 'renouncementForm',
             ]);
             echo $declinedClient->field($model, 'renouncement')->textInput()->label(false);
             echo Html::submitButton('Отправить', ['class' => 'btn action']);
@@ -235,7 +236,26 @@ use yii\widgets\Pjax;
             <?= Html::a('Редактировать', ['zakaz/update', 'id' => $model->id_zakaz], ['class' => 'btn btn-xs', 'style' => 'float: right;margin-right: 10px;'])?>
         <?php endif ?>
         <?php if (Yii::$app->user->can('seeAdop')): ?>
-            <?= Html::submitButton('Чек', ['class' => 'btn btn-xs action draft', 'style' => 'float: right;margin-right: 71px;', 'value' => Url::to(['zakaz/draft', 'id' => $model->id_zakaz])])?>
+            <?php Modal::begin([
+                'header' => 'Оплата услуг',
+                'class' => 'modal-sm',
+                'toggleButton' => [
+                    'tag' => 'a',
+                    'class' => 'btn action',
+                    'style' => 'float: right;margin-right: 71px;',
+                    'label' => 'Чек',
+                ]
+            ]);
+            $financy = new \app\models\Financy();
+            $financy->amount = $model->oplata - $model->fact_oplata;
+            /** @var $financy app\models\Financy */
+            echo Yii::$app->controller->renderPartial('draft', [
+                    'model' => $model,
+                    'financy' => $financy,
+                ]);
+
+            Modal::end() ?>
+<!--            --><?//= Html::submitButton('Чек', ['class' => 'btn btn-xs action draft', 'style' => 'float: right;margin-right: 71px;', 'value' => Url::to(['zakaz/draft', 'id' => $model->id_zakaz])])?>
         <?php endif ?>
     </div>
 <?php $script = <<<JS
@@ -257,6 +277,6 @@ $('#formComment').on('beforeSubmit', function(e) {
       console.log('server error');
     });
 return false;
-})
+});
 JS;
 $this->registerJS($script); ?>
