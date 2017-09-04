@@ -16,6 +16,7 @@ namespace app\models;
  */
 class Financy extends \yii\db\ActiveRecord
 {
+    public $amount;
     /**
      * @inheritdoc
      */
@@ -36,7 +37,7 @@ class Financy extends \yii\db\ActiveRecord
             ['sum', 'filter', 'filter' => function($value){
                 return str_replace(' ', '', $value);
             }],
-            ['sum', 'number'],
+            ['sum', 'compare', 'compareValue' => $this->amount, 'operator' => '<=', 'type' => 'number'],
             [['id_user'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['id_user' => 'id']],
             [['id_zakaz'], 'exist', 'skipOnError' => true, 'targetClass' => Zakaz::className(), 'targetAttribute' => ['id_zakaz' => 'id_zakaz']],
         ];
