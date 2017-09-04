@@ -47,7 +47,7 @@ class TodoistController extends Controller
 					[
     					'actions' => ['close'],
     					'allow' => true,
-    					'roles' => ['shop', 'zakup', 'disain', 'master'],
+    					'roles' => ['@'],
 					],
                     [
                         'actions' => ['closetodoist'],
