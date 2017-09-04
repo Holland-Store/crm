@@ -80,7 +80,7 @@ class ZakazSearch extends Zakaz
                 $sort = ['data' => SORT_DESC];
                 break;
             case 'shopExecute':
-                $query->andWhere(['id_sotrud' => Yii::$app->user->id, 'action' => 1, 'status' => Zakaz::STATUS_EXECUTE]);
+                $query->andWhere(['id_shop' => Yii::$app->user->id, 'action' => 1, 'status' => Zakaz::STATUS_EXECUTE]);
                 $sort = ['data' => SORT_DESC];
                 break;
             case 'admin':
