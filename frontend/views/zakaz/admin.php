@@ -496,6 +496,11 @@ $this->title = 'Вce заказы';
     echo '<div class="modalContent"></div>';
 
     Modal::end();?>
+    <?php Modal::begin([
+        'id' => 'draftModal',
+    ]);
+    echo '<div class="modalContent"></div>';
+    Modal::end() ?>
 </div>
 <div class="footer">
     <?php echo Nav::widget([
