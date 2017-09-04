@@ -11,6 +11,7 @@ use app\models\User;
 use yii\widgets\Pjax;
 
 /* @var  $comment app\models\Comment */
+/* @var  $model app\models\Zakaz */
 /** @var string $sotrud */
 ?>
 
@@ -172,15 +173,12 @@ use yii\widgets\Pjax;
             <?= Html::a('Готово', ['check', 'id' => $model->id_zakaz], ['class' => 'btn btn- done']) ?>
         <?php endif ?>
         <?php if (Yii::$app->user->can('seeAdop')): ?>
-            <?php if ($model->status == Zakaz::STATUS_EXECUTE && $model->action == 1): ?>
+            <?php if ($model->status == Zakaz::STATUS_EXECUTE && $model->action == 1 && $model->renouncement == null): ?>
                 <?= Html::a('Готово', ['close', 'id' => $model->id_zakaz], ['class' => 'btn btn-xs done']) ?>
             <?php endif ?>
         <?php endif ?>
         <?php if (Yii::$app->user->can('admin')): ?>
             <?php if($model->status == Zakaz::STATUS_ADOPTED && $model->action == 1): ?>
-                <?= Html::a('Выполнить', ['fulfilled','id' => $model->id_zakaz], ['class' => 'btn btn-xs done']) ?>
-            <?php endif ?>
-            <?php if ($model->status == Zakaz::STATUS_AUTSORS && $model->action == 1): ?>
                 <?= Html::a('Выполнить', ['fulfilled','id' => $model->id_zakaz], ['class' => 'btn btn-xs done']) ?>
             <?php endif ?>
             <?php if ($model->action == 0): ?>
@@ -212,17 +210,36 @@ use yii\widgets\Pjax;
 
             Modal::end(); ?>
         <?php endif ?>
+        <?php if (Yii::$app->user->can('seeAdop')): ?>
+            <?php Modal::begin([
+                'header' => 'Укажите причину отказа',
+                'class' => 'modal-sm',
+                'toggleButton' => [
+                    'tag' => 'a',
+                    'class' => 'btn action',
+                    'label' => 'Отказ',
+                ]
+            ]);
+            $declinedClient = ActiveForm::begin([
+                'action' => ['renouncement', 'id' => $model->id_zakaz],
+            ]);
+            echo $declinedClient->field($model, 'renouncement')->textInput()->label(false);
+            echo Html::submitButton('Отправить', ['class' => 'btn action']);
+            ActiveForm::end();
+            Modal::end() ?>
+        <?php endif ?>
         <?php if (($model->status == Zakaz::STATUS_DISAIN or $model->status == Zakaz::STATUS_DECLINED_DISAIN) && Yii::$app->user->can('disain')): ?>
             <?= Html::submitButton('Заказ исполнен', ['class' => 'action modalDisain', 'value' => Url::to(['uploadedisain', 'id' => $model->id_zakaz])]) ?>
         <?php endif ?>
         <?php if (!Yii::$app->user->can('seeIspol')): ?>
             <?= Html::a('Редактировать', ['zakaz/update', 'id' => $model->id_zakaz], ['class' => 'btn btn-xs', 'style' => 'float: right;margin-right: 10px;'])?>
         <?php endif ?>
-<!--            --><?//= Html::a('Чек', ['#'], ['class' => 'btn btn-xs', 'style' => 'float: right;margin-right: 71px;'])?>
+        <?php if (Yii::$app->user->can('seeAdop')): ?>
+            <?= Html::submitButton('Чек', ['class' => 'btn btn-xs action draft', 'style' => 'float: right;margin-right: 71px;', 'value' => Url::to(['zakaz/draft', 'id' => $model->id_zakaz])])?>
+        <?php endif ?>
     </div>
 <?php $script = <<<JS
 $('#formComment').on('beforeSubmit', function(e) {
-    // alert('Работает');
   var form = $(this);
   $.post(
       form.attr('action'),
