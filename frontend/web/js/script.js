@@ -25,6 +25,11 @@ $(document).ready(function(){
                 .find('.modalContent')
                 .load($(this).attr('value'));
         });
+        $('.draft').click(function () {
+            $('#draftModal').modal('show')
+                .find('.modalContent')
+                .load($(this).attr('value'));
+        });
         $('body').on('click', '.createClient', function(){
             $('#modalCreateClient').modal('show')
                 .find('.modalContentClient')
