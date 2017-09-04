@@ -1,9 +1,8 @@
 <?php
 use app\models\Zakaz;
 use yii\helpers\Html;
-use yii\helpers\Url;
 use yii\widgets\ActiveForm;
-
+/** @var $model app\models\Zakaz */
 ?>
 
 <?php $form = ActiveForm::begin([
