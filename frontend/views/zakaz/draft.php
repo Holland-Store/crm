@@ -9,6 +9,7 @@ use yii\widgets\MaskedInput;
 
 $form = ActiveForm::begin([
     'action' => ['zakaz/draft', 'id' => $model->id_zakaz],
+    'id' => 'draftForm',
 ]); ?>
 
 <div class="draftSum">
@@ -25,6 +26,3 @@ $form = ActiveForm::begin([
     <?= Html::submitButton('Зачислить', ['class' => 'btn action']) ?>
 </div>
 <?php ActiveForm::end() ?>
-
-
-
