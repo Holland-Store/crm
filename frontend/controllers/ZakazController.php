@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use app\models\Client;
+use app\models\Financy;
 use app\models\User;
 use app\models\ZakazTag;
 use Yii;
@@ -11,6 +12,7 @@ use app\models\Courier;
 use app\models\Comment;
 use app\models\Notification;
 use app\models\ZakazSearch;
+use yii\base\DynamicModel;
 use yii\base\Exception;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
@@ -171,6 +173,11 @@ class ZakazController extends Controller
                         'roles' => ['admin']
                     ],
                     [
+                        'actions' => ['draft'],
+                        'allow' => true,
+                        'roles' => ['seeAdop']
+                    ],
+                    [
                         'actions' => ['fulfilled'],
                         'allow' => true,
                         'roles' => ['admin']
@@ -179,6 +186,11 @@ class ZakazController extends Controller
                         'actions' => ['reconcilation'],
                         'allow' => true,
                         'roles' => ['disain']
+                    ],
+                    [
+                        'actions' => ['renouncement'],
+                        'allow' => true,
+                        'roles' => ['shop', 'admin']
                     ]
                 ],
             ],
@@ -278,6 +290,7 @@ class ZakazController extends Controller
             } else {
                 $model->id_client = ArrayHelper::getValue(Yii::$app->request->post('Client'), 'id');
             }
+            $model->id_shop = $model->id_sotrud;
             $model->file = UploadedFile::getInstance($model, 'file');
             if ($model->file) {
                 $model->upload();
@@ -653,6 +666,17 @@ class ZakazController extends Controller
 
         return $this->redirect(['index']);
     }
+
+    public function actionRenouncement($id)
+    {
+        $model = $this->findModel($id);
+        if ($model->load(Yii::$app->request->post()) && $model->validate()){
+            if (!$model->save()){
+                print_r($model->getErrors());
+            }
+            return $this->redirect(['shop']);
+        }
+    }
     /** START view role */
     /**
      * All zakaz existing in Shop
@@ -875,19 +899,36 @@ class ZakazController extends Controller
         return $this->renderAjax('accept', ['model' => $model]);
     }
 
+
     /**
-     * Bloc view zakaz in Admin
      * @param $id
      * @return string
      */
-    public function actionZakaz($id)
+    public function actionDraft($id)
     {
         $model = $this->findModel($id);
-        $comment = new Comment();
+        $financy = new Financy();
+        $validate = $this->actionFinancy($model->oplata, $financy->sum);
 
-        return $this->renderPartial('_zakaz', [
+        if ($financy->load(Yii::$app->request->post()) && $financy->validate()){
+            if (!$financy->save()){
+                print_r($financy->getErrors());
+            } else {
+                $model->fact_oplata = $model->fact_oplata + $financy->sum;
+                if ($model->oplata === $model->fact_oplata){
+                    $model->action = 0;
+                    $model->save();
+                    Yii::$app->session->addFlash('update', 'Заказ был закрыт');
+                } else {
+                    return 'Сумма не должно превышать всего';
+                }
+            }
+            return $this->redirect(['admin']);
+        }
+
+        return $this->renderAjax('draft', [
             'model' => $model,
-            'comment' => $comment,
+            'financy' => $financy,
         ]);
     }
     /** END Block admin in gridview*/
@@ -941,5 +982,18 @@ class ZakazController extends Controller
 
         $this->view->params['notifications'] = $notification->all();
         $this->view->params['count'] = $notifications;
+    }
+
+    public function actionFinancy($oplata, $sum)
+    {
+        $validat = new DynamicModel(compact('oplata', 'sum'));
+        $validat->addRule(['oplata', 'sum'], 'number')
+            ->addRule('sum', function($oplata, $sum){
+        return $oplata >= $sum;
+    })->validate();
+
+        if ($validat->hasErrors()){
+            return 'Сумма превышает всего суммы';
+        }
     }
 }
