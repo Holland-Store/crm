@@ -50,6 +50,7 @@ use yii\db\ActiveRecord;
  * @property User $idSotrud
  * @property Courier $idShipping
  * @property mixed $tags
+ * @property mixed uploadeFile
  *
  */
 class Zakaz extends ActiveRecord
@@ -363,7 +364,7 @@ class Zakaz extends ActiveRecord
         {
             $this->file->saveAs('maket/Maket_'.$this->id_zakaz.'.'.$this->file->extension);
             $this->maket = 'Maket_'.$this->id_zakaz.'.'.$this->file->extension;
-            $this->status = 4;
+            $this->status = self::STATUS_SUC_DISAIN;
             return true;
         } else {
             return false;
