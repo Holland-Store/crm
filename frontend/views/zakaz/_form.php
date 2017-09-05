@@ -229,7 +229,7 @@ use yii\widgets\Pjax;
                     ],
                 ]);
         ?>
-<!--        --><?//= $form->field($model, 'id_shop')->textInput(['type'=> 'number', 'value' => Yii::$app->user->id]) ?>
+        <?= $form->field($model, 'id_shop')->textInput(['type'=> 'number', 'value' => Yii::$app->user->id]) ?>
     </div>
 
     <!-- <?= $form->field($model, 'id_sotrud')->hiddenInput(['value' => Yii::$app->user->id])->label(false) ?> -->
