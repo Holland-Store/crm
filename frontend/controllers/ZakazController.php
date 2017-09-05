@@ -291,8 +291,7 @@ class ZakazController extends Controller
             $model->id_shop = $model->id_sotrud;
             $model->file = UploadedFile::getInstance($model, 'file');
             if ($model->file) {
-                $model->upload();
-                $model->img = time() . '.' . $model->file->extension;
+                $model->upload('create');
             }
             if ($model->status == Zakaz::STATUS_DISAIN or $model->status == Zakaz::STATUS_MASTER or $model->status == Zakaz::STATUS_AUTSORS) {
                 if ($model->status == Zakaz::STATUS_DISAIN) {
@@ -354,8 +353,7 @@ class ZakazController extends Controller
             $model->id_client = ArrayHelper::getValue(Yii::$app->request->post('Client'), 'id');
             $model->file = UploadedFile::getInstance($model, 'file');
             if (isset($model->file)) {
-                $model->file->saveAs('attachment/' . $model->id_zakaz . '.' . $model->file->extension);
-                $model->img = $model->id_zakaz . '.' . $model->file->extension;
+                $model->upload('update', $id);
             }
             if ($model->status == Zakaz::STATUS_DISAIN or $model->status == Zakaz::STATUS_MASTER or Zakaz::STATUS_AUTSORS) {
                 if ($model->status == Zakaz::STATUS_DISAIN) {
