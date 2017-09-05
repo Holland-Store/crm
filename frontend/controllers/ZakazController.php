@@ -359,7 +359,6 @@ class ZakazController extends Controller
                 if (!$model->save()) {
                     $this->flashErrors($id);
                 } else {
-                    $model->save();
                     $arr = ArrayHelper::map($model->tags, 'id', 'id');
                     if (Yii::$app->request->post('Zakaz')['tags_array']){
                         foreach (Yii::$app->request->post('Zakaz')['tags_array'] as $one){
@@ -731,7 +730,6 @@ class ZakazController extends Controller
             } else {
                 $this->flashErrors();
             }
-
 
             $notifications->getByIdNotification(7, $shipping->id_zakaz);//оформление уведомлений
             $notifications->saveNotification;
