@@ -255,11 +255,10 @@ class ZakazController extends Controller
             if ($model->save()){
                 try{
                     \Yii::$app->bot->sendMessage($user->telegram_chat_id, 'Назначена доставка '.$model->prefics);
-                    Yii::$app->session->addFlash('update', 'Успешно создана доставка');
                 }catch (Exception $e){
                     $e->getMessage();
                 }
-
+                Yii::$app->session->addFlash('update', 'Успешно создана доставка');
             } else {
                 $this->flashErrors($id);
             }
@@ -308,20 +307,19 @@ class ZakazController extends Controller
                 if (!$model->save()) {
                     $this->flashErrors();
                 } else {
-                    $model->save();
                     Yii::$app->session->addFlash('update', 'Успешно создан заказ');
                     try{
                         if($model->status == Zakaz::STATUS_DISAIN){
                             $user = User::findOne(['id' => User::USER_DISAYNER]);
                             if ($user->telegram_chat_id != null){
                                 \Yii::$app->bot->sendMessage($user->telegram_chat_id, 'Назначен заказ '.$model->prefics.' '.$model->description);
-                                }
                             }
-                            if ($user->telegram_chat_id != null){
-                                \Yii::$app->bot->sendMessage($user->telegram_chat_id, 'Создан заказ '.$model->prefics.' '.$model->description);
-                            }
-                        }catch (Exception $e){
-                        $e->getMessage();
+                        }
+                        if ($user->telegram_chat_id != null){
+                            \Yii::$app->bot->sendMessage($user->telegram_chat_id, 'Создан заказ '.$model->prefics.' '.$model->description);
+                        }
+                    }catch (Exception $e){
+                    $e->getMessage();
                     }
                 }
 
@@ -831,7 +829,6 @@ class ZakazController extends Controller
                 if (!$model->save()) {
                     $this->flashErrors($id);
                 } else {
-                    $model->save();
                     Yii::$app->session->addFlash('update', 'Работа была отклонена!');
                     if ($user->telegram_chat_id != null){
                         try {
