@@ -101,7 +101,7 @@ class Zakaz extends ActiveRecord
     {
         return [
             self::SCENARIO_DECLINED => ['declined', 'required'],
-            self::SCENARIO_DEFAULT => ['srok', 'number', 'description', 'phone', 'id_sotrud','sotrud_name', 'status', 'id_tovar', 'oplata', 'fact_oplata', 'number', 'statusDisain', 'statusMaster', 'img', 'id_shipping', 'id_tovar', 'id_unread', 'information', 'data', 'prioritet', 'phone', 'email', 'name', 'maket', 'time', 'renouncement'],
+            self::SCENARIO_DEFAULT => ['srok', 'number', 'description', 'phone', 'id_sotrud','sotrud_name', 'id_shop','status', 'id_tovar', 'oplata', 'fact_oplata', 'number', 'statusDisain', 'statusMaster', 'img', 'id_shipping', 'id_tovar', 'id_unread', 'information', 'data', 'prioritet', 'phone', 'email', 'name', 'maket', 'time', 'renouncement'],
         ];
     }
 
@@ -123,6 +123,7 @@ class Zakaz extends ActiveRecord
             ['prioritet', 'default', 'value' => 0],
             ['status', 'default', 'value' => self::STATUS_NEW],
             ['id_sotrud', 'default', 'value' => Yii::$app->user->getId()],
+            ['id_shop', 'default', 'value' => Yii::$app->user->getId()],
             ['data', 'default', 'value' => date('Y-m-d H:i:s')],
             [['description'], 'string', 'max' => 500],
             ['renouncement','string', 'max' => 250],
@@ -330,11 +331,17 @@ class Zakaz extends ActiveRecord
      * @property Zakaz $file
      * @return bool
      */
-    public function upload()
+    public function upload($action, $id = null)
     {
         if($this->validate()){
-            $this->file->saveAs('attachment/'.time().'.'.$this->file->extension);
-        return true;
+            if ($action == 'create'){
+                $this->file->saveAs('attachment/'.time().'.'.$this->file->extension);
+                $this->img = time() . '.' . $this->file->extension;
+            } else {
+                $this->file->saveAs('attachment/' . $id . '.' . $this->file->extension);
+                $this->img = $id . '.' . $this->file->extension;
+            }
+            return true;
         } else {return false;}
     }
 
