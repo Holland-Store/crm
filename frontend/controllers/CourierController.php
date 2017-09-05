@@ -4,11 +4,11 @@ namespace frontend\controllers;
 
 use app\models\User;
 use app\models\Zakaz;
+use frontend\models\Telegram;
 use Yii;
 use app\models\Courier;
 use app\models\Notification;
 use app\models\CourierSearch;
-use yii\base\Exception;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\AccessControl;
@@ -34,7 +34,6 @@ class CourierController extends Controller
            ],
            'access' => [
                 'class' => AccessControl::className(),
-                // 'only' => ['index'],
                 'rules' => [
                    [
                        'actions' => ['index'],
@@ -78,19 +77,16 @@ class CourierController extends Controller
     public function actionIndex()
     {
         $searchModel = new CourierSearch();
-        $notification = $this->findNotification();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'notification' => $notification,
         ]);
     }
     public function actionReady()
     {
         $courier = Courier::find();
-		$notification = $this->findNotification();
         $dataProvider = new ActiveDataProvider([
             'query' => $courier->andWhere(['>', 'data_from', '0000-00-00 00:00:00']),
             'pagination' => ['pageSize' => 50,]
@@ -98,7 +94,6 @@ class CourierController extends Controller
         
         return $this->render('ready', [
             'dataProvider' => $dataProvider,
-            'notification' => $notification,
         ]);
     }
     /** View for admin scans all active shipping */
@@ -110,12 +105,10 @@ class CourierController extends Controller
             'query' => $courier->where(['status' => Courier::DOSTAVKA]),
             'pagination' => ['pageSize' => 50,]
         ]);
-        $notification = $this->findNotification();//Уведомление
 
         return $this->render('shipping', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'notification' => $notification,
         ]);
     }
 
@@ -127,18 +120,13 @@ class CourierController extends Controller
     public function actionDeletes($id)
     {
         $model =  $this->findModel($id);
-        $user = User::findOne(['id' => User::USER_COURIER]);
+        $telegram = new Telegram();
         $model->status = Courier::CANCEL;
         if(!$model->save()){
             $this->flashErrors($id);
         } else {
-            try{
-                $model->save();
-                Yii::$app->session->addFlash('update', 'Доставка былаа отклонена');
-                Yii::$app->bot->sendMessage($user->telegram_chat_id, 'Отменена доставка '.$model->idZakaz->prefics);
-            }catch (Exception $e){
-                $e->getMessage();
-            }
+            Yii::$app->session->addFlash('update', 'Доставка былаа отклонена');
+            $telegram->message(User::USER_COURIER, 'Отменена доставка '.$model->idZakaz->prefics);
         }
 
         return $this->redirect(['shipping']);
@@ -164,7 +152,6 @@ class CourierController extends Controller
     public function actionCreate()
     {
         $model = new Courier();
-        $this->view->params['notifications'] = Notification::find()->where(['id_user' => Yii::$app->user->id, 'active' => true])->all();
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->save()){
@@ -188,7 +175,6 @@ class CourierController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $this->view->params['notifications'] = Notification::find()->where(['id_user' => Yii::$app->user->id, 'active' => true])->all();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -215,7 +201,6 @@ class CourierController extends Controller
     {
         $model = $this->findModel($id);
         $notification = new Notification();
-        $this->view->params['notifications'] = Notification::find()->where(['id_user' => Yii::$app->user->id, 'active' => true])->all();
 
         $model->data_to = date('Y-m-d H:i:s');
         $model->status = Courier::RECEIVE;
@@ -235,7 +220,6 @@ class CourierController extends Controller
         $notification = new Notification();
         $model->data_from = date('Y-m-d H:i:s');
         $model->status = Courier::DELIVERED;
-        $this->view->params['notifications'] = Notification::find()->where(['id_user' => Yii::$app->user->id, 'active' => true])->all();
 
         $notification->getByIdNotification(8, $model->id_zakaz);//Уведомление, что курьер доставил доставку
         $notification->saveNotification;
@@ -267,22 +251,8 @@ class CourierController extends Controller
      */
     private function flashErrors($id = null)
     {
+        /** @var $model \app\models\Zakaz */
         $id == null ? $model = new Zakaz() : $this->findModel($id);
         Yii::$app->session->addFlash('errors', 'Произошла ошибка! '.$model->getErrors());
-    }
-
-    protected function findNotification()
-    {
-        $notification = Notification::find()->where(['id_user' => Yii::$app->user->id, 'active' => true]);
-        if($notification->count()>50){
-                $notifications = '50+';
-            } elseif ($notification->count()<1){
-                $notifications = '';
-            } else {
-                $notifications = $notification->count();
-            }
-
-        $this->view->params['notifications'] = $notification->all();
-        $this->view->params['count'] =  $notifications;
     }
 }

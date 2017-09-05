@@ -5,7 +5,6 @@ namespace frontend\controllers;
 use Yii;
 use app\models\Custom;
 use app\models\CustomSearch;
-use app\models\Notification;
 use yii\base\Model;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -72,13 +71,11 @@ class CustomController extends Controller
     {
         $searchModel = new CustomSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, 'zakup');
-        $notification = $this->findNotification();
 
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'notification' => $notification,
         ]);
     }
 
@@ -107,11 +104,9 @@ class CustomController extends Controller
         }
         $searchModel = new CustomSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, 'adop');
-        $notification = $this->findNotification();
 
         return $this->render('adop', [
             'dataProvider' => $dataProvider,
-            'notification' => $notification,
             'models' => $models,
         ]);
     }
@@ -137,7 +132,6 @@ class CustomController extends Controller
      */
     public function actionCreate()
     {
-        $notification = $this->findNotification();
         $data = Yii::$app->request->post('Custom', []);
         $models = [new Custom()];
         foreach (array_keys($data) as $index) {
@@ -157,7 +151,6 @@ class CustomController extends Controller
         }
         return $this->render('create', [
            'models' => $models,
-           'notification' => $notification,
         ]);
     }
 
@@ -235,24 +228,5 @@ class CustomController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
-    }
-
-    /**
-     * Проверяет активные уведомлеине у пользователя.
-     * Если кол-во уведомлении больше 50, то выводит 50+
-     */
-    protected function findNotification()
-    {
-        $notification = Notification::find()->where(['id_user' => Yii::$app->user->id, 'active' => true]);
-        if($notification->count()>50){
-                $notifications = '50+';
-            } elseif ($notification->count()<1){
-                $notifications = '';
-            } else {
-                $notifications = $notification->count();
-            }
-
-        $this->view->params['notifications'] = $notification->all();
-        $this->view->params['count'] =  $notifications;
     }
 }

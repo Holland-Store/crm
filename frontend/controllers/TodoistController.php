@@ -7,7 +7,6 @@ use app\models\Todoist;
 use app\models\Helpdesk;
 use app\models\Custom;
 use yii\base\Model;
-use app\models\Notification;
 use app\models\TodoistSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -83,13 +82,11 @@ class TodoistController extends Controller
         $searchModel = new TodoistSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, 'admin-their');
         $dataProviderAlien = $searchModel->search(Yii::$app->request->queryParams, 'admin-alien');
-        $notification = $this->findNotification();
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'dataProviderAlien' => $dataProviderAlien,
-            'notifivation' => $notification,
         ]);
     }
     /**
@@ -100,12 +97,10 @@ class TodoistController extends Controller
     {
         $searchModel = new TodoistSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, 'close');
-        $notification = $this->findNotification();
 
         return $this->render('closetodoist', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'notifivation' => $notification,
         ]);
     }
     /**
@@ -117,12 +112,10 @@ class TodoistController extends Controller
         $searchModel = new TodoistSearch();
         $dataProviderTheir = $searchModel->search(Yii::$app->request->queryParams, 'shop-their');
         $dataProviderAlien = $searchModel->search(Yii::$app->request->queryParams, 'shop-alien');
-        $notification = $this->findNotification();
 
         return $this->render('shop', [
             'dataProviderTheir' => $dataProviderTheir,
             'dataProviderAlien' => $dataProviderAlien,
-            'notification' => $notification,
         ]);
     }
 
@@ -146,7 +139,6 @@ class TodoistController extends Controller
     public function actionCreate()
     {
         $model = new Todoist();
-        $notification = $this->findNotification();
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->save()){
@@ -158,7 +150,6 @@ class TodoistController extends Controller
         }
         return $this->render('create', [
             'model' => $model,
-            'notifivation' => $notification,
         ]);
     }
 
@@ -173,7 +164,6 @@ class TodoistController extends Controller
         $model = new Todoist();
         $helpdesk = new Helpdesk();
         $models = [new Custom()];
-        $notification = $this->findNotification();
 
         $data = Yii::$app->request->post('Custom', []);
         foreach (array_keys($data) as $index) {
@@ -195,7 +185,6 @@ class TodoistController extends Controller
                 'model' => $model,
                 'helpdesk' => $helpdesk,
                 'models' => $models,
-                'notification' => $notification,
             ]);
         }
     }
@@ -236,15 +225,12 @@ class TodoistController extends Controller
     public function actionCreatezakaz()
     {
         $model = new Todoist();
-        
-        $notification = $this->findNotification();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $this->findView();
         }
         return $this->render('createzakaz', [
             'model' => $model,
-            'notifivation' => $notification,
             ]);
     }
 
@@ -277,25 +263,6 @@ class TodoistController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
-    }
-
-    /**
-     * Notification for user
-     * If notification >50, it writing 50+
-     */
-    protected function findNotification()
-    {
-        $notification = Notification::find()->where(['id_user' => Yii::$app->user->id, 'active' => true]);
-        if($notification->count()>50){
-                $notifications = '50+';
-            } elseif ($notification->count()<1){
-                $notifications = '';
-            } else {
-                $notifications = $notification->count();
-            }
-
-        $this->view->params['notifications'] = $notification->all();
-        $this->view->params['count'] =  $notifications;
     }
 
     protected function findView()

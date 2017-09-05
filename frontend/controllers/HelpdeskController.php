@@ -4,11 +4,10 @@ namespace frontend\controllers;
 
 use app\models\User;
 use app\models\Zakaz;
+use frontend\models\Telegram;
 use Yii;
 use app\models\Helpdesk;
 use app\models\HelpdeskSearch;
-use app\models\Notification;
-use yii\base\Exception;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -73,13 +72,11 @@ class HelpdeskController extends Controller
         $searchModel = new HelpdeskSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, 'work');
         $dataProviderSoglas = $searchModel->search(Yii::$app->request->queryParams, 'soglas');
-        $notification = $this->findNotification();
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'dataProviderSoglas' => $dataProviderSoglas,
-            'notification' => $notification,
         ]);
     }
 
@@ -90,11 +87,8 @@ class HelpdeskController extends Controller
      */
     public function actionView($id)
     {
-        $notification = $this->findNotification();
-        
         return $this->render('view', [
             'model' => $this->findModel($id),
-            'notification' => $notification,
         ]);
     }
 
@@ -106,25 +100,19 @@ class HelpdeskController extends Controller
     public function actionCreate()
     {
         $model = new Helpdesk();
-        $user = User::findOne(['id' => User::USER_SYSTEM]);
-        $notification = $this->findNotification();
+        $telegram = new Telegram();
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if($model->save()){
-                try{
-                    Yii::$app->session->addFlash('update', 'Заявка успешно создана');
-                    Yii::$app->bot->sendMessage($user->telegram_chat_id, 'Назначена заявка на поломку '.$model->commetnt);
-                    return $this->redirect(['index', 'id' => $model->id]);
-                }catch (Exception $e){
-                    $e->getMessage();
-                };
+                Yii::$app->session->addFlash('update', 'Заявка успешно создана');
+                $telegram->message(User::USER_SYSTEM, 'Назначена заявка на поломку '.$model->commetnt);
+                return $this->redirect(['index', 'id' => $model->id]);
             } else {
                 $this->flashErrors();
             }
         }
         return $this->render('create', [
             'model' => $model,
-            'notification' => $notification,
         ]);
     }
 
@@ -137,14 +125,12 @@ class HelpdeskController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $notification = $this->findNotification();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index', 'id' => $model->id]);
         }
         return $this->render('update', [
             'model' => $model,
-            'notification' => $notification,
         ]);
     }
 
@@ -205,19 +191,14 @@ class HelpdeskController extends Controller
     public function actionDeclinedHelp($id)
     {
         $model = $this->findModel($id);
-        $user = User::findOne(['id' => User::USER_SYSTEM]);
+        $telegram  = new Telegram();
 
         if ($model->load(Yii::$app->request->post())){
             $model->status = Helpdesk::STATUS_DECLINED;
             if (!$model->save()){
                $this->flashErrors($id);
             } else {
-                try{
-                    Yii::$app->bot->sendMessage($user->telegram_chat_id, 'Отклонена поломку '.$model->commetnt.' По причине: '.$model->declined);
-                    return $this->redirect(['index']);
-                }catch (Exception $e){
-                    $e->getMessage();
-                }
+                $telegram->message(User::USER_SYSTEM, 'Отклонена поломку '.$model->commetnt.' По причине: '.$model->declined);
             }
         }
 
@@ -245,26 +226,8 @@ class HelpdeskController extends Controller
      */
     private function flashErrors($id = null)
     {
+        /** @var $model \app\models\Zakaz */
         $id == null ? $model = new Zakaz() : $this->findModel($id);
         Yii::$app->session->addFlash('errors', 'Произошла ошибка! '.$model->getErrors());
-    }
-
-    /**
-     * Find the Notification model
-     * If the user notification > 50, it shows 50+ notification
-     */
-    protected function findNotification()
-    {
-        $notification = Notification::find()->where(['id_user' => Yii::$app->user->id, 'active' => true]);
-        if($notification->count()>50){
-                $notifications = '50+';
-            } elseif ($notification->count()<1){
-                $notifications = '';
-            } else {
-                $notifications = $notification->count();
-            }
-
-        $this->view->params['notifications'] = $notification->all();
-        $this->view->params['count'] =  $notifications;
     }
 }

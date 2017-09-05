@@ -6,6 +6,7 @@ use app\models\Client;
 use app\models\Financy;
 use app\models\User;
 use app\models\ZakazTag;
+use frontend\models\Telegram;
 use Yii;
 use app\models\Zakaz;
 use app\models\Courier;
@@ -277,8 +278,8 @@ class ZakazController extends Controller
     {
         $model = new Zakaz();
         $client = new Client();
-        $user = User::findOne(['id' => User::USER_ADMIN]);
         $client->scenario = Client::SCENARIO_CREATE;
+        $telegram = new Telegram();
 
         if ($model->load(Yii::$app->request->post()) && $client->load(Yii::$app->request->post())) {
             if (Yii::$app->request->get('id')){
@@ -305,19 +306,10 @@ class ZakazController extends Controller
                     $this->flashErrors();
                 } else {
                     Yii::$app->session->addFlash('update', 'Успешно создан заказ');
-                    try{
                         if($model->status == Zakaz::STATUS_DISAIN){
-                            $user = User::findOne(['id' => User::USER_DISAYNER]);
-                            if ($user->telegram_chat_id != null){
-                                \Yii::$app->bot->sendMessage($user->telegram_chat_id, 'Назначен заказ '.$model->prefics.' '.$model->description);
-                            }
+                                $telegram->message(User::USER_DISAYNER, 'Назначен заказ '.$model->prefics.' '.$model->description);
                         }
-                        if ($user->telegram_chat_id != null){
-                            \Yii::$app->bot->sendMessage($user->telegram_chat_id, 'Создан заказ '.$model->prefics.' '.$model->description);
-                        }
-                    }catch (Exception $e){
-                    $e->getMessage();
-                    }
+                            $telegram->message(User::USER_ADMIN, 'Создан заказ '.$model->prefics.' '.$model->description);
                 }
 
                 if (Yii::$app->user->can('shop')) {
@@ -346,6 +338,7 @@ class ZakazController extends Controller
         $client = new Client();
         $client->scenario = Client::SCENARIO_CREATE;
         $user = User::findOne(['id' => User::USER_DISAYNER]);
+        $telegram = new Telegram();
 
         if ($model->load(Yii::$app->request->post()) && $client->load(Yii::$app->request->post())) {
             $model->id_client = ArrayHelper::getValue(Yii::$app->request->post('Client'), 'id');
@@ -383,7 +376,7 @@ class ZakazController extends Controller
                         ZakazTag::deleteAll(['tag_id' => $arr]);
                     }
                     if($model->status == Zakaz::STATUS_DISAIN && $user->telegram_chat_id){
-                        Yii::$app->bot->sendMessage($user->telegram_chat_id, 'Назначен заказ '.$model->prefics.' '.$model->description);
+                        $telegram->message(User::USER_DISAYNER, 'Назначен заказ '.$model->prefics.' '.$model->description);
                     }
                     Yii::$app->session->addFlash('update', 'Успешно отредактирован заказ');
                 }
@@ -412,19 +405,13 @@ class ZakazController extends Controller
     {
         $model = $this->findModel($id);
         $notification = new Notification();
-        $user = User::findOne(['id' => User::USER_ADMIN]);
+        $telegram = new Telegram();
 
         $model->unread('suc', 'suc', 'master',true);
         $notification->getByIdNotification(8, $id);
         $notification->saveNotification;
         if ($model->save()) {
-            if ($user->telegram_chat_id != null){
-                try{
-                    Yii::$app->bot->sendMessage($user->telegram_chat_id, 'Мастер выполнил работу '.$model->prefics.' '.$model->description);
-                }catch (Exception $e){
-                    $e->getMessage();
-                }
-            }
+            $telegram->message(User::USER_ADMIN, 'Мастер выполнил работу '.$model->prefics.' '.$model->description);
             Yii::$app->session->addFlash('update', 'Заказ отправлен на проверку');
             return $this->redirect(['master']);
         } else {
@@ -440,7 +427,7 @@ class ZakazController extends Controller
     public function actionUploadedisain($id)
     {
         $model = $this->findModel($id);
-        $user = User::findOne(['id' => User::USER_ADMIN]);
+        $telegram = new Telegram();
 
         if ($model->load(Yii::$app->request->post())) {
             $model->file = UploadedFile::getInstance($model, 'file');
@@ -451,13 +438,7 @@ class ZakazController extends Controller
             $model->unread('suc', 'suc', 'disain',true);
             if ($model->save()) {
                 Yii::$app->session->addFlash('update', 'Заказ отправлен на проверку');
-                if ($user->telegram_chat_id != null){
-                    try{
-                        Yii::$app->bot->sendMessage($user->telegram_chat_id, 'Дизайнер выполнил работу '.$model->prefics.' '.$model->description);
-                    }catch (Exception $e){
-                        $e->getMessage();
-                    }
-                }
+                $telegram->message(User::USER_ADMIN, 'Дизайнер выполнил работу '.$model->prefics.' '.$model->description);
                 return $this->redirect(['disain', 'id' => $id]);
             } else {
                 $this->flashErrors($id);
@@ -484,8 +465,6 @@ class ZakazController extends Controller
             $model->save();
             Yii::$app->session->addFlash('update', 'Заказ успешно закрылся');
         }
-
-        $this->view->params['notifications'] = Notification::find()->where(['id_user' => Yii::$app->user->id, 'active' => true])->all();
 
         if (Yii::$app->user->can('shop')) {
             return $this->redirect(['shop']);
@@ -728,7 +707,7 @@ class ZakazController extends Controller
         $model = new Zakaz();
         $comment = new Comment();
         $shipping = new Courier();
-        $user = User::findOne(['id' => User::USER_COURIER]);
+        $telegram = new Telegram();
 
         if ($comment->load(Yii::$app->request->post())) {
             if ($comment->save()) {
@@ -748,13 +727,7 @@ class ZakazController extends Controller
             if ($model->save()){
                 /** @var $model \app\models\Zakaz */
                 Yii::$app->session->addFlash('update', 'Доставка успешно создана');
-                if ($user->telegram_chat_id != null){
-                    try{
-                        Yii::$app->bot->sendMessage($user->telegram_chat_id, 'Назначена доставка '.$model->prefics);
-                    }catch (Exception $e){
-                        $e->getMessage();
-                    }
-                }
+                $telegram->message(User::USER_ADMIN, 'Назначена доставка '.$model->prefics);
             } else {
                 $this->flashErrors();
             }
@@ -796,12 +769,12 @@ class ZakazController extends Controller
     {
         $model = $this->findModel($id);
         $model->scenario = Zakaz::SCENARIO_DECLINED;
+        $telegram = new Telegram();
         if ($model->status == Zakaz::STATUS_SUC_DISAIN) {
-            $user_id = 4;
+            $user_id = User::USER_DISAYNER;
         } else {
-            $user_id = 3;
+            $user_id = User::USER_MASTER;
         }
-        $user = User::findOne(['id' => $user_id]);
 
         if ($model->load(Yii::$app->request->post())) {
             if ($model->validate()) {
@@ -814,13 +787,7 @@ class ZakazController extends Controller
                     $this->flashErrors($id);
                 } else {
                     Yii::$app->session->addFlash('update', 'Работа была отклонена!');
-                    if ($user->telegram_chat_id != null){
-                        try {
-                            Yii::$app->bot->sendMessage($user->telegram_chat_id, 'Отклонен заказ ' . $model->prefics . ' По причине: ' . $model->declined);
-                        } catch (Exception $e) {
-                            $e->getMessage();
-                        }
-                    }
+                    $telegram->message($user_id, 'Отклонен заказ ' . $model->prefics . ' По причине: ' . $model->declined);
                 }
                 return $this->redirect(['admin', '#' => $model->id_zakaz]);
             } else {
@@ -840,6 +807,7 @@ class ZakazController extends Controller
     public function actionAccept($id)
     {
         $model = $this->findModel($id);
+        $telegram = new Telegram();
 
         if ($model->load(Yii::$app->request->post())) {
             if ($model->validate()) {
@@ -858,11 +826,7 @@ class ZakazController extends Controller
                     /** @var $user_id \app\models\User */
                     $user = User::findOne(['id' => $user_id]);
                     if($model->status == Zakaz::STATUS_DISAIN && $user->telegram_chat_id){
-                        try{
-                            Yii::$app->bot->sendMessage($user->telegram_chat_id, 'Назначен заказ '.$model->prefics.' '.$model->description);
-                        }catch (Exception $e){
-                            $e->getMessage();
-                        }
+                        $telegram->message($user_id, 'Назначен заказ '.$model->prefics.' '.$model->description);
                     }
                     Yii::$app->session->addFlash('update', 'Работа была принята');
                     return $this->redirect(['admin', 'id' => $id]);
