@@ -8,6 +8,7 @@ use app\models\Courier;
 use app\models\Comment;
 use app\models\Zakaz;
 use app\models\User;
+use yii\widgets\MaskedInput;
 use yii\widgets\Pjax;
 
 /* @var  $comment app\models\Comment */
@@ -249,13 +250,25 @@ use yii\widgets\Pjax;
             $financy = new \app\models\Financy();
             $financy->amount = $model->oplata - $model->fact_oplata;
             /** @var $financy app\models\Financy */
-            echo Yii::$app->controller->renderPartial('draft', [
-                    'model' => $model,
-                    'financy' => $financy,
-                ]);
+            $form = ActiveForm::begin([
+                'action' => ['financy/draft', 'id' => $model->id_zakaz],
+                'id' => 'draftForm',
+            ]);
 
+            echo Html::encode('К доплате: ').number_format($model->oplata - $model->fact_oplata,0,',', ' ').' p.';
+            echo $form->field($financy, 'sum')->widget(MaskedInput::className(), [
+                'clientOptions' => [
+                    'alias' => 'decimal',
+                    'groupSeparator' => ' ',
+                    'autoGroup' => true,
+                ],
+            ]);
+            echo $form->field($financy, 'id_zakaz')->hiddenInput(['value' => $model->id_zakaz])->label(false);
+            echo $form->field($financy, 'id_user')->hiddenInput(['value' => Yii::$app->user->id])->label(false);
+            echo Html::submitButton('Зачислить', ['class' => 'btn action']);
+
+            ActiveForm::end();
             Modal::end() ?>
-<!--            --><?//= Html::submitButton('Чек', ['class' => 'btn btn-xs action draft', 'style' => 'float: right;margin-right: 71px;', 'value' => Url::to(['zakaz/draft', 'id' => $model->id_zakaz])])?>
         <?php endif ?>
     </div>
 <?php $script = <<<JS
