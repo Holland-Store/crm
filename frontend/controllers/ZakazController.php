@@ -203,11 +203,9 @@ class ZakazController extends Controller
     public function actionIndex()
     {
         $model = new Zakaz();
-        $notification = $this->findNotification();
 
         return $this->render('index', [
             'model' => $model,
-            'notification' => $notification,
         ]);
     }
 
@@ -594,12 +592,10 @@ class ZakazController extends Controller
     {
         $searchModel = new ZakazSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, 'archive');
-        $notification = $this->findNotification();
 
         return $this->render('archive', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'notification' => $notification,
         ]);
     }
 
@@ -608,12 +604,10 @@ class ZakazController extends Controller
     {
         $searchModel = new ZakazSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, 'closeshop');
-        $notification = $this->findNotification();
 
         return $this->render('closezakaz', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'notification' => $notification,
         ]);
     }
 
@@ -625,12 +619,10 @@ class ZakazController extends Controller
             'query' => Zakaz::find()->andWhere(['status' => Zakaz::STATUS_SUC_DISAIN, 'action' => 1]),
             'sort' => ['defaultOrder' => ['srok' => SORT_DESC]]
         ]);
-        $notification = $this->findNotification();
 
         return $this->render('ready', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'notification' => $notification,
         ]);
     }
 
@@ -681,13 +673,11 @@ class ZakazController extends Controller
         $searchModel = new ZakazSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, 'shopWork');
         $dataProviderExecute = $searchModel->search(Yii::$app->request->queryParams, 'shopExecute');
-        $notification = $this->findNotification();
 
         return $this->render('shop', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'dataProviderExecute' => $dataProviderExecute,
-            'notification' => $notification,
         ]);
     }
 
@@ -700,13 +690,11 @@ class ZakazController extends Controller
         $searchModel = new ZakazSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, 'disain');
         $dataProviderSoglas = $searchModel->search(Yii::$app->request->queryParams, 'disainSoglas');
-        $notification = $this->findNotification();
 
         return $this->render('disain', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'dataProviderSoglas' => $dataProviderSoglas,
-            'notification' => $notification,
         ]);
     }
 
@@ -736,7 +724,6 @@ class ZakazController extends Controller
      */
     public function actionAdmin()
     {
-        $notification = $this->findNotification();
         $notifications = new Notification();
         $model = new Zakaz();
         $comment = new Comment();
@@ -795,7 +782,6 @@ class ZakazController extends Controller
             'dataProviderWork' => $dataProviderWork,
             'dataProviderIspol' => $dataProviderIspol,
             'image' => $image,
-            'notification' => $notification,
         ]);
     }
     /** END view role */
@@ -965,21 +951,5 @@ class ZakazController extends Controller
         /** @var $model \app\models\Zakaz */
         $id == null ? $model = new Zakaz() : $this->findModel($id);
         Yii::$app->session->addFlash('errors', 'Произошла ошибка! '.$model->getErrors());
-    }
-
-    protected function findNotification()
-    {
-        $notifModel = Notification::find();
-        $notification = $notifModel->where(['id_user' => Yii::$app->user->id, 'active' => true]);
-        if ($notification->count() > 50) {
-            $notifications = '50+';
-        } elseif ($notification->count() < 1) {
-            $notifications = '';
-        } else {
-            $notifications = $notification->count();
-        }
-
-        $this->view->params['notifications'] = $notification->all();
-        $this->view->params['count'] = $notifications;
     }
 }
