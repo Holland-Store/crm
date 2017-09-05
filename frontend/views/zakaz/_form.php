@@ -229,10 +229,10 @@ use yii\widgets\Pjax;
                     ],
                 ]);
         ?>
+<!--        --><?//= $form->field($model, 'id_shop')->textInput(['type'=> 'number', 'value' => Yii::$app->user->id]) ?>
     </div>
 
     <!-- <?= $form->field($model, 'id_sotrud')->hiddenInput(['value' => Yii::$app->user->id])->label(false) ?> -->
-
     <div class="col-lg-2 submitZakazForm">
         <div class="form-group">
             <?= Html::submitButton($model->isNewRecord ? 'Создать' : 'Сохранить', ['class' => $model->isNewRecord ? 'action' : 'action']) ?>
