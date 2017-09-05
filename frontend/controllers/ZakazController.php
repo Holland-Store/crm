@@ -3,7 +3,6 @@
 namespace frontend\controllers;
 
 use app\models\Client;
-use app\models\Financy;
 use app\models\User;
 use app\models\ZakazTag;
 use frontend\models\Telegram;
@@ -838,46 +837,6 @@ class ZakazController extends Controller
         return $this->renderAjax('accept', ['model' => $model]);
     }
 
-
-    /**
-     * @param $id
-     * @return string
-     * @throws NotFoundHttpException
-     */
-    public function actionDraft($id)
-    {
-        $model = $this->findModel($id);
-        $financy = new Financy();
-        $financy->amount = $model->oplata - $model->fact_oplata;
-
-        if ($financy->load(Yii::$app->request->post()) && $financy->validate()){
-            $model->fact_oplata = $model->fact_oplata + $financy->sum;
-            if ($model->oplata >= $model->fact_oplata){
-                if ($model->oplata > $model->fact_oplata){
-                    $model->save();
-                    Yii::$app->session->addFlash('update', 'Сумма зачлась');
-                    if (Yii::$app->user->can('admin')){
-                        return $this->redirect(['admin', 'id' => $id]);
-                    } else {
-                        return $this->redirect(['shop']);
-                    }
-                } else {
-                    $model->action = 0;
-                    $model->save();
-                    Yii::$app->session->addFlash('update', 'Заказ был закрыт');
-                    if (Yii::$app->user->can('admin')){
-                        return $this->redirect(['admin', 'id' => $id]);
-                    } else {
-                        return $this->redirect(['shop']);
-                    }
-                }
-            }
-        }
-        return $this->render('draft', [
-            'model' => $model,
-            'financy' => $financy,
-        ]);
-    }
     /** END Block admin in gridview*/
     /**
      * Finds the Zakaz model based on its primary key value.
