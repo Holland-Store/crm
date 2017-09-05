@@ -2,6 +2,8 @@
 namespace frontend\models;
 
 use common\models\User;
+use Yii;
+use yii\db\Exception;
 
 class Telegram
 {
@@ -17,6 +19,7 @@ class Telegram
     {
         $token = $data['raw'];
         if ($token && $user = User::findOne(['token' => $token])) {
+            /** @var $user \app\models\User */
             if ($user->telegram_chat_id) {
                 return "Уважаемый $user->name, Вы уже авторизованы в системе. ";
             }
@@ -25,6 +28,23 @@ class Telegram
             return "Добро пожаловать, $user->name. Вы успешно авторизовались!";
         } else {
             return "Извините, не удалось найти данный токен!";
+        }
+    }
+
+    /**
+     * @param $id
+     *
+     */
+    public function message($id, $message)
+    {
+        /** @var $user \app\models\User */
+        $user = User::findOne($id);
+        if ($user->telegram_chat_id != null){
+            try {
+                Yii::$app->bot->sendMessage($user->telegram_chat_id, $message);
+            } catch (Exception $e) {
+                $e->getMessage();
+            }
         }
     }
 }
