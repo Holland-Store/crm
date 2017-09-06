@@ -172,7 +172,7 @@ class ZakazController extends Controller
                         'roles' => ['admin']
                     ],
                     [
-                        'actions' => ['draft'],
+                        'actions' => ['refusing'],
                         'allow' => true,
                         'roles' => ['seeAdop']
                     ],
@@ -835,6 +835,20 @@ class ZakazController extends Controller
             }
         }
         return $this->renderAjax('accept', ['model' => $model]);
+    }
+
+    public function actionRefusing($id, $action)
+    {
+        $model = $this->findModel($id);
+        if ($action == 'yes'){
+            $model->action = 0;
+            $model->save();
+            return $this->redirect('admin');
+        } else {
+            $model->renouncement = null;
+            $model->save();
+            return $this->redirect(['update', 'id' => $id]);
+        }
     }
 
     /** END Block admin in gridview*/
