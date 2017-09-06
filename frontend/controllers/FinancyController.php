@@ -27,8 +27,12 @@ class FinancyController extends Controller
                         return $this->redirect(['zakaz/shop']);
                     }
                 } else {
+                    if ($model->status == Zakaz::STATUS_EXECUTE){
+                        $model->action = 0;
+                        Yii::$app->session->addFlash('update', 'Заказ закрылся');
+                    }
                     $model->save();
-                    Yii::$app->session->addFlash('update', 'Сумма зачлась '.$financy->sum.' руб.');
+                    Yii::$app->session->addFlash('update', ' Сумма зачлась '.$financy->sum.' руб.');
                     if (Yii::$app->user->can('admin')){
                         return $this->redirect(['zakaz/admin', 'id' => $id]);
                     } else {
