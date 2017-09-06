@@ -182,7 +182,7 @@ use yii\widgets\Pjax;
             <?= Html::a('Готово', ['check', 'id' => $model->id_zakaz], ['class' => 'btn btn- done']) ?>
         <?php endif ?>
         <?php if (Yii::$app->user->can('seeAdop')): ?>
-            <?php if ($model->status == Zakaz::STATUS_EXECUTE && $model->action == 1 && $model->renouncement == null): ?>
+            <?php if ($model->status == Zakaz::STATUS_EXECUTE && $model->action == 1 && $model->renouncement == null && $model->oplata == $model->fact_oplata): ?>
                 <?= Html::a('Готово', ['close', 'id' => $model->id_zakaz], ['class' => 'btn btn-xs done']) ?>
             <?php endif ?>
         <?php endif ?>
