@@ -637,7 +637,18 @@ class ZakazController extends Controller
             if (!$model->save()){
                 print_r($model->getErrors());
             }
-            return $this->redirect(['shop']);
+            Yii::$app->mailer->compose()
+                ->setFrom('holland.itkzn@gmail.com')
+                ->setTo('holland.itkzn@gmail.com')
+                ->setSubject('Отказ от клиента')
+                ->setTextBody($model->prefics.' '.$model->renouncement)
+                ->send();
+            if (Yii::$app->user->can('shop')){
+                return $this->redirect(['shop']);
+            } else {
+                return $this->redirect(['admin']);
+            }
+
         }
     }
     /** START view role */
