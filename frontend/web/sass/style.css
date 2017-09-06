@@ -650,12 +650,12 @@ thead a {
     background: #446505;
     color: white; }
 
-.cancel {
+.cancelButton {
   width: 78px;
   position: relative;
   left: 66px;
   top: -1px; }
-  .cancel:hover {
+  .cancelButton:hover {
     background: #802c2c;
     color: white; }
 

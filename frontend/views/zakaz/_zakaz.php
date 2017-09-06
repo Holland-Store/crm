@@ -158,7 +158,7 @@ use yii\widgets\Pjax;
 <span class="responsible_person">По причине:</span><br>'.$model->renouncement.'</div>
 <div>'
     .Html::a('Принять', ['refusing', 'id' => $model->id_zakaz, 'action' => 'yes'], ['class' => 'action success']).' '
-    .Html::a('Отклонить', ['refusing', 'id' => $model->id_zakaz, 'action' => 'no'], ['class' => 'action cancel']).
+    .Html::a('Отклонить', ['refusing', 'id' => $model->id_zakaz, 'action' => 'no'], ['class' => 'action cancelButton']).
 '</div>';
             }
             ?>

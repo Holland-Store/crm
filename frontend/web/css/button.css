@@ -199,14 +199,14 @@
 }
 
 /* line 202, ../sass/button.scss */
-.cancel {
+.cancelButton {
   width: 78px;
   position: relative;
   left: 66px;
   top: -1px;
 }
 /* line 34, ../sass/button.scss */
-.cancel:hover {
+.cancelButton:hover {
   background: #802c2c;
   color: white;
 }
@@ -269,10 +269,13 @@
 .footer-view-zakaz a {
   padding-left: 13px;
   padding-right: 13px;
+  float: right;
+  margin-top: -10px;
   margin-right: 18px;
   font-size: 11px;
   background: #3a3331;
   border-radius: 26px;
+  color: #736a50;
   background: none;
   border: 1px solid #3a3331;
   color: #3a3331;
