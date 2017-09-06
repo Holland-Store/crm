@@ -152,6 +152,14 @@ use yii\widgets\Pjax;
 <span class="responsible_person">По причине:</span><br>'.$model->declined.'</div>';
             } elseif($model->status == Zakaz::STATUS_ADOPTED){
                 echo Html::submitButton('Назначить', ['class' => 'action actionApprove appoint', 'value' => Url::to(['zakaz/accept', 'id' => $model->id_zakaz])]);
+            } elseif ($model->renouncement != null){
+                echo '<div class="statusZakaz declined">Отказ от клиента</div>
+<div class="declined_div">
+<span class="responsible_person">По причине:</span><br>'.$model->renouncement.'</div>
+<div>'
+    .Html::a('Принять', ['refusing', 'id' => $model->id_zakaz, 'action' => 'yes'], ['class' => 'action success']).' '
+    .Html::a('Отклонить', ['refusing', 'id' => $model->id_zakaz, 'action' => 'no'], ['class' => 'action cancel']).
+'</div>';
             }
             ?>
         </div>
@@ -211,7 +219,7 @@ use yii\widgets\Pjax;
 
             Modal::end(); ?>
         <?php endif ?>
-        <?php if (Yii::$app->user->can('seeAdop')): ?>
+        <?php if (Yii::$app->user->can('seeAdop') && $model->renouncement == null): ?>
             <?php Modal::begin([
                 'header' => 'Укажите причину отказа',
                 'class' => 'modal-sm',
@@ -237,39 +245,41 @@ use yii\widgets\Pjax;
             <?= Html::a('Редактировать', ['zakaz/update', 'id' => $model->id_zakaz], ['class' => 'btn btn-xs', 'style' => 'float: right;margin-right: 10px;'])?>
         <?php endif ?>
         <?php if (Yii::$app->user->can('seeAdop')): ?>
-            <?php Modal::begin([
-                'header' => 'Оплата услуг',
-                'class' => 'modal-sm',
-                'toggleButton' => [
-                    'tag' => 'a',
-                    'class' => 'btn action',
-                    'style' => 'float: right;margin-right: 71px;',
-                    'label' => 'Чек',
-                ]
-            ]);
-            $financy = new \app\models\Financy();
-            $financy->amount = $model->oplata - $model->fact_oplata;
-            /** @var $financy app\models\Financy */
-            $form = ActiveForm::begin([
-                'action' => ['financy/draft', 'id' => $model->id_zakaz],
-                'id' => 'draftForm',
-            ]);
+            <?php if ($model->oplata - $model->fact_oplata != 0): ?>
+                <?php Modal::begin([
+                    'header' => 'Оплата услуг',
+                    'class' => 'modal-sm',
+                    'toggleButton' => [
+                        'tag' => 'a',
+                        'class' => 'btn action',
+                        'style' => 'float: right;margin-right: 71px;',
+                        'label' => 'Чек',
+                    ]
+                ]);
+                $financy = new \app\models\Financy();
+                $financy->amount = $model->oplata - $model->fact_oplata;
+                /** @var $financy app\models\Financy */
+                $form = ActiveForm::begin([
+                    'action' => ['financy/draft', 'id' => $model->id_zakaz],
+                    'id' => 'draftForm',
+                ]);
 
-            echo Html::encode('К доплате: ').number_format($model->oplata - $model->fact_oplata,0,',', ' ').' p.';
-            echo $form->field($financy, 'sum')->widget(MaskedInput::className(), [
-                'clientOptions' => [
-                    'alias' => 'decimal',
-                    'groupSeparator' => ' ',
-                    'autoGroup' => true,
-                ],
-            ]);
-            echo $form->field($financy, 'id_zakaz')->hiddenInput(['value' => $model->id_zakaz])->label(false);
-            echo $form->field($financy, 'id_user')->hiddenInput(['value' => Yii::$app->user->id])->label(false);
-            echo Html::submitButton('Зачислить', ['class' => 'btn action']);
+                echo Html::encode('К доплате: ').number_format($model->oplata - $model->fact_oplata,0,',', ' ').' p.';
+                echo $form->field($financy, 'sum')->widget(MaskedInput::className(), [
+                    'clientOptions' => [
+                        'alias' => 'decimal',
+                        'groupSeparator' => ' ',
+                        'autoGroup' => true,
+                    ],
+                ]);
+                echo $form->field($financy, 'id_zakaz')->hiddenInput(['value' => $model->id_zakaz])->label(false);
+                echo $form->field($financy, 'id_user')->hiddenInput(['value' => Yii::$app->user->id])->label(false);
+                echo Html::submitButton('Зачислить', ['class' => 'btn action']);
 
-            ActiveForm::end();
-            Modal::end() ?>
-        <?php endif ?>
+                ActiveForm::end();
+                Modal::end() ?>
+            <?php endif ?>
+        <?php endif; ?>
     </div>
 <?php $script = <<<JS
 $('#formComment').on('beforeSubmit', function(e) {
