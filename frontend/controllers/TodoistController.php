@@ -246,7 +246,7 @@ class TodoistController extends Controller
 		$model->activate = 1;
 		$model->save();
 
-        return $this->redirect(['shop']);
+        return $this->findView();
     }
 
     /**
