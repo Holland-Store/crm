@@ -20,16 +20,15 @@ class FinancyController extends Controller
             if ($model->oplata >= $model->fact_oplata){
                 if ($model->oplata > $model->fact_oplata){
                     $model->save();
-                    Yii::$app->session->addFlash('update', 'Сумма зачлась');
+                    Yii::$app->session->addFlash('update', 'Сумма зачлась '.$financy->sum.' руб.');
                     if (Yii::$app->user->can('admin')){
                         return $this->redirect(['zakaz/admin', 'id' => $id]);
                     } else {
                         return $this->redirect(['zakaz/shop']);
                     }
                 } else {
-                    $model->action = 0;
                     $model->save();
-                    Yii::$app->session->addFlash('update', 'Заказ был закрыт');
+                    Yii::$app->session->addFlash('update', 'Сумма зачлась '.$financy->sum.' руб.');
                     if (Yii::$app->user->can('admin')){
                         return $this->redirect(['zakaz/admin', 'id' => $id]);
                     } else {
