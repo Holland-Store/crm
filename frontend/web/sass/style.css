@@ -534,7 +534,7 @@ thead a {
   height: 74px;
   line-height: 2px;
   font-size: 46px;
-  box-shadow: 5px 6px 20px 0px rgba(2, 2, 2, 0.48);
+  box-shadow: 5px 6px 20px 0 rgba(2, 2, 2, 0.48);
   color: #fff;
   background: #a90329;
   background: -moz-radial-gradient(center, ellipse cover, #a90329 34%, #8f0222 67%, #6d0019 98%);
@@ -563,7 +563,7 @@ thead a {
     border: 2px solid rgba(204, 198, 198, 0.6);
     border-radius: 9px; }
     .btn-group .dropdown-menu .divider {
-      margin: 0px 0px 0px 10px;
+      margin: 0 0 0 10px;
       background: rgba(255, 255, 255, 0.07);
       width: 64px; }
     .btn-group .dropdown-menu .dropdown-header {
@@ -572,8 +572,8 @@ thead a {
       color: rgba(204, 198, 198, 0.6); }
       .btn-group .dropdown-menu a:hover {
         border-radius: 12px;
-        margin: 0px 8px 0px 7px;
-        padding: 3px 0px 3px 13px;
+        margin: 0 8px 0 7px;
+        padding: 3px 0 3px 13px;
         background-color: #191412;
         color: #736a50; }
 
@@ -586,7 +586,7 @@ thead a {
   .zakaz-form .file-actions-cell {
     display: none; }
   .zakaz-form .file-preview {
-    padding: 0px; }
+    padding: 0; }
   .zakaz-form .submitZakazForm {
     float: right;
     margin-top: -76px;
@@ -638,6 +638,25 @@ thead a {
   .actionApprove:hover {
     border: none;
     background: #446505;
+    color: white; }
+
+.success {
+  left: 64px;
+  top: -1px;
+  width: 79px;
+  position: relative; }
+  .success:hover {
+    border: none;
+    background: #446505;
+    color: white; }
+
+.cancel {
+  width: 78px;
+  position: relative;
+  left: 66px;
+  top: -1px; }
+  .cancel:hover {
+    background: #802c2c;
     color: white; }
 
 .appoint {
