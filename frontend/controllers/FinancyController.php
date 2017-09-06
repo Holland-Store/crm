@@ -37,5 +37,10 @@ class FinancyController extends Controller
                 }
             }
         }
+
+        return $this->render('draft', [
+            'financy' => $financy,
+            'model' => $model,
+        ]);
     }
 }
