@@ -2,6 +2,7 @@
 
 use app\models\Client;
 use app\models\Tag;
+use app\models\User;
 use app\models\Zakaz;
 use kartik\select2\Select2;
 use yii\bootstrap\Modal;
@@ -229,7 +230,19 @@ use yii\widgets\Pjax;
                     ],
                 ]);
         ?>
-        <?= $form->field($model, 'id_shop')->textInput(['type'=> 'number', 'value' => Yii::$app->user->id]) ?>
+        <?php if(!$model->isNewRecord): ?>
+        <?= $form->field($model, 'id_shop')->dropDownList(ArrayHelper::map(User::find()->andWhere(['<>', 'id', User::USER_DISAYNER])
+                ->andWhere(['<>', 'id', User::USER_MASTER])
+                ->andWhere(['<>', 'id', User::USER_DAMIR])
+                ->andWhere(['<>', 'id', User::USER_ALBERT])
+                ->andWhere(['<>', 'id', User::USER_PROGRAM])
+                ->andWhere(['<>', 'id', 8])
+                ->andWhere(['<>', 'id', User::USER_COURIER])
+                ->andWhere(['<>', 'id', User::USER_ZAKUP])
+                ->andWhere(['<>', 'id', User::USER_SYSTEM])
+                ->all(),
+                'id', 'name')) ?>
+        <?php endif; ?>
     </div>
 
     <!-- <?= $form->field($model, 'id_sotrud')->hiddenInput(['value' => Yii::$app->user->id])->label(false) ?> -->
