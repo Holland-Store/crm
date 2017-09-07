@@ -116,4 +116,10 @@ class Todoist extends ActiveRecord
     {
         return ArrayHelper::getValue(self::getTodoistArray(), $this->activate);
     }
+
+    public function beforeSave($insert)
+    {
+        $this->srok = date('Y-m-d', strtotime($this->srok));
+        return parent::beforeSave($insert);
+    }
 }
