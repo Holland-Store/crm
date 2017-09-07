@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use app\models\Client;
+use app\models\Financy;
 use app\models\User;
 use app\models\ZakazTag;
 use frontend\models\Telegram;
@@ -279,6 +280,7 @@ class ZakazController extends Controller
         $client = new Client();
         $client->scenario = Client::SCENARIO_CREATE;
         $telegram = new Telegram();
+        $financy = new Financy();
 
         if ($model->load(Yii::$app->request->post()) && $client->load(Yii::$app->request->post())) {
             if (Yii::$app->request->get('id')){
@@ -304,6 +306,7 @@ class ZakazController extends Controller
                 if (!$model->save()) {
                     $this->flashErrors();
                 } else {
+                    $financy->saveSum($model->fact_oplata, $model->id_zakaz, $model->oplata);
                     Yii::$app->session->addFlash('update', 'Успешно создан заказ');
                         if($model->status == Zakaz::STATUS_DISAIN){
                                 $telegram->message(User::USER_DISAYNER, 'Назначен заказ '.$model->prefics.' '.$model->description);
