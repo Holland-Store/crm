@@ -72,4 +72,19 @@ class Financy extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Zakaz::className(), ['id_zakaz' => 'id_zakaz']);
     }
+
+    /**
+     * Create zakaz save fact_oplata Zakaz models
+     * @param $sum
+     * @param $id
+     * @param $oplata
+     */
+    public function saveSum($sum, $id, $oplata)
+    {
+        $this->amount = $oplata;
+        $this->sum = $sum;
+        $this->id_zakaz = $id;
+        $this->id_user = \Yii::$app->user->id;
+        $this->save();
+    }
 }
