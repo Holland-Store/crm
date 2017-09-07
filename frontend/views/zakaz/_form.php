@@ -156,6 +156,7 @@ use yii\widgets\Pjax;
             ])->label(false) ?>
         </div>
         <div class="col-xs-10">
+            <?php if ($model->isNewRecord): ?>
             <?= $form->field($model, 'fact_oplata')->widget(MaskedInput::className(), [
                 'clientOptions' => [
                     'alias' => 'decimal',
@@ -164,6 +165,7 @@ use yii\widgets\Pjax;
                 ],
                 'options' => ['placeholder' => 'Предоплата', 'class' => 'inputWidget-form'],
             ])->label(false) ?>
+            <?php endif; ?>
         </div>
         <div class="col-xs-10">
             <?php if($model->oplata != null){?>
@@ -219,7 +221,6 @@ use yii\widgets\Pjax;
                     'data' => ArrayHelper::map(Tag::find()->all(), 'id', 'name'),
                     'language' => 'ru',
                     'options' => [
-//                        'value' => $model->tags,
                         'placeholder' => 'Выберите тэг',
                         'multiple' => true
                     ],
