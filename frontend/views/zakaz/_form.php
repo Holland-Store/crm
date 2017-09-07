@@ -100,22 +100,22 @@ use yii\widgets\Pjax;
     </div>
 
     <div class="col-xs-2 clientZakaz">
-        <h3>Клиент</h3>
-        <div class="col-xs-12">
-        <?= $form->field($model, 'name')->textInput(['placeholder' => 'Имя клиента', 'class' => 'inputForm'])->label(false) ?>
-        </div>
-        <div class="col-xs-12">
-        <?= $form->field($model, 'phone')->widget(MaskedInput::className(),[
-            'mask' => '89999999999',
-            'options' => ['placeholder' => 'Телефон', 'class' => 'inputWidget-contact'],
-        ])->label(false) ?>
-        </div>
-         <div class="col-xs-12">
-        <?= $form->field($model, 'email')->widget(MaskedInput::className(),[
-            'clientOptions' => ['alias' => 'email'],
-            'options' => ['placeholder' => 'Email', 'class' => 'inputWidget-contact'],
-        ])->label(false) ?>
-        </div>
+<!--        <h3>Клиент</h3>-->
+<!--        <div class="col-xs-12">-->
+<!--        --><?//= $form->field($model, 'name')->textInput(['placeholder' => 'Имя клиента', 'class' => 'inputForm'])->label(false) ?>
+<!--        </div>-->
+<!--        <div class="col-xs-12">-->
+<!--        --><?//= $form->field($model, 'phone')->widget(MaskedInput::className(),[
+//            'mask' => '89999999999',
+//            'options' => ['placeholder' => 'Телефон', 'class' => 'inputWidget-contact'],
+//        ])->label(false) ?>
+<!--        </div>-->
+<!--         <div class="col-xs-12">-->
+<!--        --><?//= $form->field($model, 'email')->widget(MaskedInput::className(),[
+//            'clientOptions' => ['alias' => 'email'],
+//            'options' => ['placeholder' => 'Email', 'class' => 'inputWidget-contact'],
+//        ])->label(false) ?>
+<!--        </div>-->
         <?php Pjax::begin(['id' => 'pjax-select']) ?>
         <div class="col-xs-12">
             <?php !$model->isNewRecord ? $client->id = $model->id_client : null ?>
