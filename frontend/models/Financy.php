@@ -85,6 +85,8 @@ class Financy extends \yii\db\ActiveRecord
         $this->sum = $sum;
         $this->id_zakaz = $id;
         $this->id_user = \Yii::$app->user->id;
-        $this->save();
+        if (!$this->sum == 0 or !$this->sum == null){
+            $this->save();
+        }
     }
 }
