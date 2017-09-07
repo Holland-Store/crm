@@ -4,7 +4,7 @@ use app\models\User;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use dosamigos\datepicker\DatePicker;
+use kartik\widgets\DatePicker;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Todoist */
@@ -17,11 +17,12 @@ use dosamigos\datepicker\DatePicker;
 
     <?= $form->field($model, 'srok')->widget(
         DatePicker::className(), [
-            'inline' => false, 
-            'clientOptions' => [
-                'autoclose' => true,
-                'format' => 'yyyy-mm-dd'
-            ]
+        'pluginOptions' => [
+            'autoclose'=>true,
+            'startDate' => 'yyyy-mm-dd',
+            'todayBtn' => true,
+            'todayHighlight' => true,
+        ]
     ])?>
 
     <?= $form->field($model, 'id_zakaz')->hiddenInput(['value' => Yii::$app->request->get('id_zakaz')])->label(false) ?>
