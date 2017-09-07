@@ -111,7 +111,7 @@ class Zakaz extends ActiveRecord
     public function rules()
     {
         return [
-            [['srok', 'number', 'description', 'phone', 'id_client'], 'required', 'on' => self::SCENARIO_DEFAULT],
+            [['srok', 'number', 'description', 'id_client'], 'required', 'on' => self::SCENARIO_DEFAULT],
             ['declined', 'required', 'message' => 'Введите причину отказа', 'on'=> self::SCENARIO_DECLINED],
             [['id_zakaz', 'id_tovar', 'minut', 'time', 'number', 'status', 'action', 'id_sotrud', 'id_shop','phone', 'id_client','id_shipping' ,'prioritet', 'statusDisain', 'statusMaster', 'id_unread'], 'integer'],
             [['srok', 'data', 'data-start-disain', 'tags_array'], 'safe'],
