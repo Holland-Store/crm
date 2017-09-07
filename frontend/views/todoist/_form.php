@@ -22,7 +22,6 @@ use kartik\widgets\DatePicker;
                 'startDate' => 'yyyy-mm-dd',
                 'todayBtn' => true,
                 'todayHighlight' => true,
-//                'format' => 'yyyy-mm-dd',
             ]
     ])?>
 
