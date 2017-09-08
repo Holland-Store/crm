@@ -99,7 +99,9 @@ $this->title = 'Все задачи';
                     if ($model->activate == Todoist::COMPLETED){
                         return Html::a(Html::encode('Принять'), ['close', 'id' => $model->id], ['class' => 'accept']).' / '.Html::a(Html::encode('Отклонить'), ['#'], ['class' => 'declinedTodoist', 'value' => Url::to(['declined', 'id' => $model->id])]);
                     } elseif ($model->activate == Todoist::REJECT){
-                        return '<span class="declined">'.Html::encode('Отклонено').'</span>';
+                        return Html::tag('span', Html::encode('Отклонено'), [
+                           'class' => 'declined'
+                        ]);
                     } else {
                         return false;
                     }
@@ -196,7 +198,6 @@ $this->title = 'Все задачи';
                                     'data-toggle' => 'toolpit',
                                     'class' => 'declined',
                             ]);
-//                            return '<span class="declined">'.Html::encode('Отклонено').'</span>';
                         }
                     }
                 ]

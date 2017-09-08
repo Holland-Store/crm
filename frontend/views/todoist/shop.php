@@ -1,5 +1,6 @@
 <?php
 
+use app\models\Todoist;
 use yii\helpers\Html;
 use kartik\grid\GridView;
 
@@ -35,6 +36,23 @@ $this->title = 'Все задачи';
             [
                 'attribute' => 'comment',
                 'contentOptions'=>['style'=>'white-space: normal;'],
+            ],
+            [
+                'attribute' => 'action',
+                'format' => 'raw',
+                'contentOptions'=>['class'=>'textTr tr180'],
+                'value' => function($model){
+                    if ($model->activate == Todoist::COMPLETED){
+                        return Html::a(Html::encode('Принять'), ['close', 'id' => $model->id], ['class' => 'accept']).' / '.Html::a(Html::encode('Отклонить'), ['#'], ['class' => 'declinedTodoist', 'value' => Url::to(['declined', 'id' => $model->id])]);
+                    } elseif ($model->activate == Todoist::REJECT){
+                        return Html::tag('span', Html::encode('Отклонено'), [
+                            'class' => 'declined'
+                        ]);
+                    } else {
+                        return false;
+                    }
+
+                }
             ],
             [
                 'attribute' => 'zakaz',
@@ -107,12 +125,22 @@ $this->title = 'Все задачи';
                     'format' => 'raw',
                     'contentOptions' => ['class' => 'border-right textTr tr50 ispolShop'],
                     'value' => function($model){
-                        return Html::a('Выполнить', ['close', 'id' => $model->id], [
-                            'data' => [
-                                'confirm' => 'Вы действительно выполнили задачу?',
-                                'method' => 'post',
-                            ]
-                        ]);
+                        if ($model->activate == Todoist::ACTIVE){
+                            return Html::a('Выполнить', ['accept', 'id' => $model->id], [
+                                'data' => [
+                                    'confirm' => 'Вы действительно выполнили задачу?',
+                                    'method' => 'post',
+                                ]
+                            ]);
+                        } elseif($model->activate == Todoist::COMPLETED) {
+                            return Html::encode('На проверке');
+                        } else {
+                            return Html::tag('span', 'Отклонить', [
+                                'title' => $model->declined,
+                                'data-toggle' => 'toolpit',
+                                'class' => 'declined',
+                            ]);
+                        }
                     }
                 ]
             ],
