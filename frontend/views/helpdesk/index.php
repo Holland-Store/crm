@@ -68,7 +68,6 @@ $this->title = 'Все поломки';
                         [
                             'label' => 'Задачи',
                             'url' => ['todoist/create'],
-//                            'visible' => Yii::$app->user->can('admin'),
                         ],
                     ]
                 ]
