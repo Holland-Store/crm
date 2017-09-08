@@ -59,6 +59,23 @@ $bacgrountTr: #802c2c;
   text-decoration: none;
 }
 
+@mixin declined{
+    color: $bacgrountTr;
+    text-decoration: none;
+    &:hover{
+        text-decoration: none;
+        color: $bacgrountTr;
+    }
+}
+@mixin accept{
+    color: $colorGreen;
+    text-decoration: none;
+    &:hover{
+        text-decoration: none;
+        color: $colorGreen;
+    }
+}
+
 .text-orange{
     color: $orang;
 }
@@ -286,4 +303,13 @@ $bacgrountTr: #802c2c;
         padding-left: 130px;
         text-decoration: none;
     }
+}
+.accept{
+    @include accept;
+}
+.declined{
+    @include declined;
+}
+.declinedTodoist{
+    @include declined;
 }

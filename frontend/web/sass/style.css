@@ -676,6 +676,9 @@ thead a {
 .courier-shipping a {
   color: #802c2c;
   text-decoration: none; }
+  .courier-shipping a:hover {
+    text-decoration: none;
+    color: #802c2c; }
 
 .courier-index a, .custom-index a, .helpdesk-index a {
   color: #446505;
@@ -683,9 +686,15 @@ thead a {
 .courier-index .declinedHelp, .custom-index .declinedHelp, .helpdesk-index .declinedHelp {
   color: #802c2c;
   text-decoration: none; }
+  .courier-index .declinedHelp:hover, .custom-index .declinedHelp:hover, .helpdesk-index .declinedHelp:hover {
+    text-decoration: none;
+    color: #802c2c; }
 .courier-index .declined, .custom-index .declined, .helpdesk-index .declined {
   color: #802c2c;
   text-decoration: none; }
+  .courier-index .declined:hover, .custom-index .declined:hover, .helpdesk-index .declined:hover {
+    text-decoration: none;
+    color: #802c2c; }
 .courier-index .successHelp, .custom-index .successHelp, .helpdesk-index .successHelp {
   color: #446505; }
 
@@ -735,6 +744,27 @@ thead a {
   padding-right: 146px;
   padding-left: 130px;
   text-decoration: none; }
+
+.accept {
+  color: #446505;
+  text-decoration: none; }
+  .accept:hover {
+    text-decoration: none;
+    color: #446505; }
+
+.declined {
+  color: #802c2c;
+  text-decoration: none; }
+  .declined:hover {
+    text-decoration: none;
+    color: #802c2c; }
+
+.declinedTodoist {
+  color: #802c2c;
+  text-decoration: none; }
+  .declinedTodoist:hover {
+    text-decoration: none;
+    color: #802c2c; }
 
 .modal-content {
   background: #302927;

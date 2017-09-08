@@ -35,6 +35,11 @@ $(document).ready(function(){
                 .find('.modalContentClient')
                 .load($(this).attr('value'))
         });
+        $('body').on('click', '.declinedTodoist', function () {
+            $('#modalDeclinedTodoist').modal('show')
+                .find('.modalContent')
+                .load($(this).attr('value'));
+        });
        $("body").on("click", ".trNew", function () {
            var data = $(this).data("key");
            $.ajax({
