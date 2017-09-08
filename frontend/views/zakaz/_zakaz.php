@@ -1,4 +1,6 @@
 <?php
+
+use app\models\Financy;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\widgets\DetailView;
@@ -256,7 +258,7 @@ use yii\widgets\Pjax;
                         'label' => 'Чек',
                     ]
                 ]);
-                $financy = new \app\models\Financy();
+                $financy = new Financy();
                 $financy->amount = $model->oplata - $model->fact_oplata;
                 /** @var $financy app\models\Financy */
                 $form = ActiveForm::begin([
