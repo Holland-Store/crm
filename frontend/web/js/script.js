@@ -40,29 +40,32 @@ $(document).ready(function(){
                 .find('.modalContent')
                 .load($(this).attr('value'));
         });
-       $("body").on("click", ".trNew", function () {
+       $('body').on("click", ".trNew", function () {
            var data = $(this).data("key");
            $.ajax({
                url: "/frontend/web/zakaz/adopted?id="+data,
                success: console.log('Успешно изменен статус')
            })
        });
-        $( "body" ).on( "click", ".commentButton", function() {
+        $( 'body' ).on( 'click', '.commentButton', function() {
             $( ".CommentForm" ).toggleClass( "CommentForm-visible" );
         });
-       $("body").on("click", ".trNewDisain", function () {
+       $('body').on('click', '.trNewDisain', function () {
             var data = $(this).data("key");
             $.ajax({
                 url: "/frontend/web/zakaz/adopdisain?id="+data,
                 success: console.log('Успешно изменен статус '+data)
             })
        });
-       $("body").on("click", ".trNewMaster", function () {
+       $('body').on('click', '.trNewMaster', function () {
             var data = $(this).data("key");
             $.ajax({
                 url: "/frontend/web/zakaz/adopmaster?id="+data,
                 success: console.log('Успешно изменен статус '+data)
             })
        });
+       $(function () {
+           $('[data-toggle = "toolpit"]').tooltip();
+       })
 });
 
