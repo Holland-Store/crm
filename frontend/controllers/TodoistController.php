@@ -72,7 +72,12 @@ class TodoistController extends Controller
                         'actions' => ['declined'],
                         'allow' => true,
                         'roles' => ['@'],
-                    ]
+                    ],
+                    [
+                        'actions' => ['accept'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
 				],
 			],
         ];
@@ -269,6 +274,12 @@ class TodoistController extends Controller
         return $this->findView();
     }
 
+    /**
+     * Declined task
+     * if success then the user redirected admin in index, for shop in shop
+     * @param $id
+     * @return string
+     */
     public function actionDeclined($id)
     {
         $model = $this->findModel($id);
