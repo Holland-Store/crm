@@ -15,6 +15,7 @@ use yii\helpers\ArrayHelper;
  * @property integer $id_user
  * @property integer $id_sotrud_put
  * @property string $comment
+ * @property string $declined
  * @property integer $activate
  *
  * @property Zakaz $idZakaz
@@ -27,6 +28,15 @@ class Todoist extends ActiveRecord
 	const PUSHKIN = 6;
 	const SIBIR = 9;
 	const ZAKUP = 10;
+
+	const ACTIVE = 0;
+	const CLOSE = 1;
+	const COMPLETED = 2;
+	const REJECT = 3;
+
+	const SCENARIO_DEFAULT = 'defaulr';
+	const SCENARIO_DECLINED = 'declined';
+
     /**
      * @inheritdoc
      */
@@ -35,16 +45,25 @@ class Todoist extends ActiveRecord
         return 'todoist';
     }
 
+    public function scenarios()
+    {
+        return [
+            self::SCENARIO_DEFAULT => ['srok', 'id_zakaz', 'comment', 'id_user' ,'id_sotrud_put', 'activate', 'declined'],
+            self::SCENARIO_DECLINED => ['declined'],
+        ];
+    }
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['srok', 'comment'], 'required'],
+            [['srok', 'comment'], 'required', 'on' => self::SCENARIO_DEFAULT],
+            [['declined'], 'required', 'on' => self::SCENARIO_DECLINED],
             [['srok', 'date'], 'safe'],
             [['id_zakaz', 'id_user', 'id_sotrud_put','activate'], 'integer'],
-            [['comment'], 'string'],
+            [['comment', 'declined'], 'string'],
             [['id_sotrud_put'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['id_sotrud_put' => 'id']],
             [['id_zakaz'], 'exist', 'skipOnError' => true, 'targetClass' => Zakaz::className(), 'targetAttribute' => ['id_zakaz' => 'id_zakaz']],
             [['id_user'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['id_user' => 'id']],
@@ -64,6 +83,7 @@ class Todoist extends ActiveRecord
             'id_user' => 'Назначение',
             'id_sotrud_put' => 'Сотрудник поставил',
             'comment' => 'Доп.указание',
+            'declined' => 'Отказ',
             'activate' => 'Статус',
         ];
     }
