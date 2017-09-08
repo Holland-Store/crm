@@ -68,6 +68,11 @@ class TodoistController extends Controller
     					'allow' => true,
     					'roles' => ['shop'],
 					],
+                    [
+                        'actions' => ['declined'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ]
 				],
 			],
         ];
@@ -195,7 +200,7 @@ class TodoistController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id)
+    private function actionUpdate($id)
     {
         $model = $this->findModel($id);
 
@@ -215,7 +220,7 @@ class TodoistController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
+    private function actionDelete($id)
     {
         $this->findModel($id)->delete();
 
@@ -243,10 +248,42 @@ class TodoistController extends Controller
     public function actionClose($id)
     {
         $model = $this->findModel($id);
-		$model->activate = 1;
+		$model->activate = Todoist::CLOSE;
 		$model->save();
 
         return $this->findView();
+    }
+
+    /**
+     * Completed task
+     * if success then the user redirected amin in index, for shop in shop
+     * @param $id
+     * @return \yii\web\Response
+     */
+    public function actionAccept($id)
+    {
+        $model = $this->findModel($id);
+        $model->activate = Todoist::CLOSE;
+        $model->save();
+
+        return $this->findView();
+    }
+
+    public function actionDeclined($id)
+    {
+        $model = $this->findModel($id);
+        $model->scenario = Todoist::SCENARIO_DECLINED;
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate()){
+            $model->activate = Todoist::REJECT;
+            if (!$model->save()){
+                print_r($model->getErrors());
+            }else{
+                $this->findView();
+            };
+        }
+
+        return $this->renderAjax('declined', ['model' =>$model]);
     }
 
     /**
