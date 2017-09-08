@@ -34,7 +34,7 @@ class Todoist extends ActiveRecord
 	const COMPLETED = 2;
 	const REJECT = 3;
 
-	const SCENARIO_DEFAULT = 'defaulr';
+	const SCENARIO_DEFAULT = 'default';
 	const SCENARIO_DECLINED = 'declined';
 
     /**
