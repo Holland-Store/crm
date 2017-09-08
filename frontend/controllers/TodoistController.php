@@ -149,6 +149,7 @@ class TodoistController extends Controller
     public function actionCreate()
     {
         $model = new Todoist();
+        $model->scenario = Todoist::SCENARIO_DECLINED;
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->save()){
@@ -174,6 +175,7 @@ class TodoistController extends Controller
         $model = new Todoist();
         $helpdesk = new Helpdesk();
         $models = [new Custom()];
+        $model->scenario = Todoist::SCENARIO_DECLINED;
 
         $data = Yii::$app->request->post('Custom', []);
         foreach (array_keys($data) as $index) {
@@ -253,7 +255,7 @@ class TodoistController extends Controller
     public function actionClose($id)
     {
         $model = $this->findModel($id);
-		$model->activate = Todoist::CLOSE;
+        $model->activate = Todoist::CLOSE;
 		$model->save();
 
         return $this->findView();
@@ -268,8 +270,10 @@ class TodoistController extends Controller
     public function actionAccept($id)
     {
         $model = $this->findModel($id);
-        $model->activate = Todoist::CLOSE;
-        $model->save();
+        $model->activate = Todoist::COMPLETED;
+        if (!$model->save()){
+            print_r($model->getErrors());
+        }
 
         return $this->findView();
     }
@@ -283,7 +287,6 @@ class TodoistController extends Controller
     public function actionDeclined($id)
     {
         $model = $this->findModel($id);
-        $model->scenario = Todoist::SCENARIO_DECLINED;
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()){
             $model->activate = Todoist::REJECT;
