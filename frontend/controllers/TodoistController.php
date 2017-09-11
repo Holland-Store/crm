@@ -149,13 +149,13 @@ class TodoistController extends Controller
     public function actionCreate()
     {
         $model = new Todoist();
-        $model->scenario = Todoist::SCENARIO_DECLINED;
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->save()){
                 Yii::$app->session->addFlash('update', 'Задача успешна создана');
                 $this->findView();
             } else {
+                print_r($model->getErrors());
                 Yii::$app->session->addFlash('errors', 'Произошла ошибка! '.$model->getErrors());
             }
         }
@@ -218,20 +218,6 @@ class TodoistController extends Controller
                 'model' => $model,
             ]);
         }
-    }
-
-
-    /**
-     * Deletes an existing Todoist model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     */
-    private function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
     }
 
     public function actionCreatezakaz()
