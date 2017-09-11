@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "personnel".
@@ -9,11 +10,11 @@ namespace app\models;
  * @property integer $id
  * @property string $last_name
  * @property string $name
+ * @property string $nameSotrud
  * @property string $phone
- * @property integer $id_position
  * @property integer $action
+ * @property string $job_duties
  *
- * @property Position $idPosition
  */
 class Personnel extends \yii\db\ActiveRecord
 {
@@ -33,11 +34,11 @@ class Personnel extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['last_name', 'name', 'phone', 'id_position', 'action'], 'required'],
-            [['id_position', 'action'], 'integer'],
+            [['last_name', 'name', 'phone'], 'required'],
+            [['action'], 'integer'],
             [['last_name', 'name'], 'string', 'max' => 50],
+            [['job_duties'], 'string', 'max' => 86],
             [['phone'], 'string', 'max' => 15],
-            [['id_position'], 'exist', 'skipOnError' => true, 'targetClass' => Position::className(), 'targetAttribute' => ['id_position' => 'id']],
         ];
     }
 
@@ -50,17 +51,44 @@ class Personnel extends \yii\db\ActiveRecord
             'id' => 'ID',
             'last_name' => 'Фамилия',
             'name' => 'Имя',
+            'nameSotrud' => 'Фамилия и имя',
             'phone' => 'Телефон',
-            'id_position' => 'Отдел',
             'action' => 'Action',
+            'job_duties' => 'Должностные обязанности',
+            'positions' => 'Должность',
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getIdPosition()
+    public function getPersonnelPosition()
     {
-        return $this->hasOne(Position::className(), ['id' => 'id_position']);
+        return $this->hasMany(PersonnelPosition::className(), ['personnel_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPositions()
+    {
+        return $this->hasMany(Position::className(), ['id' => 'position_id'])->via('personnelPosition');
+    }
+
+    /**
+     * @return string
+     */
+    public function getNameSotrud()
+    {
+        return $this->last_name.' '.$this->name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPositionsAsString()
+    {
+        $arr = ArrayHelper::map($this->positions, 'id', 'name');
+        return implode(', ', $arr);
     }
 }
