@@ -26,6 +26,11 @@ use yii\widgets\Pjax;
         <span class="anketaZakaz_from">Автор:</span>
         <div><?= $model->idSotrud->name ?></div>
 
+        <?php if ($model->sotrud_name != null): ?>
+        <span class="anketaZakaz_from">Сотрудник:</span>
+        <div><?= $model->sotrud_name ?></div>
+        <?php endif; ?>
+
         <span class="anketaZakaz_from">Клиент:</span>
         <div><?= $model->name ?></div>
         <div>
