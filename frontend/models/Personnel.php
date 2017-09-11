@@ -17,6 +17,8 @@ namespace app\models;
  */
 class Personnel extends \yii\db\ActiveRecord
 {
+    const WORK = 0;
+    const DISMISSAL = 1;
     /**
      * @inheritdoc
      */
@@ -46,10 +48,10 @@ class Personnel extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'last_name' => 'Last Name',
-            'name' => 'Name',
-            'phone' => 'Phone',
-            'id_position' => 'Id Position',
+            'last_name' => 'Фамилия',
+            'name' => 'Имя',
+            'phone' => 'Телефон',
+            'id_position' => 'Отдел',
             'action' => 'Action',
         ];
     }
