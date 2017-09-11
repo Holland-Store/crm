@@ -14,7 +14,7 @@ use yii\helpers\ArrayHelper;
  * @property string $phone
  * @property integer $action
  * @property string $job_duties
- *
+ * @property string $shedule
  */
 class Personnel extends \yii\db\ActiveRecord
 {
@@ -36,7 +36,7 @@ class Personnel extends \yii\db\ActiveRecord
         return [
             [['last_name', 'name', 'phone'], 'required'],
             [['action'], 'integer'],
-            [['last_name', 'name'], 'string', 'max' => 50],
+            [['last_name', 'name', 'shedule'], 'string', 'max' => 50],
             [['job_duties'], 'string', 'max' => 86],
             [['phone'], 'string', 'max' => 15],
         ];
@@ -50,11 +50,11 @@ class Personnel extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'last_name' => 'Фамилия',
-            'name' => 'Имя',
             'nameSotrud' => 'Фамилия и имя',
             'phone' => 'Телефон',
             'action' => 'Action',
             'job_duties' => 'Должностные обязанности',
+            'shedule' => 'График работы',
             'positions' => 'Должность',
         ];
     }
