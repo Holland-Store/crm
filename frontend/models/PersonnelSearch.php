@@ -54,11 +54,11 @@ class PersonnelSearch extends Personnel
                'id' => [
                    'default' => SORT_ASC
                ],
-               'nameSotrud' => [
-                   'asc' => ['last_name' => SORT_ASC],
-                   'desc' => ['last_name' => SORT_DESC],
-               ],
-               'phone',
+//               'nameSotrud' => [
+//                   'asc' => ['last_name' => SORT_ASC],
+//                   'desc' => ['last_name' => SORT_DESC],
+//               ],
+//               'phone',
            ]
         ]);
 
