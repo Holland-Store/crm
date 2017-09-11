@@ -59,6 +59,13 @@ $colorDeclined: #7c1111;
     border-radius: 0 0 15px 15px;
 }
 
+.personnel-index{
+  .infoContact{
+    background: $colTextButton;
+    border: none;
+    color: black;
+  }
+}
 .container{
     font-size: $font-size;
 }
