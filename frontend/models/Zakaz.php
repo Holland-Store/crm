@@ -408,6 +408,7 @@ class Zakaz extends ActiveRecord
                 break;
             case 'execute':
                 $this->status = self::STATUS_EXECUTE;
+                $this->id_autsors = null;
                 break;
         }
         switch ($statusIspol){
