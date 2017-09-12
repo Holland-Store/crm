@@ -606,54 +606,6 @@ class ZakazController extends Controller
         ]);
     }
 
-    /**
-     * Disain internal status zakaz
-     * @param $id
-     * @return \yii\web\Response
-     */
-    public function actionStatusdisain($id)
-    {
-        $model = $this->findModel($id);
-        $model->statusDisain = Zakaz::STATUS_DISAINER_WORK;
-        $model->save();
-
-        return $this->redirect(['view', 'id' => $model->id_zakaz]);
-    }
-
-    /**
-     * Deletes an existing Zakaz model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
-    }
-
-    public function actionRenouncement($id)
-    {
-        $model = $this->findModel($id);
-        if ($model->load(Yii::$app->request->post()) && $model->validate()){
-            if (!$model->save()){
-                print_r($model->getErrors());
-            }
-            Yii::$app->mailer->compose()
-                ->setFrom('holland.itkzn@gmail.com')
-                ->setTo('holland.itkzn@gmail.com')
-                ->setSubject('Отказ от клиента')
-                ->setTextBody($model->prefics.' '.$model->renouncement)
-                ->send();
-            if (Yii::$app->user->can('shop')){
-                return $this->redirect(['shop']);
-            } else {
-                return $this->redirect(['admin']);
-            }
-
-        }
-    }
     /** START view role */
     /**
      * All zakaz existing in Shop
@@ -770,6 +722,47 @@ class ZakazController extends Controller
     }
     /** END view role */
     /** START Block admin in gridview */
+
+    /**
+     * Disain internal status zakaz
+     * @param $id
+     * @return \yii\web\Response
+     */
+    public function actionStatusdisain($id)
+    {
+        $model = $this->findModel($id);
+        $model->statusDisain = Zakaz::STATUS_DISAINER_WORK;
+        $model->save();
+
+        return $this->redirect(['view', 'id' => $model->id_zakaz]);
+    }
+
+    /**
+     * Indicates the reason refused the order
+     * if success redirected for admin on admib view and shop on shop view.
+     * And the reason for rejection is send by mail
+     */
+    public function actionRenouncement($id)
+    {
+        $model = $this->findModel($id);
+        if ($model->load(Yii::$app->request->post()) && $model->validate()){
+            if (!$model->save()){
+                print_r($model->getErrors());
+            }
+            Yii::$app->mailer->compose()
+                ->setFrom('holland.itkzn@gmail.com')
+                ->setTo('holland.itkzn@gmail.com')
+                ->setSubject('Отказ от клиента')
+                ->setTextBody($model->prefics.' '.$model->renouncement)
+                ->send();
+            if (Yii::$app->user->can('shop')){
+                return $this->redirect(['shop']);
+            } else {
+                return $this->redirect(['admin']);
+            }
+
+        }
+    }
     /**
      * Zakaz deckined admin and in db setup STATUS_DECLINED_DISAIN or STATUS_DECLINED_MASTER
      * if success then redirected view admin
