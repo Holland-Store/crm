@@ -168,13 +168,6 @@ use yii\widgets\Pjax;
             ])->label(false) ?>
             <?php endif; ?>
         </div>
-        <div class="col-xs-10">
-            <?php if($model->oplata != null){?>
-            <label>К доплате</label>
-            <p><?php echo $model->oplata - $model->fact_oplata.' рублей'; ?></p>
-            <?php } ?>
-
-        </div>
     </div>
 
     <div class="col-xs-4 managmentZakaz">
