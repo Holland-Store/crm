@@ -167,6 +167,11 @@ use yii\widgets\Pjax;
     .Html::a('Принять', ['refusing', 'id' => $model->id_zakaz, 'action' => 'yes'], ['class' => 'action success']).' '
     .Html::a('Отклонить', ['refusing', 'id' => $model->id_zakaz, 'action' => 'no'], ['class' => 'action cancelButton']).
 '</div>';
+            } elseif ($model->status == Zakaz::STATUS_AUTSORS){
+                echo '<div class="statusZakaz">'.$model->idAutsors->name.'</div>
+<div>'
+                    .Html::submitButton('Принять', ['class' => 'action actionApprove', 'value' => Url::to(['zakaz/accept', 'id' => $model->id_zakaz])]).'
+</div>';
             }
             ?>
         </div>
