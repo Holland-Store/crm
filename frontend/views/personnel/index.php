@@ -1,6 +1,9 @@
 <?php
 
+use app\models\Personnel;
 use kartik\widgets\Alert;
+use yii\grid\GridView;
+use yii\helpers\ArrayHelper;
 use yii\widgets\Pjax;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\PersonnelSearch */
@@ -51,5 +54,18 @@ $this->title = 'Контакты';
 //            ],
 //        ],
 //    ]); ?>
-
+    <?php  ?>
+    
+    <?php  ?>
+    <table>
+        <?php foreach(Personnel::getSotrud() as $sotrud) {
+            echo '<tr>
+            <td style="padding: 8px">' . ArrayHelper::getValue($sotrud, 'Должность') . '</td>
+            <td style="padding: 8px">' . ArrayHelper::getValue($sotrud, 'Имя') . '</td>
+            <td style="padding: 8px">' . ArrayHelper::getValue($sotrud, 'Телефон') . '</td>
+            <td style="padding: 8px">' . ArrayHelper::getValue($sotrud, 'График работы') . '</td>
+            <td style="padding: 8px">' . ArrayHelper::getValue($sotrud, 'Вопросы') . '</td>
+            </tr>';
+        }?>
+    </table>
 <?php Pjax::end(); ?></div>
