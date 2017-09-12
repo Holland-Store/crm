@@ -812,6 +812,9 @@ thead a {
 #login-form input {
   padding-left: 5%; }
 
+#autsors {
+  display: none; }
+
 .form-group input {
   border-radius: 26px;
   font-size: 11px;

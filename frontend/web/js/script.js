@@ -67,5 +67,14 @@ $(document).ready(function(){
        $(function () {
            $('[data-toggle = "toolpit"]').tooltip();
        })
+    $('body').on('change', '#zakaz-status', function () {
+        var value = $(this).val();
+        if (value == 8){
+            $('#autsors').css('display', 'block');
+        } else {
+            $('#autsors').css('display', 'none')
+                .prop('selectedIndex', 0);
+        }
+    })
 });
 
