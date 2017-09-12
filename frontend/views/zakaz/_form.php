@@ -1,6 +1,7 @@
 <?php
 
 use app\models\Client;
+use app\models\Partners;
 use app\models\Tag;
 use app\models\User;
 use app\models\Zakaz;
@@ -203,6 +204,13 @@ use yii\widgets\Pjax;
                 Zakaz::STATUS_AUTSORS => 'Аутсорс',
                 ],
                 ['prompt' => 'Назначить'])->label(false);?>
+                <?= $form->field($model, 'id_autsors')->dropDownList(
+                        ArrayHelper::map(Partners::find()->all(), 'id', 'name'),
+                        [
+                            'prompt' => 'Выберите партнера',
+                            'id' => 'autsors',
+                        ]
+                )->label(false) ?>
                 <?= $form->field($model, 'prioritet')->dropDownList([
                 '1' => 'важно',
                 '2' => 'очень важно'],
