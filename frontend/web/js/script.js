@@ -68,18 +68,13 @@ $(document).ready(function(){
            $('[data-toggle = "toolpit"]').tooltip();
        })
     $('body').on('change', '#zakaz-status', function () {
-        var value = $(this).val();
-        if (value == 8){
-            $('#autsors').css('display', 'block');
-        } else {
-            $('#autsors').css('display', 'none')
-                .prop('selectedIndex', 0);
-        }
+            $('#autsors')
+                .css({'display': ($(this).val() == 8 ? 'block' : 'none')})
+                .prop('selectedIndex', 0)
     });
     $('#zakaz-status').each(function () {
-        var value = $(this ).val();
-        if (value == 8){
-            $('#autsors').css('display', 'block');
+        if ($(this).val() == 8){
+            $('#autsors').css('display', 'block')
         } else {
             $('#autsors').css('display', 'none')
                 .prop('selectedIndex', 0);
