@@ -823,6 +823,7 @@ class ZakazController extends Controller
                         $model->unread(null, 'new', 'master', 0);
                         $user_id = User::USER_MASTER;
                     } else {
+                        $model->id_autsors = null;
                         $model->id_unread = 0;
                     }
                 }
