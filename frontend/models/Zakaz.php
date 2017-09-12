@@ -28,9 +28,9 @@ use yii\db\ActiveRecord;
  * @property string $img
  * @property string $maket
  * @property integer $time
+ * @property integer $id_autsors
  * @property integer $statusDisain
  * @property integer $statusMaster
- * @property string $data_start_disain
  * @property string $name
  * @property integer $phone
  * @property string $email
@@ -43,12 +43,14 @@ use yii\db\ActiveRecord;
  *
  * @property Comment[] $comments
  * @property Courier[] $couriers
+ * @property Financy[] $financies
  * @property Notification[] $notifications
  * @property Todoist[] $todoists
  * @property Client $idClient
  * @property Tovar $idTovar
  * @property User $idSotrud
  * @property Courier $idShipping
+ * @property Partners $idAutsors
  * @property mixed $tags
  * @property mixed uploadeFile
  *
@@ -101,7 +103,7 @@ class Zakaz extends ActiveRecord
     {
         return [
             self::SCENARIO_DECLINED => ['declined', 'required'],
-            self::SCENARIO_DEFAULT => ['srok', 'number', 'description', 'phone', 'id_sotrud','sotrud_name', 'id_shop','status', 'id_tovar', 'oplata', 'fact_oplata', 'number', 'statusDisain', 'statusMaster', 'img', 'id_shipping', 'id_tovar', 'id_unread', 'information', 'data', 'prioritet', 'phone', 'email', 'name', 'maket', 'time', 'renouncement'],
+            self::SCENARIO_DEFAULT => ['srok', 'number', 'description', 'phone', 'id_sotrud','sotrud_name', 'id_shop','status', 'id_tovar', 'oplata', 'fact_oplata', 'number', 'id_autsors','statusDisain', 'statusMaster', 'img', 'id_shipping', 'id_tovar', 'id_unread', 'information', 'data', 'prioritet', 'phone', 'email', 'name', 'maket', 'time', 'renouncement'],
         ];
     }
 
@@ -113,7 +115,7 @@ class Zakaz extends ActiveRecord
         return [
             [['srok', 'number', 'description', 'id_client'], 'required', 'on' => self::SCENARIO_DEFAULT],
             ['declined', 'required', 'message' => 'Введите причину отказа', 'on'=> self::SCENARIO_DECLINED],
-            [['id_zakaz', 'id_tovar', 'minut', 'time', 'number', 'status', 'action', 'id_sotrud', 'id_shop','phone', 'id_client','id_shipping' ,'prioritet', 'statusDisain', 'statusMaster', 'id_unread'], 'integer'],
+            [['id_zakaz', 'id_tovar', 'minut', 'time', 'number', 'status', 'action', 'id_sotrud', 'id_shop','phone', 'id_client','id_shipping' ,'prioritet', 'id_autsors','statusDisain', 'statusMaster', 'id_unread'], 'integer'],
             [['srok', 'data', 'data-start-disain', 'tags_array'], 'safe'],
             [['oplata', 'fact_oplata'], 'filter', 'filter' => function($value){
                 return str_replace(' ', '', $value);
@@ -129,6 +131,7 @@ class Zakaz extends ActiveRecord
             ['renouncement','string', 'max' => 250],
             [['email', 'name', 'img', 'maket', 'sotrud_name'],'string', 'max' => 50],
             [['file'], 'file', 'skipOnEmpty' => true],
+            [['id_autsors'], 'exist', 'skipOnError' => true, 'targetClass' => Partners::className(), 'targetAttribute' => ['id_autsors' => 'id']],
             [['id_sotrud'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['id_sotrud' => 'id']],
             [['id_tovar'], 'exist', 'skipOnError' => true, 'targetClass' => Tovar::className(), 'targetAttribute' => ['id_tovar' => 'id']],
             [['id_shipping'], 'exist', 'skipOnError' => true, 'targetClass' => Courier::className(), 'targetAttribute' => ['id_shipping' => 'id']],
@@ -159,6 +162,7 @@ class Zakaz extends ActiveRecord
             'img' => 'Приложение',
             'time' => 'Рекомендуемое время',
             'maket' => 'Макет дизайнера',
+            'id_autsors' => 'Id Autsors',
             'statusDisain' => 'Этап',
             'statusMaster' => 'Этап',
             'data_start_disain' => 'Дата начала',
@@ -176,6 +180,14 @@ class Zakaz extends ActiveRecord
             'search' => 'Search',
             'tags_array' => 'Тэги',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getFinancies()
+    {
+        return $this->hasMany(Financy::className(), ['id_zakaz' => 'id_zakaz']);
     }
 
     /**
@@ -213,6 +225,14 @@ class Zakaz extends ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getIdAutsors()
+    {
+        return $this->hasOne(Partners::className(), ['id' => 'id_autsors']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getZakazTag()
     {
         return $this->hasMany(ZakazTag::className(), ['zakaz_id' => 'id_zakaz']);
@@ -225,20 +245,6 @@ class Zakaz extends ActiveRecord
     {
         return $this->hasMany(Tag::className(), ['id' => 'tag_id'])->via('zakazTag');
     }
-
-//    /**
-//     * @return \yii\db\ActiveQuery
-//     */
-//
-//    public static function getSotrudList()
-//    {
-//        $sotruds = Otdel::find()
-//        ->select(['otdel.id','otdel.fio'])
-//        ->join('JOIN','zakaz', 'zakaz.id_sotrud = otdel.id')
-//        ->all();
-//
-////        return ArrayHelper::map($sotruds, 'id', 'fio');
-//    }
 
     /**
      * @return array
@@ -383,6 +389,9 @@ class Zakaz extends ActiveRecord
         return $this->tags_array = $this->tags;
     }
 
+    /**
+     * edit status, statusIspol and id_unread on certain conditions
+     */
     public function unread($status = null, $statusIspol = null, $role = null, $id_unread)
     {
         switch ($status){
