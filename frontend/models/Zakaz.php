@@ -35,7 +35,6 @@ use yii\db\ActiveRecord;
  * @property integer $phone
  * @property string $email
  * @property integer $id_client,
- * @property string $comment
  * @property integer $id_shipping
  * @property string $declined
  * @property integer $id_unread
@@ -121,7 +120,7 @@ class Zakaz extends ActiveRecord
                 return str_replace(' ', '', $value);
             }],
             [['oplata', 'fact_oplata'], 'number'],
-            [['information', 'comment', 'search', 'declined'], 'string'],
+            [['information', 'search', 'declined'], 'string'],
             ['prioritet', 'default', 'value' => 0],
             ['status', 'default', 'value' => self::STATUS_NEW],
             ['id_sotrud', 'default', 'value' => Yii::$app->user->getId()],
@@ -165,14 +164,12 @@ class Zakaz extends ActiveRecord
             'id_autsors' => 'Id Autsors',
             'statusDisain' => 'Этап',
             'statusMaster' => 'Этап',
-            'data_start_disain' => 'Дата начала',
             'file' => 'Файл',
             'information' => 'Дополнительная информация',
             'name' => 'Клиент',
             'phone' => 'Телефон',
             'email' => 'Email',
             'id_client' => '№ клиента',
-            'comment' => 'Комментарий',
             'id_shipping' => 'Доставка',
             'declined' => 'Причина отказа',
             'id_unread' => 'Id unread',
