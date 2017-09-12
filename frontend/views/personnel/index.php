@@ -4,6 +4,7 @@ use app\models\Personnel;
 use kartik\widgets\Alert;
 use yii\grid\GridView;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Html;
 use yii\widgets\Pjax;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\PersonnelSearch */
@@ -54,17 +55,25 @@ $this->title = 'Контакты';
 //            ],
 //        ],
 //    ]); ?>
-    <?php  ?>
-    
-    <?php  ?>
+    <h3><?php echo Html::encode('Магазины') ?></h3>
+    <table>
+        <?php foreach (Personnel::getShop() as $shop){
+            echo '<tr>
+                <td style="padding: 8px">'.ArrayHelper::getValue($shop, 'Название').' ('.ArrayHelper::getValue($shop, 'Адрес').')</td>
+                <td style="padding: 8px;width: 374px;text-align: right">'.ArrayHelper::getValue($shop, 'Телефон').'</td>
+            </tr>';
+        } ?>
+    </table>
+    <h3><?php echo Html::encode('Штат') ?></h3>
     <table>
         <?php foreach(Personnel::getSotrud() as $sotrud) {
             echo '<tr>
-            <td style="padding: 8px">' . ArrayHelper::getValue($sotrud, 'Должность') . '</td>
-            <td style="padding: 8px">' . ArrayHelper::getValue($sotrud, 'Имя') . '</td>
-            <td style="padding: 8px">' . ArrayHelper::getValue($sotrud, 'Телефон') . '</td>
-            <td style="padding: 8px">' . ArrayHelper::getValue($sotrud, 'График работы') . '</td>
-            <td style="padding: 8px">' . ArrayHelper::getValue($sotrud, 'Вопросы') . '</td>
+            <td style="padding: 8px;white-space: normal;width: 250px">' . ArrayHelper::getValue($sotrud, 'Должность') . '</td>
+            <td style="padding: 8px;width: 210px">' . ArrayHelper::getValue($sotrud, 'Имя') . '</td>
+            <td style="padding: 8px;width: 100px">' . ArrayHelper::getValue($sotrud, 'Телефон') . '</td>
+            <td style="padding: 8px">' . ArrayHelper::getValue($sotrud, 'Магазин') . '</td>
+            <td style="padding: 8px;width: 70px;">' . ArrayHelper::getValue($sotrud, 'График работы') . '</td>
+            <td style="padding: 8px;white-space: normal">' . ArrayHelper::getValue($sotrud, 'Вопросы') . '</td>
             </tr>';
         }?>
     </table>
