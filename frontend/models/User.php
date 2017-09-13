@@ -93,9 +93,9 @@ class User extends \yii\db\ActiveRecord
             'name' => 'Name',
             'telegram_chat_id' => 'Chat Id',
             'telegram_token' => 'Token',
-            'address' => 'Address',
-            'otdel_id' => 'Otdel ID',
-            'phone' => 'Phone',
+            'address' => 'Адрес',
+            'otdel_id' => 'Отдел',
+            'phone' => 'Телефон',
         ];
     }
 
