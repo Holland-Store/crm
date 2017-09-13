@@ -11,7 +11,9 @@ use Yii;
  * @property string $start
  * @property string $end
  * @property integer $id_sotrud
+ * @property integer $id_user
  *
+ * @property User $idUser
  * @property Personnel $idSotrud
  */
 class Shifts extends \yii\db\ActiveRecord
@@ -31,8 +33,8 @@ class Shifts extends \yii\db\ActiveRecord
     {
         return [
             [['start', 'end'], 'safe'],
-            [['end', 'id_sotrud'], 'required'],
-            [['id_sotrud'], 'integer'],
+            [['id_sotrud', 'id_user'], 'integer'],
+            [['id_user'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['id_user' => 'id']],
             [['id_sotrud'], 'exist', 'skipOnError' => true, 'targetClass' => Personnel::className(), 'targetAttribute' => ['id_sotrud' => 'id']],
         ];
     }
@@ -47,7 +49,16 @@ class Shifts extends \yii\db\ActiveRecord
             'start' => 'Start',
             'end' => 'End',
             'id_sotrud' => 'Id Sotrud',
+            'id_user' => 'Id User',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getIdUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'id_user']);
     }
 
     /**
