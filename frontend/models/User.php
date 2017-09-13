@@ -2,6 +2,8 @@
 
 namespace app\models;
 
+use yii\helpers\ArrayHelper;
+
 
 /**
  * This is the model class for table "user".
@@ -28,6 +30,7 @@ namespace app\models;
  * @property Custom[] $customs
  * @property Helpdesk[] $helpdesks
  * @property Notification[] $notifications
+ * @property Shifts[] $shifts
  * @property Todoist[] $todoists
  * @property Todoist[] $todoists0
  * @property Otdel $otdel
@@ -169,5 +172,38 @@ class User extends \yii\db\ActiveRecord
     public function getZakazs()
     {
         return $this->hasMany(Zakaz::className(), ['id_sotrud' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getShifts()
+    {
+        return $this->hasMany(Shifts::className(), ['id_user' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getShiftSotrud()
+    {
+        return $this->hasMany(Personnel::className(), ['id' => 'id_sotrud'])->via('shifts');
+    }
+
+    public function getPersonnelAsString()
+    {
+        $arr = \app\models\Shifts::find()->andWhere(['id_user' => $this->id])
+            ->andWhere(['between', 'start', date('Y-m-d 00:00:00'), date('Y-m-d 23:59:59')])
+            ->andWhere(['end' => '0000-00-00 00:00:00'])
+            ->all();
+        $sotrud = ArrayHelper::map($arr, 'id', 'id_sotrud');
+        $user = \app\models\Shifts::findOne(['id_sotrud' => $sotrud]);
+        $arr = [];
+        foreach ($sotrud as $key => $id_sotrud){
+            $user = \app\models\Shifts::findOne(['id_sotrud' => $id_sotrud]);
+            $user->idSotrud->name;
+            $arr[] .= $user->idSotrud->nameSotrud;
+        }
+        return implode(', ', $arr);
     }
 }
