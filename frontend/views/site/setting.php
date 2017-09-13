@@ -5,6 +5,7 @@ use kartik\detail\DetailView;
 use yii\helpers\ArrayHelper;
 
 /* @var $model \app\models\User */
+/* @var $sotrud \app\models\Shifts */
 ?>
 <a href="http://telegram.me/HollandSotrudbot?start=<?= $model->telegram_token; ?>" target="_blank" class="black-btn btn-lg">
     <i class="fa fa-paper-plane"></i> Подключить
@@ -33,5 +34,6 @@ use yii\helpers\ArrayHelper;
             'value' =>  ArrayHelper::getValue($model, 'idOtdel.id'),
             'label' => '№ отдела',
         ],
+        'personnelAsString',
     ]
 ]) ?>
