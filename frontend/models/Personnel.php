@@ -50,6 +50,7 @@ class Personnel extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'last_name' => 'Фамилия',
+            'name' => 'Имя',
             'nameSotrud' => 'Фамилия и имя',
             'phone' => 'Телефон',
             'action' => 'Action',
