@@ -3,6 +3,7 @@
 namespace app\models;
 
 use yii\helpers\ArrayHelper;
+use app\models\Shifts;
 
 
 /**
@@ -19,7 +20,7 @@ use yii\helpers\ArrayHelper;
  * @property integer $updated_at
  * @property string $name
  * @property string $telegram_chat_id
- * @property string $token
+ * @property string $telegram_token
  * @property string $address
  * @property integer $otdel_id
  * @property string $phone
@@ -192,10 +193,7 @@ class User extends \yii\db\ActiveRecord
 
     public function getPersonnelAsString()
     {
-        $arr = \app\models\Shifts::find()->andWhere(['id_user' => $this->id])
-            ->andWhere(['between', 'start', date('Y-m-d 00:00:00'), date('Y-m-d 23:59:59')])
-            ->andWhere(['end' => '0000-00-00 00:00:00'])
-            ->all();
+        $arr = Shifts::find()->Shifts($this->id)->all();
         $sotrud = ArrayHelper::map($arr, 'id', 'id_sotrud');
         $user = \app\models\Shifts::findOne(['id_sotrud' => $sotrud]);
         $arr = [];
