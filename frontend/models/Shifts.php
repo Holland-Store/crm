@@ -2,7 +2,7 @@
 
 namespace app\models;
 
-use Yii;
+use app\models\query\ShiftsQuery;
 
 /**
  * This is the model class for table "shifts".
@@ -67,5 +67,14 @@ class Shifts extends \yii\db\ActiveRecord
     public function getIdSotrud()
     {
         return $this->hasOne(Personnel::className(), ['id' => 'id_sotrud']);
+    }
+
+    /**
+     * @inheritdoc
+     * @return ShiftsQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new ShiftsQuery(get_called_class());
     }
 }
