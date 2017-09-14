@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use app\models\Shifts;
 use app\models\User;
 use Yii;
 use yii\base\InvalidParamException;
@@ -194,7 +195,14 @@ class SiteController extends Controller
     public function actionSetting($id)
     {
         $model = User::findOne($id);
-        return $this->render('setting', ['model' => $model]);
+        $sotrud = new Shifts();
+        $shifts = Shifts::find()->Shifts($model->id)->all();
+
+        return $this->render('setting', [
+            'model' => $model,
+            'sotrud' => $sotrud,
+            'shifts' => $shifts,
+        ]);
 
     }
 
