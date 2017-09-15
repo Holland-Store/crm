@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use app\models\Personnel;
 use app\models\Shifts;
 use app\models\User;
 use Yii;
@@ -90,24 +91,24 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
-        $routes = [
-            'shop' => ['zakaz/shop'],
-            'disain' => ['zakaz/disain'],
-            'master' => ['zakaz/master'],
-            'admin' => ['zakaz/admin'],
-            'courier' => ['courier/index'],
-            'program' => ['zakaz/program'],
-            'zakup' => ['custom/index'],
-            'system' => ['helpdesk/index'],
-            ];
-
-        if (!Yii::$app->user->isGuest) {
-            foreach ($routes as $key => $value) {
-                if (Yii::$app->user->can($key)) {
-                    return $this->redirect($value);
-                }
-            }
-        }
+//        $routes = [
+//            'shop' => ['zakaz/shop'],
+//            'disain' => ['zakaz/disain'],
+//            'master' => ['zakaz/master'],
+//            'admin' => ['zakaz/admin'],
+//            'courier' => ['courier/index'],
+//            'program' => ['zakaz/program'],
+//            'zakup' => ['custom/index'],
+//            'system' => ['helpdesk/index'],
+//            ];
+//
+//        if (!Yii::$app->user->isGuest) {
+//            foreach ($routes as $key => $value) {
+//                if (Yii::$app->user->can($key)) {
+//                    return $this->redirect($value);
+//                }
+//            }
+//        }
 
         $model = new LoginForm();
 
@@ -115,11 +116,12 @@ class SiteController extends Controller
             $id_user = Yii::$app->user->identity->getId();
 
 
-            foreach ($routes as $key => $value) {
-                if (Yii::$app->user->can($key)) {
-                    return $this->redirect($value);
-                }
-            }
+            return $this->redirect(['personnel/index', 'id' => $id_user]);
+//            foreach ($routes as $key => $value) {
+//                if (Yii::$app->user->can($key)) {
+//                    return $this->redirect($value);
+//                }
+//            }
         } else {
             return $this->render('login', [
                 'model' => $model,
@@ -197,11 +199,13 @@ class SiteController extends Controller
         $model = User::findOne($id);
         $sotrud = new Shifts();
         $shifts = Shifts::find()->Shifts($model->id)->all();
+        $personnel = new Personnel();
 
         return $this->render('setting', [
             'model' => $model,
             'sotrud' => $sotrud,
             'shifts' => $shifts,
+            'personnel' => $personnel,
         ]);
 
     }
