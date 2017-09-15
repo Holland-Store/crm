@@ -5,6 +5,7 @@ use kartik\widgets\Alert;
 use yii\grid\GridView;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\Pjax;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\PersonnelSearch */
@@ -13,6 +14,25 @@ use yii\widgets\Pjax;
 $this->title = 'Контакты';
 ?>
 <div class="personnel-index">
+
+    <?php if (Yii::$app->user->can('admin')): ?>
+        <?= Html::a(Html::encode('OK'), Url::to(['zakaz/admin']), ['class' => 'btn action']) ?>
+    <?php endif; ?>
+    <?php if (Yii::$app->user->can('shop')): ?>
+        <?= Html::a(Html::encode('OK') , Url::to(['zakaz/shop']), ['class' => 'btn action']) ?>
+    <?php endif; ?>
+    <?php if (Yii::$app->user->can('disain')): ?>
+        <?= Html::a(Html::encode('OK') ,Url::to(['zakaz/disain']), ['class' => 'btn action']) ?>
+    <?php endif; ?>
+    <?php if (Yii::$app->user->can('master')): ?>
+        <?= Html::a(Html::encode('OK') , Url::to(['zakaz/master']), ['class' => 'btn action']) ?>
+    <?php endif; ?>
+    <?php if (Yii::$app->user->can('system')): ?>
+        <?= Html::a(Html::encode('OK') , Url::to(['helpdesk/index']), ['class' => 'btn action']) ?>
+    <?php endif; ?>
+    <?php if (Yii::$app->user->can('zakup')): ?>
+        <?= Html::a(Html::encode('OK') , Url::to(['custom/index']), ['class' => 'btn action']) ?>
+    <?php endif; ?>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
