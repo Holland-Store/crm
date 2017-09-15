@@ -39,10 +39,7 @@ AppAsset::register($this);
 <?php if (!Yii::$app->user->isGuest): ?>
     <div class="logo"></div>
 <?php echo '<h1 class="titleMain">'.Html::encode($this->title).'</h1>' ?>
-    <?php if(Yii::$app->controller->id != Yii::$app->defaultRoute
-        && Yii::$app->controller->action->id != Yii::$app->controller->defaultAction): ?>
     <?= Counter::widget() ?>
-    <?php endif; ?>
 <?php endif ?>
     <?php $counts = '<span class="glyphicon glyphicon-bell" style="font-size:21px"></span><span class="badge pull-right">'.$this->params['count'].'</span>'; ?>
     <?php
