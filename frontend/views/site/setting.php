@@ -3,6 +3,7 @@
 /* @var $model \app\models\User */
 /* @var $sotrud \app\models\Shifts */
 /* @var $shifts \app\models\Shifts */
+/** @var $personnel \app\models\Personnel */
 /** @var array $shifts */
 
 use app\models\Personnel;
@@ -43,10 +44,11 @@ use yii\helpers\Html;
     ]
 ]) ?>
 
-<?= Html::submitButton('Начать смену', ['class' => 'btn action']); ?>
+<?= Html::submitButton('Начать смену', ['class' => 'btn action startShift']); ?>
 <?php if($shifts != null): ?>
-<?= Html::submitButton('Закончить смену', ['class' => 'btn action']); ?>
+<?= Html::submitButton('Закончить смену', ['class' => 'btn action endShift']); ?>
 <?php endif; ?>
+<div class="form-shiftStart">
 <?php $form = ActiveForm::begin([
         'id' => 'form-startShift'
 ]); ?>
@@ -56,7 +58,11 @@ use yii\helpers\Html;
         'prompt' => 'Выберите сотрудника',
     ])->label(false) ?>
 
+<?= $form->field($personnel, 'password')->passwordInput()->label(false) ?>
+
 <?php ActiveForm::end(); ?>
+</div>
+<div class="form-shiftEnd">
 <?php $form = ActiveForm::begin([
     'id' => 'form-endShift'
 ]); ?>
@@ -64,5 +70,7 @@ use yii\helpers\Html;
     [
         'prompt' => 'Выберите сотрудника',
     ])->label(false) ?>
+<?= $form->field($personnel, 'password')->passwordInput()->label(false) ?>
 
 <?php ActiveForm::end(); ?>
+</div>
