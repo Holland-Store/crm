@@ -1081,4 +1081,10 @@ body {
   .zakaz-form .managmentZakaz h3 {
     padding-left: 12px; }
 
+.form-shiftEnd, .form-shiftStart {
+  display: none; }
+
+.visibleForm {
+  display: block; }
+
 /*# sourceMappingURL=style.css.map */

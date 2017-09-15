@@ -1606,3 +1606,13 @@ body {
 .zakaz-form .managmentZakaz h3 {
   padding-left: 12px;
 }
+
+/* line 188, ../sass/style.scss */
+.form-shiftEnd, .form-shiftStart {
+  display: none;
+}
+
+/* line 192, ../sass/style.scss */
+.visibleForm {
+  display: block;
+}

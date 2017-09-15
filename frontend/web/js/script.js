@@ -80,5 +80,13 @@ $(document).ready(function(){
                 .prop('selectedIndex', 0);
         }
     });
+    $('.startShift').click(function () {
+        $('#form-startShift')[0].reset();
+        $('.form-shiftStart').toggleClass('visibleForm');
+    });
+    $('.endShift').click(function () {
+        $('#form-endShift')[0].reset();
+        $('.form-shiftEnd').toggleClass('visibleForm');
+    })
 });
 
