@@ -111,7 +111,7 @@ class SiteController extends Controller
             $id_user = Yii::$app->user->identity->getId();
 
 
-            return $this->redirect(['personnel/index', 'id' => $id_user]);
+            return $this->redirect(['site/index', 'id' => $id_user]);
 //            foreach ($routes as $key => $value) {
 //                if (Yii::$app->user->can($key)) {
 //                    return $this->redirect($value);
