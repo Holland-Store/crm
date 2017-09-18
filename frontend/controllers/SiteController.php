@@ -29,7 +29,7 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout', 'signup'],
+                'only' => ['login', 'logout', 'signup'],
                 'rules' => [
                     [
                         'actions' => ['signup'],
@@ -46,6 +46,11 @@ class SiteController extends Controller
                         'allow' => true,
                         'roles' => ['@'],
                     ],
+                    [
+                        'actions' => ['login'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ]
                 ],
             ],
             'verbs' => [
@@ -80,8 +85,8 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->redirect(['login']);
-        // return $this->render('index');
+//        return $this->redirect(['login']);
+         return $this->render('index');
     }
 
     /**
@@ -91,24 +96,24 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
-//        $routes = [
-//            'shop' => ['zakaz/shop'],
-//            'disain' => ['zakaz/disain'],
-//            'master' => ['zakaz/master'],
-//            'admin' => ['zakaz/admin'],
-//            'courier' => ['courier/index'],
-//            'program' => ['zakaz/program'],
-//            'zakup' => ['custom/index'],
-//            'system' => ['helpdesk/index'],
-//            ];
-//
-//        if (!Yii::$app->user->isGuest) {
-//            foreach ($routes as $key => $value) {
-//                if (Yii::$app->user->can($key)) {
-//                    return $this->redirect($value);
-//                }
-//            }
-//        }
+        $routes = [
+            'shop' => ['zakaz/shop'],
+            'disain' => ['zakaz/disain'],
+            'master' => ['zakaz/master'],
+            'admin' => ['zakaz/admin'],
+            'courier' => ['courier/index'],
+            'program' => ['zakaz/program'],
+            'zakup' => ['custom/index'],
+            'system' => ['helpdesk/index'],
+            ];
+
+        if (!Yii::$app->user->isGuest) {
+            foreach ($routes as $key => $value) {
+                if (Yii::$app->user->can($key)) {
+                    return $this->redirect(['site/index']);
+                }
+            }
+        }
 
         $model = new LoginForm();
 
@@ -208,11 +213,6 @@ class SiteController extends Controller
             'personnel' => $personnel,
         ]);
 
-    }
-
-    public function actionTelegram()
-    {
-        return $this->redirect('https://telegram.me/HollandSotrudbot');
     }
 
     /**
