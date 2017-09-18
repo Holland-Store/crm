@@ -119,6 +119,10 @@ class RbacController extends Controller
 		$auth->addChild($prog, $zakup);
 		$auth->addChild($prog, $system);
 
+		$manager = $auth->createRole('manager');
+		$auth->add($manager);
+		$auth->addChild($manager,$admin);
+
 		$auth->assign($zakup, User::USER_ZAKUP);
 		$auth->assign($system, User::USER_SYSTEM);
         $auth->assign($courier, User::USER_COURIER);
