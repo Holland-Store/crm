@@ -68,12 +68,17 @@ class RbacController extends Controller
         $todoist->description = 'Видят задачник';
         $auth->add($todoist);
 
+        $seeManager = $auth->createPermission('seeManager');
+        $seeManager->description = 'Видят управляющие';
+        $auth->add($seeManager);
+
         $admin = $auth->createRole('admin');
         $auth->add($admin);
         $auth->addChild($admin, $seeAdmin);
         $auth->addChild($admin, $seeDisain);
         $auth->addChild($admin, $seeAdop);
         $auth->addChild($admin, $seeCourier);
+        $auth->addChild($admin, $seeManager);
 
         $shop = $auth->createRole('shop');
         $auth->add($shop);
@@ -121,7 +126,7 @@ class RbacController extends Controller
 
 		$manager = $auth->createRole('manager');
 		$auth->add($manager);
-		$auth->addChild($manager,$admin);
+		$auth->addChild($manager, $admin);
 
 		$auth->assign($zakup, User::USER_ZAKUP);
 		$auth->assign($system, User::USER_SYSTEM);
