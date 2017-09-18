@@ -87,6 +87,7 @@ AppAsset::register($this);
                 ]);
         echo Html::a('Настройки', ['/site/setting', 'id' => Yii::$app->user->identity->id]).'<br>';
         echo Html::a('Контакты', ['/personnel/index']).'<br>';
+        echo Html::a('Инфорстенд', ['/site/index']).'<br>';
 
         echo Html::beginForm(['/site/logout'], 'post');
         echo Html::submitButton('Выход '.Html::tag('span', '', ['class' => 'glyphicon glyphicon-lock']), ['class' => 'btn btn-primary']);
