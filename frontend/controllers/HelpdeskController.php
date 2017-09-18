@@ -34,30 +34,15 @@ class HelpdeskController extends Controller
 				'class' => AccessControl::className(),
 				'rules' => [
 					[
-    					'actions' => ['index'],
+    					'actions' => ['index', 'create', 'approved', 'declined-help'],
     					'allow' => true,
-    					'roles' => ['admin', 'disain', 'master', 'system', 'zakup', 'shop'],
+    					'roles' => ['admin', 'disain', 'master', 'system', 'zakup', 'shop', 'manager'],
 					],
-                    [
-                        'actions' => ['create'],
-                        'allow' => true,
-                        'roles' => ['admin', 'disain', 'master', 'zakup', 'shop'],
-                    ],
 					[
 						'actions' => ['close'],
 						'allow' => true,
 						'roles' => ['system'],
 					],
-                    [
-						'actions' => ['approved'],
-						'allow' => true,
-						'roles' => ['admin', 'disain', 'master', 'zakup', 'shop'],
-					],
-                    [
-						'actions' => ['declined-help'],
-						'allow' => true,
-						'roles' => ['admin', 'disain', 'master', 'zakup', 'shop'],
-					]
 				]
 			]
         ];
