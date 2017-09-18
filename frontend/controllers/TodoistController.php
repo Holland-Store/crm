@@ -36,7 +36,7 @@ class TodoistController extends Controller
 					[
     					'actions' => ['index'],
     					'allow' => true,
-    					'roles' => ['admin', 'program'],
+    					'roles' => ['admin', 'program', 'manager'],
 					],
 					[
     					'actions' => ['shop'],
