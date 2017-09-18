@@ -78,7 +78,9 @@ $this->title = 'Все задачи';
         'headerRowOptions' => ['class' => 'headerTable'],
         'pjax' => true,
         'tableOptions' 	=> ['class' => 'table table-bordered tableSize'],
-        'rowOptions' => ['class' => 'trTable trNormal'],
+        'rowOptions' => function($model){
+                return $model->srok <= date('Y-m-d') ? ['class' => 'trTable trNormal'] : ['class' => 'trTable trNormal trTablePass'];
+        },
         'striped' => false,
         'columns' => [
             [
@@ -146,7 +148,9 @@ $this->title = 'Все задачи';
             'headerRowOptions' => ['class' => 'headerTable'],
             'pjax' => true,
             'tableOptions' 	=> ['class' => 'table table-bordered tableSize'],
-            'rowOptions' => ['class' => 'trTable trNormal'],
+            'rowOptions' => function($model){
+                return $model->srok <= date('Y-m-d') ? ['class' => 'trTable trNormal'] : ['class' => 'trTable trNormal trTablePass'];
+            },
             'striped' => false,
             'columns' => [
                 [
