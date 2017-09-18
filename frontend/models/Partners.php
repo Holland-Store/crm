@@ -10,6 +10,10 @@ namespace app\models;
  * @property string $name
  * @property string $address
  * @property string $phone
+ * @property string $contact_person
+ * @property string $email
+ * @property string $web
+ * @property string $specialization
  * @property integer $active
  */
 class Partners extends \yii\db\ActiveRecord
@@ -30,7 +34,7 @@ class Partners extends \yii\db\ActiveRecord
         return [
             [['name', 'active'], 'required'],
             [['active'], 'integer'],
-            [['name'], 'string', 'max' => 50],
+            [['name', 'contact_person', 'email', 'web', 'specialization'], 'string', 'max' => 50],
             [['address'], 'string', 'max' => 86],
             [['phone'], 'string', 'max' => 15],
         ];
@@ -46,6 +50,10 @@ class Partners extends \yii\db\ActiveRecord
             'name' => 'Наименование',
             'address' => 'Адрес',
             'phone' => 'Телефон',
+            'email' => 'Телефон',
+            'web' => 'Телефон',
+            'specialization' => 'Телефон',
+            'contact_person' => 'Контактное лицо',
             'active' => 'Active',
         ];
     }
