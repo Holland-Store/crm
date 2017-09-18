@@ -102,10 +102,11 @@ $this->title = 'Все задачи';
                         return Html::tag('span', Html::encode('Отклонено'), [
                            'class' => 'declined'
                         ]);
+                    } elseif($model->id_user == Yii::$app->user->id) {
+                        return Html::a(Html::encode('Принять'), ['close', 'id' => $model->id], ['class' => 'accept']);
                     } else {
                         return false;
                     }
-
                 }
             ],
             [
@@ -190,7 +191,7 @@ $this->title = 'Все задачи';
                                     'method' => 'post',
                                 ]
                             ]);
-                        } elseif($model->activate == Todoist::COMPLETED) {
+                        } elseif($model->activate == Todoist::COMPLETED ) {
                             return Html::encode('На проверке');
                         } else {
                             return Html::tag('span', 'Отклонить', [
