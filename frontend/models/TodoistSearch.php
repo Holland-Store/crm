@@ -53,10 +53,10 @@ class TodoistSearch extends Todoist
                 $query = $query->where(['activate' => 1]);
                 break;
             case 'admin-their':
-                $query = $query->andWhere(['activate' => [Todoist::ACTIVE, Todoist::COMPLETED, Todoist::REJECT], 'id_sotrud_put' => User::USER_ADMIN]);
+                $query = $query->andWhere(['activate' => [Todoist::ACTIVE, Todoist::COMPLETED, Todoist::REJECT], 'id_sotrud_put' => Yii::$app->user->id]);
                 break;
             case 'admin-alien':
-                $query = $query->andWhere(['<>', 'id_sotrud_put', User::USER_ADMIN])
+                $query = $query->andWhere(['<>', 'id_sotrud_put', Yii::$app->user->id])
                                 ->andWhere(['activate' => [Todoist::ACTIVE, Todoist::COMPLETED, Todoist::REJECT ]]);
                 break;
             case 'shop-their':
