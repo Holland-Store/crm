@@ -33,6 +33,9 @@ $this->title = 'Главная страница';
         <?php if (Yii::$app->user->can('courier')): ?>
             <?= Html::a(Html::encode('ОК'), ['courier/index'], ['class' => 'btn btn-lg action']) ?>
         <?php endif; ?>
+        <?php if (Yii::$app->user->can('manager')): ?>
+            <?= Html::a(Html::encode('ОК'), ['zakaz/index'], ['class' => 'btn btn-lg action']) ?>
+        <?php endif; ?>
         </p>
     </div>
 
