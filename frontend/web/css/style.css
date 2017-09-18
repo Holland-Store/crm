@@ -1616,3 +1616,8 @@ body {
 .visibleForm {
   display: block;
 }
+
+/* line 198, ../sass/style.scss */
+.srokIndex tr td {
+  padding: 8px;
+}
