@@ -35,22 +35,12 @@ class ClientController extends Controller
                     [
                         'actions' => ['index'],
                         'allow' => true,
-                        'roles' => ['program']
+                        'roles' => ['program', 'manager']
                     ],
                     [
-                        'actions' => ['create'],
+                        'actions' => ['create', 'update', 'view'],
                         'allow' => true,
-                        'roles' => ['shop', 'admin'],
-                    ],
-                    [
-                        'actions' => ['update'],
-                        'allow' => true,
-                        'roles' => ['shop', 'admin'],
-                    ],
-                    [
-                        'actions' => ['view'],
-                        'allow' => true,
-                        'roles' => ['shop', 'admin'],
+                        'roles' => ['shop', 'admin' ],
                     ],
                 ],
             ],

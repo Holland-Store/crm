@@ -48,19 +48,9 @@ class ZakazController extends Controller
                         'roles' => ['@'],
                     ],
                     [
-                        'actions' => ['create'],
+                        'actions' => ['create', 'close', 'renouncement', 'update'],
                         'allow' => true,
                         'roles' => ['shop', 'admin', 'program'],
-                    ],
-                    [
-                        'actions' => ['delete'],
-                        'allow' => true,
-                        'roles' => ['admin', 'program'],
-                    ],
-                    [
-                        'actions' => ['update'],
-                        'allow' => true,
-                        'roles' => ['admin', 'disain', 'master', 'program', 'shop'],
                     ],
                     [
                         'actions' => ['view'],
@@ -68,44 +58,24 @@ class ZakazController extends Controller
                         'roles' => ['admin', 'disain', 'master', 'program', 'shop', 'zakup'],
                     ],
                     [
-                        'actions' => ['check'],
+                        'actions' => ['check', 'master', 'adopmaster'],
                         'allow' => true,
                         'roles' => ['master', 'program'],
                     ],
                     [
-                        'actions' => ['uploadedisain'],
+                        'actions' => ['uploadedisain', 'disain', 'ready','statusdisain', 'adopdisain', 'reconcilation'],
                         'allow' => true,
                         'roles' => ['disain', 'program'],
                     ],
                     [
-                        'actions' => ['close'],
-                        'allow' => true,
-                        'roles' => ['admin', 'program', 'shop'],
-                    ],
-                    [
-                        'actions' => ['restore'],
+                        'actions' => ['restore', 'admin', 'comment','zakaz', 'archive', 'adopted', 'zakazedit'],
                         'allow' => true,
                         'roles' => ['admin', 'program'],
                     ],
                     [
-                        'actions' => ['admin'],
-                        'allow' => true,
-                        'roles' => ['admin', 'program'],
-                    ],
-                    [
-                        'actions' => ['shop'],
+                        'actions' => ['shop', 'closezakaz'],
                         'allow' => true,
                         'roles' => ['shop', 'program'],
-                    ],
-                    [
-                        'actions' => ['disain'],
-                        'allow' => true,
-                        'roles' => ['disain', 'program'],
-                    ],
-                    [
-                        'actions' => ['master'],
-                        'allow' => true,
-                        'roles' => ['master', 'program'],
                     ],
                     [
                         'actions' => ['courier'],
@@ -113,62 +83,7 @@ class ZakazController extends Controller
                         'roles' => ['courier', 'program'],
                     ],
                     [
-                        'actions' => ['archive'],
-                        'allow' => true,
-                        'roles' => ['admin', 'program'],
-                    ],
-                    [
-                        'actions' => ['closezakaz'],
-                        'allow' => true,
-                        'roles' => ['shop', 'program'],
-                    ],
-                    [
-                        'actions' => ['ready'],
-                        'allow' => true,
-                        'roles' => ['disain', 'program'],
-                    ],
-                    [
-                        'actions' => ['adopted'],
-                        'allow' => true,
-                        'roles' => ['admin', 'program'],
-                    ],
-                    [
-                        'actions' => ['adopdisain'],
-                        'allow' => true,
-                        'roles' => ['disain', 'program'],
-                    ],
-                    [
-                        'actions' => ['adopmaster'],
-                        'allow' => true,
-                        'roles' => ['master', 'program'],
-                    ],
-                    [
-                        'actions' => ['statusdisain'],
-                        'allow' => true,
-                        'roles' => ['disain', 'program'],
-                    ],
-                    [
-                        'actions' => ['zakazedit'],
-                        'allow' => true,
-                        'roles' => ['admin', 'program'],
-                    ],
-                    [
-                        'actions' => ['zakaz'],
-                        'allow' => true,
-                        'roles' => ['admin', 'program'],
-                    ],
-                    [
-                        'actions' => ['comment'],
-                        'allow' => true,
-                        'roles' => ['admin', 'program'],
-                    ],
-                    [
-                        'actions' => ['declined'],
-                        'allow' => true,
-                        'roles' => ['admin']
-                    ],
-                    [
-                        'actions' => ['accept'],
+                        'actions' => ['declined', 'accept', 'fulfilled'],
                         'allow' => true,
                         'roles' => ['admin']
                     ],
@@ -176,21 +91,6 @@ class ZakazController extends Controller
                         'actions' => ['refusing'],
                         'allow' => true,
                         'roles' => ['seeAdop']
-                    ],
-                    [
-                        'actions' => ['fulfilled'],
-                        'allow' => true,
-                        'roles' => ['admin']
-                    ],
-                    [
-                        'actions' => ['reconcilation'],
-                        'allow' => true,
-                        'roles' => ['disain']
-                    ],
-                    [
-                        'actions' => ['renouncement'],
-                        'allow' => true,
-                        'roles' => ['shop', 'admin']
                     ]
                 ],
             ],
