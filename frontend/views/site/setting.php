@@ -3,8 +3,9 @@
 /* @var $model \app\models\User */
 /* @var $sotrud \app\models\Shifts */
 /* @var $shifts \app\models\Shifts */
-/** @var $personnel \app\models\Personnel */
-/** @var array $shifts */
+/* @var $personnel \app\models\Personnel */
+/* @var $formSotrud \app\models\SotrudForm */
+/* @var array $shifts */
 
 use app\models\Personnel;
 use kartik\detail\DetailView;
@@ -50,15 +51,18 @@ use yii\helpers\Html;
 <?php endif; ?>
 <div class="form-shiftStart">
 <?php $form = ActiveForm::begin([
-        'id' => 'form-startShift'
+        'id' => 'form-startShift',
+//        'action' => ['personnel/shifts', 'id' => Yii::$app->user->id],
 ]); ?>
 
-<?= $form->field($sotrud, 'id_sotrud')->dropDownList(ArrayHelper::map(Personnel::find()->where(['action' => 0])->all(), 'id', 'nameSotrud'),
+<?= $form->field($formSotrud, 'sotrud')->dropDownList(ArrayHelper::map(Personnel::find()->where(['action' => 0])->all(), 'id', 'nameSotrud'),
     [
         'prompt' => 'Выберите сотрудника',
     ])->label(false) ?>
 
-<?= $form->field($personnel, 'password')->passwordInput()->label(false) ?>
+<?= $form->field($formSotrud, 'password')->passwordInput()->label(false) ?>
+
+<?= Html::submitButton('Начать', ['class' => 'btn action']) ?>
 
 <?php ActiveForm::end(); ?>
 </div>
