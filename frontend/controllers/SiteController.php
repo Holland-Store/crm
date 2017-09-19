@@ -3,6 +3,7 @@ namespace frontend\controllers;
 
 use app\models\Personnel;
 use app\models\Shifts;
+use app\models\SotrudForm;
 use app\models\User;
 use Yii;
 use yii\base\InvalidParamException;
@@ -195,12 +196,18 @@ class SiteController extends Controller
         $sotrud = new Shifts();
         $shifts = Shifts::find()->Shifts($model->id)->all();
         $personnel = new Personnel();
+        $formSotrud = new SotrudForm();
+        if ($formSotrud->load(Yii::$app->request->post()) && $formSotrud->validate()){
+            return 'Hello world';
+        }
+
 
         return $this->render('setting', [
             'model' => $model,
             'sotrud' => $sotrud,
             'shifts' => $shifts,
             'personnel' => $personnel,
+            'formSotrud' => $formSotrud,
         ]);
 
     }
