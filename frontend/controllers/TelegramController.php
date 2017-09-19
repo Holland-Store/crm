@@ -33,7 +33,6 @@ class TelegramController extends Controller
     public function actionWebhook()
     {
         $data = json_decode(file_get_contents('php://input'), true);
-        // file_put_contents('logs.txt', $content);
         if(isset($data['message']['chat']['id']))
         {
             $chatId = $data['message']['chat']['id'];
