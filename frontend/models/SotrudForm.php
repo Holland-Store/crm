@@ -34,7 +34,6 @@ class SotrudForm extends Model{
     public function validatePasswordSotrud($attribute)
     {
         if (!$user = Personnel::findOne(['id' => $this->sotrud, 'password' => $this->password])){
-            Yii::$app->session->addFlash('error', 'Неправильный пароль');
             return $this->addError($attribute, 'Неправильный код подтверждение');
         }
     }
