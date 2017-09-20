@@ -50,9 +50,10 @@ use yii\helpers\Html;
 <?= Html::submitButton('Закончить смену', ['class' => 'btn action endShift']); ?>
 <?php endif; ?>
 <div class="form-shiftStart">
+    <?php \yii\widgets\Pjax::begin() ?>
 <?php $form = ActiveForm::begin([
         'id' => 'form-startShift',
-//        'action' => ['personnel/shifts', 'id' => Yii::$app->user->id],
+        'options' => ['data' => ['pjax' =>true]],
 ]); ?>
 
 <?= $form->field($formSotrud, 'sotrud')->dropDownList(ArrayHelper::map(Personnel::find()->where(['action' => 0])->all(), 'id', 'nameSotrud'),
@@ -65,6 +66,7 @@ use yii\helpers\Html;
 <?= Html::submitButton('Начать', ['class' => 'btn action']) ?>
 
 <?php ActiveForm::end(); ?>
+    <?php \yii\widgets\Pjax::end() ?>
 </div>
 <div class="form-shiftEnd">
 <?php $form = ActiveForm::begin([
