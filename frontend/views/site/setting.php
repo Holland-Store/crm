@@ -12,6 +12,7 @@ use kartik\detail\DetailView;
 use kartik\form\ActiveForm;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
+use yii\widgets\Pjax;
 
 ?>
 <a href="http://telegram.me/HollandSotrudbot?start=<?= $model->telegram_token; ?>" target="_blank" class="black-btn btn-lg">
@@ -50,7 +51,7 @@ use yii\helpers\Html;
 <?= Html::submitButton('Закончить смену', ['class' => 'btn action endShift']); ?>
 <?php endif; ?>
 <div class="form-shiftStart">
-    <?php \yii\widgets\Pjax::begin() ?>
+    <?php Pjax::begin() ?>
 <?php $form = ActiveForm::begin([
         'id' => 'form-startShift',
         'options' => ['data' => ['pjax' =>true]],
@@ -67,7 +68,7 @@ use yii\helpers\Html;
 <?= Html::submitButton('Начать', ['class' => 'btn action']) ?>
 
 <?php ActiveForm::end(); ?>
-    <?php \yii\widgets\Pjax::end() ?>
+    <?php Pjax::end() ?>
 </div>
 <div class="form-shiftEnd">
 <?php $form = ActiveForm::begin([
