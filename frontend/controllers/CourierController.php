@@ -36,32 +36,12 @@ class CourierController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                    [
-                       'actions' => ['index'],
+                       'actions' => ['index', 'ready', 'make', 'delivered'],
                        'allow' => true,
-                       'roles' => ['courier', 'program'],
+                       'roles' => ['courier'],
                    ],
                    [
-                        'actions' => ['ready'],
-                        'allow' => true,
-                        'roles' => ['courier', 'program'],
-                   ],
-                   [
-                        'actions' => ['make'],
-                        'allow' => true,
-                        'roles' => ['courier', 'program'],
-                   ],
-                   [
-                        'actions' => ['delivered'],
-                        'allow' => true,
-                        'roles' => ['courier', 'program'],
-                   ],
-                   [
-                        'actions' => ['shipping'],
-                        'allow' => true,
-                        'roles' => ['admin', 'program'],
-                   ],
-                   [
-                        'actions' => ['deletes'],
+                        'actions' => ['shipping', 'deletes', 'create'],
                         'allow' => true,
                         'roles' => ['admin', 'program'],
                    ],
@@ -156,9 +136,9 @@ class CourierController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->save()){
                 Yii::$app->session->addFlash('update', 'Доставка былаа отклонена');
-                return $this->redirect(['view', 'id' => $model->id]);
+                return $this->redirect('shipping');
             } else {
-                $this->flashErrors();
+                print_r($model->getErrors());
             }
         }
         return $this->render('create', [
