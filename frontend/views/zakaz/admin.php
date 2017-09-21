@@ -65,6 +65,17 @@ $this->title = 'Вce заказы';
                     'label' => 'Задачи',
                     'url' => 'todoist/create'
                 ],
+                [
+                    'label' => '',
+                    'options' => [
+                        'role' => 'presentation',
+                        'class' => 'divider'
+                    ]
+                ],
+                [
+                    'label' => 'Доставка',
+                    'url' => 'todoist/create'
+                ],
             ]
         ]
     ]); ?>

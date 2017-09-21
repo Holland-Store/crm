@@ -1,6 +1,7 @@
 <?php
 
 use app\models\Courier;
+use yii\bootstrap\ButtonDropdown;
 use yii\helpers\Html;
 use kartik\grid\GridView;
 use yii\widgets\Pjax;
@@ -12,6 +13,56 @@ $this->title = 'Все доставки';
 ?>
 <?php Pjax::begin(); ?>
 <div class="courier-shipping">
+
+<?= ButtonDropdown::widget([
+    'label' => '+',
+    'options' => [
+        'class' => 'btn buttonAdd',
+    ],
+    'dropdown' => [
+        'items' => [
+            [
+                'label' => 'Заказ',
+                'url' => ['zakaz/create'],
+                'visible' => Yii::$app->user->can('seeAdop'),
+            ],
+            [
+                'label' => '',
+                'options' => [
+                    'role' => 'presentation',
+                    'class' => 'divider'
+                ]
+            ],
+            [
+                'label' => 'Поломки',
+                'url' => ['helpdesk/create']
+            ],
+            [
+                'label' => '',
+                'options' => [
+                    'role' => 'presentation',
+                    'class' => 'divider'
+                ]
+            ],
+            [
+                'label' => 'Задачи',
+                'url' => ['todoist/create'],
+            ],
+            [
+                'label' => '',
+                'options' => [
+                    'role' => 'presentation',
+                    'class' => 'divider'
+                ]
+            ],
+            [
+                'label' => 'Доставка',
+                'url' => ['courier/create'],
+                'visible' => Yii::$app->user->can('admin'),
+            ],
+        ]
+    ]
+]); ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,

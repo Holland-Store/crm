@@ -12,6 +12,7 @@ use kartik\widgets\Select2;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\CustomSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
+/* @var $models app\models\Custom */
 
 $this->title = 'Все запросы';?>
 <div class="custom-index">
@@ -114,6 +115,18 @@ $this->title = 'Все запросы';?>
                     [
                         'label' => 'Задачи',
                         'url' => ['todoist/create'],
+                        'visible' => Yii::$app->user->can('admin'),
+                    ],
+                    [
+                        'label' => '',
+                        'options' => [
+                            'role' => 'presentation',
+                            'class' => 'divider'
+                        ]
+                    ],
+                    [
+                        'label' => 'Доставка',
+                        'url' => ['courier/create'],
                         'visible' => Yii::$app->user->can('admin'),
                     ],
                 ]

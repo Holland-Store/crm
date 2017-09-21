@@ -63,6 +63,17 @@ $this->title = 'Все задачи';
                             'label' => 'Задачи',
                             'url' => ['todoist/create']
                         ],
+                        [
+                            'label' => '',
+                            'options' => [
+                                'role' => 'presentation',
+                                'class' => 'divider'
+                            ]
+                        ],
+                        [
+                            'label' => 'Доставка',
+                            'url' => ['courier/create'],
+                        ],
                     ]
                 ]
             ]); ?>
