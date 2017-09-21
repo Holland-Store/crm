@@ -10,7 +10,7 @@ use yii\helpers\ArrayHelper;
  *
  * @property integer $id
  * @property integer $id_zakaz
- * @property srting $date
+ * @property string $date
  * @property string $to
  * @property string $data_to
  * @property string $from
@@ -43,7 +43,7 @@ class Courier extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_zakaz', 'to', 'from', 'date'], 'required'],
+            [['to', 'from', 'date'], 'required'],
             [['id_zakaz', 'status'], 'integer'],
             [['data_to', 'data_from', 'date'], 'safe'],
             [['commit'], 'string'],
