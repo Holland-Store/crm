@@ -55,8 +55,9 @@ use yii\helpers\Html;
         'id' => 'form-startShift',
         'options' => ['data' => ['pjax' =>true]],
 ]); ?>
-
-<?= $form->field($formSotrud, 'sotrud')->dropDownList(ArrayHelper::map(Personnel::find()->where(['action' => 0])->all(), 'id', 'nameSotrud'),
+    <h3>Начать смену</h3>
+<?php $arr = ArrayHelper::map($shifts, 'id', 'id_sotrud') ?>
+<?= $form->field($formSotrud, 'sotrud')->dropDownList(ArrayHelper::map(Personnel::find()->where(['not in', 'id', $arr])->andWhere(['action' => 0])->all(), 'id', 'nameSotrud'),
     [
         'prompt' => 'Выберите сотрудника',
     ])->label(false) ?>
@@ -70,13 +71,18 @@ use yii\helpers\Html;
 </div>
 <div class="form-shiftEnd">
 <?php $form = ActiveForm::begin([
-    'id' => 'form-endShift'
+    'id' => 'form-endShift',
+    'action' => ['site/end-sotrud']
 ]); ?>
-<?= $form->field($sotrud, 'id_sotrud')->dropDownList(ArrayHelper::map($shifts, 'id', 'nameSotrud'),
+
+    <h3>Закончить смену</h3>
+<?= $form->field($formSotrud, 'sotrud')->dropDownList(ArrayHelper::map($shifts, 'idSotrud.id', 'idSotrud.nameSotrud'),
     [
         'prompt' => 'Выберите сотрудника',
     ])->label(false) ?>
-<?= $form->field($personnel, 'password')->passwordInput()->label(false) ?>
+<?= $form->field($formSotrud, 'password')->passwordInput()->label(false) ?>
+
+<?= Html::submitButton('Закончить', ['class' => 'btn action']) ?>
 
 <?php ActiveForm::end(); ?>
 </div>
