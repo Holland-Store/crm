@@ -105,7 +105,7 @@ class CourierController extends Controller
         if(!$model->save()){
             $this->flashErrors($id);
         } else {
-            Yii::$app->session->addFlash('update', 'Доставка былаа отклонена');
+            Yii::$app->session->addFlash('update', 'Доставка была отклонена');
             if ($model->id_zakaz == null){
                 $telegram->message(User::USER_COURIER, 'Отменена доставка');
             } else {
