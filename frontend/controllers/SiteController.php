@@ -196,9 +196,14 @@ class SiteController extends Controller
         $sotrud = new Shifts();
         $shifts = Shifts::find()->Shifts($model->id)->all();
         $personnel = new Personnel();
+
         $formSotrud = new SotrudForm();
         if ($formSotrud->load(Yii::$app->request->post()) && $formSotrud->validate()){
-            return 'Hello world';
+            $shiftsStart = new Shifts();
+            $shiftsStart->id_sotrud = Yii::$app->request->post('SotrudForm')['sotrud'];
+            $shiftsStart->save();
+            Yii::$app->session->addFlash('update', 'Сотрудник '.$shiftsStart->idSotrud->nameSotrud.' начал смену');
+            return $this->redirect(['setting', 'id' => $id]);
         }
 
 
