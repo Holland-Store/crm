@@ -106,7 +106,11 @@ class CourierController extends Controller
             $this->flashErrors($id);
         } else {
             Yii::$app->session->addFlash('update', 'Доставка былаа отклонена');
-            $telegram->message(User::USER_COURIER, 'Отменена доставка '.$model->idZakaz->prefics);
+            if ($model->id_zakaz == null){
+                $telegram->message(User::USER_COURIER, 'Отменена доставка');
+            } else {
+                $telegram->message(User::USER_COURIER, 'Отменена доставка '.$model->idZakaz->prefics);
+            }
         }
 
         return $this->redirect(['shipping']);
@@ -135,7 +139,7 @@ class CourierController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->save()){
-                Yii::$app->session->addFlash('update', 'Доставка былаа отклонена');
+                Yii::$app->session->addFlash('update', 'Доставка была назначена');
                 return $this->redirect('shipping');
             } else {
                 print_r($model->getErrors());
