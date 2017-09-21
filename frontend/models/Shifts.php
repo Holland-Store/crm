@@ -3,6 +3,7 @@
 namespace app\models;
 
 use app\models\query\ShiftsQuery;
+use Yii;
 
 /**
  * This is the model class for table "shifts".
@@ -34,6 +35,7 @@ class Shifts extends \yii\db\ActiveRecord
         return [
             [['start', 'end'], 'safe'],
             [['id_sotrud', 'id_user'], 'integer'],
+            ['id_user', 'default', 'value' => Yii::$app->user->id],
             [['id_user'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['id_user' => 'id']],
             [['id_sotrud'], 'exist', 'skipOnError' => true, 'targetClass' => Personnel::className(), 'targetAttribute' => ['id_sotrud' => 'id']],
         ];
