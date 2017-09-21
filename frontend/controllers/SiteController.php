@@ -190,6 +190,11 @@ class SiteController extends Controller
         ]);
     }
 
+    /**
+     * view accaunt setting and start and end shifts
+     * @param $id
+     * @return string|\yii\web\Response
+     */
     public function actionSetting($id)
     {
         $model = User::findOne($id);
@@ -215,6 +220,23 @@ class SiteController extends Controller
             'formSotrud' => $formSotrud,
         ]);
 
+    }
+
+    /**
+     * end sxhifts sotrud
+     * if success there is a redirect setting view
+     * @return \yii\web\Response
+     */
+    public function actionEndSotrud()
+    {
+        $shifta = Shifts::findOne(['id_sotrud' => Yii::$app->request->post('SotrudForm')['sotrud'], 'end' => date('0000-00-00 00:00:00')]);
+        $formSotrud = new SotrudForm();
+        if ($formSotrud->load(Yii::$app->request->post()) && $formSotrud->validate()){
+            $shifta->end = date('Y-m-d H:i:s');
+            $shifta->save();
+            Yii::$app->session->addFlash('update', 'Сотрудник '.$shifta->idSotrud->nameSotrud.' закончил смену');
+            return $this->redirect(['setting', 'id' => Yii::$app->user->id]);
+        }
     }
 
     /**
