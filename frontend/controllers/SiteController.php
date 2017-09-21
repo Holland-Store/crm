@@ -199,7 +199,7 @@ class SiteController extends Controller
     {
         $model = User::findOne($id);
         $sotrud = new Shifts();
-        $shifts = Shifts::find()->Shifts($model->id)->all();
+        $shifts = Shifts::find()->Shifts($model->id)->indexBy('id_sotrud')->all();
         $personnel = new Personnel();
 
         $formSotrud = new SotrudForm();
