@@ -57,8 +57,7 @@ use yii\widgets\Pjax;
         'options' => ['data' => ['pjax' =>true]],
 ]); ?>
     <h3>Начать смену</h3>
-<?php $arr = ArrayHelper::map($shifts, 'id', 'id_sotrud') ?>
-<?= $form->field($formSotrud, 'sotrud')->dropDownList(ArrayHelper::map(Personnel::find()->where(['not in', 'id', $arr])->andWhere(['action' => 0])->all(), 'id', 'nameSotrud'),
+<?= $form->field($formSotrud, 'sotrud')->dropDownList(ArrayHelper::map(Personnel::find()->where(['not in', 'id', array_keys($shifts)])->andWhere(['action' => 0])->all(), 'id', 'nameSotrud'),
     [
         'prompt' => 'Выберите сотрудника',
     ])->label(false) ?>
