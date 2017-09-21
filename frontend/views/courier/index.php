@@ -33,7 +33,9 @@ $this->title = 'Все доставки';
         'columns' => [
             [
                 'attribute' => 'id_zakaz',
-                'value' => 'idZakaz.prefics',
+                'value' => function($model){
+                    return $model->id_zakaz != null ? Html::encode($model->idZakaz->prefics) : false;
+                },
                 'hAlign' => GridView::ALIGN_RIGHT,
                 'contentOptions' => ['class' => 'border-left textTr tr70', 'style' => 'border:none'],
             ],
