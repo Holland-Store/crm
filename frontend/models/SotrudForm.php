@@ -33,7 +33,7 @@ class SotrudForm extends Model{
 
     public function validatePasswordSotrud($attribute)
     {
-        if (!$user = Personnel::findOne(['id' => $this->sotrud, 'password' => $attribute])){
+        if (!$user = Personnel::findOne(['id' => $this->sotrud, 'password' => $this->password])){
             return $this->addError($attribute, 'Неправильный код подтверждение');
         }
     }
