@@ -1,6 +1,7 @@
 <?php
 
 use app\models\Todoist;
+use yii\bootstrap\Modal;
 use yii\helpers\Html;
 use kartik\grid\GridView;
 use yii\helpers\Url;
@@ -46,7 +47,7 @@ $this->title = 'Все задачи';
                 'contentOptions'=>['class'=>'textTr tr180'],
                 'value' => function($model){
                     if ($model->activate == Todoist::COMPLETED){
-                        return Html::a(Html::encode('Принять'), ['close', 'id' => $model->id], ['class' => 'accept']).' / '.Html::a(Html::encode('Отклонить'), ['#'], ['class' => 'declinedTodoist', 'value' => Url::to(['declined', 'id' => $model->id])]);
+                        return Html::a(Html::encode('Принять'), ['close', 'id' => $model->id], ['class' => 'accept']).' / '.Html::a(Html::encode('Отклонить'), [''], ['class' => 'declinedTodoist', 'value' => Url::to(['declined', 'id' => $model->id])]);
                     } elseif ($model->activate == Todoist::REJECT){
                         return Html::tag('span', Html::encode('Отклонено'), [
                             'title' => $model->declined,
@@ -75,7 +76,7 @@ $this->title = 'Все задачи';
             [
                 'attribute' => 'id_user',
                 'value' => function($model){
-                    return $model->idSotrudPut->name;
+                    return $model->idUser->name;
                 },
                 'contentOptions' => ['class' => 'border-right textTr tr50'],
             ],
@@ -171,3 +172,12 @@ $this->title = 'Все задачи';
         ]); ?>
     </div>
 </div>
+<?php Modal::begin([
+    'header' => 'Укажите причину отказа',
+    'size' => 'modal-sm',
+    'id' => 'modalDeclinedTodoist',
+]);
+
+echo '<div class="modalContent"></div>';
+
+Modal::end(); ?>
