@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use frontend\models\Telegram;
 use Yii;
 use app\models\Todoist;
 use app\models\Helpdesk;
@@ -44,7 +45,7 @@ class TodoistController extends Controller
     					'roles' => ['shop', 'zakup', 'master', 'disain', 'program', 'courier', 'system'],
 					],
 					[
-    					'actions' => ['close'],
+    					'actions' => ['close', 'create', 'declined', 'accept'],
     					'allow' => true,
     					'roles' => ['@'],
 					],
@@ -52,11 +53,6 @@ class TodoistController extends Controller
                         'actions' => ['closetodoist'],
                         'allow' => true,
                         'roles' => ['admin', 'program'],
-                    ],
-                    [
-                        'actions' => ['create'],
-                        'allow' => true,
-                        'roles' => ['@'],
                     ],
 					[
     					'actions' => ['createzakaz'],
@@ -68,16 +64,6 @@ class TodoistController extends Controller
     					'allow' => true,
     					'roles' => ['shop'],
 					],
-                    [
-                        'actions' => ['declined'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                    [
-                        'actions' => ['accept'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
 				],
 			],
         ];
@@ -149,10 +135,12 @@ class TodoistController extends Controller
     public function actionCreate()
     {
         $model = new Todoist();
+        $telegram = new Telegram();
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->save()){
                 Yii::$app->session->addFlash('update', 'Задача успешна создана');
+                $telegram->message($model->id_user, 'Задача была поставлена: '.$model->comment);
                 $this->findView();
             } else {
                 print_r($model->getErrors());
@@ -170,7 +158,7 @@ class TodoistController extends Controller
      * temporarily deleted
      * @return mixed
      */
-    public function actionCreate_shop()
+    private function actionCreate_shop()
     {
         $model = new Todoist();
         $helpdesk = new Helpdesk();
@@ -223,8 +211,10 @@ class TodoistController extends Controller
     public function actionCreatezakaz()
     {
         $model = new Todoist();
+        $telegram = new Telegram();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $telegram->message($model->id_user, 'Задача была поставлена "'.$model->comment.'" по заказу '.$model->idZakaz->prefics);
             $this->findView();
         }
         return $this->render('createzakaz', [
@@ -241,8 +231,10 @@ class TodoistController extends Controller
     public function actionClose($id)
     {
         $model = $this->findModel($id);
+        $telegram = new Telegram();
         $model->activate = Todoist::CLOSE;
 		$model->save();
+		$telegram->message($model->id_user, 'Задача '.$model->comment.' была закрыта');
 
         return $this->findView();
     }
@@ -257,8 +249,11 @@ class TodoistController extends Controller
     {
         $model = $this->findModel($id);
         $model->activate = Todoist::COMPLETED;
+        $telegram = new Telegram();
         if (!$model->save()){
             print_r($model->getErrors());
+        } else {
+            $telegram->message($model->id_sotrud_put, $model->idUser->name.' выполнил задачу '.$model->idZakaz->prefics);
         }
 
         return $this->findView();
@@ -273,12 +268,14 @@ class TodoistController extends Controller
     public function actionDeclined($id)
     {
         $model = $this->findModel($id);
+        $telegram = new Telegram();
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()){
             $model->activate = Todoist::REJECT;
             if (!$model->save()){
                 print_r($model->getErrors());
             }else{
+                $telegram->message($model->id_user, $model->idSotrudPut->name.' отклонил Вами выполненную задачу по причине: '.$model->declined);
                 $this->findView();
             };
         }
