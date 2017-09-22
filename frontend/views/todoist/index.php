@@ -90,7 +90,7 @@ $this->title = 'Все задачи';
         'pjax' => true,
         'tableOptions' 	=> ['class' => 'table table-bordered tableSize'],
         'rowOptions' => function($model){
-                return $model->srok <= date('Y-m-d') ? ['class' => 'trTable trNormal'] : ['class' => 'trTable trNormal trTablePass'];
+                return $model->srok <= date('Y-m-d') ? ['class' => 'trTable trNormal trTablePass'] : ['class' => 'trTable trNormal'];
         },
         'striped' => false,
         'columns' => [
@@ -160,7 +160,7 @@ $this->title = 'Все задачи';
             'pjax' => true,
             'tableOptions' 	=> ['class' => 'table table-bordered tableSize'],
             'rowOptions' => function($model){
-                return $model->srok <= date('Y-m-d') ? ['class' => 'trTable trNormal'] : ['class' => 'trTable trNormal trTablePass'];
+                return $model->srok <= date('Y-m-d') ? ['class' => 'trTable trNormal trTablePass'] : ['class' => 'trTable trNormal'];
             },
             'striped' => false,
             'columns' => [
@@ -173,6 +173,22 @@ $this->title = 'Все задачи';
                 [
                     'attribute' => 'comment',
                     'contentOptions'=>['style'=>'white-space: normal;'],
+                ],
+                [
+                    'attribute' => 'reject',
+                    'format' => 'raw',
+                    'contentOptions' => ['class' => 'textTr tr70'],
+                    'value' => function($model){
+                        if ($model->activate == Todoist::REJECT){
+                            return Html::tag('span', 'Отклонить', [
+                                'title' => $model->declined,
+                                'data-toggle' => 'toolpit',
+                                'class' => 'declined',
+                            ]);
+                        } else {
+                            return false;
+                        }
+                    }
                 ],
                 [
                     'attribute' => 'zakaz',
@@ -188,9 +204,9 @@ $this->title = 'Все задачи';
                     'contentOptions' => ['class' => 'textTr tr70'],
                 ],
                 [
-                    'attribute' => 'id_sotrud_put',
+                    'attribute' => 'id_user',
                     'value' => function($model){
-                        return $model->idSotrudPut->name;
+                        return $model->idUser->name;
                     },
                     'contentOptions' => ['class' => 'textTr tr50'],
                 ],
@@ -209,10 +225,11 @@ $this->title = 'Все задачи';
                         } elseif($model->activate == Todoist::COMPLETED ) {
                             return Html::encode('На проверке');
                         } else {
-                            return Html::tag('span', 'Отклонить', [
-                                    'title' => $model->declined,
-                                    'data-toggle' => 'toolpit',
-                                    'class' => 'declined',
+                            return Html::a('Выполнить', ['accept', 'id' => $model->id], [
+                                'data' => [
+                                    'confirm' => 'Вы действительно выполнили задачу?',
+                                    'method' => 'post',
+                                ]
                             ]);
                         }
                     }

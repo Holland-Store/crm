@@ -25,7 +25,9 @@ $this->title = 'Все задачи';
         'headerRowOptions' => ['class' => 'headerTable'],
         'pjax' => true,
         'tableOptions' 	=> ['class' => 'table table-bordered tableSize'],
-        'rowOptions' => ['class' => 'trTable trNormal'],
+        'rowOptions' => function($model){
+            return $model->srok <= date('Y-m-d') ? ['class' => 'trTable trNormal trTablePass'] : ['class' => 'trTable trNormal'];
+        },
         'striped' => false,
         'columns' => [
             [
@@ -47,6 +49,8 @@ $this->title = 'Все задачи';
                         return Html::a(Html::encode('Принять'), ['close', 'id' => $model->id], ['class' => 'accept']).' / '.Html::a(Html::encode('Отклонить'), ['#'], ['class' => 'declinedTodoist', 'value' => Url::to(['declined', 'id' => $model->id])]);
                     } elseif ($model->activate == Todoist::REJECT){
                         return Html::tag('span', Html::encode('Отклонено'), [
+                            'title' => $model->declined,
+                            'data-toggle' => 'toolpit',
                             'class' => 'declined'
                         ]);
                     } else {
@@ -73,13 +77,13 @@ $this->title = 'Все задачи';
                 'value' => function($model){
                     return $model->idSotrudPut->name;
                 },
-                'contentOptions' => ['class' => 'textTr tr50'],
+                'contentOptions' => ['class' => 'border-right textTr tr50'],
             ],
         ],
     ]); ?>
     </div>
     <div class="col-lg-12">
-        <h3><?= Html::encode('Поступило') ?></h3>
+        <h3><?= Html::encode('Поставленные') ?></h3>
     </div>
     <div class="col-lg-12">
         <?= GridView::widget([
@@ -88,7 +92,9 @@ $this->title = 'Все задачи';
             'headerRowOptions' => ['class' => 'headerTable'],
             'pjax' => true,
             'tableOptions' 	=> ['class' => 'table table-bordered tableSize'],
-            'rowOptions' => ['class' => 'trTable trNormal'],
+            'rowOptions' => function($model){
+                return $model->srok <= date('Y-m-d') ? ['class' => 'trTable trNormal trTablePass'] : ['class' => 'trTable trNormal'];
+            },
             'striped' => false,
             'columns' => [
                 [
@@ -100,6 +106,22 @@ $this->title = 'Все задачи';
                 [
                     'attribute' => 'comment',
                     'contentOptions'=>['style'=>'white-space: normal;'],
+                ],
+                [
+                    'attribute' => 'reject',
+                    'format' => 'raw',
+                    'contentOptions' => ['class' => 'textTr tr70'],
+                    'value' => function($model){
+                        if ($model->activate == Todoist::REJECT){
+                            return Html::tag('span', 'Отклонить', [
+                                'title' => $model->declined,
+                                'data-toggle' => 'toolpit',
+                                'class' => 'declined',
+                            ]);
+                        } else {
+                            return false;
+                        }
+                    }
                 ],
                 [
                     'attribute' => 'zakaz',
@@ -136,10 +158,11 @@ $this->title = 'Все задачи';
                         } elseif($model->activate == Todoist::COMPLETED) {
                             return Html::encode('На проверке');
                         } else {
-                            return Html::tag('span', 'Отклонить', [
-                                'title' => $model->declined,
-                                'data-toggle' => 'toolpit',
-                                'class' => 'declined',
+                            return Html::a('Выполнить', ['accept', 'id' => $model->id], [
+                                'data' => [
+                                    'confirm' => 'Вы действительно выполнили задачу?',
+                                    'method' => 'post',
+                                ]
                             ]);
                         }
                     }
