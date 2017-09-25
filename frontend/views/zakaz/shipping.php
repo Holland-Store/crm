@@ -5,12 +5,15 @@ use yii\widgets\ActiveForm;
 use dosamigos\datepicker\DatePicker;
 // use app\models\Courier;
 // use yii\models\Zakaz;
+
+/** @var $shipping app\models\Courier */
+/** @var $model app\models\Zakaz */
 ?>
 
 <div class="zakaz-shippingForm">
 	<?php $f = ActiveForm::begin(); ?>
 
-	<?= $f->field($shipping, 'id_zakaz')->hiddenInput(['value' => $model])->label(false) ?>
+    <?= $f->field($shipping, 'id_zakaz')->hiddenInput(['value' => $model])->label(false) ?>
 
     <?= $f-> field($shipping, 'commit')->textInput(['placeholder' => 'Что', 'class' => 'inputForm', 'style' => 'float:left'])->label(false) ?>
 
