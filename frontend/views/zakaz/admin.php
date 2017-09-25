@@ -192,6 +192,14 @@ $this->title = 'Вce заказы';
                 }
             ],
             [
+                'attribute' => 'tag',
+                'format' => 'raw',
+                'contentOptions' => ['class' => 'tr90'],
+                'value' => function($model){
+                    return $model->tags != null ? $model->getTagsAsString('gridview') : false;
+                }
+            ],
+            [
                 'attribute' => 'id_shipping',
                 'format' => 'raw',
                 'contentOptions' => ['class' => 'tr50'],
