@@ -134,6 +134,14 @@ $this->title = 'ВСЕ ЗАКАЗЫ';
                     }
                 ],
                 [
+                    'attribute' => 'tag',
+                    'format' => 'raw',
+                    'contentOptions' => ['class' => 'tr90'],
+                    'value' => function($model){
+                        return $model->tags != null ? $model->getTagsAsString('gridview') : false;
+                    }
+                ],
+                [
                     'attribute' => 'oplata',
                     'value' => 'money',
                     'hAlign' => GridView::ALIGN_RIGHT,
@@ -214,6 +222,14 @@ $this->title = 'ВСЕ ЗАКАЗЫ';
                 'attribute' => 'description',
                 'value' => function($model){
                     return StringHelper::truncate($model->description, 100);
+                }
+            ],
+            [
+                'attribute' => 'tag',
+                'format' => 'raw',
+                'contentOptions' => ['class' => 'tr90'],
+                'value' => function($model){
+                    return $model->tags != null ? $model->getTagsAsString('gridview') : false;
                 }
             ],
             [
