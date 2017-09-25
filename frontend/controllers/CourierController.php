@@ -189,8 +189,8 @@ class CourierController extends Controller
         $model->data_to = date('Y-m-d H:i:s');
         $model->status = Courier::RECEIVE;
 
-        $notification->getByIdNotification(5, $model->id_zakaz);//Уведомление, что курьер забрал доставку
-        $notification->saveNotification;
+//        $notification->getByIdNotification(5, $model->id_zakaz);//Уведомление, что курьер забрал доставку
+//        $notification->saveNotification;
 
         if ($model->save()){
             return $this->redirect(['index']);
@@ -205,8 +205,8 @@ class CourierController extends Controller
         $model->data_from = date('Y-m-d H:i:s');
         $model->status = Courier::DELIVERED;
 
-        $notification->getByIdNotification(8, $model->id_zakaz);//Уведомление, что курьер доставил доставку
-        $notification->saveNotification;
+//        $notification->getByIdNotification(8, $model->id_zakaz);//Уведомление, что курьер доставил доставку
+//        $notification->saveNotification;
 
         if ($model->save()){
             return $this->redirect(['index']);
