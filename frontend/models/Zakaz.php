@@ -51,8 +51,8 @@ use yii\db\ActiveRecord;
  * @property Courier $idShipping
  * @property Partners $idAutsors
  * @property mixed $tags
- * @property mixed uploadeFile
- *
+ * @property mixed $uploadeFile
+ * @property mixed $getTagsAsString
  */
 class Zakaz extends ActiveRecord
 {
@@ -243,6 +243,10 @@ class Zakaz extends ActiveRecord
         return $this->hasMany(Tag::className(), ['id' => 'tag_id'])->via('zakazTag');
     }
 
+    /**
+     * @param $view
+     * @return string
+     */
     public function  getTagsAsString($view)
     {
         if ($view == 'gridview'){
