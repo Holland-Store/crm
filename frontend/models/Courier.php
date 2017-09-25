@@ -99,4 +99,13 @@ class Courier extends \yii\db\ActiveRecord
         return $this->hasMany(Zakaz::className(), ['id_shipping' => 'id']);
     }
 
+    /**
+     * @param bool $insert
+     * @return bool
+     */
+    public function beforeSave($insert)
+    {
+        $this->date = date('Y-m-d', strtotime($this->date));
+        return parent::beforeSave($insert);
+    }
 }
