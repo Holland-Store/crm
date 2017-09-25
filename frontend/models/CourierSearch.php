@@ -49,6 +49,7 @@ class CourierSearch extends Courier
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
+        $dataProvider->pagination = false;
 
         $this->load($params);
 
