@@ -243,6 +243,17 @@ class Zakaz extends ActiveRecord
         return $this->hasMany(Tag::className(), ['id' => 'tag_id'])->via('zakazTag');
     }
 
+    public function  getTagsAsString($view)
+    {
+        if ($view == 'gridview'){
+            $tags = array_slice($this->tags, 0, 2);
+            $arr = ArrayHelper::map($tags, 'id', 'name');
+        } else {
+            $arr = ArrayHelper::map($this->tags, 'id', 'name');
+        }
+        return implode(', ', $arr);
+    }
+
     /**
      * @return array
      */
@@ -388,6 +399,10 @@ class Zakaz extends ActiveRecord
 
     /**
      * edit status, statusIspol and id_unread on certain conditions
+     * @param null $status
+     * @param null $statusIspol
+     * @param null $role
+     * @param $id_unread
      */
     public function unread($status = null, $statusIspol = null, $role = null, $id_unread)
     {
