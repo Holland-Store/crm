@@ -39,7 +39,7 @@ class TagSearch extends Tag
      */
     public function search($params)
     {
-        $query = Tag::find();
+        $query = Tag::find()->indexBy('id');
 
         // add conditions that should always apply here
 
