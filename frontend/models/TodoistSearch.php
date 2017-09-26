@@ -40,7 +40,7 @@ class TodoistSearch extends Todoist
      */
     public function search($params, $index)
     {
-        $query = Todoist::find()->with(['idZakaz', 'idUser']);
+        $query = Todoist::find()->with(['idZakaz', 'idUser'])->indexBy('id');
 
         // add conditions that should always apply here
 

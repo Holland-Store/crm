@@ -41,7 +41,7 @@ class ClientSearch extends Client
      */
     public function search($params)
     {
-        $query = Client::find();
+        $query = Client::find()->indexBy('id')->with(['zakazs']);
 
         // add conditions that should always apply here
 

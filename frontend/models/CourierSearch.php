@@ -41,7 +41,7 @@ class CourierSearch extends Courier
      */
     public function search($params)
     {
-        $query = Courier::find();
+        $query = Courier::find()->indexBy('id')->with(['idZakaz', 'zakazs']);
         $query->andWhere(['<','status',Courier::DELIVERED]);
 
         // add conditions that should always apply here
