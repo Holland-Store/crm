@@ -40,7 +40,7 @@ class HelpdeskSearch extends Helpdesk
      */
     public function search($params, $status)
     {
-        $query = Helpdesk::find();
+        $query = Helpdesk::find()->indexBy('id');
         if (Yii::$app->user->can('system') && $status == 'work'){
             $query = $query->where(['status' => [Helpdesk::STATUS_NEW, Helpdesk::STATUS_DECLINED]]);
         } elseif(Yii::$app->user->can('system') && $status == 'soglas'){

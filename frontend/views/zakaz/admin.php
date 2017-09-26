@@ -168,24 +168,6 @@ $this->title = 'Вce заказы';
                 },
             ],
             [
-                'attribute' => 'minut',
-                'hAlign' => GridView::ALIGN_RIGHT,
-                'contentOptions' => function($model) {
-                    if ($model->status == Zakaz::STATUS_NEW){
-                        return ['class' => 'trNew tr10'];
-                    } else {
-                        return ['class' => 'textTr tr10'];
-                    }
-                },
-                'value' => function($model){
-                    if ($model->minut == null){
-                        return '';
-                    } else {
-                        return $model->minut;
-                    }
-                }
-            ],
-            [
                 'attribute' => 'description',
                 'value' => function($model){
                     return StringHelper::truncate($model->description, 100);
