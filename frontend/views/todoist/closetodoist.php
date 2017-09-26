@@ -25,7 +25,7 @@ $this->title = 'Архив задач';
                 'attribute' => 'srok',
                 'format' => ['date', 'php:d M'],
                 'hAlign' => GridView::ALIGN_RIGHT,
-                'contentOptions' => ['class' => 'border-left textTr tr90', 'style' => 'border:none'],
+                'contentOptions' => ['class' => 'border-left textTr tr90 srok', 'style' => 'border:none'],
             ],
             [
                 'attribute' => 'comment',

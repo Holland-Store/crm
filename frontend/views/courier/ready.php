@@ -33,7 +33,7 @@ $this->title = 'Готовые доставки';
                 'attribute' => 'date',
                 'format' => ['date', 'php:d M'],
                 'hAlign' => GridView::ALIGN_RIGHT,
-                'contentOptions' => ['class' => 'textTr tr70'],
+                'contentOptions' => ['class' => 'textTr tr70 srok'],
             ],
             [
                 'attribute' => 'commit',

@@ -79,7 +79,7 @@ $this->title = 'Готовые макеты';
                 'format' => ['datetime', 'php:d M H:i'],
                 'value' => 'srok',
                 'hAlign' => GridView::ALIGN_RIGHT,
-                'contentOptions' => ['class' => 'textTr tr90'],
+                'contentOptions' => ['class' => 'textTr tr100 srok'],
             ],
             [
                 'attribute' => 'minut',

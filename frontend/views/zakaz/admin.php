@@ -133,7 +133,7 @@ $this->title = 'Вce заказы';
                 'hAlign' => GridView::ALIGN_RIGHT,
                 'contentOptions' => function($model) {
                     if ($model->status == Zakaz::STATUS_NEW){
-                        return ['class' => 'trNew tr70'];
+                        return ['class' => 'trNew tr70 '];
                     } else {
                         return ['class' => 'textTr tr70'];
                     }
@@ -161,9 +161,9 @@ $this->title = 'Вce заказы';
                 'hAlign' => GridView::ALIGN_RIGHT,
                 'contentOptions' => function($model) {
                     if ($model->status == Zakaz::STATUS_NEW){
-                        return ['class' => 'trNew tr90'];
+                        return ['class' => 'trNew tr100 srok'];
                     } else {
-                        return ['class' => 'textTr tr90'];
+                        return ['class' => 'textTr tr100 srok'];
                     }
                 },
             ],
@@ -237,11 +237,6 @@ $this->title = 'Вce заказы';
                 },
                 'contentOptions' => ['class' => 'textTr border-right tr90'],
             ]
-//            [
-//                'attribute' => 'statusName',
-//                'label' => 'Отв-ный',
-//                'contentOptions' => ['class' => 'border-right'],
-//            ],
 //            [
 //                'attribute' => 'status',
 //                'class' => SetColumn::className(),
@@ -324,7 +319,7 @@ $this->title = 'Вce заказы';
                 'format' => ['datetime', 'php:d M H:i'],
                 'value' => 'srok',
                 'hAlign' => GridView::ALIGN_RIGHT,
-                'contentOptions' => ['class' => 'textTr tr90'],
+                'contentOptions' => ['class' => 'textTr tr100 srok'],
             ],
             [
                 'attribute' => 'minut',
@@ -451,7 +446,7 @@ $this->title = 'Вce заказы';
                 'format' => ['datetime', 'php:d M H:i'],
                 'value' => 'srok',
                 'hAlign' => GridView::ALIGN_RIGHT,
-                'contentOptions' => ['class' => 'textTr tr90'],
+                'contentOptions' => ['class' => 'textTr tr100 srok'],
             ],
             [
                 'attribute' => 'minut',
