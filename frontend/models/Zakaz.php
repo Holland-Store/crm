@@ -373,6 +373,9 @@ class Zakaz extends ActiveRecord
         return $prefics != false ? strtoupper($prefics).'-'.$this->id_zakaz : $this->id_zakaz;
     }
 
+    /**
+     * @return string
+     */
     public function getMoney()
     {
         return number_format($this->oplata, 0,',', ' ').' р.';
