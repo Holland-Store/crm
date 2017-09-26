@@ -84,6 +84,9 @@ $colorDeclined: #7c1111;
 .divWork{
   background: $bodyBackground;
 }
+.srok{
+  text-transform: capitalize;
+}
 .headerTable{
   display: $display;
 }
@@ -161,6 +164,7 @@ $colorDeclined: #7c1111;
     .tr50 {width: $width50;}
     .tr70 {width: $width70;}
     .tr90 {width: $width90;}
+    .tr100 {width: $width90 + 10;}
     .tr180 {width: $width90 + 47;}
     .tr202 {width: $width90 + 47 + 22;}
 

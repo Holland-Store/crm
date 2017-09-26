@@ -122,6 +122,9 @@ body {
 .divWork {
   background: #302927; }
 
+.srok {
+  text-transform: capitalize; }
+
 .headerTable {
   display: none; }
 
@@ -198,6 +201,9 @@ body {
 
 .tr90 {
   width: 90px; }
+
+.tr100 {
+  width: 100px; }
 
 .tr180 {
   width: 137px; }
