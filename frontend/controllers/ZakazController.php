@@ -591,7 +591,7 @@ class ZakazController extends Controller
             if ($model->save()){
                 /** @var $model \app\models\Zakaz */
                 Yii::$app->session->addFlash('update', 'Доставка успешно создана');
-                $telegram->message(User::USER_ADMIN, 'Назначена доставка '.$model->prefics);
+                $telegram->message(User::USER_COURIER, 'Назначена доставка '.$model->prefics);
             } else {
                 $this->flashErrors();
             }
