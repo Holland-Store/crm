@@ -85,7 +85,6 @@ $this->title = $model->id_zakaz;
                 'attribute' => 'idShipping.dostavkaName',
                 'label' => 'Доставка',
             ],
-            // 'comment:ntext',
         ],
     ]) ?>
         </div>
