@@ -136,10 +136,12 @@ class CourierController extends Controller
     public function actionCreate()
     {
         $model = new Courier();
+        $telegram = new Telegram();
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->save()){
                 Yii::$app->session->addFlash('update', 'Доставка была назначена');
+                $telegram->message(User::USER_COURIER, 'Назначена доставка ');
                 return $this->redirect('shipping');
             } else {
                 print_r($model->getErrors());
