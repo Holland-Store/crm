@@ -16,7 +16,9 @@ use yii\helpers\Url;
 $this->title = 'Все задачи';
 ?>
 <div class="todoist-index">
-
+    <p>
+        <?php echo $this->render('_search', ['model' => $searchModel]);?>
+    </p>
     <p>
         <?php if (Yii::$app->user->can('admin')): ?>
             <?php echo ButtonDropdown::widget([
@@ -95,10 +97,21 @@ $this->title = 'Все задачи';
         'striped' => false,
         'columns' => [
             [
+                'class' => 'kartik\grid\ExpandRowColumn',
+                'width' => '10px',
+                'enableRowClick' => true,
+                'detailUrl' => Url::to(['todoist-detail']),
+                'value' => function(){
+                    return GridView::ROW_COLLAPSED;
+                },
+                'contentOptions' => ['class' => 'border-left textTr', 'style' => 'border:none'],
+
+            ],
+            [
                 'attribute' => 'srok',
                 'format' => ['date', 'php:d M'],
                 'hAlign' => GridView::ALIGN_RIGHT,
-                'contentOptions' => ['class' => 'border-left textTr tr90 srok', 'style' => 'border:none'],
+                'contentOptions' => ['class' => 'textTr tr90 srok'],
             ],
             [
                 'attribute' => 'comment',
@@ -144,6 +157,16 @@ $this->title = 'Все задачи';
                         return $model->idUser->name;
                     }
                 },
+                'contentOptions' => ['class' => 'textTr tr100'],
+            ],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{update}{delete}',
+                'buttons' => [
+                    'delete' => function($url, $model){
+                        return Html::a('<span class="glyphicon glyphicon-remove"></span>', ['close', 'id' => $model->id]);
+                    }
+                ],
                 'contentOptions' => ['class' => 'border-right textTr'],
             ],
         ],
