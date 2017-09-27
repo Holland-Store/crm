@@ -100,6 +100,7 @@ $this->title = 'Все задачи';
                 'class' => 'kartik\grid\ExpandRowColumn',
                 'width' => '10px',
                 'enableRowClick' => true,
+                'expandOneOnly' => true,
                 'detailUrl' => Url::to(['todoist-detail']),
                 'value' => function(){
                     return GridView::ROW_COLLAPSED;
