@@ -118,7 +118,7 @@ $this->title = 'Вce заказы';
                 'value' => function () {
                     return GridView::ROW_COLLAPSED;
                 },
-                'detail'=>function ($model) {
+                'detail' => function ($model) {
                     return Yii::$app->controller->renderPartial('_zakaz', ['model'=> $model]);
                 },
                 'enableRowClick' => true,
