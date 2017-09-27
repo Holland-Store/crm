@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use app\models\Comment;
 use frontend\models\Telegram;
 use Yii;
 use app\models\Todoist;
@@ -45,7 +46,7 @@ class TodoistController extends Controller
     					'roles' => ['shop', 'zakup', 'master', 'disain', 'program', 'courier', 'system'],
 					],
 					[
-    					'actions' => ['close', 'create', 'declined', 'accept'],
+    					'actions' => ['close', 'create', 'update', 'declined', 'accept', 'todoist-detail'],
     					'allow' => true,
     					'roles' => ['@'],
 					],
@@ -84,6 +85,21 @@ class TodoistController extends Controller
             'dataProvider' => $dataProvider,
             'dataProviderAlien' => $dataProviderAlien,
         ]);
+    }
+
+    /**
+     * @return string
+     */
+    public function actionTodoistDetail()
+    {
+        $id = Yii::$app->request->post('expandRowKey');
+        $model = $this->findModel($id);
+
+        if (isset($id)){
+            return $this->renderPartial('_todoist', ['model'=>$model]);
+        } else {
+            return '<div class="alert alert-danger">Страница не найдена</div>';
+        }
     }
     /**
      * Close all Todoist models.
@@ -195,7 +211,7 @@ class TodoistController extends Controller
      * @param integer $id
      * @return mixed
      */
-    private function actionUpdate($id)
+    public function actionUpdate($id)
     {
         $model = $this->findModel($id);
 
