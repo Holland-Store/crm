@@ -110,23 +110,22 @@ $this->title = 'Вce заказы';
 		'striped' => false,
         'columns' => [
 			[
-				'class'=>'kartik\grid\ExpandRowColumn',
+                'class'=>'kartik\grid\ExpandRowColumn',
                 'contentOptions' => function($model){
                     return ['id' => $model->id_zakaz, 'class' => 'border-left', 'style' => 'border:none'];
-                },                
-				'width'=>'10px',
-				'value' => function () {
-					return GridView::ROW_COLLAPSED;
-				},
-				'detail'=>function ($model) {
-                    $comment = new Comment();
-					return Yii::$app->controller->renderPartial('_zakaz', ['model'=> $model, 'comment' => $comment]);
-				},
-				'enableRowClick' => true,
+                },
+                'width'=>'10px',
+                'value' => function () {
+                    return GridView::ROW_COLLAPSED;
+                },
+                'detail'=>function ($model) {
+                    return Yii::$app->controller->renderPartial('_zakaz', ['model'=> $model]);
+                },
+                'enableRowClick' => true,
                 'expandOneOnly' => true,
                 'expandIcon' => ' ',
                 'collapseIcon' => ' ',
-			],
+            ],
             [
                 'attribute' => 'id_zakaz',
                 'value' => 'prefics',
@@ -267,8 +266,7 @@ $this->title = 'Вce заказы';
                     return GridView::ROW_COLLAPSED;
                 },
                 'detail'=>function ($model) {
-                    $comment = new Comment();
-                    return Yii::$app->controller->renderPartial('_zakaz', ['model'=>$model, 'comment' => $comment]);
+                    return Yii::$app->controller->renderPartial('_zakaz', ['model'=>$model]);
                 },
                 'enableRowClick' => true,
                 'expandOneOnly' => true,
@@ -394,8 +392,7 @@ $this->title = 'Вce заказы';
                     return GridView::ROW_COLLAPSED;
                 },
                 'detail'=>function ($model) {
-                    $comment = new Comment();
-                    return Yii::$app->controller->renderPartial('_zakaz', ['model'=>$model, 'comment' => $comment]);
+                    return Yii::$app->controller->renderPartial('_zakaz', ['model'=>$model]);
                 },
                 'enableRowClick' => true,
                 'expandOneOnly' => true,
