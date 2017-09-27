@@ -20,9 +20,9 @@ class Telegram
         $token = $data['raw'];
         if ($token && $user = User::findOne(['token' => $token])) {
             /** @var $user \app\models\User */
-            if ($user->telegram_chat_id) {
-                return "Уважаемый $user->name, Вы уже авторизованы в системе. ";
-            }
+//            if ($user->telegram_chat_id) {
+//                return "Уважаемый $user->name, Вы уже авторизованы в системе. ";
+//            }
             $user->telegram_chat_id = $data['chat_id'];
             $user->save();
             return "Добро пожаловать, $user->name. Вы успешно авторизовались!";
