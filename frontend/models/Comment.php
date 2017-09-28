@@ -2,7 +2,9 @@
 
 namespace app\models;
 
+use app\models\query\CommentQuery;
 use yii\db\ActiveRecord;
+
 /**
  * This is the model class for table "Comment".
  *
@@ -10,12 +12,14 @@ use yii\db\ActiveRecord;
  * @property integer $id_user
  * @property integer $sotrud
  * @property integer $id_zakaz
+ * @property integer $id_todoist
  * @property string $date
  * @property string $comment
  *
  * @property User $idUser
  * @property User $sotrud0
  * @property Zakaz $idZakaz
+ * @property Todoist $idTodoist
  */
 class Comment extends ActiveRecord
 {
@@ -33,13 +37,13 @@ class Comment extends ActiveRecord
     public function rules()
     {
         return [
-            [['id_zakaz'], 'required'],
-            [['id_user', 'sotrud', 'id_zakaz'], 'integer'],
+            [['id_user', 'sotrud', 'id_zakaz', 'id_todoist'], 'integer'],
             [['date'], 'safe'],
             [['comment'], 'string'],
             [['id_zakaz'], 'exist', 'skipOnError' => true, 'targetClass' => Zakaz::className(), 'targetAttribute' => ['id_zakaz' => 'id_zakaz']],
             [['id_user'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['id_user' => 'id']],
             [['sotrud'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['sotrud' => 'id']],
+            [['id_todoist'], 'exist', 'skipOnError' => true, 'targetClass' => Todoist::className(), 'targetAttribute' => ['id_todoist' => 'id']],
         ];
     }
 
@@ -53,6 +57,7 @@ class Comment extends ActiveRecord
             'id_user' => 'Id User',
             'sotrud' => 'Sotrud',
             'id_zakaz' => 'Id Zakaz',
+            'id_todoist' => 'Id Todoist',
             'date' => 'Date',
             'comment' => 'Comment',
         ];
@@ -80,5 +85,22 @@ class Comment extends ActiveRecord
     public function getIdZakaz()
     {
         return $this->hasOne(Zakaz::className(), ['id_zakaz' => 'id_zakaz']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getIdTodoist()
+    {
+        return $this->hasOne(Todoist::className(), ['id' => 'id_todoist']);
+    }
+
+    /**
+     * @inheritdoc
+     * @return CommentQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new CommentQuery(get_called_class());
     }
 }
