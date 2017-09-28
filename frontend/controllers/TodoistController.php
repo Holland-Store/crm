@@ -94,13 +94,14 @@ class TodoistController extends Controller
     {
         $id = Yii::$app->request->post('expandRowKey');
         $model = $this->findModel($id);
-        $comment = Comment::findAll(['id_todoist' => $id]);
-        d($comment);
+        $comment = Comment::find()->todoist($id);
+        $commentForm = new Comment();
 
         if (isset($id)){
             return $this->renderPartial('_todoist-detail', [
                 'model'=>$model,
-                'comment' => $comment
+                'comment' => $comment,
+                'commentForm' => $commentForm,
             ]);
         } else {
             return '<div class="alert alert-danger">Страница не найдена</div>';
