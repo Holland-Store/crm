@@ -2,12 +2,14 @@
 
 namespace app\models\query;
 
+use yii\db\ActiveQuery;
+
 /**
  * This is the ActiveQuery class for [[\app\models\Shifts]].
  *
  * @see \app\models\Shifts
  */
-class ShiftsQuery extends \yii\db\ActiveQuery
+class ShiftsQuery extends ActiveQuery
 {
     /*public function active()
     {
