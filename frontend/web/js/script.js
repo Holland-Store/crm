@@ -65,28 +65,31 @@ $(document).ready(function(){
             })
        });
        $(function () {
-           $('[data-toggle = "toolpit"]').tooltip();
+           $('[data-toggle = "tooltip"]').tooltip();
+       });
+        $(function () {
+            $("[data-toggle='popover']").popover();
+        });
+       $('body').on('change', '#zakaz-status', function () {
+                $('#autsors')
+                    .css({'display': ($(this).val() == 8 ? 'block' : 'none')})
+                    .prop('selectedIndex', 0)
+       });
+       $('#zakaz-status').each(function () {
+            if ($(this).val() == 8){
+                $('#autsors').css('display', 'block')
+            } else {
+                $('#autsors').css('display', 'none')
+                    .prop('selectedIndex', 0);
+            }
+       });
+       $('.startShift').click(function () {
+            $('#form-startShift')[0].reset();
+            $('.form-shiftStart').toggleClass('visibleForm');
+       });
+       $('.endShift').click(function () {
+            $('#form-endShift')[0].reset();
+            $('.form-shiftEnd').toggleClass('visibleForm');
        })
-    $('body').on('change', '#zakaz-status', function () {
-            $('#autsors')
-                .css({'display': ($(this).val() == 8 ? 'block' : 'none')})
-                .prop('selectedIndex', 0)
-    });
-    $('#zakaz-status').each(function () {
-        if ($(this).val() == 8){
-            $('#autsors').css('display', 'block')
-        } else {
-            $('#autsors').css('display', 'none')
-                .prop('selectedIndex', 0);
-        }
-    });
-    $('.startShift').click(function () {
-        $('#form-startShift')[0].reset();
-        $('.form-shiftStart').toggleClass('visibleForm');
-    });
-    $('.endShift').click(function () {
-        $('#form-endShift')[0].reset();
-        $('.form-shiftEnd').toggleClass('visibleForm');
-    })
 });
 
