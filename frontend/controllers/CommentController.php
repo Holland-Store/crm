@@ -16,12 +16,6 @@ class CommentController extends Controller
     public function behaviors()
     {
         return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
             'access' => [
                 'class' => AccessControl::className(),
                 'only' => ['todoist'],
@@ -35,6 +29,11 @@ class CommentController extends Controller
         ];
     }
 
+    /**
+     * Save comment who came todoist
+     * if success redirected [todoist/index]
+     * @param $id
+     */
     public function actionTodoist($id)
     {
         $commentForm = new Comment();
