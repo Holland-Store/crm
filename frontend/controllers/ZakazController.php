@@ -204,7 +204,7 @@ class ZakazController extends Controller
             }
             if ($model->validate() && $client->validate()){
                 if (!$model->save()) {
-                    $this->flashErrors();
+                    print_r($model->getErrors());
                 } else {
                     $financy->saveSum($model->fact_oplata, $model->id_zakaz, $model->oplata);
                     Yii::$app->session->addFlash('update', 'Успешно создан заказ');
@@ -259,7 +259,7 @@ class ZakazController extends Controller
             }
             if ($model->validate() && $client->validate()){
                 if (!$model->save()) {
-                    $this->flashErrors($id);
+                    print_r($model->getErrors());
                 } else {
                     $arr = ArrayHelper::map($model->tags, 'id', 'id');
                     if (Yii::$app->request->post('Zakaz')['tags_array']){
