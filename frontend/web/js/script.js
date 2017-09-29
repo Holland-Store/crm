@@ -75,6 +75,9 @@ $(document).ready(function(){
                     .css({'display': ($(this).val() == 8 ? 'block' : 'none')})
                     .prop('selectedIndex', 0)
        });
+    $('body').on('click', '#checkboxAppoint', function () {
+        $('.form-appoint').toggleClass('visible');
+    });
        $('#zakaz-status').each(function () {
             if ($(this).val() == 8){
                 $('#autsors').css('display', 'block')
@@ -90,6 +93,6 @@ $(document).ready(function(){
        $('.endShift').click(function () {
             $('#form-endShift')[0].reset();
             $('.form-shiftEnd').toggleClass('visibleForm');
-       })
+       });
 });
 
