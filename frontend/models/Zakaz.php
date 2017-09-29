@@ -123,13 +123,13 @@ class Zakaz extends ActiveRecord
             [['information', 'search', 'declined'], 'string'],
             ['prioritet', 'default', 'value' => 0],
             ['status', 'default', 'value' => self::STATUS_NEW],
-            ['id_sotrud', 'default', 'value' => Yii::$app->user->getId()],
-            ['id_shop', 'default', 'value' => Yii::$app->user->getId()],
+            [['id_sotrud', 'id_shop'], 'default', 'value' => Yii::$app->user->getId()],
             ['data', 'default', 'value' => date('Y-m-d H:i:s')],
             [['description'], 'string', 'max' => 500],
             ['renouncement','string', 'max' => 250],
             [['email', 'name', 'img', 'maket', 'sotrud_name'],'string', 'max' => 50],
             [['file'], 'file', 'skipOnEmpty' => true],
+            [['id_shop'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['id_shop' => 'id']],
             [['id_autsors'], 'exist', 'skipOnError' => true, 'targetClass' => Partners::className(), 'targetAttribute' => ['id_autsors' => 'id']],
             [['id_sotrud'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['id_sotrud' => 'id']],
             [['id_tovar'], 'exist', 'skipOnError' => true, 'targetClass' => Tovar::className(), 'targetAttribute' => ['id_tovar' => 'id']],
@@ -225,6 +225,14 @@ class Zakaz extends ActiveRecord
     public function getIdAutsors()
     {
         return $this->hasOne(Partners::className(), ['id' => 'id_autsors']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getIdShop()
+    {
+        return $this->hasOne(User::className(), ['id' => 'id_shop']);
     }
 
     /**
@@ -351,17 +359,23 @@ class Zakaz extends ActiveRecord
      */
     public function upload($action, $id = null)
     {
-        if($this->validate()){
-            if ($action == 'create'){
-                $this->file->saveAs('attachment/'.time().'.'.$this->file->extension);
-                $this->img = time() . '.' . $this->file->extension;
-            } else {
-                $this->file->saveAs('attachment/' . $id . '.' . $this->file->extension);
-                $this->img = $id . '.' . $this->file->extension;
-            }
-            return true;
+        $year = date('Y');
+        $month = date('F');
+        if (!is_dir('attachment/' . $year)) {
+            mkdir('attachment/' . $year);
+        }
+        if (!is_dir('attachment/' . $year . '/' . $month)) {
+            mkdir('attachment/' . $year . '/' . $month);
+        }
+        if (!is_dir('attachment/' . $year . '/' . $month.'/zakaz')) {
+            mkdir('attachment/' . $year . '/' . $month);
+        }
+        if ($action == 'create') {
+            $this->file->saveAs('attachment/'. $year . '/' . $month . '/' . time() . '.' . $this->file->extension);
+            $this->img = time() .'.' . $this->file->extension;
         } else {
-            return false;
+            $this->file->saveAs('attachment/' . $year . '/' . $month . '/' . $id . '.' . $this->file->extension);
+            $this->img = $id . '.' . $this->file->extension;
         }
     }
 
@@ -389,16 +403,19 @@ class Zakaz extends ActiveRecord
      */
     public function getUploadeFile()
     {
-        //Выполнена работа дизайнером
-        if($this->validate())
-        {
-            $this->file->saveAs('maket/Maket_'.$this->id_zakaz.'.'.$this->file->extension);
-            $this->maket = 'Maket_'.$this->id_zakaz.'.'.$this->file->extension;
-            $this->status = self::STATUS_SUC_DISAIN;
-            return true;
-        } else {
-            return false;
+        $year = date('Y');
+        $month = date('M');
+        if (!is_dir('attachment/' . $year)) {
+            mkdir('attachment/' . $year);
         }
+        if (!is_dir('attachment/' . $year . '/' . $month)) {
+            mkdir('attachment/' . $year . '/' . $month);
+        }
+        //Выполнена работа дизайнером
+        $this->file->saveAs('attachment/Maket_'.$this->id_zakaz.'.'.$this->file->extension);
+        $this->maket = 'Maket_'.$this->id_zakaz.'.'.$this->file->extension;
+        $this->status = self::STATUS_SUC_DISAIN;
+        return true;
     }
 
     public function afterFind()
