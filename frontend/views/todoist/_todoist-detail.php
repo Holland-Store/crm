@@ -1,6 +1,8 @@
 <?php
 
+use app\models\User;
 use yii\bootstrap\ActiveForm;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 
 /* @var $model app\models\Todoist */
@@ -46,4 +48,20 @@ use yii\helpers\Html;
     <?= Html::submitButton('Коммент', ['class' => 'btn btn-primary']) ?>
 
     <?php ActiveForm::end() ?>
+</div>
+
+<div class="col-lg-6">
+    <?= Html::checkbox('appoint', false, ['label' => 'Переназначить', 'class' => 'icheckbox', 'id' => 'checkboxAppoint']) ?>
+
+    <div class="form-appoint">
+        <?php $form = ActiveForm::begin([
+                'action' => ['todoist/appoint', 'id' => $model->id]
+        ]) ?>
+
+        <?= $form->field($model, 'id_user')->dropDownList(ArrayHelper::map(User::find()->select(['id', 'name'])->indexBy('id')->all(), 'id', 'name'))->label(false) ?>
+
+        <?= Html::submitButton('Назначить', ['class' => 'btn action']) ?>
+
+        <?php ActiveForm::end() ?>
+    </div>
 </div>
