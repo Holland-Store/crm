@@ -25,7 +25,6 @@
         "kartik-v/yii2-mpdf": "^1.0",
         "kartik-v/yii2-detail-view": "*",
         "kartik-v/yii2-label-inplace": "^1.2",
-        "kartik-v/yii2-money": "^1.2",
         "codeception/specify": "*",
         "codeception/verify": "*",
         "codeception/codeception": "2.3.3",
@@ -37,8 +36,7 @@
         "npm-asset/jquery": "^2.2",
         "bower-asset/sweetalert": "*",
         "sonko-dmitry/yii2-telegram-bot-api": "*",
-        "kartik-v/yii2-popover-x": "*",
-        "phpnt/yii2-icheck": "*"
+        "kartik-v/yii2-popover-x": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
