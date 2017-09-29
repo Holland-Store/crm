@@ -163,7 +163,7 @@ class TodoistController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $model->file = UploadedFile::getInstance($model, 'file');
             if ($model->file){
-                $model->uplod();
+                $model->upload();
             }
             if ($model->save()){
                 Yii::$app->session->addFlash('update', 'Задача успешна создана');
