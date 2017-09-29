@@ -41,7 +41,10 @@ use kartik\widgets\DatePicker;
     <?= $form->field($model, 'comment')->textarea(['rows' => 6]) ?>
 
     <div class="col-lg-3">
-        <?php echo $model->img != null ? 'Файл: '.$model->img : false ?>
+        <?php echo $model->img != null
+            ? 'Файл: '.Html::a(Html::encode($model->img), '@web/todoist_img/'.$model->img, ['download' => true])
+            : false
+        ?>
         <?= $form->field($model, 'file')->widget(FileInput::className(), [
             'language' => 'ru',
             'options' => ['multiple' => false],
