@@ -42,7 +42,7 @@ class ZakazSearch extends Zakaz
      */
     public function search($params, $role)
     {
-        $query = Zakaz::find()->with(['idShipping', 'idSotrud', 'tags', 'financies', 'idClient', 'idAutsors'])->indexBy('id_zakaz');
+        $query = Zakaz::find()->with(['idShipping', 'idSotrud', 'tags', 'financies', 'idClient', 'idAutsors', 'zakazTag'])->indexBy('id_zakaz');
 
         // add conditions that should always apply here
 
