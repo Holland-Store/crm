@@ -14,6 +14,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\web\UploadedFile;
 
 /**
  * TodoistController implements the CRUD actions for Todoist model.
@@ -160,6 +161,10 @@ class TodoistController extends Controller
         $telegram = new Telegram();
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $model->file = UploadedFile::getInstance($model, 'file');
+            if ($model->file){
+                $model->uplod();
+            }
             if ($model->save()){
                 Yii::$app->session->addFlash('update', 'Задача успешна создана');
                 $telegram->message($model->id_user, 'Задача была поставлена: '.$model->comment);
@@ -232,7 +237,10 @@ class TodoistController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
+        $model->file = UploadedFile::getInstance($model, 'file');
+        if ($model->file){
+            $model->upload();
+        }
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index', 'id' => $model->id]);
         } else {
@@ -326,7 +334,7 @@ class TodoistController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = Todoist::find()->indexBy('id')->with('idZakaz', 'idUser', 'idSotrudPut')->where(['id' => $id])->one()) !== null) {
+        if (($model = Todoist::find()->getId($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
