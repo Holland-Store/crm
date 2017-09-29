@@ -163,7 +163,7 @@
 }
 
 /* line 167, ../sass/gridview.scss */
-.tr9 {
+.tr100 {
   width: 100px;
 }
 
@@ -645,4 +645,13 @@ thead a {
 /* line 547, ../sass/gridview.scss */
 .nav-pills > li > a {
   border-radius: 26px;
+}
+
+/* line 551, ../sass/gridview.scss */
+.todoist-index .form-appoint {
+  display: none;
+}
+/* line 554, ../sass/gridview.scss */
+.todoist-index .visible {
+  display: block;
 }

@@ -547,4 +547,12 @@ $colorDeclined: #7c1111;
 .nav-pills > li > a{
     border-radius: $border-radius;
 }
+.todoist-index{
+  .form-appoint{
+    display: none;
+  }
+  .visible{
+    display: block;
+  }
+}
 

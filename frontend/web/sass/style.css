@@ -519,6 +519,11 @@ thead a {
 .nav-pills > li > a {
   border-radius: 26px; }
 
+.todoist-index .form-appoint {
+  display: none; }
+.todoist-index .visible {
+  display: block; }
+
 .text-orange {
   color: #f0ad4e; }
 

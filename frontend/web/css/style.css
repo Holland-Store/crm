@@ -769,6 +769,15 @@ thead a {
   border-radius: 26px;
 }
 
+/* line 551, ../sass/gridview.scss */
+.todoist-index .form-appoint {
+  display: none;
+}
+/* line 554, ../sass/gridview.scss */
+.todoist-index .visible {
+  display: block;
+}
+
 /* line 79, ../sass/button.scss */
 .text-orange {
   color: #f0ad4e;
