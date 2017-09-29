@@ -115,7 +115,7 @@ class Zakaz extends ActiveRecord
             [['srok', 'number', 'description', 'id_client'], 'required', 'on' => self::SCENARIO_DEFAULT],
             ['declined', 'required', 'message' => 'Введите причину отказа', 'on'=> self::SCENARIO_DECLINED],
             [['id_zakaz', 'id_tovar', 'minut', 'time', 'number', 'status', 'action', 'id_sotrud', 'id_shop','phone', 'id_client','id_shipping' ,'prioritet', 'id_autsors','statusDisain', 'statusMaster', 'id_unread'], 'integer'],
-            [['srok', 'data', 'data-start-disain', 'tags_array'], 'safe'],
+            [['srok', 'data', 'tags_array'], 'safe'],
             [['oplata', 'fact_oplata'], 'filter', 'filter' => function($value){
                 return str_replace(' ', '', $value);
             }],
@@ -360,7 +360,9 @@ class Zakaz extends ActiveRecord
                 $this->img = $id . '.' . $this->file->extension;
             }
             return true;
-        } else {return false;}
+        } else {
+            return false;
+        }
     }
 
     /**
