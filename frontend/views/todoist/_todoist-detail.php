@@ -51,6 +51,16 @@ use yii\helpers\Html;
 </div>
 
 <div class="col-lg-6">
+    <div>
+        <?php echo $model->img != null
+            ? 'Файл: '.Html::a(Html::encode($model->img), '@web/todoist_img/'.$model->img, [
+                'download' => true,
+                'data-pjax' => 0,
+                'title' => 'Чтобы скачать приложение кликните на ссылку',
+                'data-toggle' => 'tooltip'
+            ])
+            : false ?>
+    </div>
     <?= Html::checkbox('appoint', false, ['label' => 'Переназначить', 'class' => 'icheckbox', 'id' => 'checkboxAppoint']) ?>
 
     <div class="form-appoint">
