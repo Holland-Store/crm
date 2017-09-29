@@ -46,7 +46,7 @@ class TodoistController extends Controller
     					'roles' => ['shop', 'zakup', 'master', 'disain', 'program', 'courier', 'system'],
 					],
 					[
-    					'actions' => ['close', 'create', 'update', 'declined', 'accept', 'todoist-detail'],
+    					'actions' => ['close', 'create', 'update', 'declined', 'accept', 'todoist-detail', 'appoint'],
     					'allow' => true,
     					'roles' => ['@'],
 					],
@@ -172,6 +172,18 @@ class TodoistController extends Controller
         return $this->render('create', [
             'model' => $model,
         ]);
+    }
+
+    public function actionAppoint($id)
+    {
+        $model = $this->findModel($id);
+        if ($model->load(Yii::$app->request->post())){
+            if (!$model->save()){
+                print_r($model->getErrors());
+            } else {
+                return $this->redirect(['index', '#' => $model->id]);
+            }
+        }
     }
 
     /**
@@ -309,12 +321,12 @@ class TodoistController extends Controller
      * Finds the Todoist model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Todoist the loaded model
+     * @return array|\yii\db\ActiveRecord
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Todoist::findOne($id)) !== null) {
+        if (($model = Todoist::find()->indexBy('id')->with('idZakaz', 'idUser', 'idSotrudPut')->where(['id' => $id])->one()) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
