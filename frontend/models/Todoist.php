@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\models\query\TodoistQuery;
 use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
 
@@ -15,15 +16,19 @@ use yii\helpers\ArrayHelper;
  * @property integer $id_user
  * @property integer $id_sotrud_put
  * @property string $comment
+ * @property string $img
  * @property string $declined
  * @property integer $activate
  *
  * @property Zakaz $idZakaz
  * @property User $idUser
  * @property User $idSotrudPut
+ * @property mixed $upload
  */
 class Todoist extends ActiveRecord
 {
+    public $file;
+
 	const MOSCOW = 2;
 	const PUSHKIN = 6;
 	const SIBIR = 9;
@@ -48,7 +53,7 @@ class Todoist extends ActiveRecord
     public function scenarios()
     {
         return [
-            self::SCENARIO_DEFAULT => ['srok', 'id_zakaz', 'comment', 'id_user' ,'id_sotrud_put', 'activate', 'declined'],
+            self::SCENARIO_DEFAULT => ['srok', 'id_zakaz', 'comment', 'id_user' ,'id_sotrud_put', 'img','activate', 'declined'],
             self::SCENARIO_DECLINED => ['declined'],
         ];
     }
@@ -64,6 +69,8 @@ class Todoist extends ActiveRecord
             [['srok', 'date'], 'safe'],
             [['id_zakaz', 'id_user', 'id_sotrud_put','activate'], 'integer'],
             [['comment', 'declined'], 'string'],
+            [['img'], 'string', 'max' => 86],
+            [['file'], 'file', 'skipOnEmpty' => true],
             [['id_sotrud_put'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['id_sotrud_put' => 'id']],
             [['id_zakaz'], 'exist', 'skipOnError' => true, 'targetClass' => Zakaz::className(), 'targetAttribute' => ['id_zakaz' => 'id_zakaz']],
             [['id_user'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['id_user' => 'id']],
@@ -83,6 +90,8 @@ class Todoist extends ActiveRecord
             'id_user' => 'Назначение',
             'id_sotrud_put' => 'Сотрудник поставил',
             'comment' => 'Доп.указание',
+            'img' => 'Файл',
+            'file' => 'Файл',
             'declined' => 'Отказ',
             'activate' => 'Статус',
         ];
@@ -112,7 +121,16 @@ class Todoist extends ActiveRecord
         return $this->hasOne(User::className(), ['id' => 'id_sotrud_put']);
     }
 
-	public static function getIdUserArray()
+    /**
+     * @inheritdoc
+     * @return TodoistQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new TodoistQuery(get_called_class());
+    }
+
+    public static function getIdUserArray()
 	{
 		return [
 			self::MOSCOW => 'Московский',
@@ -132,14 +150,29 @@ class Todoist extends ActiveRecord
             '1' => 'Выполнен',
         ];
     }
+
+    /**
+     * @return mixed
+     */
     public function getTodoistName()
     {
         return ArrayHelper::getValue(self::getTodoistArray(), $this->activate);
     }
 
+    /**
+     * @param bool $insert
+     * @return bool
+     */
     public function beforeSave($insert)
     {
         $this->srok = date('Y-m-d', strtotime($this->srok));
         return parent::beforeSave($insert);
     }
+
+    public function upload()
+    {
+        $this->file->saveAs('todoist_img/'.time().'_todoist.'.$this->file->extension);
+        $this->img = time().'_todoist.'.$this->file->extension;
+    }
+
 }
