@@ -98,9 +98,11 @@ $this->title = 'Все задачи';
         'columns' => [
             [
                 'class' => 'kartik\grid\ExpandRowColumn',
-                'width' => '10px',
+                'width' => '1px',
                 'enableRowClick' => true,
                 'expandOneOnly' => true,
+                'expandIcon' => '<span class="glyphicon glyphicon-chevron-right"></span>',
+                'collapseIcon' => '<span class="glyphicon glyphicon-chevron-down"></span>',
                 'detailUrl' => Url::to(['todoist-detail']),
                 'value' => function(){
                     return GridView::ROW_COLLAPSED;
@@ -164,7 +166,7 @@ $this->title = 'Все задачи';
                 'class' => 'yii\grid\ActionColumn',
                 'template' => '{update}{delete}',
                 'buttons' => [
-                    'delete' => function($url, $model){
+                    'delete' => function($model){
                         return Html::a('<span class="glyphicon glyphicon-remove"></span>', ['close', 'id' => $model->id]);
                     }
                 ],
