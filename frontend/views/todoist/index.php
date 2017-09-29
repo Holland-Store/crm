@@ -166,7 +166,7 @@ $this->title = 'Все задачи';
                 'class' => 'yii\grid\ActionColumn',
                 'template' => '{update}{delete}',
                 'buttons' => [
-                    'delete' => function($model){
+                    'delete' => function($url, $model){
                         return Html::a('<span class="glyphicon glyphicon-remove"></span>', ['close', 'id' => $model->id]);
                     }
                 ],
