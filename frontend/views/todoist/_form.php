@@ -41,6 +41,7 @@ use kartik\widgets\DatePicker;
     <?= $form->field($model, 'comment')->textarea(['rows' => 6]) ?>
 
     <div class="col-lg-3">
+        <?php echo $model->img != null ? 'Файл: '.$model->img : false ?>
         <?= $form->field($model, 'file')->widget(FileInput::className(), [
             'language' => 'ru',
             'options' => ['multiple' => false],
@@ -86,7 +87,7 @@ use kartik\widgets\DatePicker;
                     'actionDrag' => '<span class="file-drag-handle {dragClass}" title="{dragTitle}">{dragIcon}</span>',
                 ],
             ]
-        ]) ?>
+        ])->label(false) ?>
     </div>
 
     <?= $form->field($model, 'id_sotrud_put')->hiddenInput(['value' => Yii::$app->user->id])->label(false) ?>
