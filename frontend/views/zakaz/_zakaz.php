@@ -22,8 +22,7 @@ use yii\widgets\Pjax;
 <div class="view-zakaz" style="color: black">
 	<div class="col-lg-2 anketaZakaz">
         <span class="anketaZakaz_from">От:</span>
-        <div><?= date('d M H:i',strtotime($model->data)) ?></div>
-
+        <div class="srok"><?= Yii::$app->formatter->asDatetime($model->data); ?>
         <span class="anketaZakaz_from">Автор:</span>
         <div><?= $model->idSotrud->name ?></div>
 
