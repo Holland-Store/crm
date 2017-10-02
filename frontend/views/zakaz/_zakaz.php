@@ -7,11 +7,8 @@ use yii\widgets\DetailView;
 use yii\helpers\Url;
 use yii\bootstrap\Modal;
 use app\models\Courier;
-use app\models\Comment;
 use app\models\Zakaz;
-use app\models\User;
 use yii\widgets\MaskedInput;
-use yii\widgets\Pjax;
 
 /* @var  $comment app\models\Comment */
 /* @var  $model app\models\Zakaz */
@@ -129,8 +126,8 @@ use yii\widgets\Pjax;
 				    'attribute' => 'img',
                     'format' =>'raw',
                     'value' => $model->img == null ? '' : Html::a('<span class="glyphicon glyphicon-paperclip imgZakaz"></span>', '@web/attachment/'.$model->img, ['download' => true, 'data-pjax' => 0, 'title' => 'Исходный файл от клиента'])
-				],
-			],
+                ],
+            ],
 		]) ?>
 	</div>
     <div class="responsible">
