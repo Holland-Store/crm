@@ -26,8 +26,6 @@ use kartik\widgets\DatePicker;
             ]
     ])?>
 
-    <!-- <?= $form->field($model, 'id_zakaz')->textInput() ?> -->
-
     <?= $form->field($model, 'id_user')->dropDownList(
             ArrayHelper::map(User::find()->andWhere(['<>', 'id', User::USER_ALBERT])
             ->andWhere(['<>', 'id', User::USER_DAMIR])
