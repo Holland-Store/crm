@@ -6,7 +6,6 @@ use yii\helpers\StringHelper;
 use kartik\grid\GridView;
 use yii\bootstrap\Modal;
 use app\models\Zakaz;
-use app\models\Comment;
 use yii\bootstrap\ButtonDropdown;
 use yii\widgets\Pjax;
 
