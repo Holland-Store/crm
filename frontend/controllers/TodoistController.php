@@ -256,6 +256,9 @@ class TodoistController extends Controller
         $telegram = new Telegram();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            if ($model->file){
+                $model->upload();
+            }
             $telegram->message($model->id_user, 'Задача была поставлена "'.$model->comment.'" по заказу '.$model->idZakaz->prefics);
             $this->findView();
         }
