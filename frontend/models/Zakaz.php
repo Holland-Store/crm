@@ -50,6 +50,7 @@ use yii\db\ActiveRecord;
  * @property User $idSotrud
  * @property Courier $idShipping
  * @property Partners $idAutsors
+ * @property Shifts $shifts
  * @property mixed $tags
  * @property mixed $uploadeFile
  * @property mixed $getTagsAsString
@@ -129,6 +130,7 @@ class Zakaz extends ActiveRecord
             ['renouncement','string', 'max' => 250],
             [['email', 'name', 'img', 'maket'],'string', 'max' => 50],
             [['file'], 'file', 'skipOnEmpty' => true],
+            [['shifts_id'], 'exist', 'skipOnError' => true, 'targetClass' => Shifts::className(), 'targetAttribute' => ['shifts_id' => 'id']],
             [['id_shop'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['id_shop' => 'id']],
             [['id_autsors'], 'exist', 'skipOnError' => true, 'targetClass' => Partners::className(), 'targetAttribute' => ['id_autsors' => 'id']],
             [['id_sotrud'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['id_sotrud' => 'id']],
@@ -201,6 +203,15 @@ class Zakaz extends ActiveRecord
     public function getIdTovar()
     {
         return $this->hasOne(Tovar::className(), ['id' => 'id_tovar']);
+    }
+
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getShifts()
+    {
+        return $this->hasOne(Shifts::className(), ['id' => 'shifts_id']);
     }
 
     /**
