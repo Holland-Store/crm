@@ -375,7 +375,7 @@ class Zakaz extends ActiveRecord
             $this->img = time() .'.' . $this->file->extension;
         } else {
             $this->file->saveAs('attachment/' . $year . '/' . $month . '/customer/' . $id . '.' . $this->file->extension);
-            $this->img = $id . '.' . $this->file->extension;
+            $this->img = 'attachment/' . $year . '/' . $month . '/customer/' . $id . '.' . $this->file->extension;
         }
     }
 
@@ -416,7 +416,7 @@ class Zakaz extends ActiveRecord
         }
         //Выполнена работа дизайнером
         $this->file->saveAs('attachment/'.$year.'/'.$month.'/layout/Maket_'.$this->id_zakaz.'.'.$this->file->extension);
-        $this->maket = 'Maket_'.$this->id_zakaz.'.'.$this->file->extension;
+        $this->maket = 'attachment/'.$year.'/'.$month.'/layout/Maket_'.$this->id_zakaz.'.'.$this->file->extension;
         $this->status = self::STATUS_SUC_DISAIN;
         return true;
     }
