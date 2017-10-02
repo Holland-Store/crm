@@ -155,7 +155,6 @@ $this->title = 'Вce заказы';
             [
                 'attribute' => 'srok',
                 'format' => ['datetime', 'php:d M H:i'],
-                'value' => 'srok',
                 'hAlign' => GridView::ALIGN_RIGHT,
                 'contentOptions' => function($model) {
                     if ($model->status == Zakaz::STATUS_NEW){
