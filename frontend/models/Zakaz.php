@@ -418,7 +418,6 @@ class Zakaz extends ActiveRecord
         $this->file->saveAs('attachment/'.$year.'/'.$month.'/layout/Maket_'.$this->id_zakaz.'.'.$this->file->extension);
         $this->maket = 'attachment/'.$year.'/'.$month.'/layout/Maket_'.$this->id_zakaz.'.'.$this->file->extension;
         $this->status = self::STATUS_SUC_DISAIN;
-        return true;
     }
 
     public function afterFind()
