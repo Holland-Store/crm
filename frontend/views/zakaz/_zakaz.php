@@ -15,6 +15,7 @@ use yii\widgets\Pjax;
 
 /* @var  $comment app\models\Comment */
 /* @var  $model app\models\Zakaz */
+/* @var  $client app\models\Client */
 /** @var string $sotrud */
 ?>
 
@@ -32,13 +33,22 @@ use yii\widgets\Pjax;
         <?php endif; ?>
 
         <span class="anketaZakaz_from">Клиент:</span>
-        <div><?= $model->name ?></div>
+        <div><?php if ($model->name == null) {
+                echo $model->idClient->name;
+} else {
+            echo $model->name;
+            } ?></div>
         <div>
-            <?php $s = $model->phone;
-                echo $s[0].' ('.$s[1].$s[2].$s[3].') '.$s[4].$s[5].$s[6].'-'.$s[7].$s[8].'-'.$s[9].$s[10];
-            ?>
+            <?php if ($model->phone == null){
+                echo $model->idClient->phone;
+            } else {
+                echo $model->phone;
+            }  ?>
+<!--            --><?php //$s = $model->phone;
+//                echo $s[0].' ('.$s[1].$s[2].$s[3].') '.$s[4].$s[5].$s[6].'-'.$s[7].$s[8].'-'.$s[9].$s[10];
+//            ?>
         </div>
-        <div><?= $model->email ?></div>
+        <div><?= $model->idClient->email ?></div>
 	    </div>
     </div>
 	<div class="col-lg-7 zakazInfo">
