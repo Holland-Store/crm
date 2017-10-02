@@ -1,6 +1,7 @@
 <?php
 
 use app\models\User;
+use kartik\widgets\FileInput;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
