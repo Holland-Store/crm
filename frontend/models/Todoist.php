@@ -171,7 +171,18 @@ class Todoist extends ActiveRecord
 
     public function upload()
     {
-        $this->file->saveAs('todoist_img/'.time().'_todoist.'.$this->file->extension);
+        $year = date('Y');
+        $month = date('F');
+        if (!is_dir('attachment/' . $year)) {
+            mkdir('attachment/' . $year);
+        }
+        if (!is_dir('attachment/' . $year . '/' . $month)) {
+            mkdir('attachment/' . $year . '/' . $month);
+        }
+        if (!is_dir('attachment/' . $year . '/' . $month.'/task')) {
+            mkdir('attachment/' . $year . '/' . $month.'/task');
+        }
+        $this->file->saveAs('attachment/'.$year.'/'.$month.'/'.'task/'.time().'_todoist.'.$this->file->extension);
         $this->img = time().'_todoist.'.$this->file->extension;
     }
 

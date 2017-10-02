@@ -367,14 +367,14 @@ class Zakaz extends ActiveRecord
         if (!is_dir('attachment/' . $year . '/' . $month)) {
             mkdir('attachment/' . $year . '/' . $month);
         }
-        if (!is_dir('attachment/' . $year . '/' . $month.'/zakaz')) {
-            mkdir('attachment/' . $year . '/' . $month);
+        if (!is_dir('attachment/' . $year . '/' . $month.'/customer')) {
+            mkdir('attachment/' . $year . '/' . $month.'/customer');
         }
         if ($action == 'create') {
-            $this->file->saveAs('attachment/'. $year . '/' . $month . '/' . time() . '.' . $this->file->extension);
+            $this->file->saveAs('attachment/'. $year . '/' . $month . '/customer/' . time() . '.' . $this->file->extension);
             $this->img = time() .'.' . $this->file->extension;
         } else {
-            $this->file->saveAs('attachment/' . $year . '/' . $month . '/' . $id . '.' . $this->file->extension);
+            $this->file->saveAs('attachment/' . $year . '/' . $month . '/customer/' . $id . '.' . $this->file->extension);
             $this->img = $id . '.' . $this->file->extension;
         }
     }
@@ -404,15 +404,18 @@ class Zakaz extends ActiveRecord
     public function getUploadeFile()
     {
         $year = date('Y');
-        $month = date('M');
+        $month = date('F');
         if (!is_dir('attachment/' . $year)) {
             mkdir('attachment/' . $year);
         }
         if (!is_dir('attachment/' . $year . '/' . $month)) {
             mkdir('attachment/' . $year . '/' . $month);
         }
+        if (!is_dir('attachment/' . $year . '/' . $month.'/layout')) {
+            mkdir('attachment/' . $year . '/' . $month.'/layout');
+        }
         //Выполнена работа дизайнером
-        $this->file->saveAs('attachment/Maket_'.$this->id_zakaz.'.'.$this->file->extension);
+        $this->file->saveAs('attachment/'.$year.'/'.$month.'/layout/Maket_'.$this->id_zakaz.'.'.$this->file->extension);
         $this->maket = 'Maket_'.$this->id_zakaz.'.'.$this->file->extension;
         $this->status = self::STATUS_SUC_DISAIN;
         return true;
