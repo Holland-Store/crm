@@ -194,11 +194,11 @@ use yii\widgets\Pjax;
                 ['prompt' => 'Выберите приоритет'])->label(false) ?>
             </div>
             <?php endif ?>
-            <?php if (Yii::$app->user->can('shop')): ?>
             <div class="col-xs-10">
-                <?= $form->field($model, 'sotrud_name')->textInput(['placeholder' => 'Сотрудник', 'class' => 'inputForm'])->label(false) ?>
+                <?php if ($model->isNewRecord): ?>
+                <?= $form->field($model, 'shifts_id')->dropDownList(ArrayHelper::map(\app\models\Shifts::find()->Shifts(Yii::$app->user->id)->all(), 'id', 'idSotrud.nameSotrud'))->label(false) ?>
+                <?php endif; ?>
             </div>
-            <?php endif ?>
     </div>
 
     <div class="col-lg-2">
@@ -231,7 +231,7 @@ use yii\widgets\Pjax;
         <?php endif; ?>
     </div>
 
-    <!-- <?= $form->field($model, 'id_sotrud')->hiddenInput(['value' => Yii::$app->user->id])->label(false) ?> -->
+<!--     --><?//= $form->field($model, 'id_sotrud')->hiddenInput(['value' => Yii::$app->user->id])->label(false) ?><!-- -->
     <div class="col-lg-2 submitZakazForm">
         <div class="form-group">
             <?= Html::submitButton($model->isNewRecord ? 'Создать' : 'Сохранить', ['class' => $model->isNewRecord ? 'action' : 'action']) ?>

@@ -23,9 +23,9 @@ use yii\widgets\MaskedInput;
         <span class="anketaZakaz_from">Автор:</span>
         <div><?= $model->idSotrud->name ?></div>
 
-        <?php if ($model->sotrud_name != null): ?>
+        <?php if ($model->shifts_id != null): ?>
         <span class="anketaZakaz_from">Сотрудник:</span>
-        <div><?= $model->sotrud_name ?></div>
+        <div><?= $model->shifts_id ?></div>
         <?php endif; ?>
 
         <span class="anketaZakaz_from">Клиент:</span>
