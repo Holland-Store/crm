@@ -119,8 +119,18 @@ class ZakazController extends Controller
     {
         $model = $this->findModel($id);
         $reminder = new Notification();
+        $commentField = new Comment();
+        $comment = Comment::find()->addSelect(['DATE(date) as just_date','TIME(date) as time','comment','id_user'])
+                                  ->joinWith(['idUser'])
+                                  ->where(['id_zakaz' => $id])
+                                  ->asArray()
+                                  ->all();
+        $comment = ArrayHelper::index($comment, null, 'just_date');
         $zakaz = $model->id_zakaz;
 
+        $dataProvider = new ActiveDataProvider([
+            'query' => Courier::find()->where(['id_zakaz' => $id])
+        ]);
         if ($reminder->load(Yii::$app->request->post())) {
             $reminder->getReminder($zakaz);
             if ($reminder->validate() && $reminder->save()) {
@@ -135,6 +145,9 @@ class ZakazController extends Controller
         return $this->render('view', [
             'model' => $this->findModel($id),
             'reminder' => $reminder,
+            'dataProvider' => $dataProvider,
+            'comment' => $comment,
+            'commentField' => $commentField,
         ]);
     }
 
