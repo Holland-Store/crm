@@ -1,13 +1,21 @@
 <?php
 
+use app\models\Comment;
+use app\models\Financy;
+use kartik\form\ActiveForm;
+use kartik\grid\GridView;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
-use yii\widgets\DetailView;
+use kartik\detail\DetailView;
 use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Zakaz */
+/* @var $comment app\models\Comment */
+/* @var $commentField app\models\Comment */
+/* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = $model->id_zakaz;
+$this->title = $model->prefics;
 // $this->information = $model->description;
 // $this->params['breadcrumbs'][] = ['label' => 'Все закакзы', 'url' => ['index']];
 // $this->params['breadcrumbs'][] = $this->title;
@@ -15,27 +23,32 @@ $this->title = $model->id_zakaz;
     <div class="zakaz-view">
         <?php Pjax::begin(); ?>
 
-        <div class="col-xs-12">
-            <?= DetailView::widget([
+        <div class="col-xs-6">
+        <h4>Информация о заказе</h4>
+        <?= DetailView::widget([
         'model' => $model,
-        'options' => ['class' => 'detail-view'],
+        'striped' => false,
+        'bordered' => false,
+        'condensed' => true,
         'attributes' => [
             [
                 'attribute' => 'srok',
-                'visible' => Yii::$app->user->can('seeIspol'),
+                'value' => Yii::$app->formatter->asDatetime($model->srok)
             ],
             [
-                'attribute' => 'minut',
-                'visible' => Yii::$app->user->can('admin'),
-            ],
-            [
-                'attribute' => 'idSotrud.name',
+                'attribute' => 'id_sotrud',
                 'label' => 'Магазин',
+                'value' => $model->idSotrud->name,
                 'visible' => Yii::$app->user->can('admin'),
+            ],
+            [
+                'attribute' => 'shifts_id',
+                'value' => $model->shifts->idSotrud->nameSotrud
             ],
             [
                 'attribute' => 'prioritetName',
                 'label' => 'Приоритет',
+                'value' => $model->prioritet == null ? false : $model->prioritetName,
                 'visible' => Yii::$app->user->can('admin'),
             ],
             [
@@ -44,18 +57,17 @@ $this->title = $model->id_zakaz;
                 'visible' => Yii::$app->user->can('admin'),
             ],
             [
-                'attribute' => 'idTovar.name',
-                'label' => 'Тип товара',
-                'visible' => Yii::$app->user->can('admin'),
+                'attribute' => 'oplata',
+                'visible' => Yii::$app->user->can('seeAdop'),
             ],
             [
-                'attribute' => 'oplata',
+                'attribute' => 'fact_oplata',
                 'visible' => Yii::$app->user->can('seeAdop'),
             ],
             'number',
             [
                 'attribute' => 'data',
-                'format' => ['date', 'php:d.m.Y H:i'],
+                'value' => Yii::$app->formatter->asDatetime($model->data),
                 'visible' => Yii::$app->user->can('seeAdop'),
             ],
             'information',
@@ -75,18 +87,84 @@ $this->title = $model->id_zakaz;
                 'visible' => Yii::$app->user->can('seeDisain') && $model->statusDisain != null,
                 'label' => 'Статус у дизайнера',
             ],
-            'name',
-            'phone',
-            [
-                'attribute' => 'email',
-                'visible' => Yii::$app->user->can('seeDisain'),
-            ],
-            [
-                'attribute' => 'idShipping.dostavkaName',
-                'label' => 'Доставка',
-            ],
         ],
     ]) ?>
+        </div>
+        <div class="col-lg-4">
+            <h4>Информация о клиенте</h4>
+            <?= DetailView::widget([
+                'model' => $model,
+                'striped' => false,
+                'bordered' => false,
+                'condensed' => true,
+                'attributes' => [
+                    [
+                        'attribute' => 'id_client',
+                        'label' => 'ФИО клиента',
+                        'value' => $model->idClient->fioClient
+                    ],
+                    [
+                        'attribute' => 'id_client',
+                        'label' => 'Телефон',
+                        'value' => $model->idClient->phone
+                    ],
+                    [
+                        'attribute' => 'id_client',
+                        'label' => 'Эл. почта',
+                        'value' => $model->idClient->email
+                    ],
+                ]
+            ]) ?>
+        </div>
+        <div class="col-lg-3">
+            <h4>Информация о поступлений</h4>
+            <?php foreach (Financy::find()->select(['date', 'sum'])->with('idUser', 'idZakaz')->where(['id_zakaz' => $model->id_zakaz])->all() as $payment){
+                echo Yii::$app->formatter->asDatetime($payment->date).' '.$payment->sum.' руб.<br>';
+            } ?>
+        </div>
+        <div class="col-lg-5">
+            <h4>Информация  доставках</h4>
+            <?= GridView::widget([
+                'dataProvider' => $dataProvider,
+                'headerRowOptions' => ['class' => 'headerTable'],
+                'striped' => false,
+                'condensed' => true,
+                'pjax' => true,
+                'columns' => [
+                    [
+                        'attribute' => 'date',
+                        'value' => function ($model){
+                            return Yii::$app->formatter->asDate($model->date);
+                        },
+                    ],
+                    'to',
+                    'from',
+                    'commit',
+                    [
+                        'attribute' => 'status',
+                        'value' => function($model){
+                            return $model->dostavkaName;
+                        }
+                    ],
+                ]
+            ]) ?>
+        </div>
+        <div class="col-lg-6">
+            <h4><?= Html::encode('Комментарии') ?></h4>
+            <?php foreach ($comment as $key=>$com){
+                echo '<b>'.Yii::$app->formatter->asDate($key, 'php:j M Y').'</b><br>';
+                foreach ($com as $value=>$name){
+                    echo Yii::$app->formatter->asTime(ArrayHelper::getValue($name, 'time'), 'php:H:i').' '.ArrayHelper::getValue($name, 'comment').' '.ArrayHelper::getValue($name, 'idUser.name').'<br>';
+                }
+            } ?>
+            <?php $form = ActiveForm::begin([
+                    'action' => ['comment/zakaz']
+            ]) ?>
+            <?= $form->field($commentField, 'comment')->textInput()->label(false) ?>
+            <?= $form->field($commentField, 'id_zakaz')->hiddenInput(['value' => $model->id_zakaz])->label(false) ?>
+            <?= $form->field($commentField, 'id_user')->hiddenInput(['value' => Yii::$app->user->id])->label(false) ?>
+            <?= Html::submitButton('Отправить', ['class' => 'btn action']) ?>
+            <?php ActiveForm::end() ?>
         </div>
         <?php Pjax::end(); ?>
     </div>
