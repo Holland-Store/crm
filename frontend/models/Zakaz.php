@@ -171,7 +171,7 @@ class Zakaz extends ActiveRecord
             'name' => 'Клиент',
             'phone' => 'Телефон',
             'email' => 'Email',
-            'id_client' => '№ клиента',
+            'id_client' => 'Клиент',
             'id_shipping' => 'Доставка',
             'declined' => 'Причина отказа',
             'id_unread' => 'Id unread',
