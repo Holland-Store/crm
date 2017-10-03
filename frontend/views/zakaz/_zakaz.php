@@ -298,6 +298,7 @@ use yii\widgets\MaskedInput;
                 Modal::end() ?>
             <?php endif ?>
         <?php endif; ?>
+        <?= Html::a('Понлный просмотр', ['view', 'id' => $model->id_zakaz], ['class' => 'btn action']) ?>
     </div>
 <?php $script = <<<JS
 $('#formComment').on('beforeSubmit', function(e) {
