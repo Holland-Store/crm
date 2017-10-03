@@ -49,4 +49,21 @@ class CommentController extends Controller
         }
     }
 
+    /**
+     * Save comment
+     * @return bool
+     */
+    public function actionZakaz()
+    {
+        $comment = new Comment();
+
+        if($comment->load(Yii::$app->request->post()) && $comment->validate()){
+            if($comment->save()){
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
 }
