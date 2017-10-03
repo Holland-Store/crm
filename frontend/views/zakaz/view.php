@@ -151,14 +151,18 @@ $this->title = $model->prefics;
         </div>
         <div class="col-lg-6">
             <h4><?= Html::encode('Комментарии') ?></h4>
+            <?php Pjax::begin([
+                'id' => 'commentPjax'
+            ]) ?>
             <?php foreach ($comment as $key=>$com){
                 echo '<b>'.Yii::$app->formatter->asDate($key, 'php:j M Y').'</b><br>';
                 foreach ($com as $value=>$name){
                     echo Yii::$app->formatter->asTime(ArrayHelper::getValue($name, 'time'), 'php:H:i').' '.ArrayHelper::getValue($name, 'comment').' '.ArrayHelper::getValue($name, 'idUser.name').'<br>';
                 }
-            } ?>
+            } ?><?php Pjax::end() ?>
             <?php $form = ActiveForm::begin([
-                    'action' => ['comment/zakaz']
+                    'id' => 'formComment',
+                    'action' => ['comment/zakaz'],
             ]) ?>
             <?= $form->field($commentField, 'comment')->textInput()->label(false) ?>
             <?= $form->field($commentField, 'id_zakaz')->hiddenInput(['value' => $model->id_zakaz])->label(false) ?>
@@ -168,3 +172,25 @@ $this->title = $model->prefics;
         </div>
         <?php Pjax::end(); ?>
     </div>
+<?php $script = <<<JS
+    $('#formComment').on('beforeSubmit', function(e) {
+      let form = $(this);
+      $.post(
+          form.attr('action'),
+          form.serialize()
+      )
+      .done(function(result) {
+        if (result == true){
+            $.pjax.reload({container: '#commentPjax'});
+            $('#formComment').trigger('reset');
+        } else {
+            return false;
+        }       
+      }).fail(function() {
+           console.log('server error');
+      });
+      return false
+    })
+
+JS;
+$this->registerJs($script)?>
