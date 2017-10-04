@@ -2,6 +2,8 @@
 
 namespace app\models;
 
+use app\models\query\FinancyQuery;
+
 /**
  * This is the model class for table "financy".
  *
@@ -88,5 +90,14 @@ class Financy extends \yii\db\ActiveRecord
         if (!$this->sum == 0 or !$this->sum == null){
             $this->save();
         }
+    }
+
+    /**
+     * @inheritdoc
+     * @return FinancyQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new FinancyQuery(get_called_class());
     }
 }
