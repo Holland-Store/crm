@@ -9,6 +9,8 @@ namespace app\models;
  * @property integer $id
  * @property integer $zakaz_id
  * @property integer $tag_id
+ *
+ * @property mixed $financy
  */
 class ZakazTag extends \yii\db\ActiveRecord
 {
@@ -44,5 +46,35 @@ class ZakazTag extends \yii\db\ActiveRecord
     public function getTag()
     {
         return $this->hasOne(Tag::className(), ['id' => 'tag_id']);
+    }
+
+    /**
+     * @param $post
+     * @param $arr
+     * @param $id_zakaz
+     */
+    public function getZakazForm($post, $arr, $id_zakaz)
+    {
+        foreach ($post as $one){
+            if (!in_array($one, $arr)){
+                $this->zakaz_id = $id_zakaz;
+                $this->tag_id = $one;
+                $t->save();
+            }
+            if (isset($arr[$one])){
+                unset($arr[$one]);
+            }
+        }
+        ZakazTag::deleteAll(['tag_id' => $arr]);
+    }
+
+    /**
+     * @param $id
+     */
+    public  function getFinancy($id)
+    {
+        $this->zakaz_id = $id;
+        $this->tag_id = Tag::TAG_PAID;
+        $this->save();
     }
 }
