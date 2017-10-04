@@ -3,12 +3,19 @@
 namespace frontend\controllers;
 
 use app\models\Financy;
+use app\models\Tag;
 use app\models\Zakaz;
+use app\models\ZakazTag;
 use Yii;
 use \yii\web\Controller;
 
 class FinancyController extends Controller
 {
+    /**
+     * Save payment order
+     * @param $id
+     * @return string|\yii\web\Response
+     */
     public function actionDraft($id)
     {
         $model = Zakaz::findOne($id);
@@ -32,6 +39,11 @@ class FinancyController extends Controller
                         $model->action = 0;
                         Yii::$app->session->addFlash('update', 'Заказ закрылся');
                     }
+                    /* Соранение тега оплачено*/
+                    $tag = new ZakazTag();
+                    $tag->zakaz_id = $model->id_zakaz;
+                    $tag->tag_id = Tag::TAG_PAID;
+                    $tag->save();
                     $model->save();
                     Yii::$app->session->addFlash('update', ' Сумма зачлась '.$financy->sum.' руб.');
                     if (Yii::$app->user->can('admin')){
