@@ -36,7 +36,11 @@ class TelegramController extends Controller
         if(isset($data['message']['chat']['id']))
         {
             $chatId = $data['message']['chat']['id'];
-            file_put_contents('logs.txt', $chatId);
+            $sendText = $data['message']['text'];
+            $name = $data['message']['from']['first_name'].' '.$data['message']['from']['last_name'];
+            $date = $data['message']['date'];
+            $text = '{date: '.date('Y-m-d H:i:s', $date).' chatId: '.$chatId.' message: '.$sendText.' name: '.$name.'}';
+            file_put_contents('logs.txt', $text.PHP_EOL, FILE_APPEND);
             $message = isset($data['message']['text']) ? $data['message']['text'] : false;
 
             $send = false;
