@@ -10,6 +10,7 @@ namespace app\models;
  */
 class Tag extends \yii\db\ActiveRecord
 {
+    const TAG_PAID = 4;
     /**
      * @inheritdoc
      */
