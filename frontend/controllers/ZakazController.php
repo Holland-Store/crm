@@ -120,11 +120,8 @@ class ZakazController extends Controller
         $model = $this->findModel($id);
         $reminder = new Notification();
         $commentField = new Comment();
-        $comment = Comment::find()->addSelect(['DATE(date) as just_date','TIME(date) as time','comment','id_user'])
-                                  ->joinWith(['idUser'])
-                                  ->where(['id_zakaz' => $id])
-                                  ->asArray()
-                                  ->all();
+        $comment = Comment::find()->zakaz($id);
+        $financy = Financy::find()->view($id);
         $comment = ArrayHelper::index($comment, null, 'just_date');
         $zakaz = $model->id_zakaz;
 
@@ -148,6 +145,7 @@ class ZakazController extends Controller
             'dataProvider' => $dataProvider,
             'comment' => $comment,
             'commentField' => $commentField,
+            'financy' => $financy,
         ]);
     }
 
