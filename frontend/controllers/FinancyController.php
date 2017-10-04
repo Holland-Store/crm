@@ -41,9 +41,7 @@ class FinancyController extends Controller
                     }
                     /* Соранение тега оплачено*/
                     $tag = new ZakazTag();
-                    $tag->zakaz_id = $model->id_zakaz;
-                    $tag->tag_id = Tag::TAG_PAID;
-                    $tag->save();
+                    $tag->financy($model->id_zakaz);
                     $model->save();
                     Yii::$app->session->addFlash('update', ' Сумма зачлась '.$financy->sum.' руб.');
                     if (Yii::$app->user->can('admin')){
