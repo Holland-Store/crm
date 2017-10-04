@@ -217,8 +217,23 @@ class ZakazController extends Controller
                 if (!$model->save()) {
                     print_r($model->getErrors());
                 } else {
+                    $arr = ArrayHelper::map($model->tags, 'id', 'id');
+                    if (Yii::$app->request->post('Zakaz')['tags_array']){
+                        foreach (Yii::$app->request->post('Zakaz')['tags_array'] as $one){
+                            if (!in_array($one, $arr)){
+                                $tag = new ZakazTag();
+                                $tag->zakaz_id = $model->id_zakaz;
+                                $tag->tag_id = $one;
+                                $tag->save();
+                            }
+                            if (isset($arr[$one])){
+                                unset($arr[$one]);
+                            }
+                        }
+                        ZakazTag::deleteAll(['tag_id' => $arr]);
+                    }
                     $financy->saveSum($model->fact_oplata, $model->id_zakaz, $model->oplata);
-                    Yii::$app->session->addFlash('update', 'Успешно создан заказ');
+                    Yii::$app->session->addFlash('update', 'Успешно создан заказ '.$model->id_zakaz);
                         if($model->status == Zakaz::STATUS_DISAIN){
                                 $telegram->message(User::USER_DISAYNER, 'Назначен заказ '.$model->prefics.' '.$model->description);
                         }
