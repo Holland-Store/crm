@@ -2,6 +2,7 @@
 
 use app\models\Client;
 use app\models\Partners;
+use app\models\Shifts;
 use app\models\Tag;
 use app\models\User;
 use app\models\Zakaz;
@@ -196,7 +197,15 @@ use yii\widgets\Pjax;
             <?php endif ?>
             <div class="col-xs-10">
                 <?php if ($model->isNewRecord): ?>
-                <?= $form->field($model, 'shifts_id')->dropDownList(ArrayHelper::map(\app\models\Shifts::find()->Shifts(Yii::$app->user->id)->all(), 'id', 'idSotrud.nameSotrud'))->label(false) ?>
+                    <?php if (Shifts::find()->Shifts(Yii::$app->user->id)->all() == null) {
+                        echo 'Смен не найдены';
+                    } else {
+                        echo $form->field($model, 'shifts_id')->dropDownList(ArrayHelper::map(Shifts::find()->Shifts(Yii::$app->user->id)->all(), 'id', 'idSotrud.nameSotrud'),
+                        [
+                            'prompt' => 'Выберите отрудника',
+                        ]
+                        )->label(false);
+                    }?>
                 <?php endif; ?>
             </div>
     </div>
