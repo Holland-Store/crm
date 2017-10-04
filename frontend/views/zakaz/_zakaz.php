@@ -40,9 +40,6 @@ use yii\widgets\MaskedInput;
             } else {
                 echo $model->phone;
             }  ?>
-<!--            --><?php //$s = $model->phone;
-//                echo $s[0].' ('.$s[1].$s[2].$s[3].') '.$s[4].$s[5].$s[6].'-'.$s[7].$s[8].'-'.$s[9].$s[10];
-//            ?>
         </div>
         <div><?= $model->idClient->email ?></div>
 	    </div>
@@ -51,61 +48,6 @@ use yii\widgets\MaskedInput;
         <div class="divInform">
         <?= $model->information ?>
         </div>
-<!--        --><?php //Pjax::begin(['id' => 'commentPjax']) ?>
-<!--        --><?php //$comments = Comment::find()->where(['id_zakaz' => $model->id_zakaz])->orderBy('date DESC')->all() ?>
-<!--        <div class="comment-zakaz">-->
-<!--            --><?php // foreach ($comments as $com){
-//                switch ($com->id_user){
-//                    case Yii::$app->user->id;
-//                        $user = 'Я';
-//                        break;
-//                    case (User::USER_DISAYNER);
-//                        $user = 'Дизайнер';
-//                        break;
-//                    case (User::USER_MASTER):
-//                        $user = 'Мастер';
-//                        break;
-//                }
-//                echo  '
-//<div style="display: block;">
-//    <div class="userCommit">'.$user.':</div>
-//    <div class="comment">'.$com->comment.'</div>
-//    <div class="dateCommit">'.date('d.m H:i', strtotime($com->date)).'</div>
-//</div>';
-//            }?>
-<!--        </div>-->
-<!--        --><?php //Pjax::end(); ?>
-<!--        --><?//= Html::buttonInput('Коммент', [
-//            'class' => 'btn btn-xs commentButton']) ?>
-<!--        <div class="CommentForm">-->
-<!--            --><?php //$formComment = ActiveForm::begin([
-//                    'id' => 'formComment',
-//                    'action' => ['comment/create'],
-//            ]); ?>
-<!--            --><?php //if ($model->status == Zakaz::STATUS_DISAIN){
-//                $comment->sotrud = User::USER_MASTER;
-//                $sotrud = $comment->sotrud;
-//            } elseif($model->status == Zakaz::STATUS_MASTER){
-//                $comment->sotrud = User::USER_DISAYNER;
-//                $sotrud = $comment->sotrud;
-//            }
-//            ?>
-<!--            <div class="col-lg-11">-->
-<!--                --><?//= $formComment->field($comment, 'comment')->textarea(['placeholder' => 'Комментарий', 'rows' => 1, 'class' => 'inputComment'])->label(false) ?>
-<!--                --><?//= $formComment->field($comment, 'id_user')->hiddenInput(['value' => Yii::$app->user->getId()])->label(false)?>
-<!--                --><?//= $formComment->field($comment, 'sotrud')->hiddenInput(['value' => $sotrud])->label(false)?>
-<!--                --><?//= $formComment->field($comment, 'id_zakaz')->hiddenInput(['value' => $model->id_zakaz])->label(false)?>
-<!--            </div>-->
-<!--            <div class="col-lg-1">-->
-<!--                --><?//= Html::submitButton(' <span class="glyphicon glyphicon-send"></span>', ['class' => 'btn btn-primary', 'style' => '    color: white;
-//    font-size: 15px;
-//    margin-top: 0px;
-//    margin-left: -30px;
-//    border-radius: 45px;'])?>
-<!---->
-<!--            </div>-->
-<!--            --><?php //ActiveForm::end(); ?>
-<!--        </div>-->
 	</div>
 	<div class="col-lg-1 zakazFile">
         <div class="zakazFile_block">
@@ -300,25 +242,3 @@ use yii\widgets\MaskedInput;
         <?php endif; ?>
         <?= Html::a('Понлный просмотр', ['view', 'id' => $model->id_zakaz], ['class' => 'btn action']) ?>
     </div>
-<?php $script = <<<JS
-$('#formComment').on('beforeSubmit', function(e) {
-  var form = $(this);
-  $.post(
-      form.attr('action'),
-      form.serialize()
-  )
-    .done(function(result) {
-      if (result == true)
-          {
-              $.pjax.reload({container: '#commentPjax'});
-              $('#formComment').trigger('reset');
-          } else {
-            return false
-          }
-    }).fail(function() {
-      console.log('server error');
-    });
-return false;
-});
-JS;
-$this->registerJS($script); ?>
