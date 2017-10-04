@@ -21,6 +21,15 @@ class CommentQuery extends ActiveQuery
             ->all();
     }
 
+    public function zakaz($id)
+    {
+        return $this->addSelect(['DATE(date) as just_date','TIME(date) as time','comment','id_user'])
+            ->joinWith(['idUser'])
+            ->where(['id_zakaz' => $id])
+            ->asArray()
+            ->all();
+    }
+
     /**
      * @inheritdoc
      * @return \app\models\Comment[]|array
