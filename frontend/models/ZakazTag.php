@@ -59,7 +59,7 @@ class ZakazTag extends \yii\db\ActiveRecord
             if (!in_array($one, $arr)){
                 $this->zakaz_id = $id_zakaz;
                 $this->tag_id = $one;
-                $t->save();
+                $this->save();
             }
             if (isset($arr[$one])){
                 unset($arr[$one]);
