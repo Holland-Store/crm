@@ -1,7 +1,5 @@
 <?php
 
-use app\models\Comment;
-use app\models\Financy;
 use kartik\form\ActiveForm;
 use kartik\grid\GridView;
 use yii\helpers\ArrayHelper;
@@ -13,12 +11,10 @@ use yii\widgets\Pjax;
 /* @var $model app\models\Zakaz */
 /* @var $comment app\models\Comment */
 /* @var $commentField app\models\Comment */
+/* @var $financy app\models\Financy */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = $model->prefics;
-// $this->information = $model->description;
-// $this->params['breadcrumbs'][] = ['label' => 'Все закакзы', 'url' => ['index']];
-// $this->params['breadcrumbs'][] = $this->title;
 ?>
     <div class="zakaz-view">
         <?php Pjax::begin(); ?>
@@ -49,7 +45,7 @@ $this->title = $model->prefics;
                 'attribute' => 'prioritetName',
                 'label' => 'Приоритет',
                 'value' => $model->prioritet == null ? false : $model->prioritetName,
-                'visible' => Yii::$app->user->can('admin'),
+                'visible' => Yii::$app->user->can('admin') && $model->prioritet != null,
             ],
             [
                 'attribute' => 'statusName',
@@ -111,15 +107,20 @@ $this->title = $model->prefics;
                     [
                         'attribute' => 'id_client',
                         'label' => 'Эл. почта',
-                        'value' => $model->idClient->email
+                        'value' => $model->idClient->email,
+                        'visible' => $model->idClient->email != null
                     ],
                 ]
             ]) ?>
         </div>
         <div class="col-lg-3">
             <h4>Информация о поступлений</h4>
-            <?php foreach (Financy::find()->select(['date', 'sum'])->with('idUser', 'idZakaz')->where(['id_zakaz' => $model->id_zakaz])->all() as $payment){
-                echo Yii::$app->formatter->asDatetime($payment->date).' '.$payment->sum.' руб.<br>';
+            <?php if ($financy == null) {
+                echo 'Поступлений пока нет';
+            } else {
+                foreach ($financy as $payment){
+                    echo Yii::$app->formatter->asDatetime($payment->date).' '.$payment->sum.' руб.<br>';
+                }
             } ?>
         </div>
         <div class="col-lg-5">
@@ -154,12 +155,17 @@ $this->title = $model->prefics;
             <?php Pjax::begin([
                 'id' => 'commentPjax'
             ]) ?>
-            <?php foreach ($comment as $key=>$com){
-                echo '<b>'.Yii::$app->formatter->asDate($key, 'php:j M Y').'</b><br>';
-                foreach ($com as $value=>$name){
-                    echo Yii::$app->formatter->asTime(ArrayHelper::getValue($name, 'time'), 'php:H:i').' '.ArrayHelper::getValue($name, 'comment').' '.ArrayHelper::getValue($name, 'idUser.name').'<br>';
+            <?php if ($comment == null){
+                echo 'Комментариев пока нет';
+            } else {
+                foreach ($comment as $key=>$com){
+                    echo '<b>'.Yii::$app->formatter->asDate($key, 'php:j M Y').'</b><br>';
+                    foreach ($com as $value=>$name){
+                        echo Yii::$app->formatter->asTime(ArrayHelper::getValue($name, 'time'), 'php:H:i').' '.ArrayHelper::getValue($name, 'comment').' '.ArrayHelper::getValue($name, 'idUser.name').'<br>';
+                    }
                 }
-            } ?><?php Pjax::end() ?>
+            } ?>
+            <?php Pjax::end() ?>
             <?php $form = ActiveForm::begin([
                     'id' => 'formComment',
                     'action' => ['comment/zakaz'],
@@ -191,6 +197,5 @@ $this->title = $model->prefics;
       });
       return false
     })
-
 JS;
 $this->registerJs($script)?>
