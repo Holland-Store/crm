@@ -58,6 +58,11 @@ class ZakazController extends Controller
                         'roles' => ['admin', 'disain', 'master', 'program', 'shop', 'zakup'],
                     ],
                     [
+                        'actions' => ['order'],
+                        'allow' => true,
+                        'roles' => ['manager'],
+                    ],
+                    [
                         'actions' => ['check', 'master', 'adopmaster'],
                         'allow' => true,
                         'roles' => ['master', 'program'],
@@ -577,17 +582,8 @@ class ZakazController extends Controller
     {
         $notifications = new Notification();
         $model = new Zakaz();
-        $comment = new Comment();
         $shipping = new Courier();
         $telegram = new Telegram();
-
-        if ($comment->load(Yii::$app->request->post())) {
-            if ($comment->save()) {
-                return $this->redirect(['admin']);
-            } else {
-                $this->flashErrors();
-            }
-        }
 
         if ($shipping->load(Yii::$app->request->post())) {
             $shipping->save();//сохранение доставка
@@ -619,13 +615,23 @@ class ZakazController extends Controller
         $dataProvider->pagination = false;
 
         return $this->render('admin', [
-            'comment' => $comment,
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'dataProviderNew' => $dataProviderNew,
             'dataProviderWork' => $dataProviderWork,
             'dataProviderIspol' => $dataProviderIspol,
             'image' => $image,
+        ]);
+    }
+
+    public function actionOrder()
+    {
+        $searchModel = new ZakazSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, 'manager');
+
+        return $this->render('order', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider
         ]);
     }
     /** END view role */
