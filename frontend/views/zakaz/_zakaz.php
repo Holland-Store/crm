@@ -162,26 +162,29 @@ use yii\widgets\MaskedInput;
         <?php endif ?>
             <?= Html::a('Задача', ['todoist/createzakaz', 'id_zakaz' => $model->id_zakaz], ['class' => 'btn btn-xs todoist']) ?>
         <?php if (Yii::$app->user->can('admin')): ?>
-            <?php Modal::begin([
-                'header' => '<h2>Задание на доставку</h2>',
-                'class' => 'model-sm modalShipping',
-                'toggleButton' => [
-                    'tag' => 'a',
-                    'class' => 'btn btn-xs',
-                    'label' => 'Доставка',
-                ]
-            ]);
-            $shipping = new Courier();
-            echo $this->render('shipping', [
-                'shipping' => $shipping,
-                'model' => $model->id_zakaz,
-            ]);
+            <?php if (Yii::$app->user->can('admin')): ?>
+                <?php Modal::begin([
+                    'header' => '<h2 style="color: rgba(204, 198, 198, 0.6)">Задание на доставку</h2>',
+                    'class' => 'model-sm modalShipping',
+                    'toggleButton' => [
+                        'tag' => 'a',
+                        'class' => 'btn btn-xs',
+                        'label' => 'Доставка',
+                    ]
+                ]);
 
-            Modal::end(); ?>
+                $shipping = new Courier();
+                echo $this->render('shipping', [
+                    'shipping' => $shipping,
+                    'model' => $model->id_zakaz,
+                ]);
+
+                Modal::end(); ?>
+            <?php endif ?>
         <?php endif ?>
         <?php if (Yii::$app->user->can('seeAdop') && $model->renouncement == null): ?>
             <?php Modal::begin([
-                'header' => 'Укажите причину отказа',
+                'header' => '<h3 style="color: rgba(204, 198, 198, 0.6)">Укажите причину отказа</h3>',
                 'class' => 'modal-sm',
                 'toggleButton' => [
                     'tag' => 'a',
@@ -207,7 +210,7 @@ use yii\widgets\MaskedInput;
         <?php if (Yii::$app->user->can('seeAdop')): ?>
             <?php if ($model->oplata - $model->fact_oplata != 0): ?>
                 <?php Modal::begin([
-                    'header' => 'Оплата услуг',
+                    'header' => '<h3 style="color: rgba(204, 198, 198, 0.6)">Оплата услуг</h3>',
                     'class' => 'modal-sm',
                     'toggleButton' => [
                         'tag' => 'a',
@@ -224,7 +227,7 @@ use yii\widgets\MaskedInput;
                     'id' => 'draftForm',
                 ]);
 
-                echo Html::encode('К доплате: ').number_format($model->oplata - $model->fact_oplata,0,',', ' ').' p.';
+                echo '<div style="color: rgba(204, 198, 198, 0.6)">'.Html::encode('К доплате: ').number_format($model->oplata - $model->fact_oplata,0,',', ' ').' p.</div>';
                 echo $form->field($financy, 'sum')->widget(MaskedInput::className(), [
                     'clientOptions' => [
                         'alias' => 'decimal',
