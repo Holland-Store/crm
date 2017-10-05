@@ -32,14 +32,18 @@ class Counter extends Widget
         $helpdesk = Helpdesk::find();
         $shipping = Courier::find();
 
-        $this->view->params['scoreZakazAdmin'] = $zakaz->andWhere(['action' => 1])->count();
-
         if (Yii::$app->user->can('shop')){
             $this->view->params['scoreZakazShop'] = $zakaz->andWhere(['id_sotrud' => Yii::$app->user->id, 'action' => 1])->count();
         } elseif (Yii::$app->user->can('disain')){
             $this->view->params['scoreDisain'] = $zakaz->andWhere(['status' => [Zakaz::STATUS_DISAIN, Zakaz::STATUS_SUC_DISAIN, Zakaz::STATUS_DECLINED_DISAIN]])->count();
         } elseif (Yii::$app->user->can('master')){
             $this->view->params['scoreMaster'] = $zakaz->andWhere(['status' => [Zakaz::STATUS_MASTER, Zakaz::STATUS_SUC_MASTER, Zakaz::STATUS_DECLINED_MASTER], 'action' => 1])->count();
+        } elseif (Yii::$app->user->can('manager')){
+            $this->view->params['scoreOrderZakaz'] = $zakaz->andWhere(['<', 'srok', date('Y-m-d H:i:s')])
+                ->andWhere(['>', 'oplata', 1000])
+                ->count();
+        } elseif (Yii::$app->user->can('admin')){
+            $this->view->params['scoreZakazAdmin'] = $zakaz->andWhere(['action' => 1])->count();
         }
         $this->view->params['scoreTodoistAdmin'] = $todoist->andWhere(['id_user' => Yii::$app->user->id])
                                                            ->andWhere(['<>', 'activate', Todoist::CLOSE])
@@ -78,6 +82,7 @@ class Counter extends Widget
             ['label' => 'Доставки <span class="badge pull-right">'.$this->view->params['scoreShippingAdmin'].'</span>', 'encode' => false, 'url' => ['courier/shipping'], 'visible' => Yii::$app->user->can('admin')],
             ['label' => 'Закупки <span class="badge pull-right">'.$this->view->params['scoreCustomZakup'].'</span>', 'encode' => false,'url' => ['custom/index'], 'visible' => Yii::$app->user->can('zakup')],
             ['label' => 'Задачи <span class="badge pull-right">'.$this->view->params['scoreTodoist'].'</span>', 'encode' => false,'url' => ['todoist/shop'], 'visible' => !Yii::$app->user->can('seeManager')],
+            ['label' => 'Заказы <span class="badge pull-right">'.$this->view->params['scoreOrderZakaz'].'</span>', 'encode' => false,'url' => ['zakaz/order'], 'visible' => Yii::$app->user->can('manager')],
         ],
     ]);
     }
