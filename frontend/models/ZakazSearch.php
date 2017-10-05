@@ -103,6 +103,11 @@ class ZakazSearch extends Zakaz
                 $query->andWhere(['id_sotrud' => Yii::$app->user->id, 'action' => 0]);
                 $sort = ['data' => SORT_DESC];
                 break;
+            case 'manager':
+                $query->andWhere(['<', 'srok', date('Y-m-d H:i:s')])
+                ->andWhere(['>', 'oplata', 1000]);
+                $sort = ['data' => SORT_DESC];
+                break;
         }
 
         $this->load($params);
