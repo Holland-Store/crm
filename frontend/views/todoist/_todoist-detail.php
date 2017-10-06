@@ -34,7 +34,7 @@ use yii\helpers\Html;
         foreach ($comment as $commen){
             echo '<div style="float: left">'.date('d.m.Y', strtotime($commen->date)).'</div>
                   <div style="padding-left: 8px;word-break: break-all; width: 339px;float: left;">'.$commen->comment.'</div>
-                  <div style="float: right">'.$commen->idUser->name.'</div>';
+                  <div style="float: right">'.$commen->idUser->name.'</div><br>';
         }
     } else {
         echo 'Комментариев пока что нет';
