@@ -19,6 +19,8 @@ use Yii;
  */
 class Custom extends \yii\db\ActiveRecord
 {
+    const CUSTOM_NEW = 0;
+    const CUSTOM_BROUGHT = 1;
     /**
      * @inheritdoc
      */
