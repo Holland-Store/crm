@@ -1,149 +1,108 @@
 <?php
 
+use app\models\Financy;
+use yii\helpers\Html;
+use yii\widgets\ActiveForm;
+use yii\widgets\DetailView;
+use yii\helpers\Url;
+use yii\bootstrap\Modal;
 use app\models\Courier;
 use app\models\Zakaz;
-use kartik\grid\GridView;
-use yii\helpers\StringHelper;
+use yii\widgets\MaskedInput;
 
-/* @var $this yii\web\View */
-/* @var $searchModel app\models\ZakazSearch */
-/* @var $dataProvider yii\data\ActiveDataProvider */
+/* @var  $comment app\models\Comment */
+/* @var  $model app\models\Zakaz */
+/* @var  $client app\models\Client */
+/** @var string $sotrud */
 ?>
 
-<?php $this->title = 'Все заказы' ?>
+<div class="view-zakaz" style="color: black">
+    <div class="col-lg-2 anketaZakaz">
+        <span class="anketaZakaz_from">От:</span>
+        <div class="srok"><?= Yii::$app->formatter->asDatetime($model->data); ?>
+            <span class="anketaZakaz_from">Автор:</span>
+            <div><?= $model->idSotrud->name ?></div>
 
-<?= GridView::widget([
-    'dataProvider' => $dataProvider,
-    'floatHeader' => true,
-    'headerRowOptions' => ['class' => 'headerTable'],
-    'pjax' => true,
-    'tableOptions' 	=> ['class' => 'table table-bordered tableSize'],
-    'rowOptions' => ['class' => 'trTable trNormal'],
-    'striped' => false,
-    'columns' => [
-        [
-            'class'=>'kartik\grid\ExpandRowColumn',
-            'contentOptions' => function($model){
-                return ['id' => $model->id_zakaz, 'class' => 'border-left', 'style' => 'border:none'];
-            },
-            'width'=>'10px',
-            'value' => function () {
-                return GridView::ROW_COLLAPSED;
-            },
-            'detail' => function ($model) {
-                return Yii::$app->controller->renderPartial('_zakaz', ['model'=> $model]);
-            },
-            'enableRowClick' => true,
-            'expandOneOnly' => true,
-            'expandIcon' => ' ',
-            'collapseIcon' => ' ',
-        ],
-        [
-            'attribute' => 'id_zakaz',
-            'value' => 'prefics',
-            'hAlign' => GridView::ALIGN_RIGHT,
-            'contentOptions' => function($model) {
-                if ($model->status == Zakaz::STATUS_NEW){
-                    return ['class' => 'trNew tr70 '];
-                } else {
-                    return ['class' => 'textTr tr70'];
-                }
-            },
-        ],
-        [
-            'attribute' => '',
-            'format' => 'raw',
-            'contentOptions' => ['class' => 'tr20'],
-            'value' => function($model){
-                if ($model->prioritet == 2) {
-                    return '<i class="fa fa-circle fa-red"></i>';
-                } elseif ($model->prioritet == 1) {
-                    return '<i class="fa fa-circle fa-ping"></i>';
-                } else {
-                    return '';
-                }
+            <?php if ($model->shifts_id != null): ?>
+                <span class="anketaZakaz_from">Сотрудник:</span>
+                <div><?= $model->shifts->idSotrud->name ?></div>
+            <?php endif; ?>
 
-            }
-        ],
-        [
-            'attribute' => 'srok',
-            'format' => ['datetime', 'php:d M H:i'],
-            'hAlign' => GridView::ALIGN_RIGHT,
-            'contentOptions' => function($model) {
-                if ($model->status == Zakaz::STATUS_NEW){
-                    return ['class' => 'trNew tr100 srok'];
+            <span class="anketaZakaz_from">Клиент:</span>
+            <div><?php if ($model->name == null) {
+                    echo $model->idClient->name;
                 } else {
-                    return ['class' => 'textTr tr100 srok'];
-                }
-            },
-        ],
-        [
-            'attribute' => 'description',
-            'value' => function($model){
-                return StringHelper::truncate($model->description, 100);
-            }
-        ],
-        [
-            'attribute' => 'tag',
-            'format' => 'raw',
-            'contentOptions' => ['class' => 'tr90'],
-            'value' => function($model){
-                return $model->tags != null ? $model->getTagsAsString('gridview') : false;
-            }
-        ],
-        [
-            'attribute' => 'id_shipping',
-            'format' => 'raw',
-            'contentOptions' => ['class' => 'tr50'],
-            'value' => function($model){
-                if ($model->id_shipping == null or $model->id_shipping == null){
-                    return '';
+                    echo $model->name;
+                } ?></div>
+            <div>
+                <?php if ($model->phone == null){
+                    echo $model->idClient->phone;
                 } else {
-                    if ($model->idShipping->status == Courier::DOSTAVKA or $model->idShipping->status == Courier::RECEIVE) {
-                        return '<i class="fa fa-truck" style="font-size: 13px;color: #f0ad4e;"></i>';
-                    } elseif ($model->idShipping->status == Courier::DELIVERED){
-                        return '<i class="fa fa-truck" style="font-size: 13px;color: #191412;"></i>';
-                    } else {
-                        return '';
-                    }
+                    echo $model->phone;
+                }  ?>
+            </div>
+            <div><?= $model->idClient->email ?></div>
+        </div>
+    </div>
+    <div class="col-lg-7 zakazInfo">
+        <div class="divInform">
+            <?= $model->information ?>
+        </div>
+    </div>
+    <div class="col-lg-1 zakazFile">
+        <div class="zakazFile_block">
+            <span class="zakazFile_block-number">Кол-во:</span>
+            <div><?= $model->number ?></div>
+        </div>
+        <?= Detailview::widget([
+            'model' => $model,
+            'options' => ['class' => 'table detail-view'],
+            'template' => '<tr class="trMaket"><td{contentOptions} class="zakaz-view-kartik">{value}</td></tr></tr>',
+            'attributes' => [
+                [
+                    'attribute' => 'maket',
+                    'format' =>'raw',
+                    'value' => $model->maket == null ? '<div class="maket"></div>' : Html::a('<span class="glyphicon glyphicon-saved imgZakaz maketView">', '@web/maket/'.$model->maket, ['download' => true, 'data-pjax' => 0, 'title' => 'Готовый макет от дизайнера'])
+                ],
+                [
+                    'attribute' => 'img',
+                    'format' =>'raw',
+                    'value' => $model->img == null ? '' : Html::a('<span class="glyphicon glyphicon-paperclip imgZakaz"></span>', '@web/attachment/'.$model->img, ['download' => true, 'data-pjax' => 0, 'title' => 'Исходный файл от клиента'])
+                ],
+            ],
+        ]) ?>
+    </div>
+    <div class="responsible">
+        <div class="responsible_person-status">
+                <?php if ($model->status == Zakaz::STATUS_DECLINED_DISAIN or $model->status == Zakaz::STATUS_DECLINED_MASTER){
+                    echo '<div class="statusZakaz declinedIspol">Отклонено</div>
+<div class="declinedIspol_div">
+<span class="responsible_person">По причине:</span><br>'.$model->declined.'</div>';
                 }
-            }
-        ],
-        [
-            'attribute' => 'oplata',
-            'value' => 'money',
-            'hAlign' => GridView::ALIGN_RIGHT,
-            'contentOptions' => function($model) {
-                if ($model->status == Zakaz::STATUS_NEW){
-                    return ['class' => 'trNew tr70'];
-                } else {
-                    return ['class' => 'textTr tr70'];
+                ?>
+            </div>
+            <span class="responsible_person">Статус:</span>
+            <div class="responsible_person-status">
+                <?php if ($model->status == Zakaz::STATUS_SUC_DISAIN or $model->status == Zakaz::STATUS_SUC_MASTER){
+                    echo '<div class="statusZakaz">Выполнено</div>';
+                } elseif ($model->renouncement != null){
+                    echo '<div class="statusZakaz declined">Отказ от клиента</div>
+<div class="declined_div">
+<span class="responsible_person">По причине:</span><br>'.$model->renouncement.'</div>';
+                } elseif ($model->status == Zakaz::STATUS_AUTSORS){
+                    echo '<div class="statusZakaz">'.$model->idAutsors->name.'</div>';
                 }
-            },
-        ],
-        [
-            'attribute' => '',
-            'format' => 'raw',
-            'value' => function(){
-                return '';
-            },
-            'contentOptions' => ['class' => 'textTr border-right tr90'],
-        ]
-//            [
-//                'attribute' => 'status',
-//                'class' => SetColumn::className(),
-//                'label' => 'Отв-ный',
-//                'format' => 'raw',
-//                'name' => 'statusName',
-//                'cssCLasses' => [
-//                    Zakaz::STATUS_NEW => 'primary',
-//                    Zakaz::STATUS_EXECUTE => 'success',
-//                    Zakaz::STATUS_ADOPTED => 'warning',
-//                    Zakaz::STATUS_REJECT => 'danger',
-//                    Zakaz::STATUS_SUC_DISAIN => 'success',
-//                    Zakaz::STATUS_SUC_MASTER => 'success',
-//                ],
-//                'contentOptions' => ['class' => 'border-right'],
-//            ],
-    ],
-]); ?>
+                ?>
+            </div>
+        <div class="linePrice"></div>
+        <div class="oplata-zakaz">
+            <span class="responsible_person namePrice">Оплачено:</span>
+            <span class="responsible_person namePrice">К доплате:</span>
+            <span class="responsible_person namePrice">Всего:</span>
+            <div class="responsible_person price"><?= number_format($model->fact_oplata, 0, ',', ' ').'р.' ?></div>
+            <div class="responsible_person price"><?php if($model->oplata != null){?>
+                    <?php echo number_format($model->oplata - $model->fact_oplata, 0, ',', ' ').'р.'; ?>
+                <?php } ?></div>
+            <div class="responsible_person price"><?= number_format($model->oplata, 0, ',', ' ').'р.'    ?></div>
+        </div>
+    </div>
