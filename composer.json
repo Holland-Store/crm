@@ -36,7 +36,8 @@
         "npm-asset/jquery": "^2.2",
         "bower-asset/sweetalert": "*",
         "sonko-dmitry/yii2-telegram-bot-api": "*",
-        "kartik-v/yii2-popover-x": "*"
+        "kartik-v/yii2-popover-x": "*",
+        "2amigos/yii2-chartjs-widget": "~2.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
