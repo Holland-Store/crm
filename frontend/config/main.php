@@ -79,6 +79,7 @@ return [
 				'logout' => 'site/logout',
 				'createzakaz/<id_zakaz:\d+>' => 'todoist/createzakaz',
 				'view-todoist/<id:\d+>' => 'todoist/view',
+                '' => 'site/login',
             ],
         ],
     ],
