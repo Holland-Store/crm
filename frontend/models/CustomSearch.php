@@ -44,7 +44,10 @@ class CustomSearch extends Custom
         $query = Custom::find()->indexBy('id')->with('idUser');
 		if($index == 'zakup'){
 			$query->where(['action' => 0]);
-		} else {
+		} elseif($index == 'manager'){
+		    $query->andWhere(['<', 'date', date('Y-m-d H:i:s', strtotime('- 2 week'))])
+                ->andWhere(['action' => Custom::CUSTOM_BROUGHT]);
+        }else {
             $query->where(['id_user' => Yii::$app->user->id]);
 		}
 

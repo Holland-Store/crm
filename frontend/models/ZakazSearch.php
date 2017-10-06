@@ -105,7 +105,8 @@ class ZakazSearch extends Zakaz
                 break;
             case 'manager':
                 $query->andWhere(['<', 'srok', date('Y-m-d H:i:s')])
-                ->andWhere(['>', 'oplata', 1000]);
+                ->andWhere(['>', 'oplata', 1000])
+                ->andWhere(['action' => 1]);
                 $sort = ['data' => SORT_DESC];
                 break;
         }

@@ -67,6 +67,9 @@ class TodoistSearch extends Todoist
             case 'shop-alien':
                 $query = $query->where(['id_user' => Yii::$app->user->id, 'activate' => [Todoist::ACTIVE, Todoist::COMPLETED, Todoist::REJECT]]);
                 break;
+            case 'overdue':
+                $query = $query->andWhere(['<', 'srok', date('Y-m-d')])
+                    ->andWhere(['activate' => !Todoist::CLOSE]);
         }
 
         $this->load($params);
