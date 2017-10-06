@@ -24,12 +24,6 @@ class HelpdeskController extends Controller
     public function behaviors()
     {
         return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
 			'access' => [
 				'class' => AccessControl::className(),
 				'rules' => [
@@ -38,6 +32,11 @@ class HelpdeskController extends Controller
     					'allow' => true,
     					'roles' => ['admin', 'disain', 'master', 'system', 'zakup', 'shop', 'manager'],
 					],
+                    [
+                        'actions' => ['overdue'],
+                        'allow' => true,
+                        'roles' => ['manager'],
+                    ],
 					[
 						'actions' => ['close'],
 						'allow' => true,
@@ -116,6 +115,21 @@ class HelpdeskController extends Controller
         }
         return $this->render('update', [
             'model' => $model,
+        ]);
+    }
+
+    /**
+     * View for manager sees expired helpdesk
+     * @return string
+     */
+    public function actionOverdue()
+    {
+        $searchModel = new HelpdeskSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, 'overdue');
+
+        return $this->render('overdue', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
         ]);
     }
 

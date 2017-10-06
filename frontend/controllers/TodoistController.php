@@ -66,6 +66,11 @@ class TodoistController extends Controller
     					'allow' => true,
     					'roles' => ['shop'],
 					],
+                    [
+                        'actions' => ['overdue'],
+                        'allow' => true,
+                        'roles' => ['manager'],
+                    ],
 				],
 			],
         ];
@@ -147,6 +152,16 @@ class TodoistController extends Controller
     {
         return $this->render('view', [
             'model' => $this->findModel($id),
+        ]);
+    }
+
+    public function actionOverdue()
+    {
+        $searchModel = new TodoistSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, 'overdue');
+
+        return $this->render('overdue', [
+            'dataProvider' => $dataProvider,
         ]);
     }
 

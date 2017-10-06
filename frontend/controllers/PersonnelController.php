@@ -34,6 +34,11 @@ class PersonnelController extends Controller
                     [
                         'allow' => true,
                         'roles' => ['@'],
+                    ],
+                    [
+                        'actions' => ['shifts'],
+                        'allow' => true,
+                        'roles' => ['manager'],
                     ]
                 ]
             ],
@@ -102,6 +107,15 @@ class PersonnelController extends Controller
                 'model' => $model,
             ]);
         }
+    }
+
+    public function actionShifts()
+    {
+        $model = new Personnel();
+
+        return $this->render('index', [
+            'model' => $model
+        ]);
     }
 
     /**

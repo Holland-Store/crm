@@ -34,7 +34,7 @@ class CustomController extends Controller
 				'class' => AccessControl::className(),
 				'rules' => [
 					[
-                        'actions' => ['index'],
+                        'actions' => ['index', 'close'],
                         'allow' => true,
                         'roles' => ['zakup', 'program'],
 					],
@@ -44,20 +44,15 @@ class CustomController extends Controller
                         'roles' => ['shop', 'admin', 'program'],
                     ],
                     [
-                        'actions' => ['close'],
+                        'actions' => ['brought', 'adop'],
                         'allow' => true,
-                        'roles' => ['zakup', 'program'],
+                        'roles' => ['seeAdop'],
                     ],
                     [
-                        'actions' => ['brought'],
+                        'actions' => ['overdue'],
                         'allow' => true,
-                        'roles' => ['seeAdop'],
+                        'roles' => ['manager']
                     ],
-					[
-                        'actions' => ['adop'],
-                        'allow' => true,
-                        'roles' => ['seeAdop'],
-					],
 				],
 			],
         ];
@@ -174,6 +169,16 @@ class CustomController extends Controller
         }
     }
 
+    public function actionOverdue()
+    {
+        $searchModel = new CustomSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, 'manager');
+
+        return $this->render('overdue', [
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
     /**
      * Deletes an existing Custom model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
@@ -207,7 +212,7 @@ class CustomController extends Controller
     public function actionClose($id)
     {
         $model = $this->findModel($id);
-        $model->action = 1;
+        $model->action = Custom::CUSTOM_BROUGHT;
         $model->date_end = date('Y-m-d H:i:s');
         $model->save();
 
