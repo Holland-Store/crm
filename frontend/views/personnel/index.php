@@ -15,25 +15,6 @@ $this->title = 'Контакты';
 ?>
 <div class="personnel-index">
 
-    <?php if (Yii::$app->user->can('admin')): ?>
-        <?= Html::a(Html::encode('OK'), Url::to(['zakaz/admin']), ['class' => 'btn action']) ?>
-    <?php endif; ?>
-    <?php if (Yii::$app->user->can('shop')): ?>
-        <?= Html::a(Html::encode('OK') , Url::to(['zakaz/shop']), ['class' => 'btn action']) ?>
-    <?php endif; ?>
-    <?php if (Yii::$app->user->can('disain')): ?>
-        <?= Html::a(Html::encode('OK') ,Url::to(['zakaz/disain']), ['class' => 'btn action']) ?>
-    <?php endif; ?>
-    <?php if (Yii::$app->user->can('master')): ?>
-        <?= Html::a(Html::encode('OK') , Url::to(['zakaz/master']), ['class' => 'btn action']) ?>
-    <?php endif; ?>
-    <?php if (Yii::$app->user->can('system')): ?>
-        <?= Html::a(Html::encode('OK') , Url::to(['helpdesk/index']), ['class' => 'btn action']) ?>
-    <?php endif; ?>
-    <?php if (Yii::$app->user->can('zakup')): ?>
-        <?= Html::a(Html::encode('OK') , Url::to(['custom/index']), ['class' => 'btn action']) ?>
-    <?php endif; ?>
-
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
