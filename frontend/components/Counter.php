@@ -104,7 +104,7 @@ class Counter extends Widget
             ['label' => 'Поломки <span class="badge pull-right">'.$this->view->params['scoreHelpManager'].'</span>', 'encode' => false,'url' => ['helpdesk/overdue'], 'visible' => Yii::$app->user->can('manager')],
             ['label' => 'Задачи <span class="badge pull-right">'.$this->view->params['scoreTodoistManager'].'</span>', 'encode' => false,'url' => ['todoist/overdue'], 'visible' => Yii::$app->user->can('manager')],
             ['label' => 'Заросы <span class="badge pull-right">'.$this->view->params['scoreCustomManager'].'</span>', 'encode' => false,'url' => ['custom/overdue'], 'visible' => Yii::$app->user->can('manager')],
-            ['label' => 'Статистика', 'encode' => false,'url' => ['site/statistics'], 'visible' => Yii::$app->user->can('manager')],
+            ['label' => 'Управляющий', 'encode' => false,'url' => ['site/manager'], 'visible' => Yii::$app->user->can('manager')],
         ],
     ]);
     }
