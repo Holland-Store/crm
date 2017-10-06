@@ -48,7 +48,7 @@ class HelpdeskSearch extends Helpdesk
         } elseif(!Yii::$app->user->can('system') && $status == 'work') {
             $query = $query->where(['id_user' => Yii::$app->user->id, 'status' => [Helpdesk::STATUS_NEW, Helpdesk::STATUS_DECLINED]]);
         } elseif ($status == 'overdue'){
-            $query = $query->andWhere(['<', 'date', date('Y-m-d h:i:s')])
+            $query = $query->andWhere(['<', 'date', date('Y-m-d h:i:s', strtotime('-1 day'))])
                 ->andWhere(['status' => !Helpdesk::STATUS_APPROVED]);
         }else {
             $query = $query->where(['id_user' => Yii::$app->user->id, 'status' => Helpdesk::STATUS_CHECKING]);
