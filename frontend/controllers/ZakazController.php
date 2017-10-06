@@ -626,12 +626,11 @@ class ZakazController extends Controller
 
     public function actionOrder()
     {
-        $searchModel = new ZakazSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, 'manager');
+        $id = Yii::$app->request->post('expandRowKey');
+        $model = $this->findModel($id);
 
-        return $this->render('order', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider
+        return $this->renderPartial('order', [
+            'model' => $model
         ]);
     }
     /** END view role */
