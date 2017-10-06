@@ -39,6 +39,7 @@ use yii\helpers\Html;
     } else {
         echo 'Комментариев пока что нет';
     } ?>
+    <?php if (!Yii::$app->user->can('manager')): ?>
     <?php $form = ActiveForm::begin([
             'action' => ['comment/todoist', 'id' => $model->id]
     ]) ?>
@@ -48,6 +49,7 @@ use yii\helpers\Html;
     <?= Html::submitButton('Коммент', ['class' => 'btn btn-primary']) ?>
 
     <?php ActiveForm::end() ?>
+    <?php endif; ?>
 </div>
 
 <div class="col-lg-6">
@@ -61,6 +63,7 @@ use yii\helpers\Html;
             ])
             : false ?>
     </div>
+    <?php if (!Yii::$app->user->can('manager')): ?>
     <?= Html::checkbox('appoint', false, ['label' => 'Переназначить', 'class' => 'icheckbox', 'id' => 'checkboxAppoint']) ?>
 
     <div class="form-appoint">
@@ -74,4 +77,5 @@ use yii\helpers\Html;
 
         <?php ActiveForm::end() ?>
     </div>
+    <?php endif; ?>
 </div>
