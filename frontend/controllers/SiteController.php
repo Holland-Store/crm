@@ -1,11 +1,14 @@
 <?php
 namespace frontend\controllers;
 
+use app\models\HelpdeskSearch;
 use app\models\Personnel;
 use app\models\Shifts;
 use app\models\SotrudForm;
+use app\models\TodoistSearch;
 use app\models\User;
 use app\models\Zakaz;
+use app\models\ZakazSearch;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
@@ -44,7 +47,7 @@ class SiteController extends Controller
                         'roles' => ['@'],
                     ],
                     [
-                        'actions' => ['statistics'],
+                        'actions' => ['manager'],
                         'allow' => true,
                         'roles' => ['manager'],
                     ],
@@ -245,16 +248,25 @@ class SiteController extends Controller
         }
     }
 
-    public function actionStatistics()
+    public function actionManager()
     {
+        $zakazSearch = new ZakazSearch();
+        $helpdeskSearch = new HelpdeskSearch();
+        $tododistSearch = new TodoistSearch();
+        $dataProviderZakaz = $zakazSearch->search(Yii::$app->request->queryParams, 'manager');
+        $dataProviderHelpdesk = $helpdeskSearch->search(Yii::$app->request->queryParams, 'overdue');
+        $dataProviderTodoist = $tododistSearch->search(Yii::$app->request->queryParams, 'manager');
         $zakazAll = Zakaz::find()->where(['action' => 1])->count();
-        $zakaz = Zakaz::find()->andWhere(['action' => 1])
+        $zakazCount = Zakaz::find()->andWhere(['action' => 1])
             ->andWhere(['<', 'srok', date('Y-m-d H:i:s')])
             ->count();
 
-        return $this->render('statistics', [
-            'zakaz' => $zakaz,
-            'zakazAll' => $zakazAll
+        return $this->render('manager', [
+            'zakaz' => $zakazCount,
+            'zakazAll' => $zakazAll,
+            'dataProviderHelpdesk' => $dataProviderHelpdesk,
+            'dataProviderZakaz' => $dataProviderZakaz,
+            'dataProviderTodoist' => $dataProviderTodoist,
         ]);
     }
 
