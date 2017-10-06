@@ -5,6 +5,7 @@ use app\models\Personnel;
 use app\models\Shifts;
 use app\models\SotrudForm;
 use app\models\User;
+use app\models\Zakaz;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
@@ -41,6 +42,11 @@ class SiteController extends Controller
                         'actions' => ['logout', 'setting', 'login', 'index'],
                         'allow' => true,
                         'roles' => ['@'],
+                    ],
+                    [
+                        'actions' => ['statistics'],
+                        'allow' => true,
+                        'roles' => ['manager'],
                     ],
                 ],
             ],
@@ -237,6 +243,19 @@ class SiteController extends Controller
             Yii::$app->session->addFlash('update', 'Сотрудник '.$shifta->idSotrud->nameSotrud.' закончил смену');
             return $this->redirect(['setting', 'id' => Yii::$app->user->id]);
         }
+    }
+
+    public function actionStatistics()
+    {
+        $zakazAll = Zakaz::find()->where(['action' => 1])->count();
+        $zakaz = Zakaz::find()->andWhere(['action' => 1])
+            ->andWhere(['<', 'srok', date('Y-m-d H:i:s')])
+            ->count();
+
+        return $this->render('statistics', [
+            'zakaz' => $zakaz,
+            'zakazAll' => $zakazAll
+        ]);
     }
 
     /**
