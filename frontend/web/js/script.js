@@ -43,7 +43,7 @@ $(document).ready(function(){
        $('body').on("click", ".trNew", function () {
            var data = $(this).data("key");
            $.ajax({
-               url: "/frontend/web/zakaz/adopted?id="+data,
+               url: "/zakaz/adopted?id="+data,
                success: console.log('Успешно изменен статус')
            })
        });
@@ -53,14 +53,14 @@ $(document).ready(function(){
        $('body').on('click', '.trNewDisain', function () {
             var data = $(this).data("key");
             $.ajax({
-                url: "/frontend/web/zakaz/adopdisain?id="+data,
+                url: "/zakaz/adopdisain?id="+data,
                 success: console.log('Успешно изменен статус '+data)
             })
        });
        $('body').on('click', '.trNewMaster', function () {
             var data = $(this).data("key");
             $.ajax({
-                url: "/frontend/web/zakaz/adopmaster?id="+data,
+                url: "/zakaz/adopmaster?id="+data,
                 success: console.log('Успешно изменен статус '+data)
             })
        });
