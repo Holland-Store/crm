@@ -248,7 +248,6 @@ class SiteController extends Controller
         $zakazSearch = new ZakazSearch();
         $helpdeskSearch = new HelpdeskSearch();
         $tododistSearch = new TodoistSearch();
-        $zakazModel = Zakaz::find();
         $dataProviderZakaz = $zakazSearch->search(Yii::$app->request->queryParams, 'manager');
         $dataProviderHelpdesk = $helpdeskSearch->search(Yii::$app->request->queryParams, 'overdue');
         $dataProviderTodoist = $tododistSearch->search(Yii::$app->request->queryParams, 'manager');
@@ -260,7 +259,6 @@ class SiteController extends Controller
         return $this->render('manager', [
             'zakaz' => $zakazCount,
             'zakazAll' => $zakazAll,
-            'zakazModel' => $zakazModel,
             'dataProviderHelpdesk' => $dataProviderHelpdesk,
             'dataProviderZakaz' => $dataProviderZakaz,
             'dataProviderTodoist' => $dataProviderTodoist,
