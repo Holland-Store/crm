@@ -122,11 +122,6 @@ class SiteController extends Controller
 
 
             return $this->redirect(['site/index', 'id' => $id_user]);
-//            foreach ($routes as $key => $value) {
-//                if (Yii::$app->user->can($key)) {
-//                    return $this->redirect($value);
-//                }
-//            }
         } else {
             return $this->render('login', [
                 'model' => $model,
@@ -253,6 +248,7 @@ class SiteController extends Controller
         $zakazSearch = new ZakazSearch();
         $helpdeskSearch = new HelpdeskSearch();
         $tododistSearch = new TodoistSearch();
+        $zakazModel = Zakaz::find();
         $dataProviderZakaz = $zakazSearch->search(Yii::$app->request->queryParams, 'manager');
         $dataProviderHelpdesk = $helpdeskSearch->search(Yii::$app->request->queryParams, 'overdue');
         $dataProviderTodoist = $tododistSearch->search(Yii::$app->request->queryParams, 'manager');
@@ -264,6 +260,7 @@ class SiteController extends Controller
         return $this->render('manager', [
             'zakaz' => $zakazCount,
             'zakazAll' => $zakazAll,
+            'zakazModel' => $zakazModel,
             'dataProviderHelpdesk' => $dataProviderHelpdesk,
             'dataProviderZakaz' => $dataProviderZakaz,
             'dataProviderTodoist' => $dataProviderTodoist,
