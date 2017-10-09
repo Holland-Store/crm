@@ -655,3 +655,11 @@ thead a {
 .todoist-index .visible {
   display: block;
 }
+
+/* line 559, ../sass/gridview.scss */
+.manager-index .statics {
+  position: fixed;
+  right: 10px;
+  height: 100%;
+  padding: 10px;
+}

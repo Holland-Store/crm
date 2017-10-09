@@ -778,6 +778,14 @@ thead a {
   display: block;
 }
 
+/* line 559, ../sass/gridview.scss */
+.manager-index .statics {
+  position: fixed;
+  right: 10px;
+  height: 100%;
+  padding: 10px;
+}
+
 /* line 79, ../sass/button.scss */
 .text-orange {
   color: #f0ad4e;

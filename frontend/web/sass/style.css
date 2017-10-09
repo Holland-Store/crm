@@ -524,6 +524,12 @@ thead a {
 .todoist-index .visible {
   display: block; }
 
+.manager-index .statics {
+  position: fixed;
+  right: 10px;
+  height: 100%;
+  padding: 10px; }
+
 .text-orange {
   color: #f0ad4e; }
 
