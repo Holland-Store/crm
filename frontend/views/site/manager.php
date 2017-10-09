@@ -307,8 +307,8 @@ $this->title = 'Акутальнык';
                 ]
             ]);
             ?>
-            <?php echo 'Заказы: '.number_format($zakazModel->where(['action' => 1])->sum('oplata'), 0, ',', ' ').' рублей<br>'?>
-            <?php echo 'Количество: '.$zakazModel->where(['action' => 1])->count()?>
+            <?php echo 'Заказы: '.number_format(Zakaz::find()->where(['action' => 1])->sum('oplata'), 0, ',', ' ').' рублей<br>'?>
+            <?php echo 'Количество: '.Zakaz::find()->where(['action' => 1])->count()?>
         </div>
         <div class="col-lg-12">
             <h3><?= Html::encode('Задачи') ?></h3>
