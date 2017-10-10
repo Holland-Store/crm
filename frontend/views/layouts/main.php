@@ -156,7 +156,7 @@ AppAsset::register($this);
                 'body' => Yii::$app->session->removeFlash('errors'),
             ]);
         } ?>
-        <?php if (!Shifts::find()->Shifts(Yii::$app->user->id)->all()){
+        <?php if (!Shifts::find()->Shifts(Yii::$app->user->id)->all() && !Yii::$app->user->isGuest){
             echo Alert::widget(['options' => [
                 'class' => 'alert-info'
             ],
