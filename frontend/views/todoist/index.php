@@ -166,7 +166,7 @@ $this->title = 'Все задачи';
                 'class' => 'yii\grid\ActionColumn',
                 'template' => '{update}{delete}',
                 'buttons' => [
-                    'delete' => function($url, $model){
+                    'delete' => function($model){
                         return Html::a('<span class="glyphicon glyphicon-remove"></span>', ['close', 'id' => $model->id]);
                     }
                 ],
@@ -230,9 +230,9 @@ $this->title = 'Все задачи';
                     'contentOptions' => ['class' => 'textTr tr70'],
                 ],
                 [
-                    'attribute' => 'id_user',
+                    'attribute' => 'id_sotrud_put',
                     'value' => function($model){
-                        return $model->idUser->name;
+                        return $model->idSotrudPut->name;
                     },
                     'contentOptions' => ['class' => 'textTr tr50'],
                 ],
