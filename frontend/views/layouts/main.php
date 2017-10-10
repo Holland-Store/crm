@@ -4,12 +4,13 @@
 /* @var $content string */
 
 use app\models\Notification;
+use app\models\Shifts;
 use kartik\popover\PopoverX;
 use kartik\widgets\Growl;
 use yii\helpers\Html;
 use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
-use common\widgets\Alert;
+use yii\bootstrap\Alert;
 use frontend\components\Counter;
 
 AppAsset::register($this);
@@ -143,7 +144,6 @@ AppAsset::register($this);
             'homeLink' => ['label' => 'Главная', 'url' => ['zakaz/index']],
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
-        <?= Alert::widget() ?>
         <?php if (Yii::$app->session->hasFlash('update')) {
             echo Growl::widget([
                 'type' => Growl::TYPE_SUCCESS,
@@ -155,6 +155,12 @@ AppAsset::register($this);
                 'type' => Growl::TYPE_DANGER,
                 'body' => Yii::$app->session->removeFlash('errors'),
             ]);
+        } ?>
+        <?php if (!Shifts::find()->Shifts(Yii::$app->user->id)->all()){
+            echo Alert::widget(['options' => [
+                'class' => 'alert-info'
+            ],
+                'body' => '<b>Внимание</b>, Начните смену иначе Вы останетесь без зп '.Html::a('Настройки', ['site/setting', 'id' => Yii::$app->user->id])]);
         } ?>
         <?= $content ?>
     </div>
