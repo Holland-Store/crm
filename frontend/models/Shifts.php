@@ -13,9 +13,11 @@ use Yii;
  * @property string $end
  * @property integer $id_sotrud
  * @property integer $id_user
+ * @property integer $number
  *
  * @property User $idUser
  * @property Personnel $idSotrud
+ * @property Zakaz[] $zakazs
  */
 class Shifts extends \yii\db\ActiveRecord
 {
@@ -34,7 +36,7 @@ class Shifts extends \yii\db\ActiveRecord
     {
         return [
             [['start', 'end'], 'safe'],
-            [['id_sotrud', 'id_user'], 'integer'],
+            [['id_sotrud', 'id_user', 'number'], 'integer'],
             ['id_user', 'default', 'value' => Yii::$app->user->id],
             [['id_user'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['id_user' => 'id']],
             [['id_sotrud'], 'exist', 'skipOnError' => true, 'targetClass' => Personnel::className(), 'targetAttribute' => ['id_sotrud' => 'id']],
@@ -48,10 +50,11 @@ class Shifts extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'start' => 'Start',
+            'start' => 'Начало смены',
             'end' => 'End',
             'id_sotrud' => 'Id Sotrud',
             'id_user' => 'Id User',
+            'number' => 'Number',
         ];
     }
 
