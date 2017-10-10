@@ -11,7 +11,6 @@ namespace frontend\components;
 use app\models\Courier;
 use app\models\Custom;
 use app\models\Helpdesk;
-use app\models\Personnel;
 use app\models\Todoist;
 use app\models\Zakaz;
 use Yii;
@@ -83,6 +82,7 @@ class Counter extends Widget
             ['label' => 'Закупки <span class="badge pull-right">'.$this->view->params['scoreCustomZakup'].'</span>', 'encode' => false,'url' => ['custom/index'], 'visible' => Yii::$app->user->can('zakup')],
             ['label' => 'Задачи <span class="badge pull-right">'.$this->view->params['scoreTodoist'].'</span>', 'encode' => false,'url' => ['todoist/shop'], 'visible' => !Yii::$app->user->can('seeManager')],
             ['label' => 'Управляющий', 'encode' => false,'url' => ['site/manager'], 'visible' => Yii::$app->user->can('manager')],
+            ['label' => 'Персонал', 'encode' => false,'url' => ['personnel/shifts'], 'visible' => Yii::$app->user->can('manager')],
         ],
     ]);
     }
