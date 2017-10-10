@@ -92,7 +92,7 @@ $this->title = 'Все задачи';
         'pjax' => true,
         'tableOptions' 	=> ['class' => 'table table-bordered tableSize'],
         'rowOptions' => function($model){
-                return $model->srok <= date('Y-m-d') ? ['class' => 'trTable trNormal trTablePass'] : ['class' => 'trTable trNormal'];
+                return $model->srok < date('Y-m-d') ? ['class' => 'trTable trNormal trTablePass'] : ['class' => 'trTable trNormal'];
         },
         'striped' => false,
         'columns' => [
@@ -186,7 +186,7 @@ $this->title = 'Все задачи';
             'pjax' => true,
             'tableOptions' 	=> ['class' => 'table table-bordered tableSize'],
             'rowOptions' => function($model){
-                return $model->srok <= date('Y-m-d') ? ['class' => 'trTable trNormal trTablePass'] : ['class' => 'trTable trNormal'];
+                return $model->srok < date('Y-m-d') ? ['class' => 'trTable trNormal trTablePass'] : ['class' => 'trTable trNormal'];
             },
             'striped' => false,
             'columns' => [
