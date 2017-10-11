@@ -42,6 +42,10 @@ $colPlaceholder: #191412;
     }
   }
 }
+@mixin moneyInput{
+  width: 82px;
+  padding-right: 7%;
+}
 
 #login-form{
   input{
@@ -121,8 +125,7 @@ $colPlaceholder: #191412;
     color: #000;
   }
   .inputWidget-form{
-    width: 82px;
-    padding-right: 7%;
+    @include moneyInput;
   }
   .inputWidget-contact{
     padding-left: 7%;
@@ -176,4 +179,8 @@ $colPlaceholder: #191412;
   h2{
     margin-left: 15px;
   }
+}
+.moneyField{
+  @include moneyInput;
+  padding-right: 2%;
 }

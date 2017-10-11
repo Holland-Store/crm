@@ -1224,17 +1224,17 @@ thead a {
   padding: 0px;
 }
 
-/* line 47, ../sass/input.scss */
+/* line 51, ../sass/input.scss */
 #login-form input {
   padding-left: 5%;
 }
 
-/* line 51, ../sass/input.scss */
+/* line 55, ../sass/input.scss */
 #autsors {
   display: none;
 }
 
-/* line 55, ../sass/input.scss */
+/* line 59, ../sass/input.scss */
 .form-group input {
   border-radius: 26px;
   font-size: 11px;
@@ -1244,22 +1244,22 @@ thead a {
   border: none;
   outline: 0;
 }
-/* line 63, ../sass/input.scss */
+/* line 67, ../sass/input.scss */
 .form-group input::-webkit-inner-spin-button {
   display: none;
 }
-/* line 66, ../sass/input.scss */
+/* line 70, ../sass/input.scss */
 .form-group input::-webkit-input-placeholder {
   color: #191412;
   text-indent: 0;
   transition: text-indent 0.3s ease;
 }
-/* line 71, ../sass/input.scss */
+/* line 75, ../sass/input.scss */
 .form-group input:focus::-webkit-input-placeholder {
   text-indent: 550px;
   transition: text-indent 0.3s ease;
 }
-/* line 76, ../sass/input.scss */
+/* line 80, ../sass/input.scss */
 .form-group select {
   outline: 0;
   width: 86%;
@@ -1272,7 +1272,7 @@ thead a {
   height: 26px;
   color: #000;
 }
-/* line 84, ../sass/input.scss */
+/* line 88, ../sass/input.scss */
 .form-group textarea {
   outline: 0;
   width: 86%;
@@ -1283,16 +1283,16 @@ thead a {
   font-size: 11px;
   height: 66px;
 }
-/* line 89, ../sass/input.scss */
+/* line 93, ../sass/input.scss */
 .form-group textarea::-webkit-input-placeholder {
   color: #191412;
   font-size: 11px;
 }
-/* line 94, ../sass/input.scss */
+/* line 98, ../sass/input.scss */
 .form-group .inputComment {
   height: 31px;
 }
-/* line 97, ../sass/input.scss */
+/* line 101, ../sass/input.scss */
 .form-group .inputForm {
   outline: 0;
   width: 86%;
@@ -1300,59 +1300,59 @@ thead a {
   background: #736a50;
   border: none;
 }
-/* line 100, ../sass/input.scss */
+/* line 104, ../sass/input.scss */
 .form-group .help-block {
   color: rgba(171, 100, 24, 0.99);
 }
 
-/* line 105, ../sass/input.scss */
+/* line 109, ../sass/input.scss */
 .zakaz-shippingForm input {
   width: 55%;
   margin-left: 15px;
 }
-/* line 109, ../sass/input.scss */
+/* line 113, ../sass/input.scss */
 .zakaz-shippingForm .inputForm {
   width: 38%;
 }
-/* line 112, ../sass/input.scss */
+/* line 116, ../sass/input.scss */
 .zakaz-shippingForm .help-block {
   margin-left: 19px;
 }
 
-/* line 117, ../sass/input.scss */
+/* line 121, ../sass/input.scss */
 .zakaz-form .input-group-addon {
   padding: 0 7px;
   background: #736a50;
   border: none;
   color: #000;
 }
-/* line 123, ../sass/input.scss */
+/* line 127, ../sass/input.scss */
 .zakaz-form .inputWidget-form {
   width: 82px;
   padding-right: 7%;
 }
-/* line 127, ../sass/input.scss */
+/* line 130, ../sass/input.scss */
 .zakaz-form .inputWidget-contact {
   padding-left: 7%;
 }
-/* line 130, ../sass/input.scss */
+/* line 133, ../sass/input.scss */
 .zakaz-form #zakaz-number {
   padding-left: 9%;
   margin-left: -48px;
 }
-/* line 134, ../sass/input.scss */
+/* line 137, ../sass/input.scss */
 .zakaz-form #zakaz-phone, .zakaz-form #zakaz-email {
   width: 109px;
 }
-/* line 137, ../sass/input.scss */
+/* line 140, ../sass/input.scss */
 .zakaz-form #zakaz-sotrud_name {
   width: 69%;
 }
-/* line 140, ../sass/input.scss */
+/* line 143, ../sass/input.scss */
 .zakaz-form #zakaz-name, .zakaz-form #zakaz-oplata, .zakaz-form #zakaz-fact_oplata {
   padding-left: 7%;
 }
-/* line 143, ../sass/input.scss */
+/* line 146, ../sass/input.scss */
 .zakaz-form #zakaz-srok-disp {
   width: 123px;
 }
@@ -1372,16 +1372,16 @@ thead a {
 .zakaz-form .file-preview .file-footer-buttons {
   display: none;
 }
-/* line 147, ../sass/input.scss */
+/* line 150, ../sass/input.scss */
 .zakaz-form button {
   height: 30px;
 }
-/* line 150, ../sass/input.scss */
+/* line 153, ../sass/input.scss */
 .zakaz-form select {
   width: 70%;
 }
 
-/* line 155, ../sass/input.scss */
+/* line 158, ../sass/input.scss */
 #acceptdModal select {
   width: 64%;
   margin-left: 11px;
@@ -1398,7 +1398,7 @@ thead a {
   margin-right: 26px;
 }
 
-/* line 161, ../sass/input.scss */
+/* line 164, ../sass/input.scss */
 #declinedModal input {
   width: 64%;
   margin-left: 11px;
@@ -1432,18 +1432,25 @@ thead a {
   display: none;
 }
 
-/* line 169, ../sass/input.scss */
+/* line 172, ../sass/input.scss */
 .datetimepicker {
   margin-top: 19px;
 }
-/* line 171, ../sass/input.scss */
+/* line 174, ../sass/input.scss */
 .datetimepicker table {
   color: #000;
 }
 
-/* line 176, ../sass/input.scss */
+/* line 179, ../sass/input.scss */
 .modal-dialog h2 {
   margin-left: 15px;
+}
+
+/* line 183, ../sass/input.scss */
+.moneyField {
+  width: 82px;
+  padding-right: 7%;
+  padding-right: 2%;
 }
 
 /* line 35, ../sass/style.scss */

@@ -968,6 +968,11 @@ thead a {
 .modal-dialog h2 {
   margin-left: 15px; }
 
+.moneyField {
+  width: 82px;
+  padding-right: 7%;
+  padding-right: 2%; }
+
 body {
   background: #302927;
   font-family: "Helvetica Neue", Helvetica, sans-serif; }
