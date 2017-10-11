@@ -35,9 +35,8 @@ $(document).ready(function(){
             .load($(this).attr('value'));
     });
     $('.financy').click(function () {
-        alert('Hello world')
-        // $('#financeModel').modal('show')
-        //     .find('.modalContent')
-        //     .load($(this).attr('value'));
+        $('#financeModel').modal('show')
+            .find('.modalContent')
+            .load($(this).attr('value'));
     });
 });
