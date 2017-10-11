@@ -1,7 +1,5 @@
 <?php
 use kartik\grid\GridView;
-use yii\helpers\Url;
-
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\TodoistSearch */
@@ -17,20 +15,6 @@ $this->title = 'Персонал';
     'showHeader' => true,
     'striped' => false,
     'columns' => [
-        [
-            'class' => 'kartik\grid\ExpandRowColumn',
-            'width' => '1px',
-            'enableRowClick' => true,
-            'expandOneOnly' => true,
-            'expandIcon' => '<span class="glyphicon glyphicon-chevron-right"></span>',
-            'collapseIcon' => '<span class="glyphicon glyphicon-chevron-down"></span>',
-            'detailUrl' => Url::to(['employee']),
-            'value' => function(){
-                return GridView::ROW_COLLAPSED;
-            },
-            'contentOptions' => ['class' => 'border-left textTr', 'style' => 'border:none'],
-
-        ],
         [
             'attribute' => 'positions',
             'filter' => \app\models\Position::find()->select(['name', 'id'])->indexBy('id')->column(),
@@ -54,5 +38,10 @@ $this->title = 'Персонал';
                 return $model->job_duties != null ? $model->job_duties : false;
             }
         ],
+        [
+            'class' => 'yii\grid\ActionColumn',
+            'header' => 'Действие',
+            'template' => '{view} {update}',
+        ]
     ],
 ]) ?>
