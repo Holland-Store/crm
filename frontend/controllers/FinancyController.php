@@ -3,14 +3,35 @@
 namespace frontend\controllers;
 
 use app\models\Financy;
-use app\models\Tag;
 use app\models\Zakaz;
 use app\models\ZakazTag;
 use Yii;
+use yii\filters\AccessControl;
 use \yii\web\Controller;
 
 class FinancyController extends Controller
 {
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['charge'],
+                        'allow' => true,
+                        'roles' => ['manager'],
+                    ],
+                    [
+                        'actions' => ['draft'],
+                        'allow' => true,
+                        'roles' => ['admin'],
+                    ]
+                ]
+            ]
+        ];
+    }
+
     /**
      * Save payment order
      * @param $id
@@ -41,7 +62,7 @@ class FinancyController extends Controller
                     }
                     /* Соранение тега оплачено*/
                     $tag = new ZakazTag();
-                    $tag->financy($model->id_zakaz);
+                    $tag->getFinancy($id);
                     $model->save();
                     Yii::$app->session->addFlash('update', ' Сумма зачлась '.$financy->sum.' руб.');
                     if (Yii::$app->user->can('admin')){
@@ -57,5 +78,18 @@ class FinancyController extends Controller
             'financy' => $financy,
             'model' => $model,
         ]);
+    }
+
+    public function actionCharge($id)
+    {
+        $model = new Financy();
+        $model->scenario = 'employee';
+
+        if ($model->load(Yii::$app->request->post())){
+            $model->id_employee = $id;
+            $model->save();
+            return $this->redirect(['personnel/view', 'id' => $id]);
+        }
+        return $this->renderAjax('charge', ['model' => $model]);
     }
 }
