@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use app\models\Financy;
+use app\models\PersonnelPosition;
 use app\models\Shifts;
 use Yii;
 use app\models\Personnel;
@@ -89,12 +90,16 @@ class PersonnelController extends Controller
     public function actionCreate()
     {
         $model = new Personnel();
+        $position = new PersonnelPosition();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $position->load(Yii::$app->request->post()) && $model->save()) {
+            $position->personnel_id = $model->id;
+            $position->save();
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
+                'position' => $position
             ]);
         }
     }
@@ -108,12 +113,16 @@ class PersonnelController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $position = new PersonnelPosition();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $position->load(Yii::$app->request->post()) && $model->save()) {
+            $position->personnel_id = $id;
+            $position->save();
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
+                'position' => $position,
             ]);
         }
     }
