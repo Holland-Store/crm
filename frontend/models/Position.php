@@ -7,6 +7,7 @@ namespace app\models;
  *
  * @property integer $id
  * @property string $name
+ * @property integer $salary
  */
 class Position extends \yii\db\ActiveRecord
 {
@@ -25,6 +26,7 @@ class Position extends \yii\db\ActiveRecord
     {
         return [
             [['name'], 'required'],
+            [['salary'], 'integer'],
             [['name'], 'string', 'max' => 50],
         ];
     }
@@ -37,6 +39,7 @@ class Position extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'name' => 'Наименование',
+            'salary' => 'Оклад',
         ];
     }
 }
