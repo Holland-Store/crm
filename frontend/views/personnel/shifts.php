@@ -1,5 +1,6 @@
 <?php
 use kartik\grid\GridView;
+use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\TodoistSearch */
@@ -7,6 +8,10 @@ use kartik\grid\GridView;
 
 $this->title = 'Персонал';
 ?>
+
+<p>
+    <?= Html::a('Создать сотрудника', ['personnel/create'], ['class' => 'btn btn-success']) ?>
+</p>
 
 <?= GridView::widget([
     'dataProvider' => $dataProvider,
