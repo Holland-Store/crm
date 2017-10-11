@@ -1,11 +1,13 @@
 <?php
-
+use app\models\Position;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\widgets\MaskedInput;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Personnel */
+/* @var $model app\models\PersonnelPosition */
+/* @var $position app\models\Position */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
@@ -32,6 +34,11 @@ use yii\widgets\MaskedInput;
     <?= $form->field($model, 'password')->passwordInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'bonus')->textInput(['type' => 'number']) ?>
+
+    <?= $form->field($position, 'position_id')->dropDownList(ArrayHelper::map(Position::find()->all(), 'id', 'name'),
+        [
+            'prompt' => 'Выберите должность'
+        ])->label('Должность') ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Создать' : 'Редактировать', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
