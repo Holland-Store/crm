@@ -238,12 +238,11 @@ class SiteController extends Controller
         $shifts = Shifts::findOne(['id_sotrud' => Yii::$app->request->post('SotrudForm')['sotrud'], 'end' => date('0000-00-00 00:00:00')]);
         $datetime1 = new DateTime($shifts->start);
         $datetime2 = new DateTime(date('Y-m-d H:i:s'));
-        $interval = $datetime1->diff($datetime2);
-        ;$interval = $interval->format('%h:%i:%s');
+        $durationSecond = abs($datetime2->getTimestamp()-$datetime1->getTimestamp());
         $formSotrud = new SotrudForm();
         if ($formSotrud->load(Yii::$app->request->post()) && $formSotrud->validate()){
             $shifts->end = date('Y-m-d H:i:s');
-            $shifts->number = strtotime($interval);
+            $shifts->number = round($durationSecond/60);
             if (!$shifts->save()){
                 print_r($shifts->getErrors());
             }
