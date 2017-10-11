@@ -5,6 +5,7 @@ use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Personnel */
+/* @var $position app\models\PersonnelPosition */
 
 $this->title = 'Создание сотрудника';
 $this->params['breadcrumbs'][] = ['label' => 'Personnels', 'url' => ['index']];
@@ -16,6 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= $this->render('_form', [
         'model' => $model,
+        'position' => $position
     ]) ?>
 
 </div>

@@ -1,9 +1,8 @@
 <?php
 
-use yii\helpers\Html;
-
 /* @var $this yii\web\View */
 /* @var $model app\models\Personnel */
+/* @var $position app\models\PersonnelPosition */
 
 $this->title = 'Редактировать сотрудника: ' . $model->nameSotrud;
 $this->params['breadcrumbs'][] = ['label' => 'Сотрудники', 'url' => ['shifts']];
@@ -14,6 +13,7 @@ $this->params['breadcrumbs'][] = 'Редактировать';
 
     <?= $this->render('_form', [
         'model' => $model,
+        'position' => $position,
     ]) ?>
 
 </div>
