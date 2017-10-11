@@ -9,6 +9,7 @@ use app\models\TodoistSearch;
 use app\models\User;
 use app\models\Zakaz;
 use app\models\ZakazSearch;
+use DateTime;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
@@ -96,23 +97,24 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
-        $routes = [
-            'shop' => ['zakaz/shop'],
-            'disain' => ['zakaz/disain'],
-            'master' => ['zakaz/master'],
-            'admin' => ['zakaz/admin'],
-            'courier' => ['courier/index'],
-            'program' => ['zakaz/program'],
-            'zakup' => ['custom/index'],
-            'system' => ['helpdesk/index'],
-            ];
+//        $routes = [
+//            'shop' => ['zakaz/shop'],
+//            'disain' => ['zakaz/disain'],
+//            'master' => ['zakaz/master'],
+//            'admin' => ['zakaz/admin'],
+//            'courier' => ['courier/index'],
+//            'program' => ['zakaz/program'],
+//            'zakup' => ['custom/index'],
+//            'system' => ['helpdesk/index'],
+//            ];
 
         if (!Yii::$app->user->isGuest) {
-            foreach ($routes as $key => $value) {
-                if (Yii::$app->user->can($key)) {
-                    return $this->redirect(['site/index']);
-                }
-            }
+            return $this->redirect(['site/index']);
+//            foreach ($routes as $key => $value) {
+//                if (Yii::$app->user->can($key)) {
+//                    return $this->redirect(['site/index']);
+//                }
+//            }
         }
 
         $model = new LoginForm();
@@ -233,12 +235,19 @@ class SiteController extends Controller
      */
     public function actionEndSotrud()
     {
-        $shifta = Shifts::findOne(['id_sotrud' => Yii::$app->request->post('SotrudForm')['sotrud'], 'end' => date('0000-00-00 00:00:00')]);
+        $shifts = Shifts::findOne(['id_sotrud' => Yii::$app->request->post('SotrudForm')['sotrud'], 'end' => date('0000-00-00 00:00:00')]);
+        $datetime1 = new DateTime($shifts->start);
+        $datetime2 = new DateTime(date('Y-m-d H:i:s'));
+        $interval = $datetime1->diff($datetime2);
+        ;$interval = $interval->format('%h:%i:%s');
         $formSotrud = new SotrudForm();
         if ($formSotrud->load(Yii::$app->request->post()) && $formSotrud->validate()){
-            $shifta->end = date('Y-m-d H:i:s');
-            $shifta->save();
-            Yii::$app->session->addFlash('update', 'Сотрудник '.$shifta->idSotrud->nameSotrud.' закончил смену');
+            $shifts->end = date('Y-m-d H:i:s');
+            $shifts->number = strtotime($interval);
+            if (!$shifts->save()){
+                print_r($shifts->getErrors());
+            }
+            Yii::$app->session->addFlash('update', 'Сотрудник '.$shifts->idSotrud->nameSotrud.' закончил смену');
             return $this->redirect(['setting', 'id' => Yii::$app->user->id]);
         }
     }
