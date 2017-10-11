@@ -14,6 +14,7 @@ $this->title = 'Персонал';
     'tableOptions' => ['class' => 'table table-bordered'],
     'showHeader' => true,
     'striped' => false,
+    'hover' => true,
     'columns' => [
         [
             'attribute' => 'positions',
