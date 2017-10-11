@@ -31,7 +31,7 @@ class PersonnelController extends Controller
                         'roles' => ['@'],
                     ],
                     [
-                        'actions' => ['shifts', 'view'],
+                        'actions' => ['shifts', 'view', 'create', 'update'],
                         'allow' => true,
                         'roles' => ['manager'],
                     ]
