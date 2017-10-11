@@ -3,6 +3,8 @@
 namespace app\models;
 
 use app\models\query\FinancyQuery;
+use yii\db\ActiveRecord;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "financy".
@@ -12,13 +14,22 @@ use app\models\query\FinancyQuery;
  * @property integer $sum
  * @property integer $id_zakaz
  * @property integer $id_user
+ * @property integer $id_employee
+ * @property integer $category
+ * @property string $comment
  *
+ * @property Personnel $idEmployee
  * @property User $idUser
  * @property Zakaz $idZakaz
  */
-class Financy extends \yii\db\ActiveRecord
+class Financy extends ActiveRecord
 {
+    const ZAKAZ = 0;
+    const FINE = 1;
+    const BONUS = 2;
+
     public $amount;
+
     /**
      * @inheritdoc
      */
@@ -33,13 +44,15 @@ class Financy extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['sum'], 'required'],
-            [['id', 'id_zakaz', 'id_user'], 'integer'],
+            [['sum'], 'required', 'on' => 'default'],
+            [['category', 'sum', 'comment'], 'required', 'on' => 'employee'],
+            [['id_zakaz', 'id_user', 'id_employee', 'category'], 'integer'],
             [['date'], 'safe'],
             ['sum', 'filter', 'filter' => function($value){
                 return str_replace(' ', '', $value);
             }],
-            ['sum', 'compare', 'compareValue' => $this->amount, 'operator' => '<=', 'type' => 'number'],
+            [['comment'], 'string'],
+            ['sum', 'compare', 'compareValue' => $this->amount, 'operator' => '<=', 'type' => 'number', 'on' => 'default'],
             [['id_user'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['id_user' => 'id']],
             [['id_zakaz'], 'exist', 'skipOnError' => true, 'targetClass' => Zakaz::className(), 'targetAttribute' => ['id_zakaz' => 'id_zakaz']],
         ];
@@ -56,7 +69,18 @@ class Financy extends \yii\db\ActiveRecord
             'sum' => 'Сумма',
             'id_zakaz' => 'Id Zakaz',
             'id_user' => 'Id User',
+            'id_employee' => 'Id Employee',
+            'category' => 'Category',
+            'comment' => 'Комментарий',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getIdEmployee()
+    {
+        return $this->hasOne(Personnel::className(), ['id' => 'id_employee']);
     }
 
     /**
@@ -99,5 +123,19 @@ class Financy extends \yii\db\ActiveRecord
     public static function find()
     {
         return new FinancyQuery(get_called_class());
+    }
+
+    public static function getCattegoryArray()
+    {
+        return [
+            self::ZAKAZ => 'Заказ',
+            self::FINE => 'Штраф',
+            self::BONUS => 'Премия',
+        ];
+    }
+
+    public function getCategoryName()
+    {
+        return ArrayHelper::getValue(self::getCattegoryArray(), $this->category);
     }
 }
