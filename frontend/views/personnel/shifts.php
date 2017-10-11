@@ -35,7 +35,7 @@ $this->title = 'Персонал';
         [
             'attribute' => 'shedule',
             'value' => function($model){
-                return $model->shedule != null ? $model->shedule : false;
+                return $model->shedule != null ? $model->sheduleName : false;
             },
         ],
         [
