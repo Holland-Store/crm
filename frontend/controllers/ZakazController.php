@@ -55,7 +55,7 @@ class ZakazController extends Controller
                     [
                         'actions' => ['view'],
                         'allow' => true,
-                        'roles' => ['admin', 'disain', 'master', 'program', 'shop', 'zakup'],
+                        'roles' => ['admin', 'disain', 'master', 'program', 'shop', 'zakup', 'system'],
                     ],
                     [
                         'actions' => ['order'],
