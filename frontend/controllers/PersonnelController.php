@@ -2,13 +2,14 @@
 
 namespace frontend\controllers;
 
+use app\models\Financy;
+use app\models\Shifts;
 use Yii;
 use app\models\Personnel;
 use app\models\PersonnelSearch;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * PersonnelController implements the CRUD actions for Personnel model.
@@ -21,22 +22,16 @@ class PersonnelController extends Controller
     public function behaviors()
     {
         return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index'],
                 'rules' => [
                     [
+                        'actions' => ['index'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
                     [
-                        'actions' => ['shifts'],
+                        'actions' => ['shifts', 'view'],
                         'allow' => true,
                         'roles' => ['manager'],
                     ]
@@ -67,8 +62,20 @@ class PersonnelController extends Controller
      */
     public function actionView($id)
     {
+        $modelPersonnel = $this->findModel($id);
+        $model = Shifts::find()->where(['id_sotrud' => $id])->all();
+        $sumShifts = Shifts::find()->where(['id_sotrud' => $id])->sum('number');
+        $financy = Financy::find()->where(['id_employee' => $modelPersonnel->id])->all();
+        $sumFinancy = Financy::find()->where(['id_employee' => $modelPersonnel->id])->sum('sum');
+//        $position = Position::findOne($modelPersonnel->id);
+
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
+            'modelPersonnel' => $modelPersonnel,
+            'sumShifts' => $sumShifts,
+            'financy' => $financy,
+            'sumFinancy' => $sumFinancy,
+//            'position' => $position
         ]);
     }
 
@@ -109,14 +116,21 @@ class PersonnelController extends Controller
         }
     }
 
+    /**
+     * Those who work as employees
+     * @return string
+     */
     public function actionShifts()
     {
-        $model = new Personnel();
+        $searchModel = new PersonnelSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('index', [
-            'model' => $model
+        return $this->render('shifts', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider
         ]);
     }
+
 
     /**
      * Deletes an existing Personnel model.
