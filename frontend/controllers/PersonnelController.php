@@ -67,7 +67,9 @@ class PersonnelController extends Controller
         $sumShifts = Shifts::find()->where(['id_sotrud' => $id])->sum('number');
         $financy = Financy::find()->where(['id_employee' => $modelPersonnel->id])->all();
         $sumFinancy = Financy::find()->where(['id_employee' => $modelPersonnel->id])->sum('sum');
-//        $position = Position::findOne($modelPersonnel->id);
+        $sumFine = Financy::find()->where(['id_employee' => $modelPersonnel->id, 'category' => 1])->sum('sum');
+        $sumBonus = Financy::find()->where(['id_employee' => $modelPersonnel->id, 'category' => 2])->sum('sum');
+        $sumWage = $sumFine-$sumBonus;
 
         return $this->render('view', [
             'model' => $model,
@@ -75,8 +77,8 @@ class PersonnelController extends Controller
             'sumShifts' => $sumShifts,
             'financy' => $financy,
             'sumFinancy' => $sumFinancy,
-//            'position' => $position
-        ]);
+            'sumWage' => $sumWage,
+            ]);
     }
 
     /**
