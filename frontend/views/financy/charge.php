@@ -3,13 +3,13 @@ use kartik\form\ActiveForm;
 use phpnt\ICheck\ICheck;
 use yii\helpers\Html;
 use yii\widgets\MaskedInput;
+/** @var $model app\models\Fine */
 ?>
 
 <?php $form = ActiveForm::begin([
     'id' => 'financy'
 ]) ?>
 
-<?= $form->field($model, 'id_user')->hiddenInput(['value' => Yii::$app->user->id])->label(false) ?>
 <?= $form->field($model, 'category')->widget(ICheck::className(), [
     'type'  => ICheck::TYPE_RADIO_LIST,
     'style'  => ICheck::STYLE_SQUARE,
