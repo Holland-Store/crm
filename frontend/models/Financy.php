@@ -25,9 +25,7 @@ use yii\helpers\ArrayHelper;
 class Financy extends ActiveRecord
 {
     const ZAKAZ = 0;
-    const FINE = 1;
-    const BONUS = 2;
-    const SALARY = 3;
+    const SALARY = 1;
 
     public $amount;
 
@@ -124,19 +122,5 @@ class Financy extends ActiveRecord
     public static function find()
     {
         return new FinancyQuery(get_called_class());
-    }
-
-    public static function getCattegoryArray()
-    {
-        return [
-            self::ZAKAZ => 'Заказ',
-            self::FINE => 'Штраф',
-            self::BONUS => 'Премия',
-        ];
-    }
-
-    public function getCategoryName()
-    {
-        return ArrayHelper::getValue(self::getCattegoryArray(), $this->category);
     }
 }
