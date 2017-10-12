@@ -83,6 +83,7 @@ class Counter extends Widget
             ['label' => 'Задачи <span class="badge pull-right">'.$this->view->params['scoreTodoist'].'</span>', 'encode' => false,'url' => ['todoist/shop'], 'visible' => !Yii::$app->user->can('seeManager')],
             ['label' => 'Управляющий', 'encode' => false,'url' => ['site/manager'], 'visible' => Yii::$app->user->can('manager')],
             ['label' => 'Персонал', 'encode' => false,'url' => ['personnel/shifts'], 'visible' => Yii::$app->user->can('manager')],
+            ['label' => 'Guides', 'url' => ['guide/index']],
         ],
     ]);
     }
