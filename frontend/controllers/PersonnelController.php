@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use app\models\Financy;
+use app\models\Fine;
 use app\models\Payroll;
 use app\models\PersonnelPosition;
 use app\models\Shifts;
@@ -10,7 +11,6 @@ use Yii;
 use app\models\Personnel;
 use app\models\PersonnelSearch;
 use yii\filters\AccessControl;
-use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
@@ -82,16 +82,22 @@ class PersonnelController extends Controller
         $sumShifts = Shifts::find()->where(['id_sotrud' => $id])
                                 ->andWhere(['>', 'start', $payroll])
                                 ->sum('number');
-        $financy = Financy::find()->where(['id_employee' => $modelPersonnel->id])
+        $financy = Fine::find()->where(['id_employee' => $modelPersonnel->id])
                                 ->andWhere(['>', 'date', $payroll])
                                 ->all();
-        $sumFine = Financy::find()->where(['id_employee' => $modelPersonnel->id, 'category' => 1])
+        $sumFine = Fine::find()->where(['id_employee' => $modelPersonnel->id, 'category' => 1])
                                 ->andWhere(['>', 'date', $payroll])
                                 ->sum('sum');
-        $sumBonus = Financy::find()->where(['id_employee' => $modelPersonnel->id, 'category' => 2])
+        $sumBonus = Fine::find()->where(['id_employee' => $modelPersonnel->id, 'category' => 2])
                                    ->andWhere(['>', 'date', $payroll])
                                    ->sum('sum');
-        $sumWage = $sumFine-$sumBonus;
+        if ($sumBonus > $sumFine){
+            $sumWage = $sumBonus-$sumFine;
+        } elseif($sumBonus < $sumFine) {
+            $sumWage = $sumBonus-$sumFine;
+        } else {
+            $sumWage = $sumFine-$sumBonus;
+        }
 
         return $this->render('view', [
             'model' => $model,
@@ -184,7 +190,7 @@ class PersonnelController extends Controller
      * @param $sum
      * @return \yii\web\Response
      */
-    public function actionCalculate($id, $sum, $wage, $name)
+    public function actionCalculate($id, $sum, $name)
     {
         $model = new Payroll();
         $financy = new Financy();
@@ -195,7 +201,7 @@ class PersonnelController extends Controller
         $model->sum = $sum;
 
         /** Financ models */
-        $financy->sum = $wage;
+        $financy->sum = $sum;
         $financy->id_user = Yii::$app->user->id;
         $financy->id_employee = $id;
         $financy->category = Financy::SALARY;
