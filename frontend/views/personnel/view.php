@@ -10,12 +10,25 @@ use yii\helpers\Url;
 /* @var $modelPersonnel app\models\Personnel */
 /* @var $position app\models\Position */
 /* @var $sumShifts app\models\Shifts */
-/* @var $sumFinancy app\models\Financy */
 /* @var $sumWage app\models\Financy */
 /* @var $financy app\models\Financy */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = $modelPersonnel->nameSotrud;
+foreach ($modelPersonnel->positions as $key => $value){
+    $salary = $value->salary;
+}
+if ($modelPersonnel->shedule == Personnel::SHEDULE_DOUBLE){
+    $shedule = 15;
+    $timeWork = 12;
+} else {
+    $shedule = 20;
+    $timeWork = 8;
+}
+$bonus = $modelPersonnel->bonus;
+$salaryPrize = $salary+$bonus;
+$sumTime = $salaryPrize/$shedule/$timeWork/60;
+$wage = $sumShifts*$sumTime;
 ?>
 
 <div class="col-lg-12">
@@ -28,6 +41,7 @@ $this->title = $modelPersonnel->nameSotrud;
     ]);
     echo '<div class="modalContent"></div>';
     Modal::end()?>
+    <?= Html::a('Расчитать', ['calculate', 'id' => $modelPersonnel->id, 'sum' => round($wage-$sumWage,2), 'wage' => round($wage,2), 'name' => $modelPersonnel->nameSotrud], ['class' => 'btn btn-primary']) ?>
 </div>
 <div class="col-lg-3">
     <h4><?= Html::encode('График работы '.$modelPersonnel->sheduleName) ?></h4>
@@ -70,7 +84,6 @@ $this->title = $modelPersonnel->nameSotrud;
             <td style="padding: 8px">'.$fin->comment.'</td>
             <td style="padding: 8px">'.$fin->categoryName.'</td></tr>';
         }
-        /** @var string $sumFinancy */
         echo '<tr>
             <th>Итого</th>
             <th>'.$sumWage.' рублей</th>
@@ -81,24 +94,10 @@ $this->title = $modelPersonnel->nameSotrud;
 <div class="col-lg-3">
     <h3><?= Html::encode('Зарплата') ?></h3>
     <div>Оклад:
-        <?php foreach ($modelPersonnel->positions as $key => $value){
-            $salary = $value->salary;
-            echo number_format($salary, 0, ',', ' ').' рублей<br>';
-        } ?>
+        <?php echo number_format($salary, 0, ',', ' ').' рублей<br>' ?>
     </div>
     <div>Премия: <?php echo $modelPersonnel->bonus.' рублей' ?></div>
-    <div>Итого: <?php if ($modelPersonnel->shedule == Personnel::SHEDULE_DOUBLE){
-            $shedule = 15;
-            $timeWork = 12;
-        } else {
-            $shedule = 20;
-            $timeWork = 8;
-        }
-        $bonus = $modelPersonnel->bonus;
-        $salaryPrize = $salary+$bonus;
-        $sumTime = $salaryPrize/$shedule/$timeWork/60;
-        $wage = ($sumShifts*$sumTime).'<br>';
-        echo '<b>'.number_format($wage,2, ',', ' ').'</b> рублей<br>';
+    <div>Итого: <?php echo '<b>'.number_format($wage,2, ',', ' ').'</b> рублей<br>';
         echo 'Штрафами и премиями '.number_format($wage-$sumWage, 2, ',', ' ').' рублей'; ?>
     </div>
 </div>
