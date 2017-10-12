@@ -27,6 +27,7 @@ class Financy extends ActiveRecord
     const ZAKAZ = 0;
     const FINE = 1;
     const BONUS = 2;
+    const SALARY = 3;
 
     public $amount;
 
