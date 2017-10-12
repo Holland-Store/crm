@@ -32,7 +32,7 @@ class PersonnelController extends Controller
                         'roles' => ['@'],
                     ],
                     [
-                        'actions' => ['shifts', 'view', 'create', 'update'],
+                        'actions' => ['shifts', 'view', 'create', 'update', 'lay-off'],
                         'allow' => true,
                         'roles' => ['manager'],
                     ]
@@ -140,6 +140,21 @@ class PersonnelController extends Controller
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider
         ]);
+    }
+
+    /**
+     * Layoff employee
+     * if success it happens redirected on shifts
+     * @param $id
+     * @return \yii\web\Response
+     */
+    public function actionLayOff($id)
+    {
+        $model = $this->findModel($id);
+        $model->action = 1;
+        $model->save();
+        Yii::$app->session->addFlash('update', 'Сотрудник '.$model->nameSotrud.' был уволен');
+        return $this->redirect('shifts');
     }
 
 
