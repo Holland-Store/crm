@@ -10,6 +10,7 @@ use Yii;
  * @property integer $id
  * @property integer $personnel_id
  * @property string $date
+ * @property integer $sum
  */
 class Payroll extends \yii\db\ActiveRecord
 {
@@ -27,9 +28,9 @@ class Payroll extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['personnel_id'], 'required'],
             [['personnel_id'], 'integer'],
             [['date'], 'safe'],
+            [['sum'], 'number'],
         ];
     }
 
@@ -42,6 +43,7 @@ class Payroll extends \yii\db\ActiveRecord
             'id' => 'ID',
             'personnel_id' => 'Personnel ID',
             'date' => 'Date',
+            'sum' => 'Sum',
         ];
     }
 }
