@@ -3,12 +3,14 @@
 namespace frontend\controllers;
 
 use app\models\Financy;
+use app\models\Payroll;
 use app\models\PersonnelPosition;
 use app\models\Shifts;
 use Yii;
 use app\models\Personnel;
 use app\models\PersonnelSearch;
 use yii\filters\AccessControl;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
@@ -32,7 +34,7 @@ class PersonnelController extends Controller
                         'roles' => ['@'],
                     ],
                     [
-                        'actions' => ['shifts', 'view', 'create', 'update', 'lay-off'],
+                        'actions' => ['shifts', 'view', 'create', 'update', 'lay-off', 'calculate'],
                         'allow' => true,
                         'roles' => ['manager'],
                     ]
@@ -64,12 +66,31 @@ class PersonnelController extends Controller
     public function actionView($id)
     {
         $modelPersonnel = $this->findModel($id);
-        $model = Shifts::find()->where(['id_sotrud' => $id])->all();
-        $sumShifts = Shifts::find()->where(['id_sotrud' => $id])->sum('number');
-        $financy = Financy::find()->where(['id_employee' => $modelPersonnel->id])->all();
-        $sumFinancy = Financy::find()->where(['id_employee' => $modelPersonnel->id])->sum('sum');
-        $sumFine = Financy::find()->where(['id_employee' => $modelPersonnel->id, 'category' => 1])->sum('sum');
-        $sumBonus = Financy::find()->where(['id_employee' => $modelPersonnel->id, 'category' => 2])->sum('sum');
+        $payroll = Payroll::find()->where(['personnel_id' => $id])
+                                ->orderBy('date DESC')
+                                ->limit(1)->all();
+        if ($payroll == null){
+            $payroll = '2017-09-01 00:00:00';
+        } else {
+            foreach ($payroll as $key=>$value){
+                $payroll = $value->date;
+            }
+        }
+        $model = Shifts::find()->andWhere(['id_sotrud' => $id])
+                                ->andWhere(['>', 'start', $payroll])
+                                ->all();
+        $sumShifts = Shifts::find()->where(['id_sotrud' => $id])
+                                ->andWhere(['>', 'start', $payroll])
+                                ->sum('number');
+        $financy = Financy::find()->where(['id_employee' => $modelPersonnel->id])
+                                ->andWhere(['>', 'date', $payroll])
+                                ->all();
+        $sumFine = Financy::find()->where(['id_employee' => $modelPersonnel->id, 'category' => 1])
+                                ->andWhere(['>', 'date', $payroll])
+                                ->sum('sum');
+        $sumBonus = Financy::find()->where(['id_employee' => $modelPersonnel->id, 'category' => 2])
+                                   ->andWhere(['>', 'date', $payroll])
+                                   ->sum('sum');
         $sumWage = $sumFine-$sumBonus;
 
         return $this->render('view', [
@@ -77,7 +98,6 @@ class PersonnelController extends Controller
             'modelPersonnel' => $modelPersonnel,
             'sumShifts' => $sumShifts,
             'financy' => $financy,
-            'sumFinancy' => $sumFinancy,
             'sumWage' => $sumWage,
             ]);
     }
@@ -157,6 +177,36 @@ class PersonnelController extends Controller
         return $this->redirect('shifts');
     }
 
+    /**
+     * Calculation with employees
+     * if success then there is a redirected shifts
+     * @param $id
+     * @param $sum
+     * @return \yii\web\Response
+     */
+    public function actionCalculate($id, $sum, $wage, $name)
+    {
+        $model = new Payroll();
+        $financy = new Financy();
+        $financy->scenario = 'employee';
+
+        /** Payroll models */
+        $model->personnel_id = $id;
+        $model->sum = $sum;
+
+        /** Financ models */
+        $financy->sum = $wage;
+        $financy->id_user = Yii::$app->user->id;
+        $financy->id_employee = $id;
+        $financy->category = Financy::SALARY;
+        $financy->comment = 'Расчет зарплаты '.$name;
+
+        $financy->save();
+        $model->save();
+
+        Yii::$app->session->addFlash('update', 'Произведен расчет '.$model->sum);
+        return $this->redirect(['view', 'id' => $id]);
+    }
 
     /**
      * Deletes an existing Personnel model.
