@@ -25,9 +25,6 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'question:ntext',
-            'answer:ntext',
-            'standarts:ntext',
             'title:ntext',
              [
                  'attribute' => 'created_at',
@@ -42,7 +39,15 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             ],
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{view} {update} {delete} {link}',
+                'buttons' => [
+                    'link' => function($url, $model, $key){
+                        return Html::a('Показать', ['post', 'id' => $key]);
+                    }
+                ]
+            ],
         ],
     ]); ?>
 <?php Pjax::end(); ?></div>
