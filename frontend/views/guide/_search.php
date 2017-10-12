@@ -15,9 +15,9 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'question') ?>
+<!--    --><?//= $form->field($model, 'question') ?>
 
-    <?= $form->field($model, 'title') ?>
+    <?= $form->field($model, 'title')->label(false) ?>
 
     <?php // echo $form->field($model, 'created_at') ?>
 
@@ -25,7 +25,7 @@ use yii\widgets\ActiveForm;
 
     <div class="form-group">
         <?= Html::submitButton('Найти', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Сбросить', ['class' => 'btn btn-default']) ?>
+<!--        --><?//= Html::resetButton('Сбросить', ['class' => 'btn btn-default']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
