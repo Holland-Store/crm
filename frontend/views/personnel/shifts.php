@@ -1,4 +1,6 @@
 <?php
+
+use app\models\Position;
 use kartik\grid\GridView;
 use yii\helpers\Html;
 
@@ -23,7 +25,7 @@ $this->title = 'Персонал';
     'columns' => [
         [
             'attribute' => 'positions',
-            'filter' => \app\models\Position::find()->select(['name', 'id'])->indexBy('id')->column(),
+            'filter' => Position::find()->select(['name', 'id'])->indexBy('id')->column(),
             'value' => 'positionsAsString',
         ],
         [
@@ -47,7 +49,12 @@ $this->title = 'Персонал';
         [
             'class' => 'yii\grid\ActionColumn',
             'header' => 'Действие',
-            'template' => '{view} {update}',
-        ]
+            'template' => '{view} {update} {link}',
+            'buttons' => [
+                'link' => function($url, $model, $key) {
+                    return Html::a('Уволить', ['lay-off', 'id' => $model->id]);
+                }
+            ]
+        ],
     ],
 ]) ?>
