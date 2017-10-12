@@ -112,6 +112,24 @@ class GuideController extends Controller
     }
 
     /**
+     * Post view for employee
+     * @param $id
+     * @return string
+     */
+    public function actionPost($id)
+    {
+        $model = $this->findModel($id);
+        $searchModel = new GuideSearch();
+        $posts = Guide::find()->all();
+
+        return $this->render('post', [
+            'model'=> $model,
+            'posts' => $posts,
+            'searchModel' => $searchModel
+        ]);
+    }
+
+    /**
      * Finds the Guide model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
