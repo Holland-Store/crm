@@ -286,9 +286,6 @@ $this->title = 'Акутальнык';
                     ],
                 ],
             ]); ?>
-            <?php d(Todoist::find()->andWhere(['>', 'date', date('Y-m-d 00:00:00', strtotime('-1 day'))])
-                ->andWhere(['<', 'date', date('Y-m-d 23:59:59', strtotime('-1 day'))])
-                ->count()) ?>
         </div>
     </div>
     <div class="col-lg-3 statics">
