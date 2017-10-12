@@ -17,6 +17,9 @@ $this->title = 'Все задачи';
 ?>
 <div class="todoist-index">
     <p>
+        <?php if (Yii::$app->user->can('manager')): ?>
+            <?= Html::a('Создать', ['create'], ['class' => 'btn btn-success']) ?>
+        <?php endif; ?>
         <?php echo $this->render('_search', ['model' => $searchModel]);?>
     </p>
     <p>
