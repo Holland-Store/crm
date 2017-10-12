@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use app\models\Financy;
+use app\models\Fine;
 use app\models\Zakaz;
 use app\models\ZakazTag;
 use Yii;
@@ -82,8 +83,7 @@ class FinancyController extends Controller
 
     public function actionCharge($id)
     {
-        $model = new Financy();
-        $model->scenario = 'employee';
+        $model = new Fine();
 
         if ($model->load(Yii::$app->request->post())){
             $model->id_employee = $id;
