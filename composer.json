@@ -38,7 +38,8 @@
         "sonko-dmitry/yii2-telegram-bot-api": "*",
         "kartik-v/yii2-popover-x": "*",
         "2amigos/yii2-chartjs-widget": "~2.0",
-        "phpnt/yii2-icheck": "*"
+        "phpnt/yii2-icheck": "*",
+        "vova07/yii2-imperavi-widget": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
