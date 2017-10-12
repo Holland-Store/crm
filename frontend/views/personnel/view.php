@@ -41,7 +41,7 @@ $wage = $sumShifts*$sumTime;
     ]);
     echo '<div class="modalContent"></div>';
     Modal::end()?>
-    <?= Html::a('Расчитать', ['calculate', 'id' => $modelPersonnel->id, 'sum' => round($wage-$sumWage,2), 'wage' => round($wage,2), 'name' => $modelPersonnel->nameSotrud], ['class' => 'btn btn-primary']) ?>
+    <?= Html::a('Расчитать', ['calculate', 'id' => $modelPersonnel->id, 'sum' => round($wage+$sumWage,2), 'name' => $modelPersonnel->nameSotrud], ['class' => 'btn btn-primary']) ?>
 </div>
 <div class="col-lg-3">
     <h4><?= Html::encode('График работы '.$modelPersonnel->sheduleName) ?></h4>
@@ -98,6 +98,6 @@ $wage = $sumShifts*$sumTime;
     </div>
     <div>Премия: <?php echo $modelPersonnel->bonus.' рублей' ?></div>
     <div>Итого: <?php echo '<b>'.number_format($wage,2, ',', ' ').'</b> рублей<br>';
-        echo 'Штрафами и премиями '.number_format($wage-$sumWage, 2, ',', ' ').' рублей'; ?>
+        echo 'Штрафами и премиями '.number_format($wage+$sumWage, 2, ',', ' ').' рублей'; ?>
     </div>
 </div>
