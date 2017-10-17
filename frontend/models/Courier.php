@@ -17,11 +17,15 @@ use yii\helpers\ArrayHelper;
  * @property string $data_from
  * @property string $commit
  *
+ *
  * @property Zakaz $idZakaz
  * @property Zakaz[] $zakazs
  */
 class Courier extends \yii\db\ActiveRecord
 {
+
+    public $toYandexMap;
+    public $fromYandexMap;
 
     const DOSTAVKA = 0;
     const RECEIVE = 1;
@@ -45,10 +49,10 @@ class Courier extends \yii\db\ActiveRecord
         return [
             [['to', 'from', 'date'], 'required'],
             [['id_zakaz', 'status'], 'integer'],
-            [['data_to', 'data_from', 'date'], 'safe'],
+            [['data_to', 'data_from', 'date', 'toYandexMap', 'fromYandexMap'], 'safe'],
             [['commit'], 'string'],
             ['status', 'default', 'value' => 0],
-            [['to', 'from'], 'string', 'max' => 50],
+            [['to', 'from'], 'string', 'max' => 86],
             [['id_zakaz'], 'exist', 'skipOnError' => true, 'targetClass' => Zakaz::className(), 'targetAttribute' => ['id_zakaz' => 'id_zakaz']],
         ];
     }
@@ -80,6 +84,8 @@ class Courier extends \yii\db\ActiveRecord
             'data_from' => 'Data From',
             'status' => 'Доставка',
             'commit' => 'Доп. указания',
+            'toYandexMap' => 'To Yandex Map',
+            'fromYandexMap' => 'From Yandex Map'
         ];
     }
 
