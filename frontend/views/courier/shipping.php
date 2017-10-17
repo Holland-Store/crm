@@ -85,10 +85,9 @@ $this->title = 'Все доставки';
             ],
             [
                 'attribute' => 'to',
-//                'hAlign' => GridView::ALIGN_RIGHT,
                 'format' => 'raw',
                 'value' => function($courier){
-                    return '<span class="shipping">Откуда: </span>'.$courier->to ;
+                    return '<span class="shipping">Откуда: </span>'.$courier->to_name ;
                 },
                 'contentOptions' => ['class' => 'textTr tr202'],
             ],
@@ -98,7 +97,7 @@ $this->title = 'Все доставки';
                 'format' => 'raw',
                 'contentOptions' => ['class' => 'textTr tr202'],
                 'value' => function($courier){
-                    return '<span class="shipping">Куда: </span>'.$courier->from ;
+                    return '<span class="shipping">Куда: </span>'.$courier->from_name ;
                 },
             ],
             [
