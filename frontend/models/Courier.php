@@ -115,7 +115,7 @@ class Courier extends \yii\db\ActiveRecord
      */
     public function beforeSave($insert)
     {
-        $this->date = date('Y-m-d', strtotime($this->date));
+        $this->date = date('Y-m-d H:i:s', strtotime($this->date));
         return parent::beforeSave($insert);
     }
 }
