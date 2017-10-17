@@ -6,7 +6,6 @@ use yii\widgets\ActiveForm;
 use yii\widgets\DetailView;
 use yii\helpers\Url;
 use yii\bootstrap\Modal;
-use app\models\Courier;
 use app\models\Zakaz;
 use yii\widgets\MaskedInput;
 
@@ -163,23 +162,25 @@ use yii\widgets\MaskedInput;
             <?= Html::a('Задача', ['todoist/createzakaz', 'id_zakaz' => $model->id_zakaz], ['class' => 'btn btn-xs todoist']) ?>
         <?php if (Yii::$app->user->can('admin')): ?>
             <?php if (Yii::$app->user->can('admin')): ?>
-                <?php Modal::begin([
-                    'header' => '<h2 style="color: rgba(204, 198, 198, 0.6)">Задание на доставку</h2>',
-                    'class' => 'model-sm modalShipping',
-                    'toggleButton' => [
-                        'tag' => 'a',
-                        'class' => 'btn btn-xs',
-                        'label' => 'Доставка',
-                    ]
-                ]);
-
-                $shipping = new Courier();
-                echo $this->render('shipping', [
-                    'shipping' => $shipping,
-                    'model' => $model->id_zakaz,
-                ]);
-
-                Modal::end(); ?>
+                <?= Html::submitButton('Доставка',['class' => 'btn action modalShipping-button', 'value' => Url::to(['courier/create-zakaz', 'id' => $model->id_zakaz])]) ?>
+<!--                --><?php //Modal::begin([
+//                    'header' => '<h2 style="color: rgba(204, 198, 198, 0.6)">Задание на доставку</h2>',
+//                    'class' => 'model-sm modalShipping',
+//                    'toggleButton' => [
+//                        'tag' => 'a',
+//                        'class' => 'btn btn-xs modalShipping-button',
+//                        'label' => 'Доставка',
+//                    ]
+//                ]);
+//
+//                echo '<div class="modalContent"></div>';
+//                $shipping = new Courier();
+//                echo $this->render('shipping', [
+//                    'shipping' => $shipping,
+//                    'model' => $model->id_zakaz,
+//                ]);
+//
+//                Modal::end(); ?>
             <?php endif ?>
         <?php endif ?>
         <?php if (Yii::$app->user->can('seeAdop') && $model->renouncement == null): ?>
