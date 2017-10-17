@@ -32,10 +32,24 @@ $this->title = 'Все задачи';
         'striped' => false,
         'columns' => [
             [
+                'class' => 'kartik\grid\ExpandRowColumn',
+                'width' => '1px',
+                'enableRowClick' => true,
+                'expandOneOnly' => true,
+                'expandIcon' => '<span class="glyphicon glyphicon-chevron-right"></span>',
+                'collapseIcon' => '<span class="glyphicon glyphicon-chevron-down"></span>',
+                'detailUrl' => Url::to(['todoist-detail']),
+                'value' => function(){
+                    return GridView::ROW_COLLAPSED;
+                },
+                'contentOptions' => ['class' => 'border-left textTr', 'style' => 'border:none'],
+
+            ],
+            [
                 'attribute' => 'srok',
                 'format' => ['date', 'php:d M'],
                 'hAlign' => GridView::ALIGN_RIGHT,
-                'contentOptions' => ['class' => 'border-left textTr tr90 srok', 'style' => 'border:none'],
+                'contentOptions' => ['class' => 'textTr tr90 srok', 'style' => 'border:none'],
             ],
             [
                 'attribute' => 'comment',
@@ -51,7 +65,7 @@ $this->title = 'Все задачи';
                     } elseif ($model->activate == Todoist::REJECT){
                         return Html::tag('span', Html::encode('Отклонено'), [
                             'title' => $model->declined,
-                            'data-toggle' => 'toolpit',
+                            'data-toggle' => 'tooltip',
                             'class' => 'declined'
                         ]);
                     } else {
@@ -99,10 +113,24 @@ $this->title = 'Все задачи';
             'striped' => false,
             'columns' => [
                 [
+                    'class' => 'kartik\grid\ExpandRowColumn',
+                    'width' => '1px',
+                    'enableRowClick' => true,
+                    'expandOneOnly' => true,
+                    'expandIcon' => '<span class="glyphicon glyphicon-chevron-right"></span>',
+                    'collapseIcon' => '<span class="glyphicon glyphicon-chevron-down"></span>',
+                    'detailUrl' => Url::to(['todoist-detail']),
+                    'value' => function(){
+                        return GridView::ROW_COLLAPSED;
+                    },
+                    'contentOptions' => ['class' => 'border-left textTr', 'style' => 'border:none'],
+
+                ],
+                [
                     'attribute' => 'srok',
                     'format' => ['date', 'php:d M'],
                     'hAlign' => GridView::ALIGN_RIGHT,
-                    'contentOptions' => ['class' => 'border-left textTr tr90 srok', 'style' => 'border:none'],
+                    'contentOptions' => ['class' => 'textTr tr90 srok', 'style' => 'border:none'],
                 ],
                 [
                     'attribute' => 'comment',
