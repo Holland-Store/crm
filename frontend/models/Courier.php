@@ -2,7 +2,6 @@
 
 namespace app\models;
 
-use Yii;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -12,8 +11,10 @@ use yii\helpers\ArrayHelper;
  * @property integer $id_zakaz
  * @property string $date
  * @property string $to
+ * @property string $to_name
  * @property string $data_to
  * @property string $from
+ * @property string $from_name
  * @property string $data_from
  * @property string $commit
  *
@@ -52,7 +53,8 @@ class Courier extends \yii\db\ActiveRecord
             [['data_to', 'data_from', 'date', 'toYandexMap', 'fromYandexMap'], 'safe'],
             [['commit'], 'string'],
             ['status', 'default', 'value' => 0],
-            [['to', 'from'], 'string', 'max' => 86],
+            [['to', 'from'], 'string', 'max' => 50],
+            [['to_name', 'from_name'], 'string', 'max' => 86],
             [['id_zakaz'], 'exist', 'skipOnError' => true, 'targetClass' => Zakaz::className(), 'targetAttribute' => ['id_zakaz' => 'id_zakaz']],
         ];
     }
@@ -79,13 +81,15 @@ class Courier extends \yii\db\ActiveRecord
             'id_zakaz' => 'Заказ',
 			'date' => 'Срок',
             'to' => 'Откуда',
+            'to_name' => 'To Name',
             'data_to' => 'Data To',
             'from' => 'Куда',
+            'from_name' => 'From Name',
             'data_from' => 'Data From',
             'status' => 'Доставка',
             'commit' => 'Доп. указания',
-            'toYandexMap' => 'To Yandex Map',
-            'fromYandexMap' => 'From Yandex Map'
+            'toYandexMap' => 'Откуда',
+            'fromYandexMap' => 'Куда'
         ];
     }
 
