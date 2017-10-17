@@ -41,7 +41,7 @@ class CourierController extends Controller
                        'roles' => ['courier'],
                    ],
                    [
-                        'actions' => ['shipping', 'deletes', 'create'],
+                        'actions' => ['shipping', 'deletes', 'create', 'create-zakaz'],
                         'allow' => true,
                         'roles' => ['admin', 'program'],
                    ],
@@ -141,7 +141,7 @@ class CourierController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->save()){
                 Yii::$app->session->addFlash('update', 'Доставка была назначена');
-                $telegram->message(User::USER_COURIER, 'Назначена доставка ');
+                $telegram->message(User::USER_COURIER, 'Назначена доставка.'.PHP_EOL.$model->commit.PHP_EOL.'Откуда: '.$model->to_name.PHP_EOL.'Куда: '.$model->from_name);
                 return $this->redirect('shipping');
             } else {
                 print_r($model->getErrors());
@@ -149,6 +149,40 @@ class CourierController extends Controller
         }
         return $this->render('create', [
             'model' => $model,
+        ]);
+    }
+
+    public function actionCreateZakaz($id)
+    {
+        $model = $id;
+        $shipping = new Courier();
+        $telegram = new Telegram();
+        $notifications = new Notification();
+
+        if ($shipping->load(Yii::$app->request->post())) {
+            $shipping->save();//сохранение доставка
+            if (!$shipping->save()) {
+                print_r($shipping->getErrors());
+            }
+            $model = Zakaz::findOne(['id_zakaz' => $id]);//Определяю заказ
+            $model->id_shipping = $shipping->id;//Оформление доставку в таблице заказа
+            if ($model->save()){
+                /** @var $model \app\models\Zakaz */
+                Yii::$app->session->addFlash('update', 'Доставка успешно создана');
+                $telegram->message(User::USER_COURIER, 'Назначена доставка '.$model->prefics.PHP_EOL.$shipping->commit.PHP_EOL.'Откуда: '.$shipping->to_name.PHP_EOL.'Куда: '.$shipping->from_name);
+            } else {
+                print_r($model->getErrors());
+            }
+
+            $notifications->getByIdNotification(7, $shipping->id_zakaz);//оформление уведомлений
+            $notifications->saveNotification;
+
+            return $this->redirect(['zakaz/admin', '#' => $model->id_zakaz]);
+        }
+
+        return $this->renderAjax('create-zakaz', [
+            'model' => $model,
+            'shipping' => $shipping
         ]);
     }
 
@@ -183,6 +217,13 @@ class CourierController extends Controller
 
         return $this->redirect(['index']);
     }
+
+    /**
+     * Courier took delivery
+     * If success redirected index view
+     * @param $id
+     * @return \yii\web\Response
+     */
     public function actionMake($id)//Курьер забрал заказ
     {
         $model = $this->findModel($id);
@@ -200,6 +241,13 @@ class CourierController extends Controller
             print_r($model->getErrors());
         }
     }
+
+    /**
+     * Courier delivered shipping
+     * If success redirected index view
+     * @param $id
+     * @return \yii\web\Response
+     */
     public function actionDelivered($id)//Курьер доставил заказ
     {
         $model = $this->findModel($id);
