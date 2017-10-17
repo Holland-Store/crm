@@ -9,12 +9,12 @@ use app\models\Zakaz;
 use yii\bootstrap\ButtonDropdown;
 use yii\widgets\Pjax;
 
-
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\ZakazSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Вce заказы';
+$this->registerJsFile('https://api-maps.yandex.ru/2.1/?lang=ru_RU', ['type' => 'text/javascript']);
 ?>
 <?php Pjax::begin(['id' => 'pjax-container']); ?>
 
@@ -491,23 +491,25 @@ $this->title = 'Вce заказы';
         'id' => 'declinedModal',
         'header' => '<h2>Укажите причину отказа:</h2>',
     ]);
-
     echo '<div class="modalContent"></div>';
-
     Modal::end();?>
     <?php Modal::begin([
         'id' => 'acceptdModal',
         'header' => '<h2>Назначить ответственного:</h2>',
     ]);
-
     echo '<div class="modalContent"></div>';
-
     Modal::end();?>
     <?php Modal::begin([
         'id' => 'draftModal',
     ]);
     echo '<div class="modalContent"></div>';
     Modal::end() ?>
+    <?php Modal::begin([
+        'id' => 'modalShipping',
+        'header' => '<h2>Назначить доставку</h2>'
+    ]);
+    echo '<div class="modalContent"></div>';
+    Modal::end(); ?>
 </div>
 <div class="footer">
     <?php echo Nav::widget([
