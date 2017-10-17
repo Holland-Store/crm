@@ -1,6 +1,6 @@
 <?php
 
-use kartik\date\DatePicker;
+use kartik\widgets\DateTimePicker;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -16,13 +16,14 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'date')->widget(
-            DatePicker::className(), [
-                'pluginOptions' => [
-                    'autoclose' => true,
-                    'startDate' => 'yyyy-mm-dd',
-                    'todayBtn' => true,
-                    'todayHighlight' => true,
-                ]
+            DateTimePicker::className(), [
+            'pluginOptions' => [
+                'autoclose'=>true,
+                'startDate' => 'php Y-m-d H:i:s',
+                'format' => 'dd M yyyy hh:ii:ss',
+                'todayBtn' => true,
+                'todayHighlight' => true,
+            ],
     ]) ?>
 
     <?= $form->field($model, 'toYandexMap')->textInput(['maxlength' => true, 'id' => 'toMap']) ?>
