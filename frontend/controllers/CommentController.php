@@ -3,9 +3,10 @@
 namespace frontend\controllers;
 
 use app\models\Comment;
+use app\models\Todoist;
+use frontend\models\Telegram;
 use Yii;
 use yii\filters\AccessControl;
-use yii\filters\VerbFilter;
 use yii\web\Controller;
 
 class CommentController extends Controller
@@ -29,14 +30,19 @@ class CommentController extends Controller
         ];
     }
 
+
     /**
      * Save comment who came todoist
      * if success redirected [todoist/index]
      * @param $id
+     * @return \yii\web\Response
      */
     public function actionTodoist($id)
     {
         $commentForm = new Comment();
+        $telegram = new Telegram();
+        $todoist = Todoist::findOne($id);
+        $user = Yii::$app->user->id;
 
         if ($commentForm->load(Yii::$app->request->post())){
             $commentForm->id_todoist = $id;
@@ -44,7 +50,12 @@ class CommentController extends Controller
             if (!$commentForm->save()){
                 print_r($commentForm->getErrors());
             } else {
-                $this->redirect(['todoist/index']);
+                if ($todoist->id_sotrud_put != $user){
+                    $telegram->message($todoist->id_sotrud_put, 'Задачу '.$commentForm->id_todoist.' прокомментировали '.$commentForm->comment);
+                } elseif($todoist->id_user != $user){
+                    $telegram->message($todoist->id_user, 'Задачу '.$commentForm->id_todoist.' прокомментировали '.$commentForm->comment);
+                }
+                return $this->redirect(['todoist/index']);
             };
         }
     }
