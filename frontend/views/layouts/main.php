@@ -134,7 +134,7 @@ AppAsset::register($this);
 
 <?php if (Yii::$app->user->isGuest): ?>
     <div class="headerLogin">
-        <h1>HOLLAND <span>CRM 2.1</span></h1>
+        <h1>HOLLAND <span>CRM 2.2</span></h1>
         <p>Управление заказами</p>
     </div>
 <?php endif ?>
