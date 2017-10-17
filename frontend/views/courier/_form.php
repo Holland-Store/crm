@@ -11,6 +11,8 @@ use yii\widgets\ActiveForm;
 
 <div class="courier-form">
 
+    <?php \frontend\components\YandexMap::widget() ?>
+
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'date')->widget(
@@ -23,9 +25,13 @@ use yii\widgets\ActiveForm;
                 ]
     ]) ?>
 
-    <?= $form->field($model, 'to')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'toYandexMap')->textInput(['maxlength' => true, 'id' => 'toMap']) ?>
+    <?= $form->field($model, 'to')->hiddenInput(['maxlength' => true, 'id' => 'toInput'])->label(false) ?>
+    <?= $form->field($model, 'to_name')->hiddenInput(['maxlength' => true, 'id' => 'toName'])->label(false) ?>
 
-    <?= $form->field($model, 'from')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'fromYandexMap')->textInput(['maxlength' => true, 'id' => 'fromMap']) ?>
+    <?= $form->field($model, 'from')->hiddenInput(['maxlength' => true, 'id' => 'fromInput'])->label(false) ?>
+    <?= $form->field($model, 'from_name')->hiddenInput(['maxlength' => true, 'id' => 'fromName'])->label(false) ?>
 
     <?= $form->field($model, 'commit')->textInput(['maxlength' => true]) ?>
 
