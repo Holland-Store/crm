@@ -132,7 +132,9 @@ $this->title = 'Все задачи';
                         return Html::a(Html::encode('Принять'), ['close', 'id' => $model->id], ['class' => 'accept']).' / '.Html::a(Html::encode('Отклонить'), ['#'], ['class' => 'declinedTodoist', 'value' => Url::to(['declined', 'id' => $model->id])]);
                     } elseif ($model->activate == Todoist::REJECT){
                         return Html::tag('span', Html::encode('Отклонено'), [
-                           'class' => 'declined'
+                            'title' => $model->declined,
+                            'data-toggle' => 'tooltip',
+                            'class' => 'declined'
                         ]);
                     } elseif($model->id_user == Yii::$app->user->id) {
                         return Html::a(Html::encode('Принять'), ['close', 'id' => $model->id], ['class' => 'accept']);
@@ -194,10 +196,24 @@ $this->title = 'Все задачи';
             'striped' => false,
             'columns' => [
                 [
+                    'class' => 'kartik\grid\ExpandRowColumn',
+                    'width' => '1px',
+                    'enableRowClick' => true,
+                    'expandOneOnly' => true,
+                    'expandIcon' => '<span class="glyphicon glyphicon-chevron-right"></span>',
+                    'collapseIcon' => '<span class="glyphicon glyphicon-chevron-down"></span>',
+                    'detailUrl' => Url::to(['todoist-detail']),
+                    'value' => function(){
+                        return GridView::ROW_COLLAPSED;
+                    },
+                    'contentOptions' => ['class' => 'border-left textTr', 'style' => 'border:none'],
+
+                ],
+                [
                     'attribute' => 'srok',
                     'format' => ['date', 'php:d M'],
                     'hAlign' => GridView::ALIGN_RIGHT,
-                    'contentOptions' => ['class' => 'border-left textTr tr90 srok', 'style' => 'border:none'],
+                    'contentOptions' => ['class' => 'textTr tr90 srok', 'style' => 'border:none'],
                 ],
                 [
                     'attribute' => 'comment',
