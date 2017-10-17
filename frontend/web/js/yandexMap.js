@@ -4,7 +4,8 @@ let searchControl,
 ymaps.ready(init);
 
 function init(){
-    suggestView = new ymaps.SuggestView('inputYandexMap');
+    suggestView = new ymaps.SuggestView('toMap');
+    suggestView = new ymaps.SuggestView('fromMap');
     searchControl = new ymaps.control.SearchControl({
         options: {
             float: 'left',
@@ -12,14 +13,21 @@ function init(){
             noPlacemark: true
         }
     });
-    $('#inputYandexMap').on('change', function () {
-        let value = $(this).val();
-        searchControl.search(value).then(function () {
-            let geoOjectsArray = searchControl.getResultsArray();
-            if(geoOjectsArray.length){
-                $('#toYandexMap').val(value);
-                console.log(geoOjectsArray[0].geometry.getCoordinates());
-            }
+    geoObject('#toMap', '#toInput', '#toName');
+    geoObject('#fromMap', '#fromInput', '#fromName');
+
+    function geoObject(actionMap, actionInput, actionName){
+        $(actionMap).on('change', function () {
+            let value = $(this).val();
+            searchControl.search(value).then(function () {
+                let geoOjectsArray = searchControl.getResultsArray();
+                if(geoOjectsArray.length){
+                    let coordinat = geoOjectsArray[0].geometry.getCoordinates();
+                    let name = geoOjectsArray[0].properties.get('name');
+                    $(actionInput).val(coordinat);
+                    $(actionName).val(name);
+                }
+            });
         });
-    });
+    }
 }
