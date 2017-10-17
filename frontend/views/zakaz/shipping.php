@@ -2,9 +2,6 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use dosamigos\datepicker\DatePicker;
-// use app\models\Courier;
-// use yii\models\Zakaz;
 
 /** @var $shipping app\models\Courier */
 /** @var $model app\models\Zakaz */
@@ -26,7 +23,6 @@ use dosamigos\datepicker\DatePicker;
 	<div class="form-group">
 		<?= Html::submitButton('Отправить', ['class' => 'action']) ?>
 	</div>
-
 
 	<?php ActiveForm::end(); ?>
 </div>
