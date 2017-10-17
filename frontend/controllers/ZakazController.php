@@ -580,31 +580,7 @@ class ZakazController extends Controller
      */
     public function actionAdmin()
     {
-        $notifications = new Notification();
         $model = new Zakaz();
-        $shipping = new Courier();
-        $telegram = new Telegram();
-
-        if ($shipping->load(Yii::$app->request->post())) {
-            $shipping->save();//сохранение доставка
-            if (!$shipping->save()) {
-                $this->flashErrors();
-            }
-            $model = Zakaz::findOne($shipping->id_zakaz);//Определяю заказ
-            $model->id_shipping = $shipping->id;//Оформление доставку в таблице заказа
-            if ($model->save()){
-                /** @var $model \app\models\Zakaz */
-                Yii::$app->session->addFlash('update', 'Доставка успешно создана');
-                $telegram->message(User::USER_COURIER, 'Назначена доставка '.$model->prefics);
-            } else {
-                $this->flashErrors();
-            }
-
-            $notifications->getByIdNotification(7, $shipping->id_zakaz);//оформление уведомлений
-            $notifications->saveNotification;
-
-            return $this->redirect(['admin', '#' => $model->id_zakaz]);
-        }
 
         $image = $model->img;
         $searchModel = new ZakazSearch();
