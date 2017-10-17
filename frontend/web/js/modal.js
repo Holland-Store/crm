@@ -24,6 +24,11 @@ $(document).ready(function(){
             .find('.modalContent')
             .load($(this).attr('value'));
     });
+    $('.modalShipping-button').click(function () {
+        $('#modalShipping').modal('show')
+            .find('.modalContent')
+            .load($(this).attr('value'));
+    });
     $('body').on('click', '.createClient', function(){
         $('#modalCreateClient').modal('show')
             .find('.modalContentClient')
