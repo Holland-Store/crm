@@ -21,23 +21,6 @@ class YandexMap extends Widget
     public function run()
     {
         $this->view->registerJsFile('https://api-maps.yandex.ru/2.1/?lang=ru_RU', ['type' => 'text/javascript']);
-        if ($this->data != null){
-            $script = <<<JS
-            let searchControl,
-                suggestView;
-            ymaps.ready(init);
-            function init(){
-    searchControl = new ymaps.control.SearchControl();
-    searchControl.search('.$this->data.').then(function () {
-        let geoOjectsArray = searchControl.getResultsArray();
-        if(geoOjectsArray.length){
-            alert(geoOjectsArray[0].geometry.getCoordinates());
-        }
-    });
-    }
-JS;
-        $this->view->registerJs($script);
-        }
         $this->view->registerJsFile('@web/js/yandexMap.js');
     }
 }
