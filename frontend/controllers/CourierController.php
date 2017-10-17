@@ -4,6 +4,7 @@ namespace frontend\controllers;
 
 use app\models\User;
 use app\models\Zakaz;
+use frontend\components\YandexMap;
 use frontend\models\Telegram;
 use Yii;
 use app\models\Courier;
@@ -139,6 +140,8 @@ class CourierController extends Controller
         $telegram = new Telegram();
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $model->to = YandexMap::widget(['data' => Yii::$app->request->post('Courier')['to']]);
+            d(Yii::$app->request->post('Courier')['to']);
             if ($model->save()){
                 Yii::$app->session->addFlash('update', 'Доставка была назначена');
                 $telegram->message(User::USER_COURIER, 'Назначена доставка ');
