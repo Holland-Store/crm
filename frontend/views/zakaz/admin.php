@@ -73,7 +73,7 @@ $this->title = 'Вce заказы';
                 ],
                 [
                     'label' => 'Доставка',
-                    'url' => 'todoist/create'
+                    'url' => 'courier/create'
                 ],
             ]
         ]
