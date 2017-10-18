@@ -1112,4 +1112,22 @@ body {
 .srokIndex tr td {
   padding: 8px; }
 
+.post-view:hover a {
+  text-decoration: none; }
+.post-view .guideImg {
+  width: 350px;
+  height: 200px;
+  margin-bottom: 17px;
+  overflow: hidden; }
+  .post-view .guideImg h3 {
+    color: #ffffff;
+    margin-top: -180px;
+    position: absolute; }
+  .post-view .guideImg img {
+    transition: all 1s ease-out;
+    width: 100%;
+    height: 100%; }
+    .post-view .guideImg img:hover {
+      transform: scale(1.1); }
+
 /*# sourceMappingURL=style.css.map */
