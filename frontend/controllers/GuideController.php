@@ -88,7 +88,7 @@ class GuideController extends Controller
     {
         $model = new Guide();
 
-        if (Yii::$app->request->isPost && $model->validate()) {
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $model->file = UploadedFile::getInstance($model, 'file');
             if ($model->file){
                 $model->upload('create');
@@ -114,7 +114,10 @@ class GuideController extends Controller
     {
         $model = $this->findModel($id);
 
-        if (Yii::$app->request->isPost) {
+        if ($model->load(Yii::$app->request->post())) {
+            if (!$model->validate()){
+                print_r($model->getErrors());
+            }
             $model->file = UploadedFile::getInstance($model, 'file');
             if ($model->file){
                 $model->upload('update');
