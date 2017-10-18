@@ -5,9 +5,11 @@ namespace frontend\controllers;
 use Yii;
 use app\models\Guide;
 use app\models\GuideSearch;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * GuideController implements the CRUD actions for Guide model.
@@ -26,6 +28,16 @@ class GuideController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['index', 'create', 'update', 'home-page', 'view', 'delete', 'post'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@']
+                    ]
+                ],
+            ],
         ];
     }
 
@@ -41,6 +53,17 @@ class GuideController extends Controller
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionHomePage()
+    {
+        $model = Guide::find()->all();
+        $searchModel = new GuideSearch();
+
+        return $this->render('home-page', [
+           'model' => $model,
+            'searchModel' => $searchModel
         ]);
     }
 
@@ -65,7 +88,11 @@ class GuideController extends Controller
     {
         $model = new Guide();
 
-        if ($model->load(Yii::$app->request->post())) {
+        if (Yii::$app->request->isPost && $model->validate()) {
+            $model->file = UploadedFile::getInstance($model, 'file');
+            if ($model->file){
+                $model->upload('create');
+            }
             $model->created_at = time();
             $model->updated_at = time();
             $model->save();
@@ -87,7 +114,11 @@ class GuideController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post())) {
+        if (Yii::$app->request->isPost) {
+            $model->file = UploadedFile::getInstance($model, 'file');
+            if ($model->file){
+                $model->upload('update');
+            }
             $model->updated_at = time();
             $model->save();
             return $this->redirect(['view', 'id' => $model->id]);
