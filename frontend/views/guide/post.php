@@ -3,6 +3,7 @@ use yii\helpers\Html;
 
 /** @var $model app\models\Guide */
 /** @var $posts app\models\Guide */
+/** @var $searchModel \yii\data\ActiveDataProvider */
 ?>
 
 <div class="post-view">
