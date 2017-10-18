@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 use yii\helpers\ArrayHelper;
 use yii\db\ActiveRecord;
 
@@ -39,6 +40,7 @@ use yii\db\ActiveRecord;
  * @property string $declined
  * @property integer $id_unread
  * @property string $renouncement
+ * @property integer $date_update
  *
  * @property Comment[] $comments
  * @property Courier[] $couriers
@@ -96,6 +98,19 @@ class Zakaz extends ActiveRecord
         return 'zakaz';
     }
 
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::className(),
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['date_update'],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => ['date_update'],
+                ]
+            ]
+        ];
+    }
+
     /**
      * @return array
      */
@@ -103,7 +118,7 @@ class Zakaz extends ActiveRecord
     {
         return [
             self::SCENARIO_DECLINED => ['declined', 'required'],
-            self::SCENARIO_DEFAULT => ['srok', 'number', 'description', 'phone', 'id_sotrud', 'shifts_id', 'id_shop','status', 'id_tovar', 'oplata', 'fact_oplata', 'number', 'id_autsors','statusDisain', 'statusMaster', 'img', 'id_shipping', 'id_tovar', 'id_unread', 'information', 'data', 'prioritet', 'phone', 'email', 'name', 'maket', 'time', 'renouncement'],
+            self::SCENARIO_DEFAULT => ['srok', 'number', 'description', 'phone', 'id_sotrud', 'shifts_id', 'id_shop','status', 'id_tovar', 'oplata', 'fact_oplata', 'number', 'id_autsors','statusDisain', 'statusMaster', 'img', 'id_shipping', 'id_tovar', 'id_unread', 'information', 'data', 'prioritet', 'phone', 'email', 'name', 'maket', 'time', 'renouncement', 'date_update'],
         ];
     }
 
@@ -115,7 +130,7 @@ class Zakaz extends ActiveRecord
         return [
             [['srok', 'number', 'description', 'id_client', 'shifts_id'], 'required', 'on' => self::SCENARIO_DEFAULT],
             ['declined', 'required', 'message' => 'Введите причину отказа', 'on'=> self::SCENARIO_DECLINED],
-            [['id_zakaz', 'id_tovar', 'minut', 'time', 'number', 'status', 'action', 'id_sotrud', 'id_shop','phone', 'id_client', 'shifts_id', 'id_shipping' ,'prioritet', 'id_autsors','statusDisain', 'statusMaster', 'id_unread'], 'integer'],
+            [['id_zakaz', 'id_tovar', 'minut', 'time', 'number', 'status', 'action', 'id_sotrud', 'id_shop','phone', 'id_client', 'shifts_id', 'id_shipping' ,'prioritet', 'id_autsors','statusDisain', 'statusMaster', 'id_unread', 'date_update'], 'integer'],
             [['srok', 'data', 'tags_array'], 'safe'],
             [['oplata', 'fact_oplata'], 'filter', 'filter' => function($value){
                 return str_replace(' ', '', $value);
@@ -176,6 +191,7 @@ class Zakaz extends ActiveRecord
             'declined' => 'Причина отказа',
             'id_unread' => 'Id unread',
             'renouncement' => 'Отказано',
+            'date_update' => 'Date Update',
             'search' => 'Search',
             'tags_array' => 'Тэги',
         ];
