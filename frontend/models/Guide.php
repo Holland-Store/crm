@@ -10,11 +10,13 @@ namespace app\models;
  * @property string $answer
  * @property string $standarts
  * @property string $title
+ * @property string $attachment
  * @property integer $created_at
  * @property integer $updated_at
  */
 class Guide extends \yii\db\ActiveRecord
 {
+    public $file;
     /**
      * @inheritdoc
      */
@@ -32,7 +34,8 @@ class Guide extends \yii\db\ActiveRecord
             [['question', 'answer', 'standarts', 'title', 'created_at', 'updated_at'], 'required'],
             [['question', 'answer', 'standarts'], 'string'],
             [['created_at', 'updated_at'], 'integer'],
-            [['title'], 'string', 'max' => 86],
+            [['title', 'attachment'], 'string', 'max' => 86],
+            [['file'], 'file', 'skipOnEmpty' => true],
         ];
     }
 
@@ -47,8 +50,28 @@ class Guide extends \yii\db\ActiveRecord
             'answer' => 'Ответы',
             'standarts' => 'Стандарты',
             'title' => 'Заголовок',
+            'file' => 'Файл',
+            'attachment' => 'Приложение',
             'created_at' => 'Создан',
             'updated_at' => 'Редактирован',
         ];
+    }
+
+    public function upload($action){
+        $year = date('Y');
+        $month = date('F');
+        if (!is_dir('attachment/posts/' . $year)) {
+            mkdir('attachment/posts/' . $year);
+        }
+        if (!is_dir('attachment/posts/' . $year . '/' . $month)) {
+            mkdir('attachment/posts/' . $year . '/' . $month);
+        }
+        if ($action == 'create'){
+            $this->file->saveAs('attachment/posts/'.$year.'/'.$month.'/'.date('Y-m-d H:i:s', time()).'.'.$this->file->extension);
+            $this->attachment = 'attachment/posts/'.$year.'/'.$month.'/'.date('Y-m-d H:i:s', time()).'.'.$this->file->extension;
+        } else {
+            $this->file->saveAs('attachment/posts/'.$year.'/'.$month.'/'.$this->id.'.'.$this->file->extension);
+            $this->attachment = 'attachment/posts/'.$year.'/'.$month.'/'.$this->id.'.'.$this->file->extension;
+        }
     }
 }
