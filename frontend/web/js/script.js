@@ -5,30 +5,15 @@ $(document).ready(function(){
 // 	setInterval(function(){
 // 		$.pjax.reload('#pjax-container')
 // 	}, 100000);
-       $('body').on("click", ".trNew", function () {
-           var data = $(this).data("key");
-           $.ajax({
-               url: "/zakaz/adopted?id="+data,
-               success: console.log('Успешно изменен статус')
-           })
-       });
+       changeStatus('.trNew', '/zakaz/adopted?id=');
+       changeStatus('.trNewMaster', '/zakaz/adopmaster?id=');
+       changeStatus('.trNewDisain', '/zakaz/adopdisain?id=');
+       addClassForm('.startShift', '#form-startShift', '.form-shiftStart');
+       addClassForm('.endShift', '#form-endShift', '.form-shiftEnd');
+
         $( 'body' ).on( 'click', '.commentButton', function() {
             $( ".CommentForm" ).toggleClass( "CommentForm-visible" );
         });
-       $('body').on('click', '.trNewDisain', function () {
-            var data = $(this).data("key");
-            $.ajax({
-                url: "/zakaz/adopdisain?id="+data,
-                success: console.log('Успешно изменен статус '+data)
-            })
-       });
-       $('body').on('click', '.trNewMaster', function () {
-            var data = $(this).data("key");
-            $.ajax({
-                url: "/zakaz/adopmaster?id="+data,
-                success: console.log('Успешно изменен статус '+data)
-            })
-       });
        $(function () {
            $("[data-toggle = 'tooltip']").tooltip();
        });
@@ -51,13 +36,20 @@ $(document).ready(function(){
                     .prop('selectedIndex', 0);
             }
        });
-       $('.startShift').click(function () {
-            $('#form-startShift')[0].reset();
-            $('.form-shiftStart').toggleClass('visibleForm');
-       });
-       $('.endShift').click(function () {
-            $('#form-endShift')[0].reset();
-            $('.form-shiftEnd').toggleClass('visibleForm');
-       });
+    function addClassForm(button, form, formSecond){
+        $(button).click(function () {
+            $(form)[0].reset();
+            $(formSecond).toggleClass('visibleForm');
+        });
+    }
+    function changeStatus(tr, url) {
+        $('body').on("click", tr, function () {
+            let data = $(this).data("key");
+            $.ajax({
+                url: url+data,
+                success: console.log('Успешно изменен статус')
+            })
+        });
+    }
 });
 
