@@ -168,8 +168,7 @@ $this->title = 'Все поломки';
                     if ($model->status == Helpdesk::STATUS_DECLINED){
                         return Html::tag('span', Html::encode($model->statusHelpName), [
                             'title' => $model->declined,
-                            'data-toggle' => 'popover',
-                            'data-placement' => 'top',
+                            'data-toggle' => 'tooltip',
                             'class' => 'declined',
                         ]);
                     } else {
