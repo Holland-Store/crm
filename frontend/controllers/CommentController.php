@@ -55,7 +55,11 @@ class CommentController extends Controller
                 } elseif($todoist->id_user != $user){
                     $telegram->message($todoist->id_user, 'Задачу '.$commentForm->id_todoist.' прокомментировали '.$commentForm->comment);
                 }
-                return $this->redirect(['todoist/index']);
+                if (Yii::$app->user->can('admin')){
+                    return $this->redirect(['todoist/index']);
+                } else {
+                    return $this->redirect(['todoist/shop']);
+                }
             };
         }
     }
