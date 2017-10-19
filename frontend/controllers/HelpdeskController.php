@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use app\models\Comment;
 use app\models\User;
 use app\models\Zakaz;
 use frontend\models\Telegram;
@@ -42,6 +43,11 @@ class HelpdeskController extends Controller
 						'allow' => true,
 						'roles' => ['system'],
 					],
+                    [
+                        'actions' => ['detail'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
 				]
 			]
         ];
@@ -202,6 +208,24 @@ class HelpdeskController extends Controller
         }
 
         return $this->renderAjax('declined-help', ['model' => $model]);
+    }
+
+    public function actionDetail()
+    {
+        $id = Yii::$app->request->post('expandRowKey');
+        $model = $this->findModel($id);
+        $comment = Comment::find()->comment($id);
+        $commentForm = new Comment();
+
+        if (isset($id)){
+            return $this->renderPartial('detail', [
+                'model'=>$model,
+                'comment' => $comment,
+                'commentForm' => $commentForm,
+            ]);
+        } else {
+            return '<div class="alert alert-danger">Страница не найдена</div>';
+        }
     }
 
     /**
