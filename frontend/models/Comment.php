@@ -3,32 +3,35 @@
 namespace app\models;
 
 use app\models\query\CommentQuery;
-use yii\db\ActiveRecord;
+use Yii;
 
 /**
- * This is the model class for table "Comment".
+ * This is the model class for table "comment".
  *
  * @property integer $id
  * @property integer $id_user
  * @property integer $sotrud
  * @property integer $id_zakaz
  * @property integer $id_todoist
+ * @property integer $id_helpdesk
  * @property string $date
  * @property string $comment
+ * @property integer $category
  *
+ * @property Helpdesk $idHelpdesk
  * @property User $idUser
  * @property User $sotrud0
  * @property Zakaz $idZakaz
  * @property Todoist $idTodoist
  */
-class Comment extends ActiveRecord
+class Comment extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'Comment';
+        return 'comment';
     }
 
     /**
@@ -37,12 +40,13 @@ class Comment extends ActiveRecord
     public function rules()
     {
         return [
-            [['id_user', 'sotrud', 'id_zakaz', 'id_todoist'], 'integer'],
+            [['id_user', 'sotrud', 'id_zakaz', 'id_todoist', 'id_helpdesk', 'category'], 'integer'],
             [['date'], 'safe'],
             [['comment'], 'string'],
-            [['id_zakaz'], 'exist', 'skipOnError' => true, 'targetClass' => Zakaz::className(), 'targetAttribute' => ['id_zakaz' => 'id_zakaz']],
+            [['id_helpdesk'], 'exist', 'skipOnError' => true, 'targetClass' => Helpdesk::className(), 'targetAttribute' => ['id_helpdesk' => 'id']],
             [['id_user'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['id_user' => 'id']],
             [['sotrud'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['sotrud' => 'id']],
+            [['id_zakaz'], 'exist', 'skipOnError' => true, 'targetClass' => Zakaz::className(), 'targetAttribute' => ['id_zakaz' => 'id_zakaz']],
             [['id_todoist'], 'exist', 'skipOnError' => true, 'targetClass' => Todoist::className(), 'targetAttribute' => ['id_todoist' => 'id']],
         ];
     }
@@ -58,9 +62,19 @@ class Comment extends ActiveRecord
             'sotrud' => 'Sotrud',
             'id_zakaz' => 'Id Zakaz',
             'id_todoist' => 'Id Todoist',
+            'id_helpdesk' => 'Id Helpdesk',
             'date' => 'Date',
             'comment' => 'Comment',
+            'category' => 'Category',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getIdHelpdesk()
+    {
+        return $this->hasOne(Helpdesk::className(), ['id' => 'id_helpdesk']);
     }
 
     /**
@@ -103,4 +117,5 @@ class Comment extends ActiveRecord
     {
         return new CommentQuery(get_called_class());
     }
+
 }
