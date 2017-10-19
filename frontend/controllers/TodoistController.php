@@ -313,7 +313,7 @@ class TodoistController extends Controller
         if (!$model->save()){
             print_r($model->getErrors());
         } else {
-            $telegram->message($model->id_sotrud_put, $model->idUser->name.' выполнил задачу '.$model->idZakaz->prefics);
+            $telegram->message($model->id_sotrud_put, $model->idUser->name.' выполнил задачу '.$model->idZakaz->prefics.' '.$model->comment);
         }
 
         return $this->findView();
@@ -335,7 +335,7 @@ class TodoistController extends Controller
             if (!$model->save()){
                 print_r($model->getErrors());
             }else{
-                $telegram->message($model->id_user, $model->idSotrudPut->name.' отклонил Вами выполненную задачу по причине: '.$model->declined);
+                $telegram->message($model->id_user, $model->idSotrudPut->name.' отклонил Вами выполненную задачу '.$model->comment.' по причине: '.$model->declined);
                 $this->findView();
             };
         }

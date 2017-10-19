@@ -107,9 +107,9 @@ class CourierController extends Controller
         } else {
             Yii::$app->session->addFlash('update', 'Доставка была отклонена');
             if ($model->id_zakaz == null){
-                $telegram->message(User::USER_COURIER, 'Отменена доставка');
+                $telegram->message(User::USER_COURIER, 'Отменена доставка '.$model->commit);
             } else {
-                $telegram->message(User::USER_COURIER, 'Отменена доставка '.$model->idZakaz->prefics);
+                $telegram->message(User::USER_COURIER, 'Отменена доставка '.$model->idZakaz->prefics.' '.$model->commit);
             }
         }
 
