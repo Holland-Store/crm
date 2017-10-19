@@ -99,9 +99,23 @@ $this->title = 'Все поломки';
         'rowOptions' => ['class' => 'trTable srok trNormal'],
         'columns' => [
             [
+                'class' => 'kartik\grid\ExpandRowColumn',
+                'width' => '1px',
+                'enableRowClick' => true,
+                'expandOneOnly' => true,
+                'expandIcon' => '<span class="glyphicon glyphicon-chevron-right"></span>',
+                'collapseIcon' => '<span class="glyphicon glyphicon-chevron-down"></span>',
+                'detailUrl' => Url::to(['detail']),
+                'value' => function(){
+                    return GridView::ROW_COLLAPSED;
+                },
+                'contentOptions' => ['class' => 'border-left textTr', 'style' => 'border:none'],
+
+            ],
+            [
                 'attribute' => 'id',
                 'hAlign' => GridView::ALIGN_RIGHT,
-                'contentOptions' => ['class' => 'border-left textTr tr50', 'style' => 'border:none'],
+                'contentOptions' => ['class' => 'textTr tr50', 'style' => 'border:none'],
             ],
             [
                 'attribute' => 'date',
