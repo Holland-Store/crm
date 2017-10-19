@@ -53,3 +53,18 @@ frontend
 vendor/                  contains dependent 3rd-party packages
 environments/            contains environment-based overrides
 ```
+Входят в CRM-систему следующие компоненты: 
+-------------------
+
+* Финансовый учет
+* Клиентская база
+* Push-уведомление через Telegram bot
+* Интеграция адресов с Yandex map
+* Система доставок
+* Задачник
+* Help desk
+* Закупки
+* Комментарии
+* Guide для сотрудников
+* Система тэгов
+* Контроль заказов между отделами
