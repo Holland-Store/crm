@@ -1,5 +1,6 @@
 <?php
 
+use frontend\components\YandexMap;
 use kartik\widgets\DateTimePicker;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
@@ -11,7 +12,7 @@ use yii\widgets\ActiveForm;
 
 <div class="courier-form">
 
-    <?php \frontend\components\YandexMap::widget() ?>
+    <?php YandexMap::widget() ?>
 
     <?php $form = ActiveForm::begin(); ?>
 
