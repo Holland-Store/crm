@@ -5,7 +5,7 @@ use yii\widgets\ActiveForm;
 use unclead\multipleinput\TabularInput;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Custom */
+/* @var $models app\models\Custom */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
