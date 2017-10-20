@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "f121ecc66f344ec195afe3cf6468a1d4",
+    "content-hash": "3cc3e35e048de2eb45ca8ac375dd3150",
     "packages": [
         {
             "name": "2amigos/yii2-chartjs-widget",
@@ -359,16 +359,16 @@
         },
         {
             "name": "bower-asset/jquery.inputmask",
-            "version": "3.3.8",
+            "version": "3.3.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/RobinHerbots/Inputmask.git",
-                "reference": "791d84990c4a98df1597e9d155be53a3725805dd"
+                "reference": "1fadb54be8a94e879fd1e9693b5222fb36aea04f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/RobinHerbots/Inputmask/zipball/791d84990c4a98df1597e9d155be53a3725805dd",
-                "reference": "791d84990c4a98df1597e9d155be53a3725805dd",
+                "url": "https://api.github.com/repos/RobinHerbots/Inputmask/zipball/1fadb54be8a94e879fd1e9693b5222fb36aea04f",
+                "reference": "1fadb54be8a94e879fd1e9693b5222fb36aea04f",
                 "shasum": null
             },
             "require": {
@@ -409,32 +409,32 @@
         },
         {
             "name": "bower-asset/sweetalert",
-            "version": "v2.0.4",
+            "version": "v2.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/t4t5/sweetalert.git",
-                "reference": "8431befa0d746516958bc7db1952563b9adb7975"
+                "reference": "a3f10495b9647967fa67bfd8899060370f743795"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/t4t5/sweetalert/zipball/8431befa0d746516958bc7db1952563b9adb7975",
-                "reference": "8431befa0d746516958bc7db1952563b9adb7975",
+                "url": "https://api.github.com/repos/t4t5/sweetalert/zipball/a3f10495b9647967fa67bfd8899060370f743795",
+                "reference": "a3f10495b9647967fa67bfd8899060370f743795",
                 "shasum": null
             },
             "type": "bower-asset"
         },
         {
             "name": "bower-asset/yii2-pjax",
-            "version": "v2.0.7",
+            "version": "2.0.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/jquery-pjax.git",
-                "reference": "885fc8c2d36c93a801b6af0ee8ad55d79df97cb1"
+                "reference": "aef7b953107264f00234902a3880eb50dafc48be"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/jquery-pjax/zipball/885fc8c2d36c93a801b6af0ee8ad55d79df97cb1",
-                "reference": "885fc8c2d36c93a801b6af0ee8ad55d79df97cb1",
+                "url": "https://api.github.com/repos/yiisoft/jquery-pjax/zipball/aef7b953107264f00234902a3880eb50dafc48be",
+                "reference": "aef7b953107264f00234902a3880eb50dafc48be",
                 "shasum": null
             },
             "require": {
@@ -1305,22 +1305,23 @@
         },
         {
             "name": "kartik-v/yii2-detail-view",
-            "version": "v1.7.5",
+            "version": "v1.7.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-detail-view.git",
-                "reference": "65e626c0b55e7cca0db0886410771cd304c1fbd2"
+                "reference": "16b7a94d56db8372e3c5e9c5e2dc96f94aa6a91e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-detail-view/zipball/65e626c0b55e7cca0db0886410771cd304c1fbd2",
-                "reference": "65e626c0b55e7cca0db0886410771cd304c1fbd2",
+                "url": "https://api.github.com/repos/kartik-v/yii2-detail-view/zipball/16b7a94d56db8372e3c5e9c5e2dc96f94aa6a91e",
+                "reference": "16b7a94d56db8372e3c5e9c5e2dc96f94aa6a91e",
                 "shasum": ""
             },
             "require": {
                 "kartik-v/yii2-dialog": "~1.0",
                 "kartik-v/yii2-helpers": ">=1.3.5",
-                "kartik-v/yii2-krajee-base": "~1.7"
+                "kartik-v/yii2-krajee-base": "~1.7",
+                "kartik-v/yii2-widget-activeform": "~1.4"
             },
             "type": "yii2-extension",
             "extra": {
@@ -1355,7 +1356,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2016-06-22T01:29:56+00:00"
+            "time": "2017-05-05T05:14:12+00:00"
         },
         {
             "name": "kartik-v/yii2-dialog",
@@ -1415,12 +1416,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-grid.git",
-                "reference": "b4047fe7403b91ba48fb048451a83053ee3ef0d1"
+                "reference": "b6e5219a392f3df28aa5d05b6c89addd81ab0823"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-grid/zipball/b4047fe7403b91ba48fb048451a83053ee3ef0d1",
-                "reference": "b4047fe7403b91ba48fb048451a83053ee3ef0d1",
+                "url": "https://api.github.com/repos/kartik-v/yii2-grid/zipball/b6e5219a392f3df28aa5d05b6c89addd81ab0823",
+                "reference": "b6e5219a392f3df28aa5d05b6c89addd81ab0823",
                 "shasum": ""
             },
             "require": {
@@ -1460,7 +1461,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2017-10-08T06:59:07+00:00"
+            "time": "2017-10-13T15:21:52+00:00"
         },
         {
             "name": "kartik-v/yii2-helpers",
@@ -1515,16 +1516,16 @@
         },
         {
             "name": "kartik-v/yii2-krajee-base",
-            "version": "v1.8.8",
+            "version": "v1.8.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-krajee-base.git",
-                "reference": "2479241c03c87995cfc528ae7b297f5ae9e733cb"
+                "reference": "0cafe6376780cedcd00f52c9d82b172d5851f6b0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-krajee-base/zipball/2479241c03c87995cfc528ae7b297f5ae9e733cb",
-                "reference": "2479241c03c87995cfc528ae7b297f5ae9e733cb",
+                "url": "https://api.github.com/repos/kartik-v/yii2-krajee-base/zipball/0cafe6376780cedcd00f52c9d82b172d5851f6b0",
+                "reference": "0cafe6376780cedcd00f52c9d82b172d5851f6b0",
                 "shasum": ""
             },
             "require": {
@@ -1562,7 +1563,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2017-02-22T05:58:53+00:00"
+            "time": "2017-09-29T06:18:14+00:00"
         },
         {
             "name": "kartik-v/yii2-label-inplace",
@@ -3424,16 +3425,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "5.7.22",
+            "version": "5.7.23",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "10df877596c9906d4110b5b905313829043f2ada"
+                "reference": "78532d5269d984660080d8e0f4c99c5c2ea65ffe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/10df877596c9906d4110b5b905313829043f2ada",
-                "reference": "10df877596c9906d4110b5b905313829043f2ada",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/78532d5269d984660080d8e0f4c99c5c2ea65ffe",
+                "reference": "78532d5269d984660080d8e0f4c99c5c2ea65ffe",
                 "shasum": ""
             },
             "require": {
@@ -3502,7 +3503,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-09-24T07:23:38+00:00"
+            "time": "2017-10-15T06:13:55+00:00"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -4770,16 +4771,16 @@
         },
         {
             "name": "symfony/polyfill-mbstring",
-            "version": "v1.5.0",
+            "version": "v1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-mbstring.git",
-                "reference": "7c8fae0ac1d216eb54349e6a8baa57d515fe8803"
+                "reference": "2ec8b39c38cb16674bbf3fea2b6ce5bf117e1296"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/7c8fae0ac1d216eb54349e6a8baa57d515fe8803",
-                "reference": "7c8fae0ac1d216eb54349e6a8baa57d515fe8803",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/2ec8b39c38cb16674bbf3fea2b6ce5bf117e1296",
+                "reference": "2ec8b39c38cb16674bbf3fea2b6ce5bf117e1296",
                 "shasum": ""
             },
             "require": {
@@ -4791,7 +4792,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.5-dev"
+                    "dev-master": "1.6-dev"
                 }
             },
             "autoload": {
@@ -4825,7 +4826,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2017-06-14T15:44:48+00:00"
+            "time": "2017-10-11T12:05:26+00:00"
         },
         {
             "name": "symfony/process",
@@ -4988,16 +4989,16 @@
         },
         {
             "name": "unclead/yii2-multiple-input",
-            "version": "2.10.0",
+            "version": "2.11.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/unclead/yii2-multiple-input.git",
-                "reference": "dad7c6f6f2b97420d3996cf9e3611e0dd2120203"
+                "reference": "05ab8ba3ae7682204c988e3288c8b8d6110a902e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/unclead/yii2-multiple-input/zipball/dad7c6f6f2b97420d3996cf9e3611e0dd2120203",
-                "reference": "dad7c6f6f2b97420d3996cf9e3611e0dd2120203",
+                "url": "https://api.github.com/repos/unclead/yii2-multiple-input/zipball/05ab8ba3ae7682204c988e3288c8b8d6110a902e",
+                "reference": "05ab8ba3ae7682204c988e3288c8b8d6110a902e",
                 "shasum": ""
             },
             "require": {
@@ -5033,7 +5034,7 @@
                 "yii2 multiple input",
                 "yii2 tabular input"
             ],
-            "time": "2017-08-30T08:51:49+00:00"
+            "time": "2017-10-13T11:09:36+00:00"
         },
         {
             "name": "vova07/yii2-imperavi-widget",

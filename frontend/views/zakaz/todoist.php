@@ -2,8 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-// use app\models\Courier;
-// use yii\models\Zakaz;
+/** @var $todoist \app\models\Todoist */
 ?>
 
 <div class="zakaz-shippingForm">

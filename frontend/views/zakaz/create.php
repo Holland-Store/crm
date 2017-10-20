@@ -7,8 +7,6 @@
 
 
 $this->title = 'Добавить заказ';
-// $this->params['breadcrumbs'][] = ['label' => 'Заказы', 'url' => ['index']];
-// $this->params['breadcrumbs'][] = $this->title;
 
 ?>
 <div class="zakaz-create">
