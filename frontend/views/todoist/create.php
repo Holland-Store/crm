@@ -7,8 +7,6 @@ use yii\helpers\Html;
 /* @var $model app\models\Todoist */
 
 $this->title = 'Создать задачу';
-// $this->params['breadcrumbs'][] = ['label' => 'Todoists', 'url' => ['index']];
-// $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="todoist-create">
 
