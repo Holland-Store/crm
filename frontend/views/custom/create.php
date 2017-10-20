@@ -4,7 +4,7 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Custom */
+/* @var $models app\models\Custom */
 
 $this->title = 'Создание запроса';
 //$this->params['breadcrumbs'][] = ['label' => 'Customs', 'url' => ['index']];
