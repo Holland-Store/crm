@@ -163,24 +163,6 @@ use yii\widgets\MaskedInput;
         <?php if (Yii::$app->user->can('admin')): ?>
             <?php if (Yii::$app->user->can('admin')): ?>
                 <?= Html::submitButton('Доставка',['class' => 'btn action modalShipping-button', 'value' => Url::to(['courier/create-zakaz', 'id' => $model->id_zakaz])]) ?>
-<!--                --><?php //Modal::begin([
-//                    'header' => '<h2 style="color: rgba(204, 198, 198, 0.6)">Задание на доставку</h2>',
-//                    'class' => 'model-sm modalShipping',
-//                    'toggleButton' => [
-//                        'tag' => 'a',
-//                        'class' => 'btn btn-xs modalShipping-button',
-//                        'label' => 'Доставка',
-//                    ]
-//                ]);
-//
-//                echo '<div class="modalContent"></div>';
-//                $shipping = new Courier();
-//                echo $this->render('shipping', [
-//                    'shipping' => $shipping,
-//                    'model' => $model->id_zakaz,
-//                ]);
-//
-//                Modal::end(); ?>
             <?php endif ?>
         <?php endif ?>
         <?php if (Yii::$app->user->can('seeAdop') && $model->renouncement == null): ?>
