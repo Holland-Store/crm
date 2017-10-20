@@ -1,5 +1,7 @@
 <?php
 namespace app\models;
+use yii\db\ActiveRecord;
+
 /**
  * This is the model class for table "client".
  *
@@ -15,7 +17,7 @@ namespace app\models;
  *
  * @property Zakaz[] $zakazs
  */
-class Client extends \yii\db\ActiveRecord
+class Client extends ActiveRecord
 {
     public $address;
 

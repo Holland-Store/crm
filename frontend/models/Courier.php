@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -22,7 +23,7 @@ use yii\helpers\ArrayHelper;
  * @property Zakaz $idZakaz
  * @property Zakaz[] $zakazs
  */
-class Courier extends \yii\db\ActiveRecord
+class Courier extends ActiveRecord
 {
 
     public $toYandexMap;
