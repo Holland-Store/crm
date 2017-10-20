@@ -2,6 +2,7 @@
 use kartik\file\FileInput;
 use kartik\form\ActiveForm;
 use kartik\helpers\Html;
+/** @var $model \app\models\Zakaz */
 ?>
 
 <div class="zakaz-upload">
