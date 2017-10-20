@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\models\query\CustomQuery;
 use Yii;
 
 /**
@@ -67,5 +68,14 @@ class Custom extends \yii\db\ActiveRecord
     public function getIdUser()
     {
         return $this->hasOne(User::className(), ['id' => 'id_user']);
+    }
+
+    /**
+     * @inheritdoc
+     * @return CustomQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new CustomQuery(get_called_class());
     }
 }

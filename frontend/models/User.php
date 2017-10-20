@@ -2,8 +2,9 @@
 
 namespace app\models;
 
-use yii\helpers\ArrayHelper;
+use app\models\query\UserQuery;
 use app\models\Shifts;
+use yii\helpers\ArrayHelper;
 
 
 /**
@@ -184,6 +185,15 @@ class User extends \yii\db\ActiveRecord
     }
 
     /**
+     * @inheritdoc
+     * @return UserQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new UserQuery(get_called_class());
+    }
+
+    /**
      * @return \yii\db\ActiveQuery
      */
     public function getShiftSotrud()
@@ -195,10 +205,9 @@ class User extends \yii\db\ActiveRecord
     {
         $arr = Shifts::find()->Shifts($this->id)->all();
         $sotrud = ArrayHelper::map($arr, 'id', 'id_sotrud');
-        $user = \app\models\Shifts::findOne(['id_sotrud' => $sotrud]);
         $arr = [];
         foreach ($sotrud as $key => $id_sotrud){
-            $user = \app\models\Shifts::findOne(['id_sotrud' => $id_sotrud]);
+            $user = Shifts::findOne(['id_sotrud' => $id_sotrud]);
             $user->idSotrud->name;
             $arr[] .= $user->idSotrud->nameSotrud;
         }

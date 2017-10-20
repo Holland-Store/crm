@@ -6,6 +6,7 @@ use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\helpers\ArrayHelper;
 use yii\db\ActiveRecord;
+use app\models\query\ZakazQuery;
 
 /**
  * This is the model class for table "zakaz".
@@ -276,6 +277,15 @@ class Zakaz extends ActiveRecord
     public function getTags()
     {
         return $this->hasMany(Tag::className(), ['id' => 'tag_id'])->via('zakazTag');
+    }
+
+    /**
+     * @inheritdoc
+     * @return ZakazQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new ZakazQuery(get_called_class());
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\models\query\HelpdeskQuery;
 use Yii;
 use yii\helpers\ArrayHelper;
 
@@ -85,5 +86,14 @@ class Helpdesk extends \yii\db\ActiveRecord
     public function getStatusHelpName()
     {
         return ArrayHelper::getValue(self::getStatusHelpArray(), $this->status);
+    }
+
+    /**
+     * @inheritdoc
+     * @return HelpdeskQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new HelpdeskQuery(get_called_class());
     }
 }

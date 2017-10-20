@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\models\query\FineQuery;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -67,6 +68,15 @@ class Fine extends \yii\db\ActiveRecord
     public function getIdEmployee()
     {
         return $this->hasOne(Personnel::className(), ['id' => 'id_employee']);
+    }
+
+    /**
+     * @inheritdoc
+     * @return FineQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new FineQuery(get_called_class());
     }
 
     public static function getCattegoryArray()
