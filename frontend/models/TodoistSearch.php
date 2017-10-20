@@ -2,7 +2,6 @@
 
 namespace app\models;
 
-use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
@@ -53,23 +52,19 @@ class TodoistSearch extends Todoist
                 $query = $query->where(['activate' => Todoist::CLOSE]);
                 break;
             case 'admin-their':
-                $query = $query->andWhere(['activate' => [Todoist::ACTIVE, Todoist::COMPLETED, Todoist::REJECT], 'id_sotrud_put' => Yii::$app->user->id]);
+                $query = $query->adminTheir();
                 break;
             case 'admin-alien':
-                $query = $query->andWhere(['<>', 'id_sotrud_put', Yii::$app->user->id])
-                                ->andWhere(['id_user' => Yii::$app->user->id])
-                                ->andWhere(['activate' => [Todoist::ACTIVE, Todoist::COMPLETED, Todoist::REJECT ]]);
+                $query = $query->adminAlien();
                 break;
             case 'shop-their':
-                $query = $query->andWhere(['<>', 'id_sotrud_put', User::USER_ADMIN])
-                    ->andWhere(['id_sotrud_put' => Yii::$app->user->id, 'activate' => [Todoist::ACTIVE, Todoist::COMPLETED, Todoist::REJECT]]);
+                $query = $query->shopTheir();
                 break;
             case 'shop-alien':
-                $query = $query->where(['id_user' => Yii::$app->user->id, 'activate' => [Todoist::ACTIVE, Todoist::COMPLETED, Todoist::REJECT]]);
+                $query = $query->shopAlien();
                 break;
             case 'overdue':
-                $query = $query->andWhere(['<', 'srok', date('Y-m-d')])
-                    ->andWhere(['activate' => !Todoist::CLOSE]);
+                $query = $query->overdue();
         }
 
         $this->load($params);

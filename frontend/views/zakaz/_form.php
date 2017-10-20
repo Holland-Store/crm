@@ -226,15 +226,8 @@ use yii\widgets\Pjax;
                 ]);
         ?>
         <?php if(!$model->isNewRecord): ?>
-        <?= $form->field($model, 'id_shop')->dropDownList(ArrayHelper::map(User::find()->andWhere(['<>', 'id', User::USER_DISAYNER])
-                ->andWhere(['<>', 'id', User::USER_MASTER])
-                ->andWhere(['<>', 'id', User::USER_DAMIR])
-                ->andWhere(['<>', 'id', User::USER_ALBERT])
-                ->andWhere(['<>', 'id', User::USER_PROGRAM])
-                ->andWhere(['<>', 'id', 8])
-                ->andWhere(['<>', 'id', User::USER_COURIER])
-                ->andWhere(['<>', 'id', User::USER_ZAKUP])
-                ->andWhere(['<>', 'id', User::USER_SYSTEM])
+        <?= $form->field($model, 'id_shop')->dropDownList(ArrayHelper::map(User::find()
+                ->selectUser()
                 ->all(),
                 'id', 'name')) ?>
         <?php endif; ?>

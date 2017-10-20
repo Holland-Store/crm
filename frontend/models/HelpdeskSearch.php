@@ -42,14 +42,13 @@ class HelpdeskSearch extends Helpdesk
     {
         $query = Helpdesk::find()->indexBy('id');
         if (Yii::$app->user->can('system') && $status == 'work'){
-            $query = $query->where(['status' => [Helpdesk::STATUS_NEW, Helpdesk::STATUS_DECLINED]]);
+            $query = $query->workSystem();
         } elseif(Yii::$app->user->can('system') && $status == 'soglas'){
             $query = $query->where(['status' => Helpdesk::STATUS_CHECKING]);
         } elseif(!Yii::$app->user->can('system') && $status == 'work') {
-            $query = $query->where(['id_user' => Yii::$app->user->id, 'status' => [Helpdesk::STATUS_NEW, Helpdesk::STATUS_DECLINED]]);
+            $query = $query->workNotSystem();
         } elseif ($status == 'overdue'){
-            $query = $query->andWhere(['<', 'date', date('Y-m-d h:i:s', strtotime('-1 day'))])
-                ->andWhere(['status' => !Helpdesk::STATUS_APPROVED]);
+            $query = $query->overudue();
         }else {
             $query = $query->where(['id_user' => Yii::$app->user->id, 'status' => Helpdesk::STATUS_CHECKING]);
         }

@@ -11,10 +11,11 @@ use yii\db\ActiveQuery;
  */
 class ShiftsQuery extends ActiveQuery
 {
-    /*public function active()
+    public function payoll($id, $payroll)
     {
-        return $this->andWhere('[[status]]=1');
-    }*/
+        return $this->andWhere(['id_sotrud' => $id])
+            ->andWhere(['>', 'start', $payroll]);
+    }
 
     public function Shifts($id)
     {

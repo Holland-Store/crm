@@ -59,40 +59,39 @@ class ZakazSearch extends Zakaz
 
         switch ($role) {
             case 'master':
-                $query->andWhere(['status' => [Zakaz::STATUS_MASTER, Zakaz::STATUS_DECLINED_MASTER], 'action' => 1]);
+                $query->masterGridView();
                 $sort = ['srok' => SORT_ASC];
                 break;
             case 'masterSoglas':
-                $query->andWhere(['status' => Zakaz::STATUS_SUC_MASTER, 'action' => 1]);
+                $query->masterAgreed();
                 $sort = ['srok' => SORT_ASC];
                 break;
             case 'disain':
-                $query->andWhere(['status' => [Zakaz::STATUS_DISAIN,Zakaz::STATUS_DECLINED_DISAIN], 'statusDisain' => [Zakaz::STATUS_DISAINER_NEW, Zakaz::STATUS_DISAINER_WORK, Zakaz::STATUS_DISAINER_DECLINED], 'action' => 1]);
+                $query->disainerGridView();
                 $sort = ['srok' => SORT_ASC];
                 break;
             case 'disainSoglas':
-                $query->andWhere(['status' => Zakaz::STATUS_DISAIN, 'statusDisain' => Zakaz::STATUS_DISAINER_SOGLAS, 'action' => 1])
-                    ->orWhere(['status' => Zakaz::STATUS_SUC_DISAIN, 'action' => 1]);
+                $query->disainAgreed();
                 $sort = ['srok' => SORT_ASC];
                 break;
             case 'shopWork':
-                $query->andWhere(['id_sotrud' => Yii::$app->user->id, 'action' => 1, 'status' => [Zakaz::STATUS_DISAIN, Zakaz::STATUS_MASTER, Zakaz::STATUS_AUTSORS, Zakaz::STATUS_SUC_MASTER, Zakaz::STATUS_SUC_DISAIN, Zakaz::STATUS_DECLINED_DISAIN, Zakaz::STATUS_DECLINED_MASTER, Zakaz::STATUS_NEW, Zakaz::STATUS_ADOPTED]]);
+                $query->shopWorkGridView();
                 $sort = ['data' => SORT_DESC];
                 break;
             case 'shopExecute':
-                $query->andWhere(['id_shop' => Yii::$app->user->id, 'action' => 1, 'status' => Zakaz::STATUS_EXECUTE]);
+                $query->shopExecute();
                 $sort = ['data' => SORT_DESC];
                 break;
             case 'admin':
-                $query->andWhere(['status' => [Zakaz::STATUS_DISAIN, Zakaz::STATUS_MASTER, Zakaz::STATUS_AUTSORS, Zakaz::STATUS_SUC_MASTER, Zakaz::STATUS_SUC_DISAIN, Zakaz::STATUS_DECLINED_DISAIN, Zakaz::STATUS_DECLINED_MASTER], 'action' => 1]);
+                $query->admin();
                 $sort = ['status' => SORT_DESC];
                 break;
             case 'adminWork':
-                $query->andWhere(['status' => [Zakaz::STATUS_NEW, Zakaz::STATUS_ADOPTED, Zakaz::STATUS_REJECT], 'action' => 1]);
+                $query->adminWork();
                 $sort = ['data' => SORT_DESC];
                 break;
             case 'adminIspol':
-                $query->andWhere(['status' => Zakaz::STATUS_EXECUTE, 'action' => 1]);
+                $query->adminFulfiled();
                 $sort = ['srok' => SORT_DESC];
                 break;
             case 'archive':
@@ -104,9 +103,7 @@ class ZakazSearch extends Zakaz
                 $sort = ['data' => SORT_DESC];
                 break;
             case 'manager':
-                $query->andWhere(['<', 'srok', date('Y-m-d H:i:s')])
-                ->andWhere(['>', 'oplata', 1000])
-                ->andWhere(['action' => 1]);
+                $query->managerGridView();
                 $sort = ['data' => SORT_DESC];
                 break;
         }

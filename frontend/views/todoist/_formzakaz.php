@@ -29,9 +29,7 @@ use kartik\widgets\DatePicker;
     <?= $form->field($model, 'id_zakaz')->hiddenInput(['value' => Yii::$app->request->get('id_zakaz')])->label(false) ?>
 
     <?= $form->field($model, 'id_user')->dropDownList(
-            ArrayHelper::map(User::find()->andWhere(['<>', 'id', User::USER_PROGRAM])
-            ->andWhere(['<>', 'id', User::USER_DAMIR])
-            ->andWhere(['<>', 'id', User::USER_ALBERT])
+            ArrayHelper::map(User::find()->todoistZakazUser()
             ->all(),
             'id', 'name')
     ) ?>

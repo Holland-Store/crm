@@ -76,21 +76,11 @@ class PersonnelController extends Controller
                 $payroll = $value->date;
             }
         }
-        $model = Shifts::find()->andWhere(['id_sotrud' => $id])
-                                ->andWhere(['>', 'start', $payroll])
-                                ->all();
-        $sumShifts = Shifts::find()->where(['id_sotrud' => $id])
-                                ->andWhere(['>', 'start', $payroll])
-                                ->sum('number');
-        $financy = Fine::find()->where(['id_employee' => $modelPersonnel->id])
-                                ->andWhere(['>', 'date', $payroll])
-                                ->all();
-        $sumFine = Fine::find()->where(['id_employee' => $modelPersonnel->id, 'category' => 1])
-                                ->andWhere(['>', 'date', $payroll])
-                                ->sum('sum');
-        $sumBonus = Fine::find()->where(['id_employee' => $modelPersonnel->id, 'category' => 2])
-                                   ->andWhere(['>', 'date', $payroll])
-                                   ->sum('sum');
+        $model = Shifts::find()->payoll($id, $payroll)->all();
+        $sumShifts = Shifts::find()->payoll($id, $payroll)->sum('number');
+        $financy = Fine::find()->payroll($modelPersonnel->id, $payroll)->all();
+        $sumFine = Fine::find()->payrollCategory($modelPersonnel->id, 1, $payroll)->sum('sum');
+        $sumBonus = Fine::find()->payrollCategory($modelPersonnel->id, 2, $payroll)->sum('sum');
         if ($sumBonus > $sumFine){
             $sumWage = $sumBonus-$sumFine;
         } elseif($sumBonus < $sumFine) {

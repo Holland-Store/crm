@@ -329,20 +329,15 @@ $this->title = 'Акутальнык';
                             'pointHoverBackgroundColor' => "#fff",
                             'pointHoverBorderColor' => "rgba(179,181,198,1)",
                             'data' => [
-                                Todoist::find()->andWhere(['>', 'date', date('Y-m-d 00:00:00', strtotime('-5 day'))])
-                                    ->andWhere(['<', 'date', date('Y-m-d 23:59:59', strtotime('-5 day'))])
+                                Todoist::find()->managerCountDay(5)
                                     ->count(),
-                                Todoist::find()->andWhere(['>', 'date', date('Y-m-d 00:00:00', strtotime('-4 day'))])
-                                    ->andWhere(['<', 'date', date('Y-m-d 23:59:59', strtotime('-4 day'))])
+                                Todoist::find()->managerCountDay(4)
                                     ->count(),
-                                Todoist::find()->andWhere(['>', 'date', date('Y-m-d 00:00:00', strtotime('-3 day'))])
-                                    ->andWhere(['<', 'date', date('Y-m-d 23:59:59', strtotime('-3 day'))])
+                                Todoist::find()->managerCountDay(3)
                                     ->count(),
-                                Todoist::find()->andWhere(['>', 'date', date('Y-m-d 00:00:00', strtotime('-2 day'))])
-                                    ->andWhere(['<', 'date', date('Y-m-d 23:59:59', strtotime('-2 day'))])
+                                Todoist::find()->managerCountDay(2)
                                     ->count(),
-                                Todoist::find()->andWhere(['>', 'date', date('Y-m-d 00:00:00', strtotime('-1 day'))])
-                                    ->andWhere(['<', 'date', date('Y-m-d 23:59:59', strtotime('-1 day'))])
+                                Todoist::find()->managerCountDay(1)
                                     ->count(),
                             ]
                         ],
@@ -355,25 +350,15 @@ $this->title = 'Акутальнык';
                             'pointHoverBackgroundColor' => "#fff",
                             'pointHoverBorderColor' => "rgba(255,99,132,1)",
                             'data' => [
-                                Todoist::find()->andWhere(['>', 'date', date('Y-m-d 00:00:00', strtotime('-5 day'))])
-                                    ->andWhere(['<', 'date', date('Y-m-d 23:59:59', strtotime('-5 day'))])
-                                    ->andWhere(['activate' => Todoist::CLOSE])
+                                Todoist::find()->managerCountExecuteDay(5)
                                     ->count(),
-                                Todoist::find()->andWhere(['>', 'date', date('Y-m-d 00:00:00', strtotime('-4 day'))])
-                                    ->andWhere(['<', 'date', date('Y-m-d 23:59:59', strtotime('-4 day'))])
-                                    ->andWhere(['activate' => Todoist::CLOSE])
+                                Todoist::find()->managerCountExecuteDay(4)
                                     ->count(),
-                                Todoist::find()->andWhere(['>', 'date', date('Y-m-d 00:00:00', strtotime('-3 day'))])
-                                    ->andWhere(['<', 'date', date('Y-m-d 23:59:59', strtotime('-3 day'))])
-                                    ->andWhere(['activate' => Todoist::CLOSE])
+                                Todoist::find()->managerCountExecuteDay(3)
                                     ->count(),
-                                Todoist::find()->andWhere(['>', 'date', date('Y-m-d 00:00:00', strtotime('-2 day'))])
-                                    ->andWhere(['<', 'date', date('Y-m-d 23:59:59', strtotime('-2 day'))])
-                                    ->andWhere(['activate' => Todoist::CLOSE])
+                                Todoist::find()->managerCountExecuteDay(2)
                                     ->count(),
-                                Todoist::find()->andWhere(['>', 'date', date('Y-m-d 00:00:00', strtotime('-1 day'))])
-                                    ->andWhere(['<', 'date', date('Y-m-d 23:59:59', strtotime('-1 day'))])
-                                    ->andWhere(['activate' => Todoist::CLOSE])
+                                Todoist::find()->managerCountExecuteDay(1)
                                     ->count(),
                             ]
                         ]

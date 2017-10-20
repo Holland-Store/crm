@@ -27,10 +27,7 @@ use kartik\widgets\DatePicker;
     ])?>
 
     <?= $form->field($model, 'id_user')->dropDownList(
-            ArrayHelper::map(User::find()->andWhere(['<>', 'id', User::USER_ALBERT])
-            ->andWhere(['<>', 'id', User::USER_DAMIR])
-            ->andWhere(['<>', 'id', User::USER_PROGRAM])
-            ->andWhere(['<>', 'id', 8])
+            ArrayHelper::map(User::find()->todoistUser()
             ->all(),
             'id', 'name'),
         ['prompt' => 'Выберите кому назначить']

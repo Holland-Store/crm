@@ -41,7 +41,9 @@ class PersonnelSearch extends Personnel
      */
     public function search($params)
     {
-        $query = Personnel::find()->with(['positions'])->joinWith(['personnelPosition'], false)->where(['action' => Personnel::WORK]);
+        $query = Personnel::find()->with(['positions'])
+            ->joinWith(['personnelPosition'], false)
+            ->where(['action' => Personnel::WORK]);
 
         // add conditions that should always apply here
 

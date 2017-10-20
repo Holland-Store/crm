@@ -5,7 +5,6 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Custom;
 
 /**
  * CustomSearch represents the model behind the search form about `app\models\Custom`.
@@ -45,8 +44,7 @@ class CustomSearch extends Custom
 		if($index == 'zakup'){
 			$query->where(['action' => 0]);
 		} elseif($index == 'manager'){
-		    $query->andWhere(['<', 'date', date('Y-m-d H:i:s', strtotime('- 2 week'))])
-                ->andWhere(['action' => Custom::CUSTOM_BROUGHT]);
+		    $query->manager();
         }else {
             $query->where(['id_user' => Yii::$app->user->id]);
 		}
