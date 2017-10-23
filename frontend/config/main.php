@@ -59,6 +59,29 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
+        'assetManager' => [
+            'bundles' => [
+                'yii\web\JqueryAsset' => [
+                    'sourcePath' => null,
+                    'js' => [
+                        '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'
+                    ]
+                ],
+                'yii\bootstrap\BootstrapPluginAsset' => [
+                    'sourcePath' => null,
+                    'js' => [
+                        'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'
+                    ]
+                ],
+                'yii\bootstrap\BootstrapAsset' => [
+                    'sourcePath' => null,
+                    'css' => [
+                        'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'
+                    ]
+                ],
+            ],
+            'appendTimestamp' => true
+        ],
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
