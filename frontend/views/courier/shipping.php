@@ -125,8 +125,13 @@ $this->title = 'Все доставки';
                         return '';
                     }
                 },
-                'contentOptions' => ['class' => 'border-right textTr tr50'],
+                'contentOptions' => ['class' => 'textTr tr50 declined'],
             ],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{update}',
+                'contentOptions' => ['class' => 'border-right textTr tr50'],
+            ]
         ],
     ]); ?>
     <?php Pjax::end(); ?></div>
