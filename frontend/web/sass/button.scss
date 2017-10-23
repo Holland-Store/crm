@@ -238,8 +238,10 @@ $bacgrountTr: #802c2c;
     }
 }
 .courier-shipping{
-    a{
-        @include declined;
+    .declined{
+        a{
+            @include declined;
+        }
     }
 }
 .courier-index, .custom-index, .helpdesk-index{

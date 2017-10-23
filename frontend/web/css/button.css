@@ -233,23 +233,23 @@
   text-decoration: none;
 }
 
-/* line 241, ../sass/button.scss */
-.courier-shipping a {
+/* line 242, ../sass/button.scss */
+.courier-shipping .declined a {
   color: #802c2c;
   text-decoration: none;
 }
 /* line 65, ../sass/button.scss */
-.courier-shipping a:hover {
+.courier-shipping .declined a:hover {
   text-decoration: none;
   color: #802c2c;
 }
 
-/* line 246, ../sass/button.scss */
+/* line 248, ../sass/button.scss */
 .courier-index a, .custom-index a, .helpdesk-index a {
   color: #446505;
   text-decoration: none;
 }
-/* line 250, ../sass/button.scss */
+/* line 252, ../sass/button.scss */
 .courier-index .declinedHelp, .custom-index .declinedHelp, .helpdesk-index .declinedHelp {
   color: #802c2c;
   text-decoration: none;
@@ -259,7 +259,7 @@
   text-decoration: none;
   color: #802c2c;
 }
-/* line 253, ../sass/button.scss */
+/* line 255, ../sass/button.scss */
 .courier-index .declined, .custom-index .declined, .helpdesk-index .declined {
   color: #802c2c;
   text-decoration: none;
@@ -269,18 +269,18 @@
   text-decoration: none;
   color: #802c2c;
 }
-/* line 256, ../sass/button.scss */
+/* line 258, ../sass/button.scss */
 .courier-index .successHelp, .custom-index .successHelp, .helpdesk-index .successHelp {
   color: #446505;
 }
 
-/* line 262, ../sass/button.scss */
+/* line 264, ../sass/button.scss */
 .footer-view-zakaz .done:hover {
   border: none;
   background: #446505;
   color: white;
 }
-/* line 268, ../sass/button.scss */
+/* line 270, ../sass/button.scss */
 .footer-view-zakaz a {
   padding-left: 13px;
   padding-right: 13px;
@@ -302,7 +302,7 @@
   color: #3a3331;
   background: #736a50;
 }
-/* line 275, ../sass/button.scss */
+/* line 277, ../sass/button.scss */
 .footer-view-zakaz a:hover {
   text-decoration: none;
   outline: 0;
@@ -310,7 +310,7 @@
   background: #3a3331;
 }
 
-/* line 284, ../sass/button.scss */
+/* line 286, ../sass/button.scss */
 .zakaz-shippingForm button {
   height: 30px;
   margin-left: 15px;
@@ -320,11 +320,11 @@
   outline: 0;
 }
 
-/* line 294, ../sass/button.scss */
+/* line 296, ../sass/button.scss */
 .modal-content a {
   height: 30px;
 }
-/* line 297, ../sass/button.scss */
+/* line 299, ../sass/button.scss */
 .modal-content .fulfilled {
   width: 64%;
   margin-left: 11px;
@@ -335,7 +335,7 @@
   text-decoration: none;
 }
 
-/* line 307, ../sass/button.scss */
+/* line 309, ../sass/button.scss */
 .accept {
   color: #446505;
   text-decoration: none;
@@ -346,7 +346,7 @@
   color: #446505;
 }
 
-/* line 310, ../sass/button.scss */
+/* line 312, ../sass/button.scss */
 .declined {
   color: #802c2c;
   text-decoration: none;
@@ -357,7 +357,7 @@
   color: #802c2c;
 }
 
-/* line 313, ../sass/button.scss */
+/* line 315, ../sass/button.scss */
 .declinedTodoist {
   color: #802c2c;
   text-decoration: none;

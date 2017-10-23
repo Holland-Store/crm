@@ -695,10 +695,10 @@ thead a {
   color: #446505;
   text-decoration: none; }
 
-.courier-shipping a {
+.courier-shipping .declined a {
   color: #802c2c;
   text-decoration: none; }
-  .courier-shipping a:hover {
+  .courier-shipping .declined a:hover {
     text-decoration: none;
     color: #802c2c; }
 
