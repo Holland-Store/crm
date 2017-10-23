@@ -41,7 +41,7 @@ class CourierController extends Controller
                        'roles' => ['courier'],
                    ],
                    [
-                        'actions' => ['shipping', 'deletes', 'create', 'create-zakaz'],
+                        'actions' => ['shipping', 'deletes', 'create', 'create-zakaz', 'update'],
                         'allow' => true,
                         'roles' => ['admin', 'program'],
                    ],
