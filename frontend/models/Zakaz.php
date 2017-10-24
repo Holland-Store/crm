@@ -3,7 +3,6 @@
 namespace app\models;
 
 use Yii;
-use yii\behaviors\TimestampBehavior;
 use yii\helpers\ArrayHelper;
 use yii\db\ActiveRecord;
 use app\models\query\ZakazQuery;
@@ -103,7 +102,7 @@ class Zakaz extends ActiveRecord
     {
         return [
             [
-                'class' => TimestampBehavior::className(),
+                'class' => 'yii\behaviors\TimestampBehavior',
                 'attributes' => [
                     ActiveRecord::EVENT_BEFORE_INSERT => ['date_update'],
                     ActiveRecord::EVENT_BEFORE_UPDATE => ['date_update'],
