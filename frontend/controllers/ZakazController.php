@@ -17,8 +17,6 @@ use yii\base\Exception;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
 use yii\data\ActiveDataProvider;
 use yii\web\UploadedFile;
 
@@ -34,7 +32,7 @@ class ZakazController extends Controller
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => 'yii\filters\VerbFilter',
                 'actions' => [
                     'delete' => ['POST'],
                 ],
@@ -47,7 +45,7 @@ class ZakazController extends Controller
                 }
             ],
             'access' => [
-                'class' => AccessControl::className(),
+                'class' => 'yii\filters\AccessControl',
                 'rules' => [
                     [
                         'actions' => ['index'],
