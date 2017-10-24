@@ -39,6 +39,13 @@ class ZakazController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+            'caching' => [
+                'class' => 'yii\filters\HttpCache',
+                'only' => ['admin', 'shop', 'master', 'disain'],
+                'lastModified' => function(){
+                    return Zakaz::find()->max('date_update');
+                }
+            ],
             'access' => [
                 'class' => AccessControl::className(),
                 'rules' => [
