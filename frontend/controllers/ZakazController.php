@@ -37,13 +37,6 @@ class ZakazController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
-            'caching' => [
-                'class' => 'yii\filters\HttpCache',
-                'only' => ['admin', 'shop', 'master', 'disain'],
-                'lastModified' => function(){
-                    return Zakaz::find()->max('date_update');
-                }
-            ],
             'access' => [
                 'class' => 'yii\filters\AccessControl',
                 'rules' => [
@@ -456,7 +449,7 @@ class ZakazController extends Controller
             Yii::$app->session->addFlash('update', 'Выполнен заказ №'.$model->prefics);
             return $this->redirect(['admin']);
         } else {
-            $this->flashErrors($id);
+            print_r($model->getErrors());
         }
     }
 
@@ -787,6 +780,6 @@ class ZakazController extends Controller
     {
         /** @var $model \app\models\Zakaz */
         $id == null ? $model = new Zakaz() : $this->findModel($id);
-        Yii::$app->session->addFlash('errors', 'Произошла ошибка! '.$model->getErrors());
+        Yii::$app->session->addFlash('errors', 'Произошла ошибка!');
     }
 }
