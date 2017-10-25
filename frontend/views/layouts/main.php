@@ -105,32 +105,32 @@ AppAsset::register($this);
             ;
     }
     ?>
-    <?php if (!Yii::$app->user->isGuest): ?>
-        <div class="notification-container hidden" id="notification-container">
-            <div class="notification-content">
-                <?php foreach($this->params['notifications'] as $notification){
-                $date = date('Y-m-d H:i:s', time());
-                    if ($notification->category == 0) {
-                        $notif = '<span class="glyphicon glyphicon-road"></span> '.$notification->name.'<br>';
-                    } elseif ($notification->category == 1) {
-                        $notif = '<span class="glyphicon glyphicon-ok"></span> '.$notification->name.'<br>';
-                    } elseif ($notification->category == 2) {
-                        $notif = '<span class="glyphicon glyphicon-file"></span> '.$notification->name.'<br>';
-                    } elseif ($notification->category == 4 && $notification->srok <= $date){
-                        $notif = 'Напоминание о заказе №'.$notification->id_zakaz.' '.$notification->srok;
-                    } elseif ($notification->category == 4 && $notification->srok >= $date){
-                        $notif = '';
-                    }
-                    /** @var string $notif */
-                    echo Html::a($notif.'<br>', ['notification/notification', 'id' => $notification->id_zakaz], ['id' => $notification->id_zakaz, 'class' => 'zakaz', 'data-key' => $notification->id_zakaz]);
-                }
-                ?>
-            </div>
-            <div class='notification-footer'>
-            <?php echo Html::a('Прочитать все напоминание', ['notification/index']) ?>
-            </div>
-        </div>
-    <?php endif ?>
+<!--    --><?php //if (!Yii::$app->user->isGuest): ?>
+<!--        <div class="notification-container hidden" id="notification-container">-->
+<!--            <div class="notification-content">-->
+<!--                --><?php //foreach($this->params['notifications'] as $notification){
+//                $date = date('Y-m-d H:i:s', time());
+//                    if ($notification->category == 0) {
+//                        $notif = '<span class="glyphicon glyphicon-road"></span> '.$notification->name.'<br>';
+//                    } elseif ($notification->category == 1) {
+//                        $notif = '<span class="glyphicon glyphicon-ok"></span> '.$notification->name.'<br>';
+//                    } elseif ($notification->category == 2) {
+//                        $notif = '<span class="glyphicon glyphicon-file"></span> '.$notification->name.'<br>';
+//                    } elseif ($notification->category == 4 && $notification->srok <= $date){
+//                        $notif = 'Напоминание о заказе №'.$notification->id_zakaz.' '.$notification->srok;
+//                    } elseif ($notification->category == 4 && $notification->srok >= $date){
+//                        $notif = '';
+//                    }
+//                    /** @var string $notif */
+//                    echo Html::a($notif.'<br>', ['notification/notification', 'id' => $notification->id_zakaz], ['id' => $notification->id_zakaz, 'class' => 'zakaz', 'data-key' => $notification->id_zakaz]);
+//                }
+//                ?>
+<!--            </div>-->
+<!--            <div class='notification-footer'>-->
+<!--            --><?php //echo Html::a('Прочитать все напоминание', ['notification/index']) ?>
+<!--            </div>-->
+<!--        </div>-->
+<!--    --><?php //endif ?>
 
 <?php if (Yii::$app->user->isGuest): ?>
     <div class="headerLogin">
