@@ -1,7 +1,6 @@
 <?php
 
 use frontend\components\YandexMap;
-use kartik\label\LabelInPlace;
 use kartik\widgets\DateTimePicker;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
@@ -36,13 +35,10 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'from')->hiddenInput(['maxlength' => true, 'id' => 'fromInput'])->label(false) ?>
     <?= $form->field($model, 'from_name')->hiddenInput(['maxlength' => true, 'id' => 'fromName'])->label(false) ?>
 
-<!--    --><?//= $form->field($model, 'commit')->textInput(['maxlength' => true]) ?>
-    <?= $form->field($model, 'commit')->widget(LabelInPlace::className(), [
-        'type' => LabelInPlace::TYPE_TEXT
-    ])->label(false) ?>
+    <?= $form->field($model, 'commit')->textInput(['maxlength' => true]) ?>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Создать' : 'Редактировать', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? 'Создать' : 'Редактирвовать', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

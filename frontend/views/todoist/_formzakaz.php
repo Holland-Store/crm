@@ -1,7 +1,6 @@
 <?php
 
 use app\models\User;
-use kartik\label\LabelInPlace;
 use kartik\widgets\FileInput;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -35,10 +34,7 @@ use kartik\widgets\DatePicker;
             'id', 'name')
     ) ?>
 
-    <?= $form->field($model, 'comment')->widget(LabelInPlace::className(), [
-        'type' => LabelInPlace::TYPE_TEXTAREA,
-        'defaultIndicators' => false
-    ])->label(false) ?>
+    <?= $form->field($model, 'comment')->textarea(['rows' => 6]) ?>
 
     <div class="col-lg-3">
         <?php echo $model->img != null
