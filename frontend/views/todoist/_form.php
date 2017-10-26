@@ -6,6 +6,7 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use kartik\widgets\DatePicker;
+use kartik\label\LabelInPlace;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Todoist */
@@ -33,7 +34,11 @@ use kartik\widgets\DatePicker;
         ['prompt' => 'Выберите кому назначить']
     ) ?>
 
-    <?= $form->field($model, 'comment')->textarea(['rows' => 6]) ?>
+<!--    --><?//= $form->field($model, 'comment')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'comment')->widget(LabelInPlace::className(), [
+            'type' => LabelInPlace::TYPE_TEXTAREA,
+            'defaultIndicators' => false
+    ])->label(false) ?>
 
     <div class="col-lg-3">
         <?php echo $model->img != null
