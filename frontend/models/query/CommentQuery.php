@@ -14,6 +14,7 @@ class CommentQuery extends ActiveQuery
     public function todoist($id)
     {
         return $this->select(['date', 'comment', 'id_user'])
+            ->indexBy('id_todoist')
             ->with(['idUser'])
             ->where(['id_todoist' => $id])
             ->orderBy('id DESC')
@@ -24,6 +25,7 @@ class CommentQuery extends ActiveQuery
     public function comment($id)
     {
         return $this->select(['date', 'comment', 'id_user'])
+            ->indexBy('id_helpdesk')
             ->with(['idUser'])
             ->where(['id_helpdesk' => $id])
             ->orderBy('id DESC')
@@ -34,6 +36,7 @@ class CommentQuery extends ActiveQuery
     public function zakaz($id)
     {
         return $this->addSelect(['DATE(date) as just_date','TIME(date) as time','comment','id_user'])
+            ->indexBy('id_zakaz')
             ->joinWith(['idUser'])
             ->where(['id_zakaz' => $id])
             ->asArray()
