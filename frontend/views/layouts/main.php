@@ -86,7 +86,7 @@ AppAsset::register($this);
                 'placement' => PopoverX::ALIGN_BOTTOM,
                 'toggleButton' => ['label'=>'<span>'.Yii::$app->user->identity->name.'</span> <span class="glyphicon glyphicon-off exit"></span>', 'class' => 'btn btn-link logout'],
                 ]);
-        echo Html::a('Настройки', ['/site/setting', 'id' => Yii::$app->user->identity->id]).'<br>';
+        echo Html::a('Настройки', ['/site/setting', 'id' => Yii::$app->user->identity->getId()]).'<br>';
         echo Html::a('Контакты', ['/personnel/index']).'<br>';
         echo Html::a('Инфорстенд', ['/site/index']).'<br>';
 
@@ -168,7 +168,10 @@ AppAsset::register($this);
 <?php if (Yii::$app->user->isGuest): ?>
     <footer>
         <div class="footerLogin">
-            <img src="img/logo.png" title="Logo">
+            <?= Html::img(\yii\helpers\Url::to('@web/img/logo.png'), [
+                    'data-toggle' => 'tooltip',
+                    'title' => 'Logo'
+            ]) ?>
             <div>Сеть магазинов</div>
             <div>&copy Holland <?php echo date('Y') ?></div>
         </div>
