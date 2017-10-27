@@ -18,13 +18,11 @@
         "yiisoft/yii2": "~2.0.6",
         "yiisoft/yii2-bootstrap": "~2.0.0",
         "yiisoft/yii2-swiftmailer": "~2.0.0",
-        "2amigos/yii2-date-picker-widget": "~1.0",
         "mdmsoft/yii2-admin": "~2.0",
         "unclead/yii2-multiple-input": "~2.0",
         "kartik-v/yii2-grid": "@dev",
         "kartik-v/yii2-mpdf": "^1.0",
         "kartik-v/yii2-detail-view": "*",
-        "kartik-v/yii2-label-inplace": "^1.2",
         "codeception/specify": "*",
         "codeception/verify": "*",
         "codeception/codeception": "2.3.3",
@@ -38,7 +36,6 @@
         "sonko-dmitry/yii2-telegram-bot-api": "*",
         "kartik-v/yii2-popover-x": "*",
         "2amigos/yii2-chartjs-widget": "~2.0",
-        "phpnt/yii2-icheck": "*",
         "vova07/yii2-imperavi-widget": "*"
     },
     "require-dev": {

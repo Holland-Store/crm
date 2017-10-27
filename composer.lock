@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "3cc3e35e048de2eb45ca8ac375dd3150",
+    "content-hash": "cad146424116b51c12adfb5483a3f5ef",
     "packages": [
         {
             "name": "2amigos/yii2-chartjs-widget",
@@ -63,67 +63,6 @@
                 "yii2"
             ],
             "time": "2017-07-26T09:24:16+00:00"
-        },
-        {
-            "name": "2amigos/yii2-date-picker-widget",
-            "version": "1.0.7",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/2amigos/yii2-date-picker-widget.git",
-                "reference": "d09c2444e8c2329e38528bba77002dd65186c1ff"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/2amigos/yii2-date-picker-widget/zipball/d09c2444e8c2329e38528bba77002dd65186c1ff",
-                "reference": "d09c2444e8c2329e38528bba77002dd65186c1ff",
-                "shasum": ""
-            },
-            "require": {
-                "bower-asset/bootstrap-datepicker": "1.7.0",
-                "yiisoft/yii2": ">=2.0.9",
-                "yiisoft/yii2-bootstrap": "*"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "4.*"
-            },
-            "type": "yii2-extension",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0-dev"
-                },
-                "asset-installer-paths": {
-                    "bower-asset-library": "vendor/bower"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "dosamigos\\datepicker\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "2amigOS! Consulting Group",
-                    "email": "hola@2amigos.us",
-                    "homepage": "http://2amigos.us",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Bootstrap DatePicker widget for Yii2.",
-            "homepage": "http://yiiwheels.com/extension/bootstrap-datepicker",
-            "keywords": [
-                "2amigos",
-                "datepicker",
-                "extension",
-                "widget",
-                "yii",
-                "yii 2",
-                "yii2"
-            ],
-            "time": "2017-07-05T05:52:03+00:00"
         },
         {
             "name": "behat/gherkin",
@@ -234,35 +173,6 @@
             ]
         },
         {
-            "name": "bower-asset/bootstrap-datepicker",
-            "version": "v1.7.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/uxsolutions/bootstrap-datepicker.git",
-                "reference": "d364be5b066b38f3675a5a1dc174ce1ab1f3360e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/uxsolutions/bootstrap-datepicker/zipball/d364be5b066b38f3675a5a1dc174ce1ab1f3360e",
-                "reference": "d364be5b066b38f3675a5a1dc174ce1ab1f3360e",
-                "shasum": ""
-            },
-            "require": {
-                "bower-asset/jquery": ">=1.7.1,<4.0.0"
-            },
-            "type": "bower-asset-library",
-            "extra": {
-                "bower-asset-main": [
-                    "dist/css/bootstrap-datepicker3.css",
-                    "dist/js/bootstrap-datepicker.js"
-                ],
-                "bower-asset-ignore": []
-            },
-            "license": [
-                "Apache-2.0"
-            ]
-        },
-        {
             "name": "bower-asset/bootstrap3-dialog",
             "version": "v1.35.4",
             "source": {
@@ -305,28 +215,6 @@
             ]
         },
         {
-            "name": "bower-asset/icheck",
-            "version": "1.0.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/fronteed/icheck.git",
-                "reference": "8a6eb37bd7dab1e843c1b630c91c6398ff409d05"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/fronteed/icheck/zipball/8a6eb37bd7dab1e843c1b630c91c6398ff409d05",
-                "reference": "8a6eb37bd7dab1e843c1b630c91c6398ff409d05",
-                "shasum": null
-            },
-            "require": {
-                "bower-asset/jquery": ">=1.7"
-            },
-            "type": "bower-asset",
-            "license": [
-                "MIT"
-            ]
-        },
-        {
             "name": "bower-asset/jquery",
             "version": "2.2.4",
             "source": {
@@ -359,16 +247,16 @@
         },
         {
             "name": "bower-asset/jquery.inputmask",
-            "version": "3.3.9",
+            "version": "3.3.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/RobinHerbots/Inputmask.git",
-                "reference": "1fadb54be8a94e879fd1e9693b5222fb36aea04f"
+                "reference": "14873e5775964275d13621cbe2b52e4448af3707"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/RobinHerbots/Inputmask/zipball/1fadb54be8a94e879fd1e9693b5222fb36aea04f",
-                "reference": "1fadb54be8a94e879fd1e9693b5222fb36aea04f",
+                "url": "https://api.github.com/repos/RobinHerbots/Inputmask/zipball/14873e5775964275d13621cbe2b52e4448af3707",
+                "reference": "14873e5775964275d13621cbe2b52e4448af3707",
                 "shasum": null
             },
             "require": {
@@ -1360,16 +1248,16 @@
         },
         {
             "name": "kartik-v/yii2-dialog",
-            "version": "v1.0.1",
+            "version": "v1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-dialog.git",
-                "reference": "4aaf8918c6dbd90218b6ad9036b1aae211480716"
+                "reference": "cd80ac5bf7c3f43d0452b1b3ff1559f3db053674"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-dialog/zipball/4aaf8918c6dbd90218b6ad9036b1aae211480716",
-                "reference": "4aaf8918c6dbd90218b6ad9036b1aae211480716",
+                "url": "https://api.github.com/repos/kartik-v/yii2-dialog/zipball/cd80ac5bf7c3f43d0452b1b3ff1559f3db053674",
+                "reference": "cd80ac5bf7c3f43d0452b1b3ff1559f3db053674",
                 "shasum": ""
             },
             "require": {
@@ -1408,7 +1296,7 @@
                 "modal",
                 "yii2"
             ],
-            "time": "2016-09-13T18:15:26+00:00"
+            "time": "2017-10-20T11:01:19+00:00"
         },
         {
             "name": "kartik-v/yii2-grid",
@@ -1416,12 +1304,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-grid.git",
-                "reference": "b6e5219a392f3df28aa5d05b6c89addd81ab0823"
+                "reference": "071c9ccdbc56a2ec95cfbeec088c0664557e663d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-grid/zipball/b6e5219a392f3df28aa5d05b6c89addd81ab0823",
-                "reference": "b6e5219a392f3df28aa5d05b6c89addd81ab0823",
+                "url": "https://api.github.com/repos/kartik-v/yii2-grid/zipball/071c9ccdbc56a2ec95cfbeec088c0664557e663d",
+                "reference": "071c9ccdbc56a2ec95cfbeec088c0664557e663d",
                 "shasum": ""
             },
             "require": {
@@ -1461,7 +1349,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2017-10-13T15:21:52+00:00"
+            "time": "2017-10-25T11:57:15+00:00"
         },
         {
             "name": "kartik-v/yii2-helpers",
@@ -1564,54 +1452,6 @@
                 "yii2"
             ],
             "time": "2017-09-29T06:18:14+00:00"
-        },
-        {
-            "name": "kartik-v/yii2-label-inplace",
-            "version": "v1.2.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/kartik-v/yii2-label-inplace.git",
-                "reference": "08f583e53204095ec999e3c45006b691c35e0376"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-label-inplace/zipball/08f583e53204095ec999e3c45006b691c35e0376",
-                "reference": "08f583e53204095ec999e3c45006b691c35e0376",
-                "shasum": ""
-            },
-            "require": {
-                "kartik-v/yii2-krajee-base": "~1.7"
-            },
-            "type": "yii2-extension",
-            "autoload": {
-                "psr-4": {
-                    "kartik\\label\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Kartik Visweswaran",
-                    "email": "kartikv2@gmail.com",
-                    "homepage": "http://www.krajee.com/"
-                }
-            ],
-            "description": "A form enhancement widget for Yii2 allowing in-field label support.",
-            "homepage": "https://github.com/kartik-v/yii2-label-inplace",
-            "keywords": [
-                "extension",
-                "form",
-                "inline",
-                "inplace",
-                "input",
-                "label",
-                "widget",
-                "yii2"
-            ],
-            "time": "2015-06-17T17:08:17+00:00"
         },
         {
             "name": "kartik-v/yii2-mpdf",
@@ -2867,37 +2707,40 @@
         },
         {
             "name": "myclabs/deep-copy",
-            "version": "1.6.1",
+            "version": "1.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/myclabs/DeepCopy.git",
-                "reference": "8e6e04167378abf1ddb4d3522d8755c5fd90d102"
+                "reference": "3b8a3a99ba1f6a3952ac2747d989303cbd6b7a3e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/8e6e04167378abf1ddb4d3522d8755c5fd90d102",
-                "reference": "8e6e04167378abf1ddb4d3522d8755c5fd90d102",
+                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/3b8a3a99ba1f6a3952ac2747d989303cbd6b7a3e",
+                "reference": "3b8a3a99ba1f6a3952ac2747d989303cbd6b7a3e",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.4.0"
+                "php": "^5.6 || ^7.0"
             },
             "require-dev": {
-                "doctrine/collections": "1.*",
-                "phpunit/phpunit": "~4.1"
+                "doctrine/collections": "^1.0",
+                "doctrine/common": "^2.6",
+                "phpunit/phpunit": "^4.1"
             },
             "type": "library",
             "autoload": {
                 "psr-4": {
                     "DeepCopy\\": "src/DeepCopy/"
-                }
+                },
+                "files": [
+                    "src/DeepCopy/deep_copy.php"
+                ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
             "description": "Create deep copies (clones) of your objects",
-            "homepage": "https://github.com/myclabs/DeepCopy",
             "keywords": [
                 "clone",
                 "copy",
@@ -2905,7 +2748,7 @@
                 "object",
                 "object graph"
             ],
-            "time": "2017-04-12T18:52:22+00:00"
+            "time": "2017-10-19T19:58:43+00:00"
         },
         {
             "name": "npm-asset/jquery",
@@ -3066,50 +2909,6 @@
                 }
             ],
             "time": "2017-06-03T08:32:36+00:00"
-        },
-        {
-            "name": "phpnt/yii2-icheck",
-            "version": "0.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phpnt/yii2-icheck.git",
-                "reference": "a167522bd326bb2da529b9f94e5b12864cb61740"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phpnt/yii2-icheck/zipball/a167522bd326bb2da529b9f94e5b12864cb61740",
-                "reference": "a167522bd326bb2da529b9f94e5b12864cb61740",
-                "shasum": ""
-            },
-            "require": {
-                "bower-asset/icheck": "*",
-                "php": ">=5.4.0",
-                "yiisoft/yii2": "*"
-            },
-            "type": "yii2-extension",
-            "autoload": {
-                "psr-4": {
-                    "phpnt\\ICheck\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "phpNT",
-                    "email": "phpnt@phpnt.com",
-                    "homepage": "http://phpnt.com"
-                }
-            ],
-            "description": "Yii2 ICheck",
-            "keywords": [
-                "iCheck",
-                "phpnt",
-                "yii2"
-            ],
-            "time": "2017-05-01T15:32:27+00:00"
         },
         {
             "name": "phpspec/prophecy",
@@ -4989,16 +4788,16 @@
         },
         {
             "name": "unclead/yii2-multiple-input",
-            "version": "2.11.2",
+            "version": "2.11.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/unclead/yii2-multiple-input.git",
-                "reference": "05ab8ba3ae7682204c988e3288c8b8d6110a902e"
+                "reference": "06bc83b0508b0a9ec9de8622d6cae2433d9bac45"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/unclead/yii2-multiple-input/zipball/05ab8ba3ae7682204c988e3288c8b8d6110a902e",
-                "reference": "05ab8ba3ae7682204c988e3288c8b8d6110a902e",
+                "url": "https://api.github.com/repos/unclead/yii2-multiple-input/zipball/06bc83b0508b0a9ec9de8622d6cae2433d9bac45",
+                "reference": "06bc83b0508b0a9ec9de8622d6cae2433d9bac45",
                 "shasum": ""
             },
             "require": {
@@ -5034,7 +4833,7 @@
                 "yii2 multiple input",
                 "yii2 tabular input"
             ],
-            "time": "2017-10-13T11:09:36+00:00"
+            "time": "2017-10-19T19:58:28+00:00"
         },
         {
             "name": "vova07/yii2-imperavi-widget",
@@ -5393,7 +5192,7 @@
             "version": "v0.11.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/twitter/typeahead.js.git",
+                "url": "git@github.com:twitter/typeahead.js.git",
                 "reference": "588440f66559714280628a4f9799f0c4eb880a4a"
             },
             "dist": {
