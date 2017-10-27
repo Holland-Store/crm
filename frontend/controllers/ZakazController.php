@@ -126,24 +126,24 @@ class ZakazController extends Controller
         $comment = Comment::find()->zakaz($id);
         $financy = Financy::find()->view($id);
         $comment = ArrayHelper::index($comment, null, 'just_date');
-        $zakaz = $model->id_zakaz;
+//        $zakaz = $model->id_zakaz;
 
         $dataProvider = new ActiveDataProvider([
-            'query' => Courier::find()->where(['id_zakaz' => $id])
+            'query' => Courier::find()->select(['date', 'to', 'from', 'commit', 'status'])->where(['id_zakaz' => $id])
         ]);
-        if ($reminder->load(Yii::$app->request->post())) {
-            $reminder->getReminder($zakaz);
-            if ($reminder->validate() && $reminder->save()) {
-                Yii::$app->session->setFlash('success', 'Напоминание было создана');
-            } else {
-                Yii::$app->session->setFlash('error', 'Извините. Напоминание не было создана');
-            }
-            unset($reminder->srok);
-            return $this->redirect(['view', 'id' => $model->id_zakaz]);
-        }
+//        if ($reminder->load(Yii::$app->request->post())) {
+//            $reminder->getReminder($zakaz);
+//            if ($reminder->validate() && $reminder->save()) {
+//                Yii::$app->session->setFlash('success', 'Напоминание было создана');
+//            } else {
+//                Yii::$app->session->setFlash('error', 'Извините. Напоминание не было создана');
+//            }
+//            unset($reminder->srok);
+//            return $this->redirect(['view', 'id' => $model->id_zakaz]);
+//        }
 
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
             'reminder' => $reminder,
             'dataProvider' => $dataProvider,
             'comment' => $comment,
