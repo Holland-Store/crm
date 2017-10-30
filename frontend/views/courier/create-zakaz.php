@@ -9,7 +9,9 @@ $this->registerJsFile('@web/js/yandexMap.js');
 ?>
 
 <div class="zakaz-shippingForm">
-    <?php $f = ActiveForm::begin(); ?>
+    <?php $f = ActiveForm::begin([
+        'id' => 'shippingZakaz'
+    ]); ?>
 
     <?= $f->field($shipping, 'id_zakaz')->hiddenInput(['value' => $model])->label(false) ?>
 
