@@ -279,7 +279,7 @@ class TodoistController extends Controller
         }
         return $this->render('createzakaz', [
             'model' => $model,
-            ]);
+        ]);
     }
 
 	/**
@@ -295,6 +295,7 @@ class TodoistController extends Controller
         $model->activate = Todoist::CLOSE;
 		$model->save();
 		$telegram->message($model->id_user, 'Задача '.$model->comment.' была закрыта');
+        Yii::$app->session->addFlash('update', 'Задача была закрыта');
 
         return $this->findView();
     }
