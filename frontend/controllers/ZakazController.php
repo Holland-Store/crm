@@ -153,37 +153,6 @@ class ZakazController extends Controller
     }
 
     /**
-     * appointed shipping in courier
-     * @param $id
-     * @return string
-     */
-    public function actionShipping($id)
-    {
-        $model = $this->findModel($id);
-        $shipping = new Courier();
-        $user = User::findOne(['id' => User::USER_ADMIN]);
-        if ($model->load(Yii::$app->request->post())) {
-            $shipping->save();
-            $model->id_shipping = $shipping->id;
-            if ($model->save()){
-                try{
-                    \Yii::$app->bot->sendMessage($user->telegram_chat_id, 'Назначена доставка '.$model->prefics);
-                }catch (Exception $e){
-                    $e->getMessage();
-                }
-                Yii::$app->session->addFlash('update', 'Успешно создана доставка');
-            } else {
-                $this->flashErrors($id);
-            }
-        }
-
-        return $this->render('shipping', [
-            'model' => $model,
-            'shipping' => $shipping,
-        ]);
-    }
-
-    /**
      * Creates a new Zakaz model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
