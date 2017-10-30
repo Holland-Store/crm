@@ -11,12 +11,14 @@ use Yii;
  * @property integer $id
  * @property integer $id_user
  * @property string $tovar
+ * @property string $id_tovar
  * @property integer $number
  * @property string $date
  * @property integer $action
  * @property string $date_end
  *
  * @property User $idUser
+ * @property Tovar $idTovar
  */
 class Custom extends \yii\db\ActiveRecord
 {
@@ -36,8 +38,8 @@ class Custom extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['tovar'], 'required'],
-            [['id_user', 'number', 'action'], 'integer'],
+            [['id_tovar', 'number'], 'required'],
+            [['id_user', 'number', 'action', 'id_tovar'], 'integer'],
             ['id_user', 'default', 'value' => Yii::$app->user->getId()],
             ['action', 'default', 'value' => 0],
             [['tovar'], 'string', 'max' => 50],
@@ -55,11 +57,20 @@ class Custom extends \yii\db\ActiveRecord
             'id' => 'ID',
             'id_user' => 'Магазин',
             'tovar' => 'Товар',
+            'id_tovar' => 'Товар',
             'number' => 'Кол-во',
             'date' => 'Дата',
             'action' => 'Статус',
             'date_end' => 'Date_end,',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getIdTovar()
+    {
+        return $this->hasOne(Tovar::className(), ['id' => 'id_tovar']);
     }
 
     /**
