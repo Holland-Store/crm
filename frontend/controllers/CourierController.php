@@ -159,7 +159,7 @@ class CourierController extends Controller
         $telegram = new Telegram();
         $notifications = new Notification();
 
-        if ($shipping->load(Yii::$app->request->post())) {
+        if ($shipping->load(Yii::$app->request->post()) && $shipping->validate()) {
             $shipping->save();//сохранение доставка
             if (!$shipping->save()) {
                 print_r($shipping->getErrors());
