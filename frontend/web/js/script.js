@@ -14,20 +14,14 @@ $(document).ready(function(){
         $( 'body' ).on( 'click', '.commentButton', function() {
             $( ".CommentForm" ).toggleClass( "CommentForm-visible" );
         });
-       $(function () {
-           $("[data-toggle = 'tooltip']").tooltip();
-       });
-        $(function () {
-            $("[data-toggle='popover']").popover();
-        });
        $('body').on('change', '#zakaz-status', function () {
                 $('#autsors')
                     .css({'display': ($(this).val() == 8 ? 'block' : 'none')})
                     .prop('selectedIndex', 0)
        });
-    $('body').on('click', '#checkboxAppoint', function () {
-        $('.form-appoint').toggleClass('visible');
-    });
+       $('body').on('click', '#checkboxAppoint', function () {
+           $('.form-appoint').toggleClass('visible');
+       });
        $('#zakaz-status').each(function () {
             if ($(this).val() == 8){
                 $('#autsors').css('display', 'block')
@@ -36,6 +30,7 @@ $(document).ready(function(){
                     .prop('selectedIndex', 0);
             }
        });
+
     function addClassForm(button, form, formSecond){
         $(button).click(function () {
             $(form)[0].reset();
@@ -51,5 +46,10 @@ $(document).ready(function(){
             })
         });
     }
+    $(function () {
+        $("[data-toggle = 'tooltip']").tooltip();
+    });
+    $(function () {
+        $("[data-toggle='popover']").popover();
+    });
 });
-
