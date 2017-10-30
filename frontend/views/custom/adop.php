@@ -18,29 +18,29 @@ $this->title = 'Все запросы';?>
 <div class="custom-index">
 
     <?php $form = ActiveForm::begin([
+        'id' => 'custom-form',
         'enableAjaxValidation'      => true,
         'enableClientValidation'    => false,
         'validateOnChange'          => false,
         'validateOnSubmit'          => true,
         'validateOnBlur'            => false,
+        'action' => ['custom/adop']
     ]); ?>
     <div id="customForm">
+        <div class="error-custom"></div>
 
-        <?=
-        TabularInput::widget([
+        <?= TabularInput::widget([
             'models' => $models,
+            'attributeOptions' => [
+                'enableAjaxValidation'      => true,
+                'enableClientValidation'    => false,
+                'validateOnChange'          => false,
+                'validateOnSubmit'          => true,
+                'validateOnBlur'            => false,
+            ],
             'columns' => [
-//                [
-//                    'name' => 'tovar',
-//                    'type' => \unclead\multipleinput\MultipleInputColumn::TYPE_TEXT_INPUT,
-//                    'title' => 'Товар',
-//                    'options' => [
-//                        'maxlength' => '50',
-//                        'placeholder' => 'Максимальное значение должно быть не больше 50 символов',
-//                    ]
-//                ],
                 [
-                    'name' => 'tovar',
+                    'name' => 'id_tovar',
                     'type' => Select2::className(),
                     'title' => 'Товар',
                     'options' => [
@@ -145,12 +145,12 @@ $this->title = 'Все запросы';?>
         'columns' => [
             [
 				'attribute' => 'date',
-				'format' => ['datetime', 'php:d M H:m'],
+				'format' => ['datetime', 'php:d M H:i'],
                 'hAlign' => GridView::ALIGN_RIGHT,
                 'contentOptions' => ['class' => 'border-left textTr tr90', 'style' => 'border:none'],
 			],
             [
-                'attribute' => 'tovar',
+                'attribute' => 'idTovar.name',
                 'contentOptions'=>['style'=>'white-space: normal;'],
             ],
             [
