@@ -1,5 +1,6 @@
 <?php
 
+use unclead\multipleinput\MultipleInputColumn;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use unclead\multipleinput\TabularInput;
@@ -20,13 +21,19 @@ use unclead\multipleinput\TabularInput;
     ]); ?>
     <div id="customForm">
 
-        <?=
-        TabularInput::widget([
+        <?= TabularInput::widget([
             'models' => $models,
+            'attributeOptions' => [
+                'enableAjaxValidation'      => true,
+                'enableClientValidation'    => false,
+                'validateOnChange'          => false,
+                'validateOnSubmit'          => true,
+                'validateOnBlur'            => false,
+            ],
             'columns' => [
                 [
                     'name' => 'tovar',
-                    'type' => \unclead\multipleinput\MultipleInputColumn::TYPE_TEXT_INPUT,
+                    'type' => MultipleInputColumn::TYPE_TEXT_INPUT,
                     'title' => 'Товар',
                     'options' => [
                         'maxlength' => '50',
