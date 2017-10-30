@@ -40,7 +40,7 @@ class CustomSearch extends Custom
      */
     public function search($params, $index)
     {
-        $query = Custom::find()->indexBy('id')->with('idUser');
+        $query = Custom::find()->indexBy('id')->with('idUser', 'idTovar');
 		if($index == 'zakup'){
 			$query->where(['action' => 0]);
 		} elseif($index == 'manager'){
