@@ -8,9 +8,9 @@ use app\models\CustomSearch;
 use yii\base\Model;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\web\Response;
+use yii\widgets\ActiveForm;
 
 
 /**
@@ -24,12 +24,6 @@ class CustomController extends Controller
     public function behaviors()
     {
         return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
 			'access' => [
 				'class' => AccessControl::className(),
 				'rules' => [
@@ -80,11 +74,21 @@ class CustomController extends Controller
      */
     public function actionAdop()
     {
-        $data = Yii::$app->request->post('Custom', []);
         $models = [new Custom()];
-        foreach (array_keys($data) as $index) {
-            $models[$index] = new Custom();
+        $request = Yii::$app->request;
+        if ($request->isPost && $request->post('ajax') != null){
+            $data = Yii::$app->request->post('Custom', []);
+            foreach (array_keys($data) as $index) {
+                $models[$index] = new Custom();
+            }
+            Model::loadMultiple($models, $request->post());
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            $result = ActiveForm::validateMultiple($models);
+            return $result;
         }
+//        foreach (array_keys($data) as $index) {
+//            $models[$index] = new Custom();
+//        }
 // загружаем данные из запроса в массив созданных моделей
         if (Model::loadMultiple($models, Yii::$app->request->post())) {
             foreach ($models as $model) {
