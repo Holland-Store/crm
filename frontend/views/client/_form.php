@@ -42,7 +42,7 @@ use yii\widgets\MaskedInput;
 </div>
 <?php $script = <<<JS
 $('form#{$model->formName()}').on('beforeSubmit', function(e) {
-  var form = $(this);
+  let form = $(this);
   $.post(
       form.attr('action'),
       form.serialize()
