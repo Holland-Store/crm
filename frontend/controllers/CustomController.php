@@ -76,19 +76,16 @@ class CustomController extends Controller
     {
         $models = [new Custom()];
         $request = Yii::$app->request;
+        $data = $request->post('Custom', []);
+        foreach (array_keys($data) as $index) {
+            $models[$index] = new Custom();
+        }
         if ($request->isPost && $request->post('ajax') != null){
-            $data = Yii::$app->request->post('Custom', []);
-            foreach (array_keys($data) as $index) {
-                $models[$index] = new Custom();
-            }
             Model::loadMultiple($models, $request->post());
             Yii::$app->response->format = Response::FORMAT_JSON;
             $result = ActiveForm::validateMultiple($models);
             return $result;
         }
-//        foreach (array_keys($data) as $index) {
-//            $models[$index] = new Custom();
-//        }
 // загружаем данные из запроса в массив созданных моделей
         if (Model::loadMultiple($models, Yii::$app->request->post())) {
             foreach ($models as $model) {
