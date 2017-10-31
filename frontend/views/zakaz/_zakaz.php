@@ -162,7 +162,7 @@ use yii\widgets\MaskedInput;
             <?= Html::a('Задача', ['todoist/createzakaz', 'id_zakaz' => $model->id_zakaz], ['class' => 'btn btn-xs todoist']) ?>
         <?php if (Yii::$app->user->can('admin')): ?>
             <?php if (Yii::$app->user->can('admin')): ?>
-                <?= Html::submitButton('Доставка',['class' => 'btn action modalShipping-button', 'value' => Url::to(['courier/create-zakaz', 'id' => $model->id_zakaz])]) ?>
+                <?= Html::a('Доставка', ['#'],['class' => 'btn action modalShipping-button', 'value' => Url::to(['courier/create-zakaz', 'id' => $model->id_zakaz]), 'onclick' => 'return false']) ?>
             <?php endif ?>
         <?php endif ?>
         <?php if (Yii::$app->user->can('seeAdop') && $model->renouncement == null): ?>
