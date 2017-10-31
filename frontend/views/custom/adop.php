@@ -8,6 +8,7 @@ use kartik\grid\GridView;
 use yii\widgets\ActiveForm;
 use unclead\multipleinput\TabularInput;
 use kartik\widgets\Select2;
+use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\CustomSearch */
@@ -16,7 +17,6 @@ use kartik\widgets\Select2;
 
 $this->title = 'Все запросы';?>
 <div class="custom-index">
-
     <?php $form = ActiveForm::begin([
         'id' => 'custom-form',
         'enableAjaxValidation'      => true,
@@ -24,11 +24,8 @@ $this->title = 'Все запросы';?>
         'validateOnChange'          => false,
         'validateOnSubmit'          => true,
         'validateOnBlur'            => false,
-        'action' => ['custom/adop']
     ]); ?>
     <div id="customForm">
-        <div class="error-custom"></div>
-
         <?= TabularInput::widget([
             'models' => $models,
             'attributeOptions' => [
@@ -134,6 +131,9 @@ $this->title = 'Все запросы';?>
         ]); ?>
     </p>
 
+    <?php Pjax::begin([
+        'id' => 'pjax-custom_adop'
+    ]) ?>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'floatHeader' => true,
@@ -177,4 +177,5 @@ $this->title = 'Все запросы';?>
 //            ],
         ],
     ]); ?>
+    <?php Pjax::end() ?>
 </div>
