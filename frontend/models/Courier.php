@@ -49,7 +49,7 @@ class Courier extends ActiveRecord
     public function rules()
     {
         return [
-            [['to', 'from', 'date'], 'required'],
+            [['toYandexMap', 'fromYandexMap', 'to', 'from', 'date'], 'required'],
             [['id_zakaz', 'status'], 'integer'],
             [['data_to', 'data_from', 'date', 'toYandexMap', 'fromYandexMap'], 'safe'],
             [['commit'], 'string'],
