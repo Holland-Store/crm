@@ -95,7 +95,7 @@ class Zakaz extends ActiveRecord
      */
     public static function tableName()
     {
-        return 'zakaz';
+        return '{{%zakaz}}';
     }
 
     public function behaviors()
