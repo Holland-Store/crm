@@ -14,7 +14,9 @@ use yii\widgets\ActiveForm;
 
     <?php YandexMap::widget() ?>
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin([
+        'id' => 'CourierForm'
+    ]); ?>
 
     <?= $form->field($model, 'date')->widget(
             DateTimePicker::className(), [
@@ -27,11 +29,11 @@ use yii\widgets\ActiveForm;
             ],
     ]) ?>
 
-    <?= $form->field($model, 'toYandexMap')->textInput(['maxlength' => true, 'id' => 'toMap']) ?>
+    <?= $form->field($model, 'toYandexMap')->textInput(['maxlength' => true, 'id' => 'toMap', 'value' => $model->to_name]) ?>
     <?= $form->field($model, 'to')->hiddenInput(['maxlength' => true, 'id' => 'toInput'])->label(false) ?>
     <?= $form->field($model, 'to_name')->hiddenInput(['maxlength' => true, 'id' => 'toName'])->label(false) ?>
 
-    <?= $form->field($model, 'fromYandexMap')->textInput(['maxlength' => true, 'id' => 'fromMap']) ?>
+    <?= $form->field($model, 'fromYandexMap')->textInput(['maxlength' => true, 'id' => 'fromMap', 'value' => $model->from_name]) ?>
     <?= $form->field($model, 'from')->hiddenInput(['maxlength' => true, 'id' => 'fromInput'])->label(false) ?>
     <?= $form->field($model, 'from_name')->hiddenInput(['maxlength' => true, 'id' => 'fromName'])->label(false) ?>
 
