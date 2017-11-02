@@ -12,7 +12,7 @@ use yii\widgets\ActiveForm;
 
 <div class="courier-form">
 
-    <?php YandexMap::widget() ?>
+    <?php YandexMap::widget(['index' => 'courier']) ?>
 
     <?php $form = ActiveForm::begin([
         'id' => 'CourierForm'
