@@ -7,7 +7,6 @@ use app\models\Partners;
 use app\models\PartnersSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * PartnersController implements the CRUD actions for Partners model.
@@ -20,12 +19,14 @@ class PartnersController extends Controller
     public function behaviors()
     {
         return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
+            'access' => [
+                'class' => 'yii\filters\AccessControl',
+                'rules' => [
+                    'actions' => ['index', 'update', 'close'],
+                    'allow' => true,
+                    'roles' => ['admin']
+                ]
+            ]
         ];
     }
 
