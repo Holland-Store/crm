@@ -70,12 +70,12 @@ $this->title = $model->prefics;
             [
                 'attribute' => 'img',
                 'format' => 'raw',
-                'value' => $model->img == null ? null : Html::a($model->img, '@web/attachment/'.$model->img, ['download' => true, 'data-pjax' => 0])
+                'value' => $model->img == null ? null : Html::a($model->img, '@web/'.$model->img, ['download' => true, 'data-pjax' => 0])
             ],
             [
                 'attribute' => 'maket',
                 'format' => 'raw',
-                'value' => $model->maket == null ? null : Html::a($model->maket, '@web/maket/'.$model->maket, ['download' => true, 'data-pjax' => 0]),
+                'value' => $model->maket == null ? null : Html::a($model->maket, '@web/'.$model->maket, ['download' => true, 'data-pjax' => 0]),
                 'visible' => $model->maket != null
             ],
             [
@@ -186,7 +186,7 @@ $this->title = $model->prefics;
           form.serialize()
       )
       .done(function(result) {
-        if (result == true){
+        if (result === true){
             $.pjax.reload({container: '#commentPjax'});
             $('#formComment').trigger('reset');
         } else {
