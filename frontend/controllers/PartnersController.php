@@ -23,7 +23,7 @@ class PartnersController extends Controller
                 'class' => 'yii\filters\AccessControl',
                 'rules' => [
                     [
-                        'actions' => ['index', 'update', 'close'],
+                        'actions' => ['index', 'update', 'create', 'view','close'],
                         'allow' => true,
                         'roles' => ['admin']
                     ]
