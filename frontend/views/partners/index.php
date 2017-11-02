@@ -7,7 +7,7 @@ use kartik\grid\GridView;
 /* @var $searchModel app\models\PartnersSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Partners';
+$this->title = 'Партнеры';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="partners-index">
