@@ -55,7 +55,7 @@ use yii\helpers\Html;
 <div class="col-lg-6">
     <div>
         <?php echo $model->img != null
-            ? 'Файл: '.Html::a(Html::encode($model->img), '@web/todoist_img/'.$model->img, [
+            ? 'Файл: '.Html::a('<span class="glyphicon glyphicon-paperclip"></span>', '@web/'.$model->img, [
                 'download' => true,
                 'data-pjax' => 0,
                 'title' => 'Чтобы скачать приложение кликните на ссылку',
