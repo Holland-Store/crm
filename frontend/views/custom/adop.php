@@ -18,14 +18,14 @@ use yii\widgets\Pjax;
 $this->title = 'Все запросы';?>
 <div class="custom-index">
     <?php $form = ActiveForm::begin([
-        'id' => 'custom-form',
+        'id' => 'customForm',
         'enableAjaxValidation'      => true,
         'enableClientValidation'    => false,
         'validateOnChange'          => false,
         'validateOnSubmit'          => true,
         'validateOnBlur'            => false,
     ]); ?>
-    <div id="customForm">
+    <div class="custom-formAdop">
         <?= TabularInput::widget([
             'models' => $models,
             'attributeOptions' => [
@@ -132,7 +132,7 @@ $this->title = 'Все запросы';?>
     </p>
 
     <?php Pjax::begin([
-        'id' => 'pjax-custom_adop'
+        'id' => 'pjax-customAdop'
     ]) ?>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
