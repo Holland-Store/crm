@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "partners".
@@ -9,15 +10,23 @@ namespace app\models;
  * @property integer $id
  * @property string $name
  * @property string $address
+ * @property string $coordinate
+ * @property string $city
+ * @property string $street
+ * @property string $room
  * @property string $phone
  * @property string $contact_person
  * @property string $email
  * @property string $web
  * @property string $specialization
  * @property integer $active
+ *
+ * @property Zakaz[] $zakazs
  */
-class Partners extends \yii\db\ActiveRecord
+class Partners extends ActiveRecord
 {
+    const ACTIVE = 0;
+    const ClOSE = 1;
     /**
      * @inheritdoc
      */
@@ -32,11 +41,12 @@ class Partners extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'active'], 'required'],
+            [['name', 'address', 'phone', 'specialization'], 'required'],
             [['active'], 'integer'],
-            [['name', 'contact_person', 'email', 'web', 'specialization'], 'string', 'max' => 50],
-            [['address'], 'string', 'max' => 86],
+            [['name', 'coordinate', 'city', 'street', 'contact_person', 'email', 'web'], 'string', 'max' => 50],
+            [['address', 'specialization'], 'string', 'max' => 86],
             [['phone'], 'string', 'max' => 15],
+            [['room'], 'string', 'max' => 5],
         ];
     }
 
@@ -49,12 +59,24 @@ class Partners extends \yii\db\ActiveRecord
             'id' => 'ID',
             'name' => 'Наименование',
             'address' => 'Адрес',
+            'coordinate' => 'Координаты',
+            'city' => 'Город',
+            'street' => 'Улица',
+            'room' => 'Кабюинет',
             'phone' => 'Телефон',
-            'email' => 'Телефон',
-            'web' => 'Телефон',
-            'specialization' => 'Телефон',
             'contact_person' => 'Контактное лицо',
+            'email' => 'Email',
+            'web' => 'Сайт',
+            'specialization' => 'Специализация',
             'active' => 'Active',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getZakazs()
+    {
+        return $this->hasMany(Zakaz::className(), ['id_autsors' => 'id']);
     }
 }
