@@ -183,7 +183,7 @@ class Todoist extends ActiveRecord
             mkdir('attachment/' . $year . '/' . $month.'/task');
         }
         $this->file->saveAs('attachment/'.$year.'/'.$month.'/'.'task/'.time().'_todoist.'.$this->file->extension);
-        $this->img = time().'_todoist.'.$this->file->extension;
+        $this->img = 'attachment/'.$year.'/'.$month.'/'.'task/'.time().'_todoist.'.$this->file->extension;
     }
 
 }
