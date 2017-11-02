@@ -84,6 +84,7 @@ class Counter extends Widget
             ['label' => 'Управляющий', 'encode' => false,'url' => ['site/manager'], 'visible' => Yii::$app->user->can('manager')],
             ['label' => 'Персонал', 'encode' => false,'url' => ['personnel/shifts'], 'visible' => Yii::$app->user->can('manager')],
             ['label' => 'Guides', 'url' => ['guide/home-page']],
+            ['label' => 'Партнеры', 'url' => ['partners/index'], 'visible' => Yii::$app->user->can('admin')],
         ],
     ]);
     }
