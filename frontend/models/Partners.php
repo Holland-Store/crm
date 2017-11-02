@@ -41,7 +41,7 @@ class Partners extends ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'address', 'phone', 'specialization'], 'required'],
+            [['name', 'phone', 'specialization'], 'required'],
             [['active'], 'integer'],
             [['name', 'coordinate', 'city', 'street', 'contact_person', 'email', 'web'], 'string', 'max' => 50],
             [['address', 'specialization'], 'string', 'max' => 86],
