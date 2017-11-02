@@ -33,7 +33,13 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'street',
                 'value' => function($model){
-                    return $model->street == null ? false : $model->street.' оф.'.$model->room;
+                    if($model->street == null){
+                        return false;
+                    } elseif ($model->room == null){
+                        return $model->street;
+                    } else {
+                        return $model->street.' оф.'.$model->room;
+                    }
                 }
             ],
             'phone',
