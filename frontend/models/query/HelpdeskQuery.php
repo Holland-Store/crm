@@ -3,13 +3,14 @@
 namespace app\models\query;
 use app\models\Helpdesk;
 use Yii;
+use yii\db\ActiveQuery;
 
 /**
  * This is the ActiveQuery class for [[\app\models\Helpdesk]].
  *
  * @see \app\models\Helpdesk
  */
-class HelpdeskQuery extends \yii\db\ActiveQuery
+class HelpdeskQuery extends ActiveQuery
 {
     public function workSystem()
     {
