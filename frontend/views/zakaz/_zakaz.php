@@ -1,13 +1,11 @@
 <?php
 
-use app\models\Financy;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\widgets\DetailView;
 use yii\helpers\Url;
 use yii\bootstrap\Modal;
 use app\models\Zakaz;
-use yii\widgets\MaskedInput;
 
 /* @var  $comment app\models\Comment */
 /* @var  $model app\models\Zakaz */
@@ -192,38 +190,7 @@ use yii\widgets\MaskedInput;
         <?php endif ?>
         <?php if (Yii::$app->user->can('seeAdop')): ?>
             <?php if ($model->oplata - $model->fact_oplata != 0): ?>
-                <?php Modal::begin([
-                    'header' => '<h3 style="color: rgba(204, 198, 198, 0.6)">Оплата услуг</h3>',
-                    'class' => 'modal-sm',
-                    'toggleButton' => [
-                        'tag' => 'a',
-                        'class' => 'btn action',
-                        'style' => 'float: right;margin-right: 71px;',
-                        'label' => 'Чек',
-                    ]
-                ]);
-                $financy = new Financy();
-                $financy->amount = $model->oplata - $model->fact_oplata;
-                /** @var $financy app\models\Financy */
-                $form = ActiveForm::begin([
-                    'action' => ['financy/draft', 'id' => $model->id_zakaz],
-                    'id' => 'draftForm',
-                ]);
-
-                echo '<div style="color: rgba(204, 198, 198, 0.6)">'.Html::encode('К доплате: ').number_format($model->oplata - $model->fact_oplata,0,',', ' ').' p.</div>';
-                echo $form->field($financy, 'sum')->widget(MaskedInput::className(), [
-                    'clientOptions' => [
-                        'alias' => 'decimal',
-                        'groupSeparator' => ' ',
-                        'autoGroup' => true,
-                    ],
-                ]);
-                echo $form->field($financy, 'id_zakaz')->hiddenInput(['value' => $model->id_zakaz])->label(false);
-                echo $form->field($financy, 'id_user')->hiddenInput(['value' => Yii::$app->user->id])->label(false);
-                echo Html::submitButton('Зачислить', ['class' => 'btn action']);
-
-                ActiveForm::end();
-                Modal::end() ?>
+                <?= Html::a('Чек', ['#'], ['class' => 'draft btn action', 'value' => Url::to(['financy/draft', 'id' => $model->id_zakaz])]) ?>
             <?php endif ?>
         <?php endif; ?>
         <?= Html::a('Понлный просмотр', ['view', 'id' => $model->id_zakaz], ['class' => 'btn action']) ?>
