@@ -8,7 +8,7 @@ use yii\widgets\MaskedInput;
 /** @var $financy app\models\Financy */
 
 $form = ActiveForm::begin([
-        'action' => ['zakaz/draft', 'id' => $model->id_zakaz],
+        'id' => 'draftForm',
     ]); ?>
 
 <div class="draftSum">
