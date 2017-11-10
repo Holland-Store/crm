@@ -42,7 +42,42 @@ class ZakazSearch extends Zakaz
      */
     public function search($params, $role)
     {
-        $query = Zakaz::find()->with(['idShipping', 'idSotrud', 'tags', 'financies', 'idClient', 'shifts.idSotrud', 'idAutsors', 'zakazTag'])->indexBy('id_zakaz');
+        $query = Zakaz::find()
+            ->select([
+                'zakaz.id_zakaz',
+                'srok',
+                'data',
+                'sotrud.name',
+                'id_shop',
+                'id_autsors',
+                'id_shipping',
+                'id_unread',
+                'shifts_id',
+                'prioritet',
+                'zakaz.status',
+                'statusDisain',
+                'statusMaster',
+                'oplata',
+                'fact_oplata',
+                'number',
+                'description',
+                'information',
+                'img',
+                'maket',
+                'declined',
+                'renouncement',
+                'client.name',
+                'client.phone',
+                'client.email',
+            ])
+            ->joinWith(['idClient' => function($q){
+                $q->from(['client' => Client::tableName()]);
+            }])
+            ->joinWith(['idSotrud' => function($q){
+                $q->from(['sotrud' => Personnel::tableName()]);
+            }])
+            ->with(['idShipping', 'idSotrud', 'tags', 'financies', 'idClient', 'shifts.idSotrud', 'idAutsors', 'zakazTag'])
+            ->indexBy('id_zakaz');
 
         // add conditions that should always apply here
 
