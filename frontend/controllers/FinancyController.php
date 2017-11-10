@@ -75,7 +75,7 @@ class FinancyController extends Controller
             }
         }
 
-        return $this->render('draft', [
+        return $this->renderAjax('draft', [
             'financy' => $financy,
             'model' => $model,
         ]);
