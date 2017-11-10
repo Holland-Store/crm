@@ -803,18 +803,18 @@ thead a {
   #acceptdModal .modal-content .close {
     display: none; }
   #acceptdModal .modal-content .modal-header h2 {
-    margin-bottom: 0px; }
+    margin-bottom: 0; }
   #acceptdModal .modal-content .modal-body {
-    padding-top: 0px; }
+    padding-top: 0; }
 
 #declinedModal .modal-content {
   width: 75%; }
   #declinedModal .modal-content .close {
     display: none; }
   #declinedModal .modal-content .modal-header h2 {
-    margin-bottom: 0px; }
+    margin-bottom: 0; }
   #declinedModal .modal-content .modal-body {
-    padding-top: 0px; }
+    padding-top: 0; }
 
 .footer-view-zakaz .modal-content {
   width: 61%;
@@ -824,7 +824,7 @@ thead a {
   .footer-view-zakaz .modal-content .modal-header {
     padding: 6px; }
   .footer-view-zakaz .modal-content .modal-body {
-    padding: 0px; }
+    padding: 0p; }
 
 #login-form input {
   padding-left: 5%; }
