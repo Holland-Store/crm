@@ -501,6 +501,7 @@ $this->registerJsFile('https://api-maps.yandex.ru/2.1/?lang=ru_RU', ['type' => '
     Modal::end();?>
     <?php Modal::begin([
         'id' => 'draftModal',
+        'header' => '<h2>Оплата услуг</h2>'
     ]);
     echo '<div class="modalContent"></div>';
     Modal::end() ?>
