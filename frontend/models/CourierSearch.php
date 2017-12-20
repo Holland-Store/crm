@@ -2,10 +2,8 @@
 
 namespace app\models;
 
-use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Courier;
 
 /**
  * CourierSearch represents the model behind the search form about `app\models\Courier`.
@@ -39,17 +37,23 @@ class CourierSearch extends Courier
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params, $view)
     {
         $query = Courier::find()->indexBy('id')->with(['idZakaz', 'zakazs']);
-        $query->andWhere(['<','status',Courier::DELIVERED]);
+        if($view == 'ready'){
+            $query->andWhere(['>', 'data_from', '0000-00-00 00:00:00']);
+        } else {
+            $query->andWhere(['<','status',Courier::DELIVERED]);
+        }
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => [
+                'pageSize' => 50
+            ]
         ]);
-        $dataProvider->pagination = false;
 
         $this->load($params);
 
@@ -68,6 +72,7 @@ class CourierSearch extends Courier
         ]);
 
         $query->andFilterWhere(['like', 'to', $this->to])
+            ->andFilterWhere(['like', 'id_zakaz', $this->id_zakaz])
             ->andFilterWhere(['like', 'from', $this->from]);
 
         return $dataProvider;
