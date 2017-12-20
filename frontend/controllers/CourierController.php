@@ -36,9 +36,14 @@ class CourierController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                    [
-                       'actions' => ['index', 'ready', 'make', 'delivered'],
+                       'actions' => ['index', 'make', 'delivered'],
                        'allow' => true,
                        'roles' => ['courier'],
+                   ],
+                   [
+                       'actions' => ['ready'],
+                       'allow' => true,
+                       'roles' => ['courier', 'admin']
                    ],
                    [
                         'actions' => ['shipping', 'deletes', 'create', 'create-zakaz', 'update'],
@@ -57,7 +62,7 @@ class CourierController extends Controller
     public function actionIndex()
     {
         $searchModel = new CourierSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, 'courier');
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -67,12 +72,11 @@ class CourierController extends Controller
     public function actionReady()
     {
         $courier = Courier::find();
-        $dataProvider = new ActiveDataProvider([
-            'query' => $courier->andWhere(['>', 'data_from', '0000-00-00 00:00:00']),
-            'pagination' => ['pageSize' => 50,]
-            ]);
+        $searchModel = new CourierSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, 'ready');
         
         return $this->render('ready', [
+            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
@@ -96,6 +100,7 @@ class CourierController extends Controller
      * Delete shipping after courier not accepted shipping
      * @param $id
      * @return \yii\web\Response
+     * @throws NotFoundHttpException
      */
     public function actionDeletes($id)
     {
@@ -120,6 +125,7 @@ class CourierController extends Controller
      * Displays a single Courier model.
      * @param integer $id
      * @return mixed
+     * @throws NotFoundHttpException
      */
     public function actionView($id)
     {
@@ -191,6 +197,7 @@ class CourierController extends Controller
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
+     * @throws NotFoundHttpException
      */
     public function actionUpdate($id)
     {
@@ -211,6 +218,10 @@ class CourierController extends Controller
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
+     * @throws NotFoundHttpException
+     * @throws \Exception
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
      */
     public function actionDelete($id)
     {
@@ -224,6 +235,7 @@ class CourierController extends Controller
      * If success redirected index view
      * @param $id
      * @return \yii\web\Response
+     * @throws NotFoundHttpException
      */
     public function actionMake($id)//Курьер забрал заказ
     {
@@ -248,6 +260,7 @@ class CourierController extends Controller
      * If success redirected index view
      * @param $id
      * @return \yii\web\Response
+     * @throws NotFoundHttpException
      */
     public function actionDelivered($id)//Курьер доставил заказ
     {
@@ -283,6 +296,7 @@ class CourierController extends Controller
 
     /**
      * @param null $id
+     * @throws NotFoundHttpException
      */
     private function flashErrors($id = null)
     {
