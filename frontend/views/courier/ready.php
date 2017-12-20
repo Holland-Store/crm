@@ -13,6 +13,7 @@ $this->title = 'Готовые доставки';
 <?php Pjax::begin(); ?>  
 
 <div class="courier-index">
+    <?php echo $this->render('_search', ['model' => $searchModel]) ?>
 
 <?= GridView::widget([
         'dataProvider' => $dataProvider,
