@@ -2,6 +2,7 @@
 
 use app\models\Courier;
 use yii\bootstrap\ButtonDropdown;
+use yii\bootstrap\Nav;
 use yii\helpers\Html;
 use kartik\grid\GridView;
 use yii\widgets\Pjax;
@@ -134,4 +135,12 @@ $this->title = 'Все доставки';
             ]
         ],
     ]); ?>
-    <?php Pjax::end(); ?></div>
+<?php Pjax::end(); ?></div>
+<div class="footerNav">
+    <?php echo Nav::widget([
+        'options' => ['class' => 'nav nav-pills footerNav'],
+        'items' => [
+            ['label' => 'Архив', 'url' => ['courier/ready'], 'visible' => Yii::$app->user->can('admin')],
+        ],
+    ]); ?>
+</div>
