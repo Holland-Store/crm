@@ -54,6 +54,7 @@ use yii\helpers\Html;
 
 <div class="col-lg-6">
     <div>
+        <?= Html::encode('Создан '.Yii::$app->formatter->asDatetime($model->date, 'php:d M Y H:i')) ?>
         <?php echo $model->img != null
             ? 'Файл: '.Html::a('<span class="glyphicon glyphicon-paperclip"></span>', '@web/'.$model->img, [
                 'download' => true,
