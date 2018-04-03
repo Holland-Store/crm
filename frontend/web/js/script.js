@@ -31,6 +31,23 @@ $(document).ready(function(){
             }
        });
 
+       $('.sendGood').click(function (e) {
+           e.preventDefault();
+           let url = $(this).attr('href');
+           let id = $(this).attr('id');
+           console.log(id);
+           $.ajax({
+               type: 'get',
+               url: 'http://crm/'+url
+           }).done(result => {
+               if(result === '1'){
+                $('#'+id).parents('tr').remove();
+               } else {
+                   console.log(result);
+               }
+           })
+       });
+
     function addClassForm(button, form, formSecond){
         $(button).click(function () {
             $(form)[0].reset();
