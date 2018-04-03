@@ -14,6 +14,7 @@ use Yii;
  * @property integer $id_zakaz
  * @property integer $id_todoist
  * @property integer $id_helpdesk
+ * @property integer $notice_id
  * @property string $date
  * @property string $comment
  * @property integer $category
@@ -40,7 +41,7 @@ class Comment extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_user', 'sotrud', 'id_zakaz', 'id_todoist', 'id_helpdesk', 'category'], 'integer'],
+            [['id_user', 'sotrud', 'id_zakaz', 'id_todoist', 'id_helpdesk', 'notice_id', 'category'], 'integer'],
             [['date'], 'safe'],
             [['comment'], 'string'],
             [['id_helpdesk'], 'exist', 'skipOnError' => true, 'targetClass' => Helpdesk::className(), 'targetAttribute' => ['id_helpdesk' => 'id']],
@@ -63,10 +64,19 @@ class Comment extends \yii\db\ActiveRecord
             'id_zakaz' => 'Id Zakaz',
             'id_todoist' => 'Id Todoist',
             'id_helpdesk' => 'Id Helpdesk',
+            'notice_id' => 'Notice Id',
             'date' => 'Date',
             'comment' => 'Comment',
             'category' => 'Category',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getNotice()
+    {
+        return $this->hasOne(Notice::className(), ['id' => 'notice_id']);
     }
 
     /**
