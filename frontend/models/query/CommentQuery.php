@@ -35,9 +35,11 @@ class CommentQuery extends ActiveQuery
 
     public function zakaz($id)
     {
-        return $this->addSelect(['DATE(date) as just_date','TIME(date) as time','comment','id_user'])
-            ->indexBy('id_zakaz')
-            ->joinWith(['idUser'])
+        return $this
+//            ->addSelect(['DATE(date) as just_date','TIME(date) as time','comment','id_user'])
+//            ->indexBy('id_zakaz')
+//            ->joinWith(['idUser'])
+            ->with(['idUser'])
             ->where(['id_zakaz' => $id])
             ->asArray()
             ->all();
