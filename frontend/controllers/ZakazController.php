@@ -4,6 +4,7 @@ namespace frontend\controllers;
 
 use app\models\Client;
 use app\models\Financy;
+use app\models\Notice;
 use app\models\User;
 use app\models\ZakazTag;
 use frontend\models\Telegram;
@@ -13,7 +14,6 @@ use app\models\Courier;
 use app\models\Comment;
 use app\models\Notification;
 use app\models\ZakazSearch;
-use yii\base\Exception;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -125,7 +125,8 @@ class ZakazController extends Controller
         $commentField = new Comment();
         $comment = Comment::find()->zakaz($id);
         $financy = Financy::find()->view($id);
-        $comment = ArrayHelper::index($comment, null, 'just_date');
+        $notice = Notice::find()->where(['order_id' => $id])->orderBy('id DESC')->all();
+//        $comment = ArrayHelper::index($comment, null, 'just_date');
 //        $zakaz = $model->id_zakaz;
 
         $dataProvider = new ActiveDataProvider([
@@ -148,6 +149,7 @@ class ZakazController extends Controller
             'dataProvider' => $dataProvider,
             'comment' => $comment,
             'commentField' => $commentField,
+            'notice' => $notice,
             'financy' => $financy,
         ]);
     }
