@@ -208,16 +208,18 @@ class CustomController extends Controller
      * Close an existing Custom model.
      * if close is successful, the browser will be redirected to hte 'index' page.
      * @param $id
-     * @return Response
+     * @return array|bool
      */
     public function actionClose($id)
     {
         $model = $this->findModel($id);
         $model->action = Custom::CUSTOM_BROUGHT;
         $model->date_end = date('Y-m-d H:i:s');
-        $model->save();
-
-        return $this->redirect(['index']);
+        if(!$model->save()){
+            return json_encode($model->getErrors(), JSON_UNESCAPED_UNICODE);
+        };
+        return true;
+//        return $this->redirect(['index']);
     }
 
     /**
