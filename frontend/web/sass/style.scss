@@ -9,6 +9,7 @@
 @import "button";
 @import "modal";
 @import "input";
+@import "detailview";
 
 $display: none;
 $bodyBackground: #302927;
@@ -224,5 +225,26 @@ body{
         transform: scale(1.1);
       }
     }
+  }
+}
+
+.zakaz-view{
+  .notice-block{
+    background: #736a50;
+    padding: 7px;
+    margin-bottom: 5px;
+  }
+  .notice-action{
+    font-style: italic;
+  }
+  .zakaz-view_comment{
+      height: 88px;
+      overflow: auto;
+  }
+  .notice-sotrud{
+    margin-right: 10px;
+  }
+  .zakaz-view_shipping{
+    height: 150px;
   }
 }

@@ -26,11 +26,11 @@
 }
 /* line 18, ../sass/modal.scss */
 #acceptdModal .modal-content .modal-header h2 {
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
 /* line 22, ../sass/modal.scss */
 #acceptdModal .modal-content .modal-body {
-  padding-top: 0px;
+  padding-top: 0;
 }
 
 /* line 12, ../sass/modal.scss */
@@ -43,11 +43,11 @@
 }
 /* line 18, ../sass/modal.scss */
 #declinedModal .modal-content .modal-header h2 {
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
 /* line 22, ../sass/modal.scss */
 #declinedModal .modal-content .modal-body {
-  padding-top: 0px;
+  padding-top: 0;
 }
 
 /* line 50, ../sass/modal.scss */
@@ -63,5 +63,5 @@
 }
 /* line 58, ../sass/modal.scss */
 .footer-view-zakaz .modal-content .modal-body {
-  padding: 0px;
+  padding: 0;
 }

@@ -1184,11 +1184,11 @@ thead a {
 }
 /* line 18, ../sass/modal.scss */
 #acceptdModal .modal-content .modal-header h2 {
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
 /* line 22, ../sass/modal.scss */
 #acceptdModal .modal-content .modal-body {
-  padding-top: 0px;
+  padding-top: 0;
 }
 
 /* line 12, ../sass/modal.scss */
@@ -1201,11 +1201,11 @@ thead a {
 }
 /* line 18, ../sass/modal.scss */
 #declinedModal .modal-content .modal-header h2 {
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
 /* line 22, ../sass/modal.scss */
 #declinedModal .modal-content .modal-body {
-  padding-top: 0px;
+  padding-top: 0;
 }
 
 /* line 50, ../sass/modal.scss */
@@ -1221,7 +1221,7 @@ thead a {
 }
 /* line 58, ../sass/modal.scss */
 .footer-view-zakaz .modal-content .modal-body {
-  padding: 0px;
+  padding: 0;
 }
 
 /* line 51, ../sass/input.scss */
@@ -1453,13 +1453,18 @@ thead a {
   padding-right: 2%;
 }
 
-/* line 35, ../sass/style.scss */
+/* line 3, ../sass/detailview.scss */
+.zakaz-view .zakaz-information .addNotice {
+  float: right;
+}
+
+/* line 36, ../sass/style.scss */
 body {
   background: #302927;
   font-family: "Helvetica Neue", Helvetica, sans-serif;
 }
 
-/* line 39, ../sass/style.scss */
+/* line 40, ../sass/style.scss */
 .logout {
   float: right;
   font-size: 11px;
@@ -1471,23 +1476,23 @@ body {
   top: -30px;
   height: 30px;
 }
-/* line 49, ../sass/style.scss */
+/* line 50, ../sass/style.scss */
 .logout span {
   padding-left: 9px;
   font-size: 12px;
 }
-/* line 53, ../sass/style.scss */
+/* line 54, ../sass/style.scss */
 .logout .exit {
   color: #802c2c;
 }
-/* line 56, ../sass/style.scss */
+/* line 57, ../sass/style.scss */
 .logout:hover {
   color: rgba(204, 198, 198, 0.6);
   text-decoration: none;
   background: #191412;
 }
 
-/* line 63, ../sass/style.scss */
+/* line 64, ../sass/style.scss */
 .wrap .logo {
   background-image: url("../img/holland.png");
   background-repeat: no-repeat;
@@ -1497,7 +1502,7 @@ body {
   height: 58px;
   float: left;
 }
-/* line 72, ../sass/style.scss */
+/* line 73, ../sass/style.scss */
 .wrap .headerNav {
   margin-top: -26px;
   margin-left: 426px;
@@ -1508,12 +1513,12 @@ body {
   width: 506px;
   height: 36px;
 }
-/* line 82, ../sass/style.scss */
+/* line 83, ../sass/style.scss */
 .wrap .headerNav li a {
   color: rgba(204, 198, 198, 0.6);
   padding-right: 3px;
 }
-/* line 85, ../sass/style.scss */
+/* line 86, ../sass/style.scss */
 .wrap .headerNav li a span {
   color: rgba(204, 198, 198, 0.6);
   background: #3a3331;
@@ -1521,35 +1526,35 @@ body {
   font-size: 11px;
   font-weight: 700;
 }
-/* line 92, ../sass/style.scss */
+/* line 93, ../sass/style.scss */
 .wrap .headerNav li a:hover {
   color: #736a50;
 }
-/* line 94, ../sass/style.scss */
+/* line 95, ../sass/style.scss */
 .wrap .headerNav li a:hover span {
   background: transparent;
 }
-/* line 102, ../sass/style.scss */
+/* line 103, ../sass/style.scss */
 .wrap .headerNav .active a span {
   color: #302927;
   background: #736a50;
 }
-/* line 105, ../sass/style.scss */
+/* line 106, ../sass/style.scss */
 .wrap .headerNav .active a span:hover {
   color: #302927;
   background: transparent;
 }
-/* line 113, ../sass/style.scss */
+/* line 114, ../sass/style.scss */
 .wrap .container {
   padding: 41px 15px 20px;
 }
-/* line 116, ../sass/style.scss */
+/* line 117, ../sass/style.scss */
 .wrap .nav-pills > li.active > a {
   background-color: #736a50;
   color: #302927;
 }
 
-/* line 121, ../sass/style.scss */
+/* line 122, ../sass/style.scss */
 .titleMain {
   font-size: 27px;
   font-weight: 700;
@@ -1560,7 +1565,7 @@ body {
   top: 14px;
 }
 
-/* line 130, ../sass/style.scss */
+/* line 131, ../sass/style.scss */
 .notification-container {
   position: fixed;
   width: 16%;
@@ -1577,109 +1582,133 @@ body {
   list-style: none;
 }
 
-/* line 145, ../sass/style.scss */
+/* line 146, ../sass/style.scss */
 .notification-container .hidden {
   display: none;
 }
 
-/* line 148, ../sass/style.scss */
+/* line 149, ../sass/style.scss */
 .notification-content {
   height: 169px;
   overflow: auto;
 }
 
-/* line 153, ../sass/style.scss */
+/* line 154, ../sass/style.scss */
 .zakaz-form h3 {
   color: #736a50;
 }
-/* line 156, ../sass/style.scss */
+/* line 157, ../sass/style.scss */
 .zakaz-form .informationZakaz {
   margin-left: 94px;
   height: 255px;
   border-top: 1px solid #736a50;
   border-bottom: 1px solid #736a50;
 }
-/* line 159, ../sass/style.scss */
+/* line 160, ../sass/style.scss */
 .zakaz-form .informationZakaz h3 {
   padding-left: 16px;
 }
-/* line 162, ../sass/style.scss */
+/* line 163, ../sass/style.scss */
 .zakaz-form .informationZakaz textarea {
   width: 255px;
 }
-/* line 166, ../sass/style.scss */
+/* line 167, ../sass/style.scss */
 .zakaz-form .clientZakaz {
   margin-left: -76px;
   height: 255px;
   border-top: 1px solid #736a50;
   border-bottom: 1px solid #736a50;
 }
-/* line 169, ../sass/style.scss */
+/* line 170, ../sass/style.scss */
 .zakaz-form .clientZakaz h3 {
   padding-left: 18px;
 }
-/* line 173, ../sass/style.scss */
+/* line 174, ../sass/style.scss */
 .zakaz-form .moneyZakaz {
   margin-left: -42px;
   height: 255px;
   border-top: 1px solid #736a50;
   border-bottom: 1px solid #736a50;
 }
-/* line 176, ../sass/style.scss */
+/* line 177, ../sass/style.scss */
 .zakaz-form .moneyZakaz h3 {
   padding-left: 12px;
 }
-/* line 180, ../sass/style.scss */
+/* line 181, ../sass/style.scss */
 .zakaz-form .managmentZakaz {
   margin-left: -60px;
   height: 255px;
   border-top: 1px solid #736a50;
   border-bottom: 1px solid #736a50;
 }
-/* line 183, ../sass/style.scss */
+/* line 184, ../sass/style.scss */
 .zakaz-form .managmentZakaz h3 {
   padding-left: 12px;
 }
 
-/* line 188, ../sass/style.scss */
+/* line 189, ../sass/style.scss */
 .form-shiftEnd, .form-shiftStart {
   display: none;
 }
 
-/* line 192, ../sass/style.scss */
+/* line 193, ../sass/style.scss */
 .visibleForm {
   display: block;
 }
 
-/* line 198, ../sass/style.scss */
+/* line 199, ../sass/style.scss */
 .srokIndex tr td {
   padding: 8px;
 }
 
-/* line 205, ../sass/style.scss */
+/* line 206, ../sass/style.scss */
 .post-view:hover a {
   text-decoration: none;
 }
-/* line 209, ../sass/style.scss */
+/* line 210, ../sass/style.scss */
 .post-view .guideImg {
   width: 350px;
   height: 200px;
   margin-bottom: 17px;
   overflow: hidden;
 }
-/* line 214, ../sass/style.scss */
+/* line 215, ../sass/style.scss */
 .post-view .guideImg h3 {
   color: #ffffff;
   margin-top: -180px;
   position: absolute;
 }
-/* line 219, ../sass/style.scss */
+/* line 220, ../sass/style.scss */
 .post-view .guideImg img {
   transition: all 1s ease-out;
   width: 100%;
   height: 100%;
 }
-/* line 223, ../sass/style.scss */
+/* line 224, ../sass/style.scss */
 .post-view .guideImg img:hover {
   transform: scale(1.1);
+}
+
+/* line 232, ../sass/style.scss */
+.zakaz-view .notice-block {
+  background: #736a50;
+  padding: 7px;
+  margin-bottom: 5px;
+}
+/* line 237, ../sass/style.scss */
+.zakaz-view .notice-action {
+  font-style: italic;
+}
+/* line 240, ../sass/style.scss */
+.zakaz-view .zakaz-view_comment {
+  height: 88px;
+  overflow: auto;
+}
+/* line 244, ../sass/style.scss */
+.zakaz-view .notice-sotrud {
+  margin-right: 10px;
+}
+/* line 247, ../sass/style.scss */
+.zakaz-view .zakaz-view_shipping {
+  height: 150px;
 }

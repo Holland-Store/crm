@@ -824,7 +824,7 @@ thead a {
   .footer-view-zakaz .modal-content .modal-header {
     padding: 6px; }
   .footer-view-zakaz .modal-content .modal-body {
-    padding: 0p; }
+    padding: 0; }
 
 #login-form input {
   padding-left: 5%; }
@@ -972,6 +972,9 @@ thead a {
   width: 82px;
   padding-right: 7%;
   padding-right: 2%; }
+
+.zakaz-view .zakaz-information .addNotice {
+  float: right; }
 
 body {
   background: #302927;
@@ -1129,5 +1132,19 @@ body {
     height: 100%; }
     .post-view .guideImg img:hover {
       transform: scale(1.1); }
+
+.zakaz-view .notice-block {
+  background: #736a50;
+  padding: 7px;
+  margin-bottom: 5px; }
+.zakaz-view .notice-action {
+  font-style: italic; }
+.zakaz-view .zakaz-view_comment {
+  height: 88px;
+  overflow: auto; }
+.zakaz-view .notice-sotrud {
+  margin-right: 10px; }
+.zakaz-view .zakaz-view_shipping {
+  height: 150px; }
 
 /*# sourceMappingURL=style.css.map */

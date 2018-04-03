@@ -225,11 +225,11 @@ use yii\widgets\Pjax;
                     ],
                 ]);
         ?>
-        <?php if(!$model->isNewRecord): ?>
+        <?php if(!$model->isNewRecord && Yii::$app->user->can('admin')): ?>
         <?= $form->field($model, 'id_shop')->dropDownList(ArrayHelper::map(User::find()
                 ->selectUser()
                 ->all(),
-                'id', 'name')) ?>
+                'id', 'name'))->label(false) ?>
         <?php endif; ?>
     </div>
 
