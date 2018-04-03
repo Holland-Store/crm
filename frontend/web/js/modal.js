@@ -9,6 +9,10 @@ $(document).ready(function() {
     bodyModalView('.createClient', '#modalCreateClient', '.modalContentClient');
     bodyModalView('.declinedTodoist', '#modalDeclinedTodoist', '.modalContent');
 
+    $('body').on('click', '.addNotice', function () {
+        $('#create-modal_notify').modal('show')
+    });
+
     function modalView(button, modal) {
         $(button).click(function (e) {
             e.preventDefault();
