@@ -193,5 +193,5 @@ use app\models\Zakaz;
                 <?= Html::a('Чек', ['#'], ['class' => 'draft btn action', 'value' => Url::to(['financy/draft', 'id' => $model->id_zakaz])]) ?>
             <?php endif ?>
         <?php endif; ?>
-        <?= Html::a('Понлный просмотр', ['view', 'id' => $model->id_zakaz], ['class' => 'btn action']) ?>
+        <?= Html::a('Полный просмотр', ['view', 'id' => $model->id_zakaz], ['class' => 'btn action']) ?>
     </div>
