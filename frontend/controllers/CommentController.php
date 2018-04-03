@@ -4,6 +4,7 @@ namespace frontend\controllers;
 
 use app\models\Comment;
 use app\models\Helpdesk;
+use app\models\Notice;
 use app\models\Todoist;
 use app\models\User;
 use frontend\models\Telegram;
@@ -95,8 +96,10 @@ class CommentController extends Controller
     public function actionZakaz()
     {
         $comment = new Comment();
+        $notice = Notice::find()->where(['order_id' => Yii::$app->request->post('Comment')['id_zakaz']])->orderBy('id DESC')->all();
 
         if($comment->load(Yii::$app->request->post()) && $comment->validate()){
+            $comment->notice_id = $notice != null ? $notice[0]->id : null;
             if($comment->save()){
                 return true;
             } else {
