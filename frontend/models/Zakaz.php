@@ -200,6 +200,14 @@ class Zakaz extends ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getComments()
+    {
+        return $this->hasMany(Comment::className(), ['id_zakaz' => 'id_zakaz']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getFinancies()
     {
         return $this->hasMany(Financy::className(), ['id_zakaz' => 'id_zakaz']);
