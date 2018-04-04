@@ -31,6 +31,7 @@ $(document).ready(function(){
             }
        });
 
+       /** clicked on delivared from the buyer */
        $('.sendGood').click(function (e) {
            e.preventDefault();
            let url = $(this).attr('href');
