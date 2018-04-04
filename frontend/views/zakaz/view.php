@@ -199,6 +199,13 @@ $this->title = $model->prefics;
             <?php Pjax::end() ?>
         </div>
         <div class="col-lg-6">
+            <?php if ($notice == null): ?>
+                <?php foreach ($comment as $item): ?>
+                    <div><span class="notice-sotrud"><?= $item['idUser']['name'] ?></span><?= $item['comment'] ?><span class="notice-action pull-right"><?= Yii::$app->formatter->asDatetime($item['date']) ?></span></div>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </div>
+        <div class="col-lg-6">
             <h4><?= Html::encode('Комментарии') ?></h4>
 <!--            --><?php //if ($comment == null){
 //                echo 'Комментариев пока нет';
