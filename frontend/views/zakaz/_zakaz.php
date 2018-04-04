@@ -1,5 +1,6 @@
 <?php
 
+use app\models\Comment;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\widgets\DetailView;
@@ -45,7 +46,24 @@ use app\models\Zakaz;
         <div class="divInform">
         <?= $model->information ?>
         </div>
-	</div>
+        <?php
+        $dataProvider = new \yii\data\ActiveDataProvider([
+            'query' => Comment::find()->where(['id_zakaz' => $model->id_zakaz])->orderBy('id DESC'),
+            'pagination' => [
+                'pageSize' => 6,
+            ]
+        ]);
+        ?>
+        <div class="comment-zakaz">
+            <?php
+            echo \yii\widgets\ListView::widget([
+                'dataProvider' => $dataProvider,
+                'itemOptions' => ['class' => 'item'],
+                'itemView' => '_comment',
+                'pager' => ['class' => \kop\y2sp\ScrollPager::className()]
+            ]) ?>
+        </div>
+    </div>
 	<div class="col-lg-1 zakazFile">
         <div class="zakazFile_block">
             <span class="zakazFile_block-number">Кол-во:</span>
