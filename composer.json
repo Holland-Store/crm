@@ -36,7 +36,8 @@
         "sonko-dmitry/yii2-telegram-bot-api": "*",
         "kartik-v/yii2-popover-x": "*",
         "2amigos/yii2-chartjs-widget": "~2.0",
-        "vova07/yii2-imperavi-widget": "*"
+        "vova07/yii2-imperavi-widget": "*",
+        "kop/yii2-scroll-pager": "^2.5"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
