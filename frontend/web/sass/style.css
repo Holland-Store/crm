@@ -470,14 +470,14 @@ thead a {
 .zakaz-index .userCommit {
   width: 62px;
   float: left;
-  text-align: right;
+  text-align: left;
   padding-right: 10px; }
 .zakaz-index .comment {
-  width: 446px;
+  width: 443px;
   float: left;
   color: #505050; }
 .zakaz-index .dateCommit {
-  float: left; }
+  float: right; }
 
 .zakaz-shop .zakazSearch .shopSearch {
   margin-top: -45px;

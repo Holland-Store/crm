@@ -697,18 +697,18 @@ thead a {
 .zakaz-index .userCommit {
   width: 62px;
   float: left;
-  text-align: right;
+  text-align: left;
   padding-right: 10px;
 }
 /* line 491, ../sass/gridview.scss */
 .zakaz-index .comment {
-  width: 446px;
+  width: 443px;
   float: left;
   color: #505050;
 }
 /* line 496, ../sass/gridview.scss */
 .zakaz-index .dateCommit {
-  float: left;
+  float: right;
 }
 
 /* line 502, ../sass/gridview.scss */
