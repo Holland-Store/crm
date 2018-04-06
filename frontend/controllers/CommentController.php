@@ -107,4 +107,16 @@ class CommentController extends Controller
             }
         }
     }
+
+    /**
+     * @param $id
+     * @param $offset
+     * @return string
+     */
+    public function actionPagination($id, $offset)
+    {
+        $offset = $offset * 6;
+        $comment = Comment::find()->where(['id_zakaz' => $id])->orderBy('id DESC')->offset($offset)->limit(6)->asArray()->all();
+        return json_encode($comment, JSON_UNESCAPED_UNICODE);
+    }
 }
