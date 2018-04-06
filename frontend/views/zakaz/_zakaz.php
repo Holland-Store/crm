@@ -1,6 +1,7 @@
 <?php
 
 use app\models\Comment;
+use app\models\User;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\widgets\DetailView;
@@ -46,22 +47,33 @@ use app\models\Zakaz;
         <div class="divInform">
         <?= $model->information ?>
         </div>
-        <?php
-        $dataProvider = new \yii\data\ActiveDataProvider([
-            'query' => Comment::find()->where(['id_zakaz' => $model->id_zakaz])->orderBy('id DESC'),
-            'pagination' => [
-                'pageSize' => 6,
-            ]
-        ]);
-        ?>
+        <?php $comment = Comment::find()->where(['id_zakaz' => $model->id_zakaz])->orderBy('id DESC')->limit(6)->all(); ?>
         <div class="comment-zakaz">
-            <?php
-            echo \yii\widgets\ListView::widget([
-                'dataProvider' => $dataProvider,
-                'itemOptions' => ['class' => 'item'],
-                'itemView' => '_comment',
-                'pager' => ['class' => \kop\y2sp\ScrollPager::className()]
-            ]) ?>
+            <?php if (count($comment) != 0): ?>
+            <?php foreach ($comment as $com): ?>
+                <?php switch ($com->id_user){
+                    case Yii::$app->user->id;
+                        $user = 'Я';
+                        break;
+                    case (User::USER_DISAYNER);
+                        $user = 'Дизайнер';
+                        break;
+                    case (User::USER_MASTER):
+                        $user = 'Мастер';
+                        break;
+                }
+                echo  '
+        <div style="display: block;">
+            <div class="userCommit">'.$user.':</div>
+            <div class="comment">'.$com->comment.'</div>
+            <div class="dateCommit">'.date('d.m H:i', strtotime($com->date)).'</div>
+        </div>';
+                ?>
+            <?php endforeach; ?>
+            <span class="nextComment" data-id="<?= $model->id_zakaz ?>" data-offset="1">Показать еще</span>
+            <?php else: ?>
+                <span>Комментариев нет</span>
+            <?php endif; ?>
         </div>
     </div>
 	<div class="col-lg-1 zakazFile">
@@ -213,3 +225,53 @@ use app\models\Zakaz;
         <?php endif; ?>
         <?= Html::a('Полный просмотр', ['view', 'id' => $model->id_zakaz], ['class' => 'btn action']) ?>
     </div>
+<?php
+$user = Yii::$app->user->id;
+$script = <<<JS
+$('body').on('click', '.nextComment', function () {
+           let id = $(this).data('id');
+           let offset = $(this).data('offset');
+           $.get(window.location.origin+'/comment/pagination?id='+id+'&offset='+offset)
+               .done(res => {
+                   res = JSON.parse(res);
+                   if (res.length === 0){
+                       $(this).parent('.comment-zakaz').append('Комментариев нет');
+                       $(this).remove();
+                   } else {
+                        let com = res.map(comment => {
+                           let user;
+                           let date = new Date(comment.date);
+                           let day = date.getDate();
+                           let month = date.getMonth() + 1;
+                           day = day < 10 ? '0'+ day : day;
+                           month = month < 10 ? '0'+month : month;
+                           switch (parseInt(comment.id_user)){
+                               case $user:
+                                   user = 'Я';
+                                   break;
+                               case 4:
+                                   user = 'Дизайнер';
+                                   break;
+                               case 3:
+                                   user = 'Мастер';
+                                   break;
+                           }
+                           return '<div style="display: block;">'+
+                                '<div class="userCommit">'+user+':</div>'+
+                                '<div class="comment">'+comment.comment+'</div>'+
+                                '<div class="dateCommit">'+day+' '+month+' '+date.getHours()+' '+date.getMinutes()+'</div>'+
+                            '</div>'
+                           });
+                       $(this).parent('.comment-zakaz').append(com.join(' ')+
+                       '<span class="nextComment" data-id="'+id+'" data-offset="'+offset + 1 +'">Показать еще</span>');
+                       $(this).remove();
+                       console.log(res)   
+                   }
+               })
+               .fail(err => console.error(err.responseText));
+       });
+
+JS;
+
+$this->registerJs($script)
+?>
