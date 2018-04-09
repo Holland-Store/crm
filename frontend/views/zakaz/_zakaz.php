@@ -49,28 +49,30 @@ use app\models\Zakaz;
         </div>
         <?php $comment = Comment::find()->where(['id_zakaz' => $model->id_zakaz])->orderBy('id DESC')->limit(6)->all(); ?>
         <div class="comment-zakaz">
-            <?php if (count($comment) != 0): ?>
-            <?php foreach ($comment as $com): ?>
-                <?php switch ($com->id_user){
-                    case Yii::$app->user->id;
-                        $user = 'Я';
-                        break;
-                    case (User::USER_DISAYNER);
-                        $user = 'Дизайнер';
-                        break;
-                    case (User::USER_MASTER):
-                        $user = 'Мастер';
-                        break;
-                }
-                echo  '
-        <div style="display: block;">
-            <div class="userCommit">'.$user.':</div>
-            <div class="comment">'.$com->comment.'</div>
-            <div class="dateCommit">'.date('d.m H:i', strtotime($com->date)).'</div>
-        </div>';
-                ?>
-            <?php endforeach; ?>
-            <span class="nextComment" data-id="<?= $model->id_zakaz ?>" data-offset="1">Показать еще</span>
+            <?php if (count($comment) != 0  or count($comment) > 6): ?>
+                <?php foreach ($comment as $com): ?>
+                    <?php switch ($com->id_user){
+                        case Yii::$app->user->id;
+                            $user = 'Я';
+                            break;
+                        case (User::USER_DISAYNER);
+                            $user = 'Дизайнер';
+                            break;
+                        case (User::USER_MASTER):
+                            $user = 'Мастер';
+                            break;
+                    }
+                    echo  '
+            <div style="display: block;">
+                <div class="userCommit">'.$user.':</div>
+                <div class="comment">'.$com->comment.'</div>
+                <div class="dateCommit">'.date('d.m H:i', strtotime($com->date)).'</div>
+            </div>';
+                    ?>
+                <?php endforeach; ?>
+                <?php if (count($comment) >= 6): ?>
+                    <span class="nextComment" data-id="<?= $model->id_zakaz ?>" data-offset="1">Показать еще</span>
+                <?php endif; ?>
             <?php else: ?>
                 <span>Комментариев нет</span>
             <?php endif; ?>
@@ -265,7 +267,6 @@ $('body').on('click', '.nextComment', function () {
                        $(this).parent('.comment-zakaz').append(com.join(' ')+
                        '<span class="nextComment" data-id="'+id+'" data-offset="'+offset + 1 +'">Показать еще</span>');
                        $(this).remove();
-                       console.log(res)   
                    }
                })
                .fail(err => console.error(err.responseText));
