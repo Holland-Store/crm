@@ -20,6 +20,9 @@ use yii\helpers\ArrayHelper;
  */
 class Notification extends \yii\db\ActiveRecord
 {
+    const ACTIVE = 1;
+    const NOT_ACTIVE = 0;
+
     const CATEGORY_SHIPPING = 0;
     const CATEGORY_SUCCESS = 1;
     const CATEGORY_NEW = 2;
@@ -137,5 +140,13 @@ class Notification extends \yii\db\ActiveRecord
         $this->id_zakaz = $id;
         $this->category = 4;
         $this->active = true;
+    }
+
+    public function getCreateNotice($user, $order_id)
+    {
+        $this->id_user = $user;
+        $this->name = 'Были правки в заказе '.$order_id;
+        $this->active = self::ACTIVE;
+        $this->id_zakaz = $order_id;
     }
 }
