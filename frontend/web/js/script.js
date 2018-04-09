@@ -5,11 +5,12 @@ $(document).ready(function(){
 // 	setInterval(function(){
 // 		$.pjax.reload('#pjax-container')
 // 	}, 100000);
-       changeStatus('.trNew', '/zakaz/adopted?id=');
-       changeStatus('.trNewMaster', '/zakaz/adopmaster?id=');
-       changeStatus('.trNewDisain', '/zakaz/adopdisain?id=');
-       addClassForm('.startShift', '#form-startShift', '.form-shiftStart');
-       addClassForm('.endShift', '#form-endShift', '.form-shiftEnd');
+        let urlSite = window.location.origin+'/frontend/web';
+        changeStatus('.trNew', urlSite+'/zakaz/adopted?id=');
+        changeStatus('.trNewMaster', urlSite+'/zakaz/adopmaster?id=');
+        changeStatus('.trNewDisain', urlSite+'/zakaz/adopdisain?id=');
+        addClassForm('.startShift', '#form-startShift', '.form-shiftStart');
+        addClassForm('.endShift', '#form-endShift', '.form-shiftEnd');
 
         $( 'body' ).on( 'click', '.commentButton', function() {
             $( ".CommentForm" ).toggleClass( "CommentForm-visible" );
@@ -36,10 +37,9 @@ $(document).ready(function(){
            e.preventDefault();
            let url = $(this).attr('href');
            let id = $(this).attr('id');
-           console.log(id);
            $.ajax({
                type: 'get',
-               url: 'http://crm/'+url
+               url: urlSite+'/'+url
            }).done(result => {
                if(result === '1'){
                 $('#'+id).parents('tr').remove();
@@ -60,8 +60,9 @@ $(document).ready(function(){
             let data = $(this).data("key");
             $.ajax({
                 url: url+data,
-                success: console.log('Успешно изменен статус')
             })
+                .done(() => console.log('Статус успешно изменен'))
+                .fail(err => console.error(err))
         });
     }
     $(function () {
