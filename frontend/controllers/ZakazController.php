@@ -126,8 +126,6 @@ class ZakazController extends Controller
         $comment = Comment::find()->zakaz($id);
         $financy = Financy::find()->view($id);
         $notice = Notice::find()->where(['order_id' => $id])->orderBy('id DESC')->all();
-//        $comment = ArrayHelper::index($comment, null, 'just_date');
-//        $zakaz = $model->id_zakaz;
 
         $dataProvider = new ActiveDataProvider([
             'query' => Courier::find()->select(['date', 'to', 'from', 'commit', 'status'])->where(['id_zakaz' => $id])
