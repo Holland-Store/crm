@@ -4,7 +4,6 @@ namespace frontend\controllers;
 
 use Yii;
 use app\models\Notification;
-use app\models\NotificationSearch;
 use yii\web\Controller;
 use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
@@ -41,7 +40,7 @@ class NotificationController extends Controller
                         'roles' => ['@'],
                     ],
                     [
-                        'actions' => ['notification'],
+                        'actions' => ['read-notice'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -56,7 +55,6 @@ class NotificationController extends Controller
      */
     public function actionIndex()
     {
-        $notification = $this->findNotification();
         $model = Notification::find()->where(['id_user' => Yii::$app->user->id])->limit(50)->all();
 
         return $this->render('index', [
@@ -87,12 +85,11 @@ class NotificationController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionNotification($id)
+    public function actionReadNotice($id)
     {
         $model = $this->findModel(['id_zakaz' => $id]);
-        $model->active = 0;
+        $model->active = Notification::NOT_ACTIVE;
         $model->save();
-
         return $this->redirect(['zakaz/admin', '#' => $id]);
     }
 
