@@ -158,53 +158,57 @@ $this->title = $model->prefics;
             ]) ?>
         </div>
         <?php endif; ?>
-        <div class="col-lg-6">
-            <?php Pjax::begin([
-                'id' => 'commentPjax'
-            ]) ?>
-            <?php if ($notice != null): ?>
-                <div class="notice-block"><?= '<span class="notice-sotrud">'.$notice[0]->user->name.'</span> '.$notice[0]->comment.' <span class="notice-action pull-right">'.Yii::$app->formatter->asDatetime($notice[0]->created_at).'</span>' ?></div>
-                <?php echo count($notice[0]->comments) >= 6 ? '<div class="zakaz-view_comment">' : '<div>' ?>
-                <?php foreach ($comment as $item): ?>
-                    <?php if ($item['notice_id'] != null): ?>
-                        <?php if ($notice[0]->id == $item['notice_id']): ?>
-                        <div><span class="notice-sotrud"><?= $item['idUser']['name'] ?></span><?= $item['comment'] ?><span class="notice-action pull-right"><?= Yii::$app->formatter->asDatetime($item['date']) ?></span></div>
-                        <?php endif; ?>
-                    <?php endif; ?>
-                <?php endforeach; ?>
-                </div>
-                <?php foreach ($notice as $key => $value): ?>
-                    <?php if ($key != 0): ?>
-                    <div class="notice-block"><?= '<span class="notice-sotrud">'.$value->user->name.'</span> '.$value->comment.' <span class="notice-action pull-right">'.Yii::$app->formatter->asDatetime($value->created_at).'</span>' ?></div>
-                        <?php echo count($notice->comments) >= 6 ? '<div class="zakaz-view_comment">' : '<div>' ?>
-                        <?php foreach ($comment as $item): ?>
+        <?php if ($notice != null): ?>
+            <div class="col-lg-6">
+                <?php Pjax::begin([
+                    'id' => 'commentPjax'
+                ]) ?>
+                    <div class="notice-block"><?= '<span class="notice-sotrud">'.$notice[0]->user->name.'</span> '.$notice[0]->comment.' <span class="notice-action pull-right">'.Yii::$app->formatter->asDatetime($notice[0]->created_at).'</span>' ?></div>
+                    <?php echo count($notice[0]->comments) >= 6 ? '<div class="zakaz-view_comment">' : '<div>' ?>
+                    <?php foreach ($comment as $item): ?>
                         <?php if ($item['notice_id'] != null): ?>
-                            <?php if ($notice[0]->id != $item['notice_id']): ?>
+                            <?php if ($notice[0]->id == $item['notice_id']): ?>
                             <div><span class="notice-sotrud"><?= $item['idUser']['name'] ?></span><?= $item['comment'] ?><span class="notice-action pull-right"><?= Yii::$app->formatter->asDatetime($item['date']) ?></span></div>
                             <?php endif; ?>
                         <?php endif; ?>
                     <?php endforeach; ?>
-                    <?php endif; ?>
-                <?php endforeach; ?>
-                </div>
-                <div class="notice-block"><?= '<span class="notice-sotrud">'.$model->idSotrud->name.'</span>'.$model->information.' <span class="notice-action pull-right">Основной</span>' ?></div>
-                <?php echo count($model->comments) >= 6 ? '<div class="zakaz-view_comment">' : '<div>' ?>
-                <?php foreach ($comment as $item): ?>
-                    <?php if ($item['notice_id'] == null): ?>
-                        <div><span class="notice-sotrud"><?= $item['idUser']['name'] ?></span><?= $item['comment'] ?><span class="notice-action pull-right"><?= Yii::$app->formatter->asDatetime($item['date']) ?></span></div>
-                    <?php endif; ?>
-                <?php endforeach; ?>
-                </div>
-            <?php endif; ?>
-            <?php Pjax::end() ?>
-        </div>
+                    </div>
+                    <?php foreach ($notice as $key => $value): ?>
+                        <?php if ($key != 0): ?>
+                        <div class="notice-block"><?= '<span class="notice-sotrud">'.$value->user->name.'</span> '.$value->comment.' <span class="notice-action pull-right">'.Yii::$app->formatter->asDatetime($value->created_at).'</span>' ?></div>
+                            <?php echo count($notice->comments) >= 6 ? '<div class="zakaz-view_comment">' : '<div>' ?>
+                            <?php foreach ($comment as $item): ?>
+                            <?php if ($item['notice_id'] != null): ?>
+                                <?php if ($notice[0]->id != $item['notice_id']): ?>
+                                <div><span class="notice-sotrud"><?= $item['idUser']['name'] ?></span><?= $item['comment'] ?><span class="notice-action pull-right"><?= Yii::$app->formatter->asDatetime($item['date']) ?></span></div>
+                                <?php endif; ?>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                    </div>
+                    <div class="notice-block"><?= '<span class="notice-sotrud">'.$model->idSotrud->name.'</span>'.$model->information.' <span class="notice-action pull-right">Основной</span>' ?></div>
+                    <?php echo count($model->comments) >= 6 ? '<div class="zakaz-view_comment">' : '<div>' ?>
+                    <?php foreach ($comment as $item): ?>
+                        <?php if ($item['notice_id'] == null): ?>
+                            <div><span class="notice-sotrud"><?= $item['idUser']['name'] ?></span><?= $item['comment'] ?><span class="notice-action pull-right"><?= Yii::$app->formatter->asDatetime($item['date']) ?></span></div>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                    </div>
+                <?php Pjax::end() ?>
+            </div>
+        <?php endif; ?>
+        <?php if ($notice == null): ?>
+        <?php Pjax::begin([
+            'id' => 'commentPjax'
+        ]) ?>
         <div class="col-lg-6">
-            <?php if ($notice == null): ?>
-                <?php foreach ($comment as $item): ?>
-                    <div><span class="notice-sotrud"><?= $item['idUser']['name'] ?></span><?= $item['comment'] ?><span class="notice-action pull-right"><?= Yii::$app->formatter->asDatetime($item['date']) ?></span></div>
-                <?php endforeach; ?>
-            <?php endif; ?>
+            <?php foreach ($comment as $item): ?>
+                <div><span class="notice-sotrud"><?= $item['idUser']['name'] ?></span><?= $item['comment'] ?><span class="notice-action pull-right"><?= Yii::$app->formatter->asDatetime($item['date']) ?></span></div>
+            <?php endforeach; ?>
         </div>
+        <?php Pjax::end() ?>
+        <?php endif; ?>
         <div class="col-lg-6">
             <h4><?= Html::encode('Комментарии') ?></h4>
 <!--            --><?php //if ($comment == null){
