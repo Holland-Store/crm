@@ -113,7 +113,6 @@ $bacgrountTr: #802c2c;
     background: radial-gradient(ellipse at right top, #9e1818 34%, #791010 67%, #882828 98%);
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a90329', endColorstr='#6d0019',GradientType=1 );
     border: 5px solid rgba(72, 26, 26, 0.51);
-    // cursor: none;
     &:hover &:focus{
         background: #791010;
         color: #fff;
@@ -258,6 +257,23 @@ $bacgrountTr: #802c2c;
   .successHelp{
     color: $colorGreen;
   }
+}
+.notification{
+    float: right;
+    position: relative;
+    right: 100px;
+    top: -32px;
+    .notification-icon{
+        background: #3a3331;
+        padding: 8px;
+        border-radius: 19px;
+        font-size: 13px;
+        padding-bottom: 3px;
+        cursor: pointer;
+    }
+    .newNotification{
+        color: green;
+    }
 }
 .footer-view-zakaz{
     .done{

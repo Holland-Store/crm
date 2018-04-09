@@ -377,6 +377,9 @@ $colorDeclined: #7c1111;
                 border-right: 3px solid $colButtonHover;
                 border-bottom: 27px solid $colButtonHover;
               }
+              .nextComment{
+                cursor: pointer;
+              }
               .CommentForm{
                 visibility: hidden;
               }

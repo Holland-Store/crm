@@ -129,19 +129,31 @@ body{
     top: 14px;
 }
 .notification-container{
-   position: fixed;
-    width: 16%;
-    top: 50px;
-    height: 200px;
-    float: left;
-    margin-left: 69%;
-    @include border(#f1d0d0);
-    z-index: 1000;
-    background: #ffffff;
-    padding: 5px 0;
-    font-size: 14px;
-    text-align: left;
-    list-style: none;
+  position: absolute;
+  width: 246px;
+  top: 32px;
+  height: 200px;
+  float: right;
+  z-index: 2;
+  background: $colorNavBadge;
+  padding: 6px;
+  font-size: 14px;
+  text-align: left;
+  .notification-container_message{
+    height: 170px;
+    overflow: auto;
+  }
+  .notification-all{
+    position: absolute;
+    top: 179px;
+    width: 222px;
+    text-align: center;
+    cursor: pointer;
+  }
+  a{
+    color: #908a89;
+    text-decoration: none;
+  }
 }
 .notification-container .hidden{
     display: $display;
