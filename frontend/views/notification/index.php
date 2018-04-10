@@ -17,7 +17,9 @@ $this->title = 'Уведомление';
     <?= Html::a('Отметить все прочитаным', ['ready', 'id' => Yii::$app->user->id])  ?>
     <br>
     <div class="notification-info" data-count="<?= $countNew ?>">
-    <?= Html::a('Новый уведомление: '.$countNew, ['#'], ['id' => 'notification-new']) ?>
+    <?php if ($countNew != 0): ?>
+    <div class="notification-info_filter"><?= Html::a('Новый уведомление: '.$countNew, ['#'], ['id' => 'notification-new']) ?></div>
+    <?php endif; ?>
     <?php foreach ($model as $notification): ?>
        <?php $date = date('Y-m-d H:i:s', time()) ?>
         <?php  echo Html::tag('p',Html::a($notification->name, ['open-notification', 'id' => $notification->id]),['style'=>$notification->active == Notification::ACTIVE ? 'font-weight: bold;':'']);
