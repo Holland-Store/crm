@@ -30,17 +30,7 @@ class NotificationController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['index'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                    [
-                        'actions' => ['ready'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                    [
-                        'actions' => ['read-notice'],
+                        'actions' => ['index', 'ready', 'read-notice', 'open-notification'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -49,17 +39,28 @@ class NotificationController extends Controller
         ];
     }
 
+
+
     /**
      * Lists all Notification models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($new = null)
     {
-        $model = Notification::find()->where(['id_user' => Yii::$app->user->id])->limit(50)->all();
+        $notification = Notification::find();
+        $user = Yii::$app->user->id;
+        $model = $notification->where(['id_user' => $user])->limit(50)->all();
+        if (Yii::$app->request->isAjax){
+            if ($new){
+                $model= $notification->where(['id_user' => $user, 'active' => Notification::ACTIVE])->asArray()->all();
+            } else {
+                $model = $notification->where(['id_user' => $user])->asArray()->all();
+            }
+            return json_encode($model, JSON_UNESCAPED_UNICODE);
+        }
+        $countNew = $notification->where(['id_user' => $user, 'active' => Notification::ACTIVE])->count();
 
-        return $this->render('index', [
-                'model' => $model,
-            ]);
+        return $this->render('index', compact('model', 'countNew'));
     }
 
 
@@ -75,10 +76,8 @@ class NotificationController extends Controller
         $model->getDb()->createCommand()->update('notification', ['active' => 0], ['id_user' => $id])->execute();
 
         return $this->redirect(['index']);
-
-
-        // return $this->render('ready');
     }
+
     /**
      *  One notification an existing Notification model.
      * If ready is successful, the browser will be redirected to the 'index' page.
@@ -87,10 +86,26 @@ class NotificationController extends Controller
      */
     public function actionReadNotice($id)
     {
-        $model = $this->findModel(['id_zakaz' => $id]);
+        $model = $this->findModel($id);
         $model->active = Notification::NOT_ACTIVE;
         $model->save();
         return $this->redirect(['zakaz/admin', '#' => $id]);
+    }
+
+    /**
+     * For index click notification and changed active
+     * if success there is redirect
+     * @param $id
+     * @return \yii\web\Response
+     * @throws NotFoundHttpException
+     */
+    public function actionOpenNotification($id)
+    {
+        $model = Notification::findOne($id);
+        $model->active = Notification::NOT_ACTIVE;
+        $model->save();
+
+        return $this->redirect(['zakaz/view', 'id' => $model->id_zakaz]);
     }
 
     /**
