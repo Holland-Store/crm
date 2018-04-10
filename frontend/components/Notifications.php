@@ -25,7 +25,7 @@ class Notifications extends Widget
                 <div class="notification-container hidden">
                 <div class="notification-container_message">';
                 foreach ($notifications as $notification){
-                    echo '<div>'.Html::a($notification->name, ['notification/read-notice', 'id' => $notification->id_zakaz], ['class' => 'notification-content']).'</div>';
+                    echo '<div>'.Html::a($notification->name, ['notification/read-notice', 'id' => $notification->id], ['class' => 'notification-content']).'</div>';
                 }
                 echo '</div><div class="notification-all"><span>'.Html::a('Показать все', ['notification/index']).'</span></div>';
                 echo '</div>
