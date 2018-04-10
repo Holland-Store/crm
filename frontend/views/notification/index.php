@@ -1,9 +1,10 @@
 <?php
 
+use app\models\Notification;
 use yii\helpers\Html;
-use yii\grid\GridView;
 
 /* @var $this yii\web\View */
+/* @var $countNew app\models\Notification */
 /* @var $searchModel app\models\NotificationSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
@@ -15,11 +16,12 @@ $this->title = 'Уведомление';
 
     <?= Html::a('Отметить все прочитаным', ['ready', 'id' => Yii::$app->user->id])  ?>
     <br>
-    
+    <div class="notification-info" data-count="<?= $countNew ?>">
+    <?= Html::a('Новый уведомление: '.$countNew, ['#'], ['id' => 'notification-new']) ?>
     <?php foreach ($model as $notification): ?>
        <?php $date = date('Y-m-d H:i:s', time()) ?>
-        <?php  echo Html::tag('p',Html::a($notification->name, ['notification', 'id' => $notification->id_zakaz]),['style'=>$notification->active == 1?'font-weight: bold;':'']);
+        <?php  echo Html::tag('p',Html::a($notification->name, ['open-notification', 'id' => $notification->id]),['style'=>$notification->active == Notification::ACTIVE ? 'font-weight: bold;':'']);
         ?>
-
     <?php endforeach ?>
+    </div>
 </div>
