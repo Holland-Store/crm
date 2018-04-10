@@ -23,7 +23,7 @@ $(document).ready(function(){
         });
         $('body').on('click', '#notification-all', function (e) {
             e.preventDefault();
-            let count = $(this).parent().data('count');
+            let count = $(this).parents('.notification-info').data('count');
             $.get(`${url}/notification/index`)
                 .done(res => {
                     notificationView(res, `Новый уведомление: ${count}`, `notification-new`)
@@ -94,7 +94,7 @@ $(document).ready(function(){
             }
             return `<p><a href="${url}/notification/open-notification?id=${item.id}" style="${style}">${item.name}</a></p>`
         }).join(' ');
-        $('.notification-info').html(`<a id=${idName}>${message}</a>${view}`);
+        $('.notification-info').html(`<div class="notification-info_filter"><a id=${idName}>${message}</a></div>${view}`);
     }
     $(function () {
         $("[data-toggle = 'tooltip']").tooltip();
