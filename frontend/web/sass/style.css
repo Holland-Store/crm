@@ -1084,7 +1084,7 @@ body {
     overflow: auto; }
   .notification-container .notification-all {
     position: absolute;
-    top: px;
+    top: 179px;
     width: 222px;
     text-align: center;
     cursor: pointer; }
@@ -1098,6 +1098,13 @@ body {
 .notification-content {
   height: 169px;
   overflow: auto; }
+
+.notification-index .notification-info .notification-info_filter {
+  margin-bottom: 10px; }
+.notification-index .notification-info a {
+  color: #908a89;
+  text-decoration: none;
+  cursor: poin; }
 
 .zakaz-form h3 {
   color: #736a50; }

@@ -17,6 +17,7 @@ $colorNavActiv: #736a50;
 $colorNavText: rgba(204, 198, 198, 0.6);
 $colorNavBadge: #3a3331;
 $colButtonHover: #191412;
+$greyCrayola: #908a89;
 
 @mixin border-bottom($color) {
     border-bottom: 1px solid $color;
@@ -161,6 +162,19 @@ body{
 .notification-content{
     height: 169px;
     overflow: auto;
+}
+
+.notification-index{
+  .notification-info{
+    .notification-info_filter{
+      margin-bottom: 10px;
+    }
+    a{
+      color: $greyCrayola;
+      text-decoration: none;
+      cursor: pointer;
+    }
+  }
 }
 .zakaz-form{
   h3{
