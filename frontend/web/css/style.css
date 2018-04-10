@@ -1483,13 +1483,13 @@ thead a {
   float: right;
 }
 
-/* line 36, ../sass/style.scss */
+/* line 37, ../sass/style.scss */
 body {
   background: #302927;
   font-family: "Helvetica Neue", Helvetica, sans-serif;
 }
 
-/* line 40, ../sass/style.scss */
+/* line 41, ../sass/style.scss */
 .logout {
   float: right;
   font-size: 11px;
@@ -1501,23 +1501,23 @@ body {
   top: -30px;
   height: 30px;
 }
-/* line 50, ../sass/style.scss */
+/* line 51, ../sass/style.scss */
 .logout span {
   padding-left: 9px;
   font-size: 12px;
 }
-/* line 54, ../sass/style.scss */
+/* line 55, ../sass/style.scss */
 .logout .exit {
   color: #802c2c;
 }
-/* line 57, ../sass/style.scss */
+/* line 58, ../sass/style.scss */
 .logout:hover {
   color: rgba(204, 198, 198, 0.6);
   text-decoration: none;
   background: #191412;
 }
 
-/* line 64, ../sass/style.scss */
+/* line 65, ../sass/style.scss */
 .wrap .logo {
   background-image: url("../img/holland.png");
   background-repeat: no-repeat;
@@ -1527,7 +1527,7 @@ body {
   height: 58px;
   float: left;
 }
-/* line 73, ../sass/style.scss */
+/* line 74, ../sass/style.scss */
 .wrap .headerNav {
   margin-top: -26px;
   margin-left: 426px;
@@ -1538,12 +1538,12 @@ body {
   width: 506px;
   height: 36px;
 }
-/* line 83, ../sass/style.scss */
+/* line 84, ../sass/style.scss */
 .wrap .headerNav li a {
   color: rgba(204, 198, 198, 0.6);
   padding-right: 3px;
 }
-/* line 86, ../sass/style.scss */
+/* line 87, ../sass/style.scss */
 .wrap .headerNav li a span {
   color: rgba(204, 198, 198, 0.6);
   background: #3a3331;
@@ -1551,35 +1551,35 @@ body {
   font-size: 11px;
   font-weight: 700;
 }
-/* line 93, ../sass/style.scss */
+/* line 94, ../sass/style.scss */
 .wrap .headerNav li a:hover {
   color: #736a50;
 }
-/* line 95, ../sass/style.scss */
+/* line 96, ../sass/style.scss */
 .wrap .headerNav li a:hover span {
   background: transparent;
 }
-/* line 103, ../sass/style.scss */
+/* line 104, ../sass/style.scss */
 .wrap .headerNav .active a span {
   color: #302927;
   background: #736a50;
 }
-/* line 106, ../sass/style.scss */
+/* line 107, ../sass/style.scss */
 .wrap .headerNav .active a span:hover {
   color: #302927;
   background: transparent;
 }
-/* line 114, ../sass/style.scss */
+/* line 115, ../sass/style.scss */
 .wrap .container {
   padding: 41px 15px 20px;
 }
-/* line 117, ../sass/style.scss */
+/* line 118, ../sass/style.scss */
 .wrap .nav-pills > li.active > a {
   background-color: #736a50;
   color: #302927;
 }
 
-/* line 122, ../sass/style.scss */
+/* line 123, ../sass/style.scss */
 .titleMain {
   font-size: 27px;
   font-weight: 700;
@@ -1590,7 +1590,7 @@ body {
   top: 14px;
 }
 
-/* line 131, ../sass/style.scss */
+/* line 132, ../sass/style.scss */
 .notification-container {
   position: absolute;
   width: 246px;
@@ -1603,152 +1603,163 @@ body {
   font-size: 14px;
   text-align: left;
 }
-/* line 142, ../sass/style.scss */
+/* line 143, ../sass/style.scss */
 .notification-container .notification-container_message {
   height: 170px;
   overflow: auto;
 }
-/* line 146, ../sass/style.scss */
+/* line 147, ../sass/style.scss */
 .notification-container .notification-all {
   position: absolute;
-  top: px;
+  top: 179px;
   width: 222px;
   text-align: center;
   cursor: pointer;
 }
-/* line 153, ../sass/style.scss */
+/* line 154, ../sass/style.scss */
 .notification-container a {
   color: #908a89;
   text-decoration: none;
 }
 
-/* line 158, ../sass/style.scss */
+/* line 159, ../sass/style.scss */
 .notification-container .hidden {
   display: none;
 }
 
-/* line 161, ../sass/style.scss */
+/* line 162, ../sass/style.scss */
 .notification-content {
   height: 169px;
   overflow: auto;
 }
 
-/* line 166, ../sass/style.scss */
+/* line 169, ../sass/style.scss */
+.notification-index .notification-info .notification-info_filter {
+  margin-bottom: 10px;
+}
+/* line 172, ../sass/style.scss */
+.notification-index .notification-info a {
+  color: #908a89;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* line 180, ../sass/style.scss */
 .zakaz-form h3 {
   color: #736a50;
 }
-/* line 169, ../sass/style.scss */
+/* line 183, ../sass/style.scss */
 .zakaz-form .informationZakaz {
   margin-left: 94px;
   height: 255px;
   border-top: 1px solid #736a50;
   border-bottom: 1px solid #736a50;
 }
-/* line 172, ../sass/style.scss */
+/* line 186, ../sass/style.scss */
 .zakaz-form .informationZakaz h3 {
   padding-left: 16px;
 }
-/* line 175, ../sass/style.scss */
+/* line 189, ../sass/style.scss */
 .zakaz-form .informationZakaz textarea {
   width: 255px;
 }
-/* line 179, ../sass/style.scss */
+/* line 193, ../sass/style.scss */
 .zakaz-form .clientZakaz {
   margin-left: -76px;
   height: 255px;
   border-top: 1px solid #736a50;
   border-bottom: 1px solid #736a50;
 }
-/* line 182, ../sass/style.scss */
+/* line 196, ../sass/style.scss */
 .zakaz-form .clientZakaz h3 {
   padding-left: 18px;
 }
-/* line 186, ../sass/style.scss */
+/* line 200, ../sass/style.scss */
 .zakaz-form .moneyZakaz {
   margin-left: -42px;
   height: 255px;
   border-top: 1px solid #736a50;
   border-bottom: 1px solid #736a50;
 }
-/* line 189, ../sass/style.scss */
+/* line 203, ../sass/style.scss */
 .zakaz-form .moneyZakaz h3 {
   padding-left: 12px;
 }
-/* line 193, ../sass/style.scss */
+/* line 207, ../sass/style.scss */
 .zakaz-form .managmentZakaz {
   margin-left: -60px;
   height: 255px;
   border-top: 1px solid #736a50;
   border-bottom: 1px solid #736a50;
 }
-/* line 196, ../sass/style.scss */
+/* line 210, ../sass/style.scss */
 .zakaz-form .managmentZakaz h3 {
   padding-left: 12px;
 }
 
-/* line 201, ../sass/style.scss */
+/* line 215, ../sass/style.scss */
 .form-shiftEnd, .form-shiftStart {
   display: none;
 }
 
-/* line 205, ../sass/style.scss */
+/* line 219, ../sass/style.scss */
 .visibleForm {
   display: block;
 }
 
-/* line 211, ../sass/style.scss */
+/* line 225, ../sass/style.scss */
 .srokIndex tr td {
   padding: 8px;
 }
 
-/* line 218, ../sass/style.scss */
+/* line 232, ../sass/style.scss */
 .post-view:hover a {
   text-decoration: none;
 }
-/* line 222, ../sass/style.scss */
+/* line 236, ../sass/style.scss */
 .post-view .guideImg {
   width: 350px;
   height: 200px;
   margin-bottom: 17px;
   overflow: hidden;
 }
-/* line 227, ../sass/style.scss */
+/* line 241, ../sass/style.scss */
 .post-view .guideImg h3 {
   color: #ffffff;
   margin-top: -180px;
   position: absolute;
 }
-/* line 232, ../sass/style.scss */
+/* line 246, ../sass/style.scss */
 .post-view .guideImg img {
   transition: all 1s ease-out;
   width: 100%;
   height: 100%;
 }
-/* line 236, ../sass/style.scss */
+/* line 250, ../sass/style.scss */
 .post-view .guideImg img:hover {
   transform: scale(1.1);
 }
 
-/* line 244, ../sass/style.scss */
+/* line 258, ../sass/style.scss */
 .zakaz-view .notice-block {
   background: #736a50;
   padding: 7px;
   margin-bottom: 5px;
 }
-/* line 249, ../sass/style.scss */
+/* line 263, ../sass/style.scss */
 .zakaz-view .notice-action {
   font-style: italic;
 }
-/* line 252, ../sass/style.scss */
+/* line 266, ../sass/style.scss */
 .zakaz-view .zakaz-view_comment {
   height: 88px;
   overflow: auto;
 }
-/* line 256, ../sass/style.scss */
+/* line 270, ../sass/style.scss */
 .zakaz-view .notice-sotrud {
   margin-right: 10px;
 }
-/* line 259, ../sass/style.scss */
+/* line 273, ../sass/style.scss */
 .zakaz-view .zakaz-view_shipping {
   height: 150px;
 }
