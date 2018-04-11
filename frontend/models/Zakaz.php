@@ -523,4 +523,17 @@ class Zakaz extends ActiveRecord
         }
         $this->id_unread = $id_unread;
     }
+
+    public function changedUnread()
+    {
+        if ($this->status == self::STATUS_DISAIN or $this->status == self::STATUS_MASTER or $this->status == self::STATUS_AUTSORS) {
+            if ($this->status == self::STATUS_DISAIN) {
+                $this->unread(null, 'new', 'disain',0);
+            } elseif ($this->status == self::STATUS_MASTER) {
+                $this->unread(null, 'new', 'master',0);
+            } else {
+                $this->id_unread = 0;
+            }
+        }
+    }
 }
