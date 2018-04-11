@@ -5,8 +5,7 @@ $(document).ready(function(){
 // 	setInterval(function(){
 // 		$.pjax.reload('#pjax-container')
 // 	}, 100000);
-        let url = window.location.origin;
-        let urlSite = window.location.origin+'/frontend/web';
+        let urlSite = window.location.origin;
         changeStatus('.trNew', urlSite+'/zakaz/adopted?id=');
         changeStatus('.trNewMaster', urlSite+'/zakaz/adopmaster?id=');
         changeStatus('.trNewDisain', urlSite+'/zakaz/adopdisain?id=');
@@ -15,7 +14,7 @@ $(document).ready(function(){
 
         $('body').on('click', '#notification-new', function (e) {
             e.preventDefault();
-            $.get(`${url}/notification/index?new=true`)
+            $.get(`${urlSite}/notification/index?new=true`)
                 .done(res => {
                     notificationView(res, 'Показать все уведомление', 'notification-all');
                 })
@@ -80,7 +79,9 @@ $(document).ready(function(){
             $.ajax({
                 url: url+data,
             })
-                .done(() => console.log('Статус успешно изменен'))
+                .done(() => {
+                    $(this).removeClass(tr.slice(1));
+                })
                 .fail(err => console.error(err))
         });
     }
