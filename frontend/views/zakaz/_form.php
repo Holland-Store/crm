@@ -169,12 +169,7 @@ use yii\widgets\Pjax;
                         ],
                     ])->label(false);?>
             </div>
-            <?php if (Yii::$app->user->can('admin')): ?> 
-<!--            <div class="col-xs-10">-->
-<!--                --><?//= $form->field($model, 'id_tovar')->dropDownList(
-//                    ArrayHelper::map(Tovar::find()->all(), 'id', 'name'),
-//                ['prompt' => 'Выберите товар'])->label(false); ?>
-<!--            </div>-->
+            <?php if (Yii::$app->user->can('admin')): ?>
             <div class="col-xs-10">      
                 <?= $form->field($model, 'status')->dropDownList([
                 Zakaz::STATUS_DISAIN => 'Дизайнер',
