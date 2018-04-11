@@ -131,7 +131,7 @@ $this->registerJsFile('https://api-maps.yandex.ru/2.1/?lang=ru_RU', ['type' => '
                 'hAlign' => GridView::ALIGN_RIGHT,
                 'contentOptions' => function($model) {
                     if ($model->status == Zakaz::STATUS_NEW){
-                        return ['class' => 'trNew tr70 '];
+                        return ['class' => 'tr70 '];
                     } else {
                         return ['class' => 'textTr tr70'];
                     }
@@ -158,7 +158,7 @@ $this->registerJsFile('https://api-maps.yandex.ru/2.1/?lang=ru_RU', ['type' => '
                 'hAlign' => GridView::ALIGN_RIGHT,
                 'contentOptions' => function($model) {
                     if ($model->status == Zakaz::STATUS_NEW){
-                        return ['class' => 'trNew tr100 srok'];
+                        return ['class' => 'tr100 srok'];
                     } else {
                         return ['class' => 'textTr tr100 srok'];
                     }
@@ -202,7 +202,7 @@ $this->registerJsFile('https://api-maps.yandex.ru/2.1/?lang=ru_RU', ['type' => '
                 'hAlign' => GridView::ALIGN_RIGHT,
                 'contentOptions' => function($model) {
                     if ($model->status == Zakaz::STATUS_NEW){
-                        return ['class' => 'trNew tr70'];
+                        return ['class' => 'tr70'];
                     } else {
                         return ['class' => 'textTr tr70'];
                     }
@@ -216,22 +216,6 @@ $this->registerJsFile('https://api-maps.yandex.ru/2.1/?lang=ru_RU', ['type' => '
                 },
                 'contentOptions' => ['class' => 'textTr border-right tr90'],
             ]
-//            [
-//                'attribute' => 'status',
-//                'class' => SetColumn::className(),
-//                'label' => 'Отв-ный',
-//                'format' => 'raw',
-//                'name' => 'statusName',
-//                'cssCLasses' => [
-//                    Zakaz::STATUS_NEW => 'primary',
-//                    Zakaz::STATUS_EXECUTE => 'success',
-//                    Zakaz::STATUS_ADOPTED => 'warning',
-//                    Zakaz::STATUS_REJECT => 'danger',
-//                    Zakaz::STATUS_SUC_DISAIN => 'success',
-//                    Zakaz::STATUS_SUC_MASTER => 'success',
-//                ],
-//                'contentOptions' => ['class' => 'border-right'],
-//            ],
         ],
     ]); ?>
     </div>
