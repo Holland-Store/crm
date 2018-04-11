@@ -130,16 +130,6 @@ class ZakazController extends Controller
         $dataProvider = new ActiveDataProvider([
             'query' => Courier::find()->select(['date', 'to', 'from', 'commit', 'status'])->where(['id_zakaz' => $id])
         ]);
-//        if ($reminder->load(Yii::$app->request->post())) {
-//            $reminder->getReminder($zakaz);
-//            if ($reminder->validate() && $reminder->save()) {
-//                Yii::$app->session->setFlash('success', 'Напоминание было создана');
-//            } else {
-//                Yii::$app->session->setFlash('error', 'Извините. Напоминание не было создана');
-//            }
-//            unset($reminder->srok);
-//            return $this->redirect(['view', 'id' => $model->id_zakaz]);
-//        }
 
         return $this->render('view', [
             'model' => $model,
@@ -177,15 +167,7 @@ class ZakazController extends Controller
             if ($model->file) {
                 $model->upload('create');
             }
-            if ($model->status == Zakaz::STATUS_DISAIN or $model->status == Zakaz::STATUS_MASTER or $model->status == Zakaz::STATUS_AUTSORS) {
-                if ($model->status == Zakaz::STATUS_DISAIN) {
-                    $model->unread(null, 'new', 'disain',0);
-                } elseif ($model->status == Zakaz::STATUS_MASTER) {
-                    $model->unread(null, 'new', 'master',0);
-                } else {
-                    $model->id_unread = 0;
-                }
-            }
+            $model->changedUnread();
             if ($model->validate() && $client->validate()){
                 if (!$model->save()) {
                     print_r($model->getErrors());
@@ -233,28 +215,22 @@ class ZakazController extends Controller
         $telegram = new Telegram();
 
         if ($model->load(Yii::$app->request->post()) && $client->load(Yii::$app->request->post())) {
-            $model->id_client = ArrayHelper::getValue(Yii::$app->request->post('Client'), 'id');
+            $model->id_client = ArrayHelper::getValue(Yii::$app->request->post('Client'), 'id');//Пришел запрос при создание клиента из select 2
+            /** Сохранение файла */
             $model->file = UploadedFile::getInstance($model, 'file');
             if (isset($model->file)) {
                 $model->upload('update', $id);
             }
-            if ($model->status == Zakaz::STATUS_DISAIN or $model->status == Zakaz::STATUS_MASTER or Zakaz::STATUS_AUTSORS) {
-                if ($model->status == Zakaz::STATUS_DISAIN) {
-                    $model->unread(null, 'new', 'disain',0);
-                } elseif ($model->status == Zakaz::STATUS_MASTER) {
-                    $model->unread(null, 'new', 'master',0);
-                } else {
-                    $model->id_unread = 0;
-                }
-            }
+            $model->changedUnread();
+            /** Сохранение заказ и клиента если прошли валидацию */
             if ($model->validate() && $client->validate()){
                 if (!$model->save()) {
                     print_r($model->getErrors());
                 } else {
+                    /** Сохранение тегов */
                     $arr = ArrayHelper::map($model->tags, 'id', 'id');
-                    $post = Yii::$app->request->post('Zakaz')['tags_array'];
-                    if ($post){
-                        $tag->getZakazForm($post, $arr, $id);
+                    if (Yii::$app->request->post('Zakaz')['tags_array']){
+                        $tag->getZakazForm(Yii::$app->request->post('Zakaz')['tags_array'], $arr, $id);
                     }
                     if($model->status == Zakaz::STATUS_DISAIN && $user->telegram_chat_id){
                         $telegram->message(User::USER_DISAYNER, 'Назначен заказ '.$model->prefics.' '.$model->description);
@@ -264,7 +240,7 @@ class ZakazController extends Controller
 
                 if (Yii::$app->user->can('shop')) {
                     return $this->redirect(['shop']);
-                } elseif (Yii::$app->user->can('admin')) {
+                } else {
                     return $this->redirect(['admin']);
                 }
             }
