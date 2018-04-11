@@ -80,7 +80,10 @@ $(document).ready(function(){
                 url: url+data,
             })
                 .done(() => {
-                    $(this).removeClass(tr.slice(1));
+                    $(this).removeClass(tr.slice(1)+' bold');
+                    $(this).children('td:nth-child(2)').addClass('textTr');
+                    $(this).children('td:nth-child(4)').addClass('textTr');
+                    $(this).children('td:nth-child(8)').addClass('textTr');
                 })
                 .fail(err => console.error(err))
         });
