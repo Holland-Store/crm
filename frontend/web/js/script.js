@@ -57,14 +57,14 @@ $(document).ready(function(){
            let id = $(this).attr('id');
            $.ajax({
                type: 'get',
-               url: urlSite+'/'+url
-           }).done(result => {
-               if(result === '1'){
-                $('#'+id).parents('tr').remove();
-               } else {
-                   console.log(result);
-               }
+               url: urlSite+''+url
            })
+               .done(result => {
+                   if(result === '1'){
+                    $('#'+id).parents('tr').remove();
+                   }
+                })
+               .fail(err =>  console.error(err))
        });
 
     function addClassForm(button, form, formSecond){
