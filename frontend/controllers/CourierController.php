@@ -146,6 +146,7 @@ class CourierController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->save()){
+
                 Yii::$app->session->addFlash('update', 'Доставка была назначена');
                 $telegram->message(User::USER_COURIER, 'Назначена доставка.'.PHP_EOL.$model->commit.PHP_EOL.'Откуда: '.$model->to_name.PHP_EOL.'Куда: '.$model->from_name);
                 return $this->redirect('shipping');
@@ -163,7 +164,6 @@ class CourierController extends Controller
         $model = $id;
         $shipping = new Courier();
         $telegram = new Telegram();
-        $notifications = new Notification();
 
         if ($shipping->load(Yii::$app->request->post()) && $shipping->validate()) {
             $shipping->save();//сохранение доставка
@@ -173,6 +173,7 @@ class CourierController extends Controller
             $model = Zakaz::findOne(['id_zakaz' => $id]);//Определяю заказ
             $model->id_shipping = $shipping->id;//Оформление доставку в таблице заказа
             if ($model->save()){
+
                 /** @var $model \app\models\Zakaz */
                 Yii::$app->session->addFlash('update', 'Доставка успешно создана');
                 $telegram->message(User::USER_COURIER, 'Назначена доставка '.$model->prefics.PHP_EOL.$shipping->commit.PHP_EOL.'Откуда: '.$shipping->to_name.PHP_EOL.'Куда: '.$shipping->from_name);
@@ -245,8 +246,8 @@ class CourierController extends Controller
         $model->data_to = date('Y-m-d H:i:s');
         $model->status = Courier::RECEIVE;
 
-//        $notification->getByIdNotification(5, $model->id_zakaz);//Уведомление, что курьер забрал доставку
-//        $notification->saveNotification;
+        $notification->getByIdNotification(6, $model->id_zakaz);//Уведомление, что курьер забрал доставку
+        $notification->saveNotification;
 
         if ($model->save()){
             return $this->redirect(['index']);
@@ -269,8 +270,8 @@ class CourierController extends Controller
         $model->data_from = date('Y-m-d H:i:s');
         $model->status = Courier::DELIVERED;
 
-//        $notification->getByIdNotification(8, $model->id_zakaz);//Уведомление, что курьер доставил доставку
-//        $notification->saveNotification;
+        $notification->getByIdNotification(9, $model->id_zakaz);//Уведомление, что курьер доставил доставку
+        $notification->saveNotification;
 
         if ($model->save()){
             return $this->redirect(['index']);
