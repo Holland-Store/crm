@@ -69,6 +69,7 @@ class ZakazSearch extends Zakaz
                 'client.name',
                 'client.phone',
                 'client.email',
+                'zakaz.action'
             ])
             ->joinWith(['idClient' => function($q){
                 $q->from(['client' => Client::tableName()]);
