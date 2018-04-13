@@ -10,11 +10,13 @@ use app\models\Helpdesk;
 use app\models\Custom;
 use yii\base\Model;
 use app\models\TodoistSearch;
+use app\models\Notification;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\web\UploadedFile;
+
 
 /**
  * TodoistController implements the CRUD actions for Todoist model.
@@ -174,6 +176,8 @@ class TodoistController extends Controller
     {
         $model = new Todoist();
         $telegram = new Telegram();
+        $notification = new Notification();
+
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $model->file = UploadedFile::getInstance($model, 'file');
@@ -181,6 +185,9 @@ class TodoistController extends Controller
                 $model->upload();
             }
             if ($model->save()){
+                $notification->getByIdNotificationTodoList( 'create', $model);
+                $notification->getSaveNotification();
+
                 Yii::$app->session->addFlash('update', 'Задача успешна создана');
                 $telegram->message($model->id_user, 'Задача была поставлена: '.$model->comment);
                 $this->findView();
@@ -311,9 +318,13 @@ class TodoistController extends Controller
         $model = $this->findModel($id);
         $model->activate = Todoist::COMPLETED;
         $telegram = new Telegram();
+        $notification = new Notification();
+
         if (!$model->save()){
             print_r($model->getErrors());
         } else {
+            $notification->getByIdNotificationTodoList( 'ready', $model);
+            $notification->getSaveNotification();
             $telegram->message($model->id_sotrud_put, $model->idUser->name.' выполнил задачу '.$model->idZakaz->prefics.' '.$model->comment);
         }
 
