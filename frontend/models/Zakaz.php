@@ -118,7 +118,7 @@ class Zakaz extends ActiveRecord
     {
         return [
             self::SCENARIO_DECLINED => ['declined', 'required'],
-            self::SCENARIO_DEFAULT => ['srok', 'number', 'description', 'phone', 'id_sotrud', 'shifts_id', 'id_shop','status', 'id_tovar', 'oplata', 'fact_oplata', 'number', 'id_autsors','statusDisain', 'statusMaster', 'img', 'id_shipping', 'id_tovar', 'id_unread', 'information', 'data', 'prioritet', 'phone', 'email', 'name', 'maket', 'time', 'renouncement', 'date_update'],
+            self::SCENARIO_DEFAULT => ['srok', 'number', 'description', 'phone', 'id_sotrud', 'shifts_id', 'id_shop','status', 'id_tovar', 'oplata', 'fact_oplata', 'number', 'id_autsors','statusDisain', 'statusMaster', 'img', 'id_shipping', 'id_tovar', 'id_unread', 'information', 'data', 'prioritet', 'phone', 'email', 'name', 'maket', 'time', 'renouncement', 'date_update', 'action'],
         ];
     }
 
@@ -141,6 +141,7 @@ class Zakaz extends ActiveRecord
             ['status', 'default', 'value' => self::STATUS_NEW],
             [['id_sotrud', 'id_shop'], 'default', 'value' => Yii::$app->user->getId()],
             ['data', 'default', 'value' => date('Y-m-d H:i:s')],
+            ['id_tovar', 'default', 'value' => 1],
             [['description'], 'string', 'max' => 500],
             ['renouncement','string', 'max' => 250],
             [['email', 'name', 'img', 'maket'],'string', 'max' => 50],
@@ -194,6 +195,7 @@ class Zakaz extends ActiveRecord
             'date_update' => 'Date Update',
             'search' => 'Search',
             'tags_array' => 'Тэги',
+            'action' => 'Action'
         ];
     }
 
