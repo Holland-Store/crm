@@ -46,6 +46,7 @@ class CommentController extends Controller
         $telegram = new Telegram();
         $todoist = Todoist::findOne($id);
         $user = Yii::$app->user->id;
+        $notification = new Notification();
 
         if ($commentForm->load(Yii::$app->request->post())){
             $commentForm->id_todoist = $id;
@@ -53,9 +54,13 @@ class CommentController extends Controller
             if (!$commentForm->save()){
                 print_r($commentForm->getErrors());
             } else {
-                if ($todoist->id_sotrud_put != $user){
+                if ($todoist->id_sotrud_put != $user){                 //уведомление кто назначил задачу
+                    $notification->getByIdNotificationComments( '1', $commentForm, $todoist->id_sotrud_put);
+                    $notification->getSaveNotification();
                     $telegram->message($todoist->id_sotrud_put, 'Задачу '.$commentForm->idTodoist->comment.' прокомментировали '.$commentForm->comment);
-                } elseif($todoist->id_user != $user){
+                } elseif($todoist->id_user != $user){                   //уведомление кому назначена задача
+                    $notification->getByIdNotificationComments( '2', $commentForm, $todoist->id_sotrud_put);
+                    $notification->getSaveNotification();
                     $telegram->message($todoist->id_user, 'Задачу '.$commentForm->idTodoist->comment.' прокомментировали '.$commentForm->comment);
                 }
                 if (Yii::$app->user->can('admin')){
@@ -72,6 +77,7 @@ class CommentController extends Controller
         $commentForm = new Comment();
         $telegram = new Telegram();
         $helpdesk = Helpdesk::findOne($id);
+        $notification = new Notification();
 
         if ($commentForm->load(Yii::$app->request->post())){
             $commentForm->id_helpdesk = $id;
@@ -80,8 +86,12 @@ class CommentController extends Controller
                 print_r($commentForm->getErrors());
             } else {
                 if(Yii::$app->user->id != User::USER_SYSTEM){
+                    $notification->getByIdNotificationComments( '4', $commentForm, $id_sotrud_put= null);
+                    $notification->getSaveNotification();
                     $telegram->message($helpdesk->id_user, 'Поломку '.$commentForm->idHelpdesk->commetnt.' прокомментировали '.$commentForm->comment);
                 } else {
+                    $notification->getByIdNotificationComments( '3', $commentForm, $id_sotrud_put= null);
+                    $notification->getSaveNotification();
                     $telegram->message(User::USER_SYSTEM, 'Поломку '.$commentForm->idHelpdesk->commetnt.' прокомментировали '.$commentForm->comment);
                 }
                 return $this->redirect(['helpdesk/index']);
