@@ -5,6 +5,7 @@ namespace app\models;
 use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
 use app\models\User;
+use app\models\Todoist;
 
 /**
  * This is the model class for table "notification".
@@ -117,23 +118,7 @@ class Notification extends ActiveRecord
     {
         return ArrayHelper::getValue(self::getCategoryArray(), $this->category);
     }
-    public function getByIdNotificationTodoList($id, $todoist)
-    {
-        switch ($id) {
-            case 'create'://оформление уведомление исполнителю
-                $this->id_user = $todoist->id_user;
-                $this->name = 'Новая задача '.$todoist->comment;
-                $this->todoist_id = $todoist->id;
-                $this->category = 2;
-                break;
-            case 'ready'://оформление уведомление заказчика
-                $this->id_user = $todoist->id_sotrud_put;
-                $this->name = 'Выполнена задача '.$todoist->comment;
-                $this->todoist_id = $todoist->id;
-                $this->category = 2;
-                break;
-        }
-    }
+
     public function getByIdNotification($id, $zakaz)
     {
         switch ($id) {
@@ -193,6 +178,55 @@ class Notification extends ActiveRecord
                 break;
         }
     }
+
+    public function getByIdNotificationTodoList($id, $todoist)
+    {
+        switch ($id) {
+            case 'create'://оформление уведомление исполнителю
+                $this->id_user = $todoist->id_user;
+                $this->name = 'Новая задача '.$todoist->comment;
+                $this->todoist_id = $todoist->id;
+                $this->category = 2;
+                break;
+            case 'ready'://оформление уведомление заказчика
+                $this->id_user = $todoist->id_sotrud_put;
+                $this->name = 'Выполнена задача '.$todoist->comment;
+                $this->todoist_id = $todoist->id;
+                $this->category = 2;
+                break;
+        }
+    }
+
+    public function getByIdNotificationComments($id, $comment, $id_sotrud_put)
+    {
+        switch ($id) {
+            case '1'://оформление уведомление о новом комментарии к созданной задача
+                $this->id_user = $id_sotrud_put;
+                $this->name = substr('Комментарий к созданной задаче '.$comment->comment, 0, 49) . '...' ;
+                $this->todoist_id = $comment->id_todoist;
+                $this->category = 2;
+                break;
+            case '2'://оформление уведомление о новом ответе к выполняемой задачи
+                $this->id_user = $comment->id_user;
+                $this->name = substr('Добавлен ответ к выполняемой задачи '.$comment->comment, 0, 49) . '...' ;
+                $this->todoist_id = $comment->id_todoist;
+                $this->category = 2;
+                break;
+            case '3'://оформление уведомление для сотрудника с проблемой
+                $this->id_user = $comment->id_user;
+                $this->name = substr('Комит к проблеме '.$comment->comment, 0, 49) . '...' ;
+                $this->todoist_id = $comment->id_todoist;
+                $this->category = 2;
+                break;
+            case '4'://оформление уведомление helpdesk
+                $this->id_user = User::USER_SYSTEM ;
+                $this->name = substr('Коммит от сотрудника по ошибке'.$comment->comment, 0, 49) . '...' ;
+                $this->todoist_id = $comment->id_todoist;
+                $this->category = 2;
+                break;
+        }
+    }
+
     public function getReminder($id)
     {
         $this->id_user = 5;
