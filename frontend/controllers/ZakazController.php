@@ -466,7 +466,8 @@ class ZakazController extends Controller
         ]);
     }
 
-    /** All close zakaz in shop */
+    /** All close zakaz
+     * in shop */
     public function actionClosezakaz()
     {
         $searchModel = new ZakazSearch();
