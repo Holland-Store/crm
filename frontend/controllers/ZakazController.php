@@ -349,8 +349,10 @@ class ZakazController extends Controller
             var_dump($model->getErrors());
         } else {
             $model->save();
-            $notification->getByIdNotification(10, $id);
-            $notification->saveNotification;
+            if (Yii::$app->user->id != User::USER_ADMIN ){
+                $notification->getByIdNotification(10, $id);
+                $notification->saveNotification;
+            }
             Yii::$app->session->addFlash('update', 'Заказ успешно закрылся');
         }
 
