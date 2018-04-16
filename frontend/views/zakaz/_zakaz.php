@@ -178,6 +178,7 @@ use app\models\Zakaz;
         <?php if (Yii::$app->user->can('admin')): ?>
             <?php if($model->status == Zakaz::STATUS_ADOPTED && $model->action == 1): ?>
                 <?= Html::a('Выполнить', ['fulfilled','id' => $model->id_zakaz], ['class' => 'btn btn-xs done']) ?>
+
             <?php endif ?>
             <?php if ($model->action == 0): ?>
                 <?= Html::a('Восстановить', ['restore','id' => $model->id_zakaz], [
