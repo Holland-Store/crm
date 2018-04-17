@@ -7,6 +7,8 @@ use app\models\Helpdesk;
 use app\models\Notice;
 use app\models\Todoist;
 use app\models\User;
+use app\models\Notification;
+use app\models\Zakaz;
 use frontend\models\Telegram;
 use Yii;
 use yii\filters\AccessControl;
@@ -34,7 +36,7 @@ class CommentController extends Controller
     }
 
 
-    /**
+    /*
      * Save comment who came todoist
      * if success redirected [todoist/index]
      * @param $id
@@ -106,15 +108,40 @@ class CommentController extends Controller
     public function actionZakaz()
     {
         $comment = new Comment();
-        $notice = Notice::find()->where(['order_id' => Yii::$app->request->post('Comment')['id_zakaz']])->orderBy('id DESC')->all();
+        $notification = new Notification();
+        $idZakaz = Yii::$app->request->post('Comment')['id_zakaz'];
 
-        if($comment->load(Yii::$app->request->post()) && $comment->validate()){
+        $zakaz = Zakaz::find()
+            ->where(['id_zakaz' => $idZakaz ])
+            ->orderBy('id_zakaz DESC')
+            ->one();
+
+        $notice = Notice::find()
+            ->where(['order_id' => $idZakaz])
+            ->orderBy('id DESC')
+            ->all();
+
+        if($comment->load(Yii::$app->request->post()) && $comment->validate()) {
             $comment->notice_id = $notice != null ? $notice[0]->id : null;
-            if($comment->save()){
-                return true;
+            if (!$comment->save()){
+                print_r($comment->getErrors());
             } else {
-                return false;
-            }
+                if($zakaz->status == Zakaz::STATUS_MASTER ){
+                    $notification->getByIdNotificationComments( '10', $comment, $id_sotrud_put= null);
+                    $notification->getSaveNotification();
+                } else {
+                    $notification->getByIdNotificationComments( '12', $comment, $id_sotrud_put= null);
+                    $notification->getSaveNotification();
+                }
+                if($zakaz->status == Zakaz::STATUS_DISAIN ) {
+                    $notification->getByIdNotificationComments('11', $comment, $id_sotrud_put = null);
+                    $notification->getSaveNotification();
+                } else {
+                    $notification->getByIdNotificationComments( '12', $comment, $id_sotrud_put= null);
+                    $notification->getSaveNotification();
+                }
+                return true;
+            };
         }
     }
 
