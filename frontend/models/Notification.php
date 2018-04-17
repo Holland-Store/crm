@@ -7,6 +7,7 @@ use yii\helpers\ArrayHelper;
 use app\models\User;
 use app\models\Todoist;
 
+
 /**
  * This is the model class for table "notification".
  *
@@ -18,6 +19,7 @@ use app\models\Todoist;
  * @property integer $category
  * @property string $srok
  * @property integer $active
+ * @property integer $id_sotrud_put
  *
  * @property Todoist $todoist
  * @property Zakaz $idZakaz
@@ -89,7 +91,7 @@ class Notification extends ActiveRecord
     {
         return $this->hasOne(Zakaz::className(), ['id_zakaz' => 'id_zakaz']);
     }
-    
+
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -99,7 +101,7 @@ class Notification extends ActiveRecord
     }
     public function getSaveNotification()
     {
-		$this->srok = null;
+        $this->srok = null;
         $this->active = true;
         $this->save();
         if (!$this->save()) {
@@ -223,6 +225,24 @@ class Notification extends ActiveRecord
                 $this->name = substr('Коммит от сотрудника по ошибке'.$comment->comment, 0, 49) . '...' ;
                 $this->todoist_id = $comment->id_todoist;
                 $this->category = 2;
+                break;
+            case '10'://Уведомление, мастеру о новом комментарии в заказе
+                $this->id_user = User::USER_MASTER;
+                $this->name = 'Мастер'.$comment->comment;
+                $this->id_zakaz = $comment->notice_id;
+                $this->category = 1;
+                break;
+            case '11'://Уведомление, дизайнеру о новом комментарии в заказе
+                $this->id_user = User::USER_DISAYNER;
+                $this->name = 'Дизайнеру'.$comment->comment;
+                $this->id_zakaz = $comment->notice_id;
+                $this->category = 1;
+                break;
+            case '12'://Уведомление, администратору о новом комментарии в заказе
+                $this->id_user = User::USER_ADMIN;
+                $this->name = 'Админу'.$comment->comment;
+                $this->id_zakaz = $comment->notice_id;
+                $this->category = 1;
                 break;
         }
     }
