@@ -8,6 +8,7 @@ use app\models\User;
 use app\models\Todoist;
 
 
+
 /**
  * This is the model class for table "notification".
  *
@@ -209,7 +210,7 @@ class Notification extends ActiveRecord
                 $this->category = 2;
                 break;
             case '2'://оформление уведомление о новом ответе к выполняемой задачи
-                $this->id_user = $comment->id_user;
+                $this->id_user = $id_sotrud_put->id_user;
                 $this->name = substr('Добавлен ответ к выполняемой задачи '.$comment->comment, 0, 49) . '...' ;
                 $this->todoist_id = $comment->id_todoist;
                 $this->category = 2;
@@ -228,13 +229,13 @@ class Notification extends ActiveRecord
                 break;
             case '10'://Уведомление, мастеру о новом комментарии в заказе
                 $this->id_user = User::USER_MASTER;
-                $this->name = 'Мастер'.$comment->comment;
+                $this->name = 'Мастеру админа'.$comment->comment;
                 $this->id_zakaz = $comment->notice_id;
                 $this->category = 1;
                 break;
             case '11'://Уведомление, дизайнеру о новом комментарии в заказе
                 $this->id_user = User::USER_DISAYNER;
-                $this->name = 'Дизайнеру'.$comment->comment;
+                $this->name = 'Дизайнеру админа'.$comment->comment;
                 $this->id_zakaz = $comment->notice_id;
                 $this->category = 1;
                 break;

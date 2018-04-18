@@ -189,8 +189,8 @@ class TodoistController extends Controller
                 $notification->getSaveNotification();
 
                 Yii::$app->session->addFlash('update', 'Задача успешна создана');
-                $telegram->message($model->id_user, 'Задача была поставлена: '.$model->comment);
-                $this->findView();
+               /* $telegram->message($model->id_user, 'Задача была поставлена: '.$model->comment);
+                $this->findView();*/
             } else {
                 print_r($model->getErrors());
                 Yii::$app->session->addFlash('errors', 'Произошла ошибка! '.$model->getErrors());
@@ -281,7 +281,7 @@ class TodoistController extends Controller
             if ($model->file){
                 $model->upload();
             }
-            $telegram->message($model->id_user, 'Задача была поставлена "'.$model->comment.'" по заказу '.$model->idZakaz->prefics);
+           /* $telegram->message($model->id_user, 'Задача была поставлена "'.$model->comment.'" по заказу '.$model->idZakaz->prefics);*/
             $this->findView();
         }
         return $this->render('createzakaz', [
@@ -301,7 +301,7 @@ class TodoistController extends Controller
         $telegram = new Telegram();
         $model->activate = Todoist::CLOSE;
 		$model->save();
-		$telegram->message($model->id_user, 'Задача '.$model->comment.' была закрыта');
+	/*	$telegram->message($model->id_user, 'Задача '.$model->comment.' была закрыта');*/
         Yii::$app->session->addFlash('update', 'Задача была закрыта');
 
         return $this->findView();
@@ -325,7 +325,7 @@ class TodoistController extends Controller
         } else {
             $notification->getByIdNotificationTodoList( 'ready', $model);
             $notification->getSaveNotification();
-            $telegram->message($model->id_sotrud_put, $model->idUser->name.' выполнил задачу '.$model->idZakaz->prefics.' '.$model->comment);
+           /* $telegram->message($model->id_sotrud_put, $model->idUser->name.' выполнил задачу '.$model->idZakaz->prefics.' '.$model->comment);*/
         }
 
         return $this->findView();
@@ -347,7 +347,7 @@ class TodoistController extends Controller
             if (!$model->save()){
                 print_r($model->getErrors());
             }else{
-                $telegram->message($model->id_user, $model->idSotrudPut->name.' отклонил Вами выполненную задачу '.$model->comment.' по причине: '.$model->declined);
+              /*  $telegram->message($model->id_user, $model->idSotrudPut->name.' отклонил Вами выполненную задачу '.$model->comment.' по причине: '.$model->declined);*/
                 $this->findView();
             };
         }

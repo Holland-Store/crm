@@ -112,9 +112,9 @@ class CourierController extends Controller
         } else {
             Yii::$app->session->addFlash('update', 'Доставка была отклонена');
             if ($model->id_zakaz == null){
-                $telegram->message(User::USER_COURIER, 'Отменена доставка '.$model->commit);
+               /* $telegram->message(User::USER_COURIER, 'Отменена доставка '.$model->commit);*/
             } else {
-                $telegram->message(User::USER_COURIER, 'Отменена доставка '.$model->idZakaz->prefics.' '.$model->commit);
+                /*$telegram->message(User::USER_COURIER, 'Отменена доставка '.$model->idZakaz->prefics.' '.$model->commit);*/
             }
         }
 
@@ -148,7 +148,7 @@ class CourierController extends Controller
             if ($model->save()){
 
                 Yii::$app->session->addFlash('update', 'Доставка была назначена');
-                $telegram->message(User::USER_COURIER, 'Назначена доставка.'.PHP_EOL.$model->commit.PHP_EOL.'Откуда: '.$model->to_name.PHP_EOL.'Куда: '.$model->from_name);
+                /*$telegram->message(User::USER_COURIER, 'Назначена доставка.'.PHP_EOL.$model->commit.PHP_EOL.'Откуда: '.$model->to_name.PHP_EOL.'Куда: '.$model->from_name);*/
                 return $this->redirect('shipping');
             } else {
                 print_r($model->getErrors());
@@ -176,7 +176,7 @@ class CourierController extends Controller
 
                 /** @var $model \app\models\Zakaz */
                 Yii::$app->session->addFlash('update', 'Доставка успешно создана');
-                $telegram->message(User::USER_COURIER, 'Назначена доставка '.$model->prefics.PHP_EOL.$shipping->commit.PHP_EOL.'Откуда: '.$shipping->to_name.PHP_EOL.'Куда: '.$shipping->from_name);
+               /* $telegram->message(User::USER_COURIER, 'Назначена доставка '.$model->prefics.PHP_EOL.$shipping->commit.PHP_EOL.'Откуда: '.$shipping->to_name.PHP_EOL.'Куда: '.$shipping->from_name);*/
             } else {
                 print_r($model->getErrors());
             }

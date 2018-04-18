@@ -40,9 +40,9 @@ use yii\helpers\ArrayHelper;
 class User extends \yii\db\ActiveRecord
 {
     const USER_PROGRAM = 1;
-    const USER_ADMIN = 5;
     const USER_MASTER = 3;
     const USER_DISAYNER = 4;
+    const USER_ADMIN = 5;
     const USER_SYSTEM = 11;
     const USER_ZAKUP = 10;
     const USER_COURIER = 7;

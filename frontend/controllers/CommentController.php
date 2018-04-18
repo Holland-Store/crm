@@ -1,7 +1,5 @@
 <?php
-
 namespace frontend\controllers;
-
 use app\models\Comment;
 use app\models\Helpdesk;
 use app\models\Notice;
@@ -13,7 +11,6 @@ use frontend\models\Telegram;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
-
 class CommentController extends Controller
 {
     /**
@@ -34,8 +31,6 @@ class CommentController extends Controller
             ],
         ];
     }
-
-
     /*
      * Save comment who came todoist
      * if success redirected [todoist/index]
@@ -49,7 +44,6 @@ class CommentController extends Controller
         $todoist = Todoist::findOne($id);
         $user = Yii::$app->user->id;
         $notification = new Notification();
-
         if ($commentForm->load(Yii::$app->request->post())){
             $commentForm->id_todoist = $id;
             $commentForm->id_user = Yii::$app->user->id;
@@ -59,11 +53,11 @@ class CommentController extends Controller
                 if ($todoist->id_sotrud_put != $user){                 //уведомление кто назначил задачу
                     $notification->getByIdNotificationComments( '1', $commentForm, $todoist->id_sotrud_put);
                     $notification->getSaveNotification();
-                    $telegram->message($todoist->id_sotrud_put, 'Задачу '.$commentForm->idTodoist->comment.' прокомментировали '.$commentForm->comment);
+                  /*  $telegram->message($todoist->id_sotrud_put, 'Задачу '.$commentForm->idTodoist->comment.' прокомментировали '.$commentForm->comment);*/
                 } elseif($todoist->id_user != $user){                   //уведомление кому назначена задача
-                    $notification->getByIdNotificationComments( '2', $commentForm, $todoist->id_sotrud_put);
+                    $notification->getByIdNotificationComments( '2', $commentForm, $todoist);
                     $notification->getSaveNotification();
-                    $telegram->message($todoist->id_user, 'Задачу '.$commentForm->idTodoist->comment.' прокомментировали '.$commentForm->comment);
+                   /* $telegram->message($todoist->id_user, 'Задачу '.$commentForm->idTodoist->comment.' прокомментировали '.$commentForm->comment);*/
                 }
                 if (Yii::$app->user->can('admin')){
                     return $this->redirect(['todoist/index']);
@@ -73,14 +67,12 @@ class CommentController extends Controller
             };
         }
     }
-
     public function actionHelpdesk($id)
     {
         $commentForm = new Comment();
         $telegram = new Telegram();
         $helpdesk = Helpdesk::findOne($id);
         $notification = new Notification();
-
         if ($commentForm->load(Yii::$app->request->post())){
             $commentForm->id_helpdesk = $id;
             $commentForm->id_user = Yii::$app->user->id;
@@ -90,17 +82,16 @@ class CommentController extends Controller
                 if(Yii::$app->user->id != User::USER_SYSTEM){
                     $notification->getByIdNotificationComments( '4', $commentForm, $id_sotrud_put= null);
                     $notification->getSaveNotification();
-                    $telegram->message($helpdesk->id_user, 'Поломку '.$commentForm->idHelpdesk->commetnt.' прокомментировали '.$commentForm->comment);
+                   /* $telegram->message($helpdesk->id_user, 'Поломку '.$commentForm->idHelpdesk->commetnt.' прокомментировали '.$commentForm->comment);*/
                 } else {
                     $notification->getByIdNotificationComments( '3', $commentForm, $id_sotrud_put= null);
                     $notification->getSaveNotification();
-                    $telegram->message(User::USER_SYSTEM, 'Поломку '.$commentForm->idHelpdesk->commetnt.' прокомментировали '.$commentForm->comment);
+                    /*$telegram->message(User::USER_SYSTEM, 'Поломку '.$commentForm->idHelpdesk->commetnt.' прокомментировали '.$commentForm->comment);*/
                 }
                 return $this->redirect(['helpdesk/index']);
             };
         }
     }
-
     /**
      * Save comment
      * @return bool
@@ -110,17 +101,14 @@ class CommentController extends Controller
         $comment = new Comment();
         $notification = new Notification();
         $idZakaz = Yii::$app->request->post('Comment')['id_zakaz'];
-
         $zakaz = Zakaz::find()
             ->where(['id_zakaz' => $idZakaz ])
             ->orderBy('id_zakaz DESC')
             ->one();
-
         $notice = Notice::find()
             ->where(['order_id' => $idZakaz])
             ->orderBy('id DESC')
             ->all();
-
         if($comment->load(Yii::$app->request->post()) && $comment->validate()) {
             $comment->notice_id = $notice != null ? $notice[0]->id : null;
             if (!$comment->save()){
@@ -129,11 +117,7 @@ class CommentController extends Controller
                 if($zakaz->status == Zakaz::STATUS_MASTER ){
                     $notification->getByIdNotificationComments( '10', $comment, $id_sotrud_put= null);
                     $notification->getSaveNotification();
-                } else {
-                    $notification->getByIdNotificationComments( '12', $comment, $id_sotrud_put= null);
-                    $notification->getSaveNotification();
-                }
-                if($zakaz->status == Zakaz::STATUS_DISAIN ) {
+                } else if($zakaz->status == Zakaz::STATUS_DISAIN ) {
                     $notification->getByIdNotificationComments('11', $comment, $id_sotrud_put = null);
                     $notification->getSaveNotification();
                 } else {
@@ -144,7 +128,6 @@ class CommentController extends Controller
             };
         }
     }
-
     /**
      * @param $id
      * @param $offset
