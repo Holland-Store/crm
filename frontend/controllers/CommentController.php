@@ -51,11 +51,12 @@ class CommentController extends Controller
                 print_r($commentForm->getErrors());
             } else {
                 if ($todoist->id_sotrud_put != $user){                 //уведомление кто назначил задачу
-                    $notification->getByIdNotificationComments( '1', $commentForm, $todoist->id_sotrud_put);
+                    $notification->getByIdNotificationComments( '1', $commentForm, $todoist,$zakaz= null);
                     $notification->getSaveNotification();
+
                   /*  $telegram->message($todoist->id_sotrud_put, 'Задачу '.$commentForm->idTodoist->comment.' прокомментировали '.$commentForm->comment);*/
                 } elseif($todoist->id_user != $user){                   //уведомление кому назначена задача
-                    $notification->getByIdNotificationComments( '2', $commentForm, $todoist);
+                    $notification->getByIdNotificationComments( '2', $commentForm, $todoist,$zakaz= null);
                     $notification->getSaveNotification();
                    /* $telegram->message($todoist->id_user, 'Задачу '.$commentForm->idTodoist->comment.' прокомментировали '.$commentForm->comment);*/
                 }
@@ -114,14 +115,25 @@ class CommentController extends Controller
             if (!$comment->save()){
                 print_r($comment->getErrors());
             } else {
+
                 if($zakaz->status == Zakaz::STATUS_MASTER ){
-                    $notification->getByIdNotificationComments( '10', $comment, $id_sotrud_put= null);
+                    if(Yii::$app->user->id != User::USER_ADMIN){
+                    $notification->getByIdNotificationComments( '12', $comment, $id_sotrud_put= null,$zakaz);
                     $notification->getSaveNotification();
+                    } else{
+                        $notification->getByIdNotificationComments( '10', $comment, $id_sotrud_put= null,$zakaz);
+                        $notification->getSaveNotification();
+                    }
                 } else if($zakaz->status == Zakaz::STATUS_DISAIN ) {
-                    $notification->getByIdNotificationComments('11', $comment, $id_sotrud_put = null);
-                    $notification->getSaveNotification();
+                    if(Yii::$app->user->id != User::USER_ADMIN){
+                        $notification->getByIdNotificationComments( '12', $comment, $id_sotrud_put= null,$zakaz);
+                        $notification->getSaveNotification();
+                    } else{
+                        $notification->getByIdNotificationComments( '11', $comment, $id_sotrud_put= null,$zakaz);
+                        $notification->getSaveNotification();
+                    }
                 } else {
-                    $notification->getByIdNotificationComments( '12', $comment, $id_sotrud_put= null);
+                    $notification->getByIdNotificationComments( '12', $comment, $id_sotrud_put= null,$zakaz);
                     $notification->getSaveNotification();
                 }
                 return true;
