@@ -231,8 +231,6 @@ class ZakazController extends Controller
         $notification = new Notification();
 
         if ($model->load(Yii::$app->request->post()) && $client->load(Yii::$app->request->post())) {
-            /*          var_dump($model->validate());
-                      var_dump($model->getErrors());*/
             $model->id_client = ArrayHelper::getValue(Yii::$app->request->post('Client'), 'id');//Пришел запрос при создание клиента из select 2
             /** Сохранение файла */
             $model->file = UploadedFile::getInstance($model, 'file');
@@ -293,9 +291,9 @@ class ZakazController extends Controller
         $notification = new Notification();
 
         $model->unread('suc', 'suc', 'master',true);
-        $notification->getByIdNotification(8, $id);
-        $notification->saveNotification;
         if ($model->save()) {
+            $notification->getByIdNotification(8, $id);
+            $notification->saveNotification;
            /* $telegram->message(User::USER_ADMIN, 'Мастер выполнил работу '.$model->prefics.' '.$model->description);*/
             Yii::$app->session->addFlash('update', 'Заказ отправлен на проверку');
             return $this->redirect(['master']);
@@ -316,9 +314,6 @@ class ZakazController extends Controller
         $notification = new Notification();
 
         $model->unread('suc', 'suc', 'disain',true);
-        $notification->getByIdNotification(5, $id);
-        $notification->saveNotification;
-
         if ($model->load(Yii::$app->request->post())) {
             $model->file = UploadedFile::getInstance($model, 'file');
             //Выполнение работы дизайнером
@@ -327,6 +322,8 @@ class ZakazController extends Controller
             }
             if ($model->save()) {
                 Yii::$app->session->addFlash('update', 'Заказ отправлен на проверку');
+                $notification->getByIdNotification(5, $id);
+                $notification->saveNotification;
                 /*$telegram->message(User::USER_ADMIN, 'Дизайнер выполнил работу '.$model->prefics.' '.$model->description);*/
                 return $this->redirect(['disain', 'id' => $id]);
             } else {
@@ -645,6 +642,7 @@ class ZakazController extends Controller
         $model = $this->findModel($id);
         $model->scenario = Zakaz::SCENARIO_DECLINED;
         $telegram = new Telegram();
+        $notification = new Notification();
         if ($model->status == Zakaz::STATUS_SUC_DISAIN) {
             $user_id = User::USER_DISAYNER;
         } else {
@@ -662,6 +660,8 @@ class ZakazController extends Controller
                     $this->flashErrors($id);
                 } else {
                     Yii::$app->session->addFlash('update', 'Работа была отклонена!');
+                    $notification->getByIdNotification(12, $id);
+                    $notification->getSaveNotification();
                    /* $telegram->message($user_id, 'Отклонен заказ ' . $model->prefics . ' По причине: ' . $model->declined);*/
                 }
                 return $this->redirect(['admin', '#' => $model->id_zakaz]);
@@ -683,6 +683,7 @@ class ZakazController extends Controller
     {
         $model = $this->findModel($id);
         $telegram = new Telegram();
+        $notification = new Notification();
 
         if ($model->load(Yii::$app->request->post())) {
             if ($model->validate()) {
@@ -702,6 +703,8 @@ class ZakazController extends Controller
                     /** @var $user_id \app\models\User */
                     $user = User::findOne(['id' => $user_id]);
                     if($model->status == Zakaz::STATUS_DISAIN && $user->telegram_chat_id){
+                        $notification->getByIdNotification(4, $model->id_zakaz);
+                        $notification->getSaveNotification();
                         /*$telegram->message($user_id, 'Назначен заказ '.$model->prefics.' '.$model->description);*/
                     }
                     Yii::$app->session->addFlash('update', 'Работа была принята');
