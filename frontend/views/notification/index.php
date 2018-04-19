@@ -18,7 +18,7 @@ $this->title = 'Уведомление';
     <br>
     <div class="notification-info" data-count="<?= $countNew ?>">
     <?php if ($countNew != 0): ?>
-    <div class="notification-info_filter"><?= Html::a('Новый уведомление: '.$countNew, ['#'], ['id' => 'notification-new']) ?></div>
+    <div class="notification-info_filter"><?= Html::a('Новое уведомление: '.$countNew, ['#'], ['id' => 'notification-new']) ?></div>
     <?php endif; ?>
     <?php foreach ($model as $notification): ?>
        <?php $date = date('Y-m-d H:i:s', time()) ?>
