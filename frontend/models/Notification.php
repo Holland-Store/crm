@@ -155,7 +155,7 @@ class Notification extends ActiveRecord
                 $this->id_zakaz = $zakaz;
                 $this->category = 1;
                 break;
-            case '7'://оформление уведомление доставки
+            case '7'://оформление уведомление курьеру о доставке
                 $this->id_user = $id;
                 $this->name = 'Новая доставка №'.$zakaz;
                 $this->id_zakaz = $zakaz;
@@ -179,6 +179,31 @@ class Notification extends ActiveRecord
                 $this->id_zakaz = $zakaz;
                 $this->category = 1;
                 break;
+            case '11'://Уведомление, курьеру о отмене доставки
+                $this->id_user = $id;
+                $this->name = 'Доставка отменена №'.$zakaz;
+                $this->id_zakaz = $zakaz;
+                $this->category = 2;
+                break;
+            case '12'://Уведомление, дизайнеру Отклонен заказ
+                $this->id_user = $id;
+                $this->name = 'Отклонен заказ ' . $zakaz->prefics . ' По причине: ' . $zakaz->declinedж;
+                $this->id_zakaz = $zakaz;
+                $this->category = 2;
+                break;
+            case '13'://Уведомление,
+                $this->id_user = User::USER_SYSTEM;
+                $this->name = 'Назначена заявка на поломку' .$zakaz->comment;
+                $this->id_zakaz = $zakaz;
+                $this->category = 2;
+                break;
+            case '14'://Уведомление,
+                $this->id_user = User::USER_SYSTEM;
+                $this->name = 'Отклонена поломку '.$zakaz->commetnt.' По причине: '.$zakaz->declined;
+                $this->id_zakaz = $zakaz;
+                $this->category = 2;
+                break;
+
         }
     }
 
@@ -197,53 +222,80 @@ class Notification extends ActiveRecord
                 $this->todoist_id = $todoist->id;
                 $this->category = 2;
                 break;
+            case 'close'://оформление уведомление о закрытие выполненной задачи заказчиком
+                $this->id_user = $todoist->id_user;
+                $this->name = 'Закрыта задача '.$todoist->comment;
+                $this->todoist_id = $todoist->id;
+                $this->category = 2;
+                break;
+            case 'rejected'://оформление уведомление что задача отклонена заказчиком
+                $this->id_user = $todoist->id_user;
+                $this->name = 'Задача была отклонена '.$todoist->comment;
+                $this->todoist_id = $todoist->id;
+                $this->category = 2;
+                break;
+            case 'createorder'://оформление уведомление о задаче по заказу
+                $this->id_user = $todoist->id_user;
+                $this->name = 'Задача была назначена по заказу '.$todoist->idZakaz->prefics;
+                $this->todoist_id = $todoist->id;
+                $this->category = 2;
+                break;
+            case 'redirect':// не пашет
+                $this->id_user = $todoist->id_user;
+                $this->name = 'На вас переназначена задача '.$todoist->comment;
+                $this->todoist_id = $todoist->id;
+                $this->category = 2;
+                break;
+
+
         }
     }
 
-    public function getByIdNotificationComments($id, $comment, $id_sotrud_put)
+    public function getByIdNotificationComments($id, $comment, $id_sotrud_put,$zakaz)
     {
+
         switch ($id) {
             case '1'://оформление уведомление о новом комментарии к созданной задача
-                $this->id_user = $id_sotrud_put;
-                $this->name = substr('Комментарий к созданной задаче '.$comment->comment, 0, 49) . '...' ;
+                $this->id_user = $id_sotrud_put->id_sotrud_put;
+                $this->name = substr($comment->date.'Комментарий к задаче '.$id_sotrud_put->comment , 0, 120) . '...' ;
                 $this->todoist_id = $comment->id_todoist;
                 $this->category = 2;
                 break;
             case '2'://оформление уведомление о новом ответе к выполняемой задачи
                 $this->id_user = $id_sotrud_put->id_user;
-                $this->name = substr('Добавлен ответ к выполняемой задачи '.$comment->comment, 0, 49) . '...' ;
+                $this->name = substr('Коммент к задаче '.$id_sotrud_put->comment, 0, 120) . '...' ;
                 $this->todoist_id = $comment->id_todoist;
                 $this->category = 2;
                 break;
             case '3'://оформление уведомление для сотрудника с проблемой
                 $this->id_user = $comment->id_user;
-                $this->name = substr('Комит к проблеме '.$comment->comment, 0, 49) . '...' ;
+                $this->name = substr('Коммент к проблеме '.$comment->comment, 0, 49) . '...' ;
                 $this->todoist_id = $comment->id_todoist;
                 $this->category = 2;
                 break;
             case '4'://оформление уведомление helpdesk
                 $this->id_user = User::USER_SYSTEM ;
-                $this->name = substr('Коммит от сотрудника по ошибке'.$comment->comment, 0, 49) . '...' ;
+                $this->name = substr('Коммент по проблеме'.$comment->comment, 0, 49) . '...' ;
                 $this->todoist_id = $comment->id_todoist;
                 $this->category = 2;
                 break;
             case '10'://Уведомление, мастеру о новом комментарии в заказе
-                $this->id_user = User::USER_MASTER;
-                $this->name = 'Мастеру админа'.$comment->comment;
+                $this->id_user = 4;
+                $this->name = 'Коммент к заказу '.$zakaz->id_zakaz;
                 $this->id_zakaz = $comment->notice_id;
-                $this->category = 1;
+                $this->category = 2;
                 break;
             case '11'://Уведомление, дизайнеру о новом комментарии в заказе
-                $this->id_user = User::USER_DISAYNER;
-                $this->name = 'Дизайнеру админа'.$comment->comment;
+                $this->id_user = 3;
+                $this->name = 'Коммент к заказу '.$zakaz->id_zakaz;
                 $this->id_zakaz = $comment->notice_id;
-                $this->category = 1;
+                $this->category = 2;
                 break;
             case '12'://Уведомление, администратору о новом комментарии в заказе
                 $this->id_user = User::USER_ADMIN;
-                $this->name = 'Админу'.$comment->comment;
+                $this->name = 'Коммент к заказу '.$zakaz->id_zakaz;
                 $this->id_zakaz = $comment->notice_id;
-                $this->category = 1;
+                $this->category = 2;
                 break;
         }
     }
