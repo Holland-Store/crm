@@ -9,6 +9,7 @@ use frontend\models\Telegram;
 use Yii;
 use app\models\Helpdesk;
 use app\models\HelpdeskSearch;
+use app\models\Notification;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -91,11 +92,14 @@ class HelpdeskController extends Controller
     {
         $model = new Helpdesk();
         $telegram = new Telegram();
+        $notification = new Notification();
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if($model->save()){
                 Yii::$app->session->addFlash('update', 'Заявка успешно создана');
-                $telegram->message(User::USER_SYSTEM, 'Назначена заявка на поломку '.$model->commetnt);
+                $notification->getByIdNotification(13, $model);
+                $notification->getSaveNotification();
+               /* $telegram->message(User::USER_SYSTEM, 'Назначена заявка на поломку '.$model->comment);*/
                 return $this->redirect(['index', 'id' => $model->id]);
             } else {
                 $this->flashErrors();
@@ -197,13 +201,16 @@ class HelpdeskController extends Controller
     {
         $model = $this->findModel($id);
         $telegram  = new Telegram();
+        $notification = new Notification();
 
         if ($model->load(Yii::$app->request->post())){
             $model->status = Helpdesk::STATUS_DECLINED;
             if (!$model->save()){
                $this->flashErrors($id);
             } else {
-                $telegram->message(User::USER_SYSTEM, 'Отклонена поломку '.$model->commetnt.' По причине: '.$model->declined);
+                $notification->getByIdNotification(14, $model);
+                $notification->getSaveNotification();
+              /*  $telegram->message(User::USER_SYSTEM, 'Отклонена поломку '.$model->commetnt.' По причине: '.$model->declined);*/
             }
         }
 
