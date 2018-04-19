@@ -42,8 +42,8 @@ class Comment extends \yii\db\ActiveRecord
     {
         return [
             [['id_user', 'sotrud', 'id_zakaz', 'id_todoist', 'id_helpdesk', 'notice_id', 'category'], 'integer'],
-            [['date'], 'safe'],
-            [['comment'], 'string'],
+           [['date'], 'safe'],
+            [['comment','date'], 'string'],
             [['id_helpdesk'], 'exist', 'skipOnError' => true, 'targetClass' => Helpdesk::className(), 'targetAttribute' => ['id_helpdesk' => 'id']],
             [['id_user'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['id_user' => 'id']],
             [['sotrud'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['sotrud' => 'id']],
