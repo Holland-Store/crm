@@ -201,13 +201,17 @@ class TodoistController extends Controller
         ]);
     }
 
+
     public function actionAppoint($id)
     {
+        $notification = new Notification();
         $model = $this->findModel($id);
         if ($model->load(Yii::$app->request->post())){
             if (!$model->save()){
                 print_r($model->getErrors());
             } else {
+                $notification->getByIdNotificationTodoList( 'redirect', $model);
+                $notification->getSaveNotification();
                 return $this->redirect(['index', '#' => $model->id]);
             }
         }
@@ -276,11 +280,14 @@ class TodoistController extends Controller
     {
         $model = new Todoist();
         $telegram = new Telegram();
+        $notification = new Notification();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             if ($model->file){
                 $model->upload();
             }
+            $notification->getByIdNotificationTodoList( 'createorder', $model);
+            $notification->getSaveNotification();
            /* $telegram->message($model->id_user, 'Задача была поставлена "'.$model->comment.'" по заказу '.$model->idZakaz->prefics);*/
             $this->findView();
         }
@@ -299,8 +306,11 @@ class TodoistController extends Controller
     {
         $model = $this->findModel($id);
         $telegram = new Telegram();
+        $notification = new Notification();
         $model->activate = Todoist::CLOSE;
 		$model->save();
+        $notification->getByIdNotificationTodoList( 'close', $model);
+        $notification->getSaveNotification();
 	/*	$telegram->message($model->id_user, 'Задача '.$model->comment.' была закрыта');*/
         Yii::$app->session->addFlash('update', 'Задача была закрыта');
 
@@ -341,12 +351,15 @@ class TodoistController extends Controller
     {
         $model = $this->findModel($id);
         $telegram = new Telegram();
+        $notification = new Notification();
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()){
             $model->activate = Todoist::REJECT;
             if (!$model->save()){
                 print_r($model->getErrors());
             }else{
+                $notification->getByIdNotificationTodoList( 'rejected', $model);
+                $notification->getSaveNotification();
               /*  $telegram->message($model->id_user, $model->idSotrudPut->name.' отклонил Вами выполненную задачу '.$model->comment.' по причине: '.$model->declined);*/
                 $this->findView();
             };
