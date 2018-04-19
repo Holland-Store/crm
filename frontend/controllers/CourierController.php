@@ -106,12 +106,15 @@ class CourierController extends Controller
     {
         $model =  $this->findModel($id);
         $telegram = new Telegram();
+        $notification = new Notification();
         $model->status = Courier::CANCEL;
         if(!$model->save()){
             $this->flashErrors($id);
         } else {
             Yii::$app->session->addFlash('update', 'Доставка была отклонена');
             if ($model->id_zakaz == null){
+                $notification->getByIdNotification(11, $id);
+                $notification->getSaveNotification();
                /* $telegram->message(User::USER_COURIER, 'Отменена доставка '.$model->commit);*/
             } else {
                 /*$telegram->message(User::USER_COURIER, 'Отменена доставка '.$model->idZakaz->prefics.' '.$model->commit);*/
@@ -164,6 +167,7 @@ class CourierController extends Controller
         $model = $id;
         $shipping = new Courier();
         $telegram = new Telegram();
+        $notification = new Notification();
 
         if ($shipping->load(Yii::$app->request->post()) && $shipping->validate()) {
             $shipping->save();//сохранение доставка
@@ -176,13 +180,14 @@ class CourierController extends Controller
 
                 /** @var $model \app\models\Zakaz */
                 Yii::$app->session->addFlash('update', 'Доставка успешно создана');
+                $notification->getByIdNotification(7, $shipping->id_zakaz);//оформление уведомлений
+                $notification->saveNotification;
                /* $telegram->message(User::USER_COURIER, 'Назначена доставка '.$model->prefics.PHP_EOL.$shipping->commit.PHP_EOL.'Откуда: '.$shipping->to_name.PHP_EOL.'Куда: '.$shipping->from_name);*/
             } else {
                 print_r($model->getErrors());
             }
 
-            $notifications->getByIdNotification(7, $shipping->id_zakaz);//оформление уведомлений
-            $notifications->saveNotification;
+
 
             return $this->redirect(['zakaz/admin', '#' => $model->id_zakaz]);
         }
