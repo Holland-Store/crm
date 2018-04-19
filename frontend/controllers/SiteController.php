@@ -9,6 +9,9 @@ use app\models\TodoistSearch;
 use app\models\User;
 use app\models\Zakaz;
 use app\models\ZakazSearch;
+
+use app\models\BlogList;  // Custom Blog Model
+
 use DateTime;
 use Yii;
 use yii\base\InvalidParamException;
@@ -21,6 +24,8 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
+
+
 
 /**
  * Site controller
@@ -162,6 +167,15 @@ class SiteController extends Controller
                 'model' => $model,
             ]);
         }
+    }
+
+    /**
+     * Displays blog page.
+     */
+    public function actionBlog()
+    {
+        $array = BlogList::getAll();
+        return $this->render('blog',['varInView' => $array]);
     }
 
     /**
