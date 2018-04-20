@@ -282,19 +282,19 @@ class Notification extends ActiveRecord
             case '10'://Уведомление, мастеру о новом комментарии в заказе
                 $this->id_user = 4;
                 $this->name = 'Коммент к заказу '.$zakaz->id_zakaz;
-                $this->id_zakaz = $comment->notice_id;
+                $this->id_zakaz = $zakaz->id_zakaz;
                 $this->category = 2;
                 break;
             case '11'://Уведомление, дизайнеру о новом комментарии в заказе
                 $this->id_user = 3;
                 $this->name = 'Коммент к заказу '.$zakaz->id_zakaz;
-                $this->id_zakaz = $comment->notice_id;
+                $this->id_zakaz = $zakaz->id_zakaz;
                 $this->category = 2;
                 break;
             case '12'://Уведомление, администратору о новом комментарии в заказе
                 $this->id_user = User::USER_ADMIN;
                 $this->name = 'Коммент к заказу '.$zakaz->id_zakaz;
-                $this->id_zakaz = $comment->notice_id;
+                $this->id_zakaz = $zakaz->id_zakaz;
                 $this->category = 2;
                 break;
         }
