@@ -13,6 +13,7 @@ use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use yii\bootstrap\Alert;
 use frontend\components\Counter;
+use yii\widgets\Pjax;
 
 AppAsset::register($this);
 ?>
@@ -100,6 +101,7 @@ AppAsset::register($this);
     }
     ?>
     <?= Notifications::widget() ?>
+
 
 <?php if (Yii::$app->user->isGuest): ?>
     <div class="headerLogin">

@@ -1,10 +1,10 @@
-// document.getElementById('notification').onclick = () => {
-// 	document.getElementById('notification-container').classList.toggle('hidden');
-// }
+/*document.getElementById('notification').onclick = () => {
+	document.getElementById('notification-container').classList.toggle('hidden');
+}*/
 $(document).ready(function(){
-// 	setInterval(function(){
-// 		$.pjax.reload('#pjax-container')
-// 	}, 100000);
+/*	setInterval(function(){
+		$.pjax.reload('#pjax-container')
+	}, 3000);*/
         let urlSite = window.location.origin;
         changeStatus('.trNew', urlSite+'/zakaz/adopted?id=');
         changeStatus('.trNewMaster', urlSite+'/zakaz/adopmaster?id=');

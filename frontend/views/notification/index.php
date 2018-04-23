@@ -12,6 +12,7 @@ $this->title = 'Уведомление';
 ?>
 <div class="notification-index">
 
+
     <h1><?= Html::encode($this->title) ?></h1>
 
     <?= Html::a('Отметить все прочитаным', ['ready', 'id' => Yii::$app->user->id])  ?>
