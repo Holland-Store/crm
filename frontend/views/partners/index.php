@@ -43,6 +43,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             ],
             'phone',
+            'whatsapp',
+            'timetable',
             [
                 'attribute' => 'contact_person',
                 'filter' => false,
