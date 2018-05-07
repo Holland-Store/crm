@@ -567,6 +567,11 @@ class ZakazController extends Controller
         $dataProviderNew = $searchModel->search(Yii::$app->request->queryParams, 'adminNew');
         $dataProviderWork = $searchModel->search(Yii::$app->request->queryParams, 'adminWork');
         $dataProviderIspol = $searchModel->search(Yii::$app->request->queryParams, 'adminIspol');
+        $dataProvider  ->sort->defaultOrder['srok']=SORT_ASC;
+        $dataProviderNew  ->sort->defaultOrder['srok']=SORT_DESC;
+        $dataProviderWork  ->sort->defaultOrder['srok']=SORT_ASC;
+
+        $dataProviderIspol  ->sort->defaultOrder['srok']=SORT_ASC;
         $dataProvider->pagination = false;
 
         return $this->render('admin', [
