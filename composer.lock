@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3fbe3fe1e04cacd734f84af875b45db8",
+    "content-hash": "c3d4249f6efccc4f746613e2a23161d9",
     "packages": [
         {
             "name": "2amigos/yii2-chartjs-widget",
@@ -2947,6 +2947,64 @@
             "time": "2017-06-03T08:32:36+00:00"
         },
         {
+            "name": "phpoffice/phpexcel",
+            "version": "1.8.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/PHPOffice/PHPExcel.git",
+                "reference": "372c7cbb695a6f6f1e62649381aeaa37e7e70b32"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/PHPOffice/PHPExcel/zipball/372c7cbb695a6f6f1e62649381aeaa37e7e70b32",
+                "reference": "372c7cbb695a6f6f1e62649381aeaa37e7e70b32",
+                "shasum": ""
+            },
+            "require": {
+                "ext-xml": "*",
+                "ext-xmlwriter": "*",
+                "php": ">=5.2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "PHPExcel": "Classes/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL"
+            ],
+            "authors": [
+                {
+                    "name": "Maarten Balliauw",
+                    "homepage": "http://blog.maartenballiauw.be"
+                },
+                {
+                    "name": "Mark Baker"
+                },
+                {
+                    "name": "Franck Lefevre",
+                    "homepage": "http://blog.rootslabs.net"
+                },
+                {
+                    "name": "Erik Tilt"
+                }
+            ],
+            "description": "PHPExcel - OpenXML - Read, Create and Write Spreadsheet documents in PHP - Spreadsheet engine",
+            "homepage": "http://phpexcel.codeplex.com",
+            "keywords": [
+                "OpenXML",
+                "excel",
+                "php",
+                "spreadsheet",
+                "xls",
+                "xlsx"
+            ],
+            "abandoned": "phpoffice/phpspreadsheet",
+            "time": "2015-05-01T07:00:55+00:00"
+        },
+        {
             "name": "phpspec/prophecy",
             "version": "v1.7.2",
             "source": {
@@ -4870,6 +4928,62 @@
                 "yii2 tabular input"
             ],
             "time": "2017-10-19T19:58:28+00:00"
+        },
+        {
+            "name": "uranum/yii2-excel-exchange",
+            "version": "1.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/uranum/yii2-excel-exchange.git",
+                "reference": "42c772887d118f2390ca896e094f257469338029"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/uranum/yii2-excel-exchange/zipball/42c772887d118f2390ca896e094f257469338029",
+                "reference": "42c772887d118f2390ca896e094f257469338029",
+                "shasum": ""
+            },
+            "require": {
+                "phpoffice/phpexcel": "*",
+                "yiisoft/yii2": "~2.0",
+                "yiisoft/yii2-bootstrap": "*"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.*"
+            },
+            "type": "yii2-extension",
+            "extra": {
+                "asset-installer-paths": {
+                    "npm-asset-library": "vendor/npm",
+                    "bower-asset-library": "vendor/bower"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "uranum\\excel\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Eugeny Emelyanov",
+                    "email": "eugeny@emelyanov.studio",
+                    "homepage": "http://emelyanov.studio"
+                }
+            ],
+            "description": "Yii2 extension for exchanging a data from DB to excel and back again for Yii2 Framework.",
+            "keywords": [
+                "exchange data",
+                "export excel",
+                "import excel",
+                "yii 2",
+                "yii excel",
+                "yii2"
+            ],
+            "time": "2016-10-13T10:38:31+00:00"
         },
         {
             "name": "vova07/yii2-imperavi-widget",
