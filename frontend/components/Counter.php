@@ -39,7 +39,7 @@ class Counter extends Widget
         } elseif (Yii::$app->user->can('master')){
             $this->view->params['scoreMaster'] = $zakaz->andWhere(['status' => [Zakaz::STATUS_MASTER, Zakaz::STATUS_SUC_MASTER, Zakaz::STATUS_DECLINED_MASTER], 'action' => 1])->count();
         } elseif (Yii::$app->user->can('admin')){
-            $this->view->params['scoreZakazAdmin'] = $zakaz->andWhere(['action' => 1])->count();
+            $this->view->params['scoreZakazAdmin'] = $zakaz->andWhere(['action' => 1])->andWhere(['!=', 'status' , Zakaz::STATUS_EXECUTE])->count();
         }
         if (Yii::$app->user->can('admin')){
             $this->view->params['scoreTodoistAdmin'] = $todoist->andWhere(['id_user' => Yii::$app->user->id])
