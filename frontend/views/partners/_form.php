@@ -28,8 +28,17 @@ YandexMap::widget(['index' => 'partners']);
 
     <?= $form->field($model, 'room')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'phone')->widget(MaskedInput::className(), [
+    <?= $form->field($model, 'phone')->widget(\yii\widgets\MaskedInput::className(), [
+        'mask' => '999-999-9999',
+    ]) ?>
+
+
+    <?= $form->field($model, 'whatsapp')->widget(MaskedInput::className(), [
         'mask' => '8(999)999-99-99',
+    ]) ?>
+
+    <?= $form->field($model, 'timetable')->widget(MaskedInput::className(), [
+        'mask' => '09:00-18:00',
     ]) ?>
 
     <?= $form->field($model, 'contact_person')->textInput(['maxlength' => true]) ?>
