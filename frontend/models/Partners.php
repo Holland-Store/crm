@@ -15,6 +15,8 @@ use yii\db\ActiveRecord;
  * @property string $street
  * @property string $room
  * @property string $phone
+ * @property string $whatsapp
+ * @property string $timetable
  * @property string $contact_person
  * @property string $email
  * @property string $web
@@ -41,11 +43,11 @@ class Partners extends ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'phone', 'specialization'], 'required'],
+            [['name', 'phone', 'specialization','whatsapp', 'timetable'], 'required'],
             [['active'], 'integer'],
             [['name', 'coordinate', 'city', 'street', 'contact_person', 'email', 'web'], 'string', 'max' => 50],
             [['address', 'specialization'], 'string', 'max' => 86],
-            [['phone'], 'string', 'max' => 15],
+            [['phone', 'whatsapp', 'timetable'], 'string', 'max' => 15],
             [['room'], 'string', 'max' => 5],
         ];
     }
@@ -62,8 +64,10 @@ class Partners extends ActiveRecord
             'coordinate' => 'Координаты',
             'city' => 'Город',
             'street' => 'Улица',
-            'room' => 'Кабюинет',
+            'room' => 'Кабинет',
             'phone' => 'Телефон',
+            'whatsapp' => 'Whatsapp',
+            'timetable' => 'График работы',
             'contact_person' => 'Контактное лицо',
             'email' => 'Email',
             'web' => 'Сайт',
