@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Rus
- * Date: 18.04.2018
- * Time: 12:33
- */
 
 namespace app\models;
 
@@ -21,6 +15,7 @@ class BlogList extends \yii\db\ActiveRecord{
     {
         $data = self::find()->all();
         return $data;
+
     }
 
 }
