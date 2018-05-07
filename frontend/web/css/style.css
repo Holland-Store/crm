@@ -149,6 +149,12 @@ body {
   font-size: 11px;
 }
 
+.container-fixed {
+  margin: 0 auto;
+  position: fixed;
+  z-index: 100;
+  background: #302927;
+}
 /* line 73, ../sass/gridview.scss */
 .form-control:focus {
   outline: none;
@@ -288,6 +294,10 @@ body {
 .tr100 {
   width: 100px;
 }
+/* line 167, ../sass/gridview.scss */
+.tr110 {
+  width: 350px;
+}
 
 /* line 168, ../sass/gridview.scss */
 .tr180 {
@@ -333,7 +343,16 @@ body {
 .table thead {
   background: #302927;
 }
-
+#analytic thead {
+  background: #edeef0 !important;
+}
+/*Кнопки для формы аналитики*/
+#w4-togdata-page{
+  right: -51px;
+}
+#w4-togdata-all{
+  right: -51px;
+}
 /* line 182, ../sass/gridview.scss */
 .table .trNew {
   font-weight: bold;
@@ -888,7 +907,7 @@ thead a {
 /* line 158, ../sass/button.scss */
 .zakaz-form {
   height: 30px;
-  line-height: 25px;
+ /* line-height: 25px;*/
   padding-left: 20px;
 }
 /* line 160, ../sass/button.scss */
@@ -1128,7 +1147,18 @@ thead a {
   height: 30px;
   margin-left: 15px;
   position: relative;
-  top: -43px;
+/*  top: -43px;*/
+  left: 211px;
+  outline: 0;
+}
+
+
+/* line 302, ../sass/button.scss */
+.zakaz-reminderForm button {
+  height: 30px;
+  margin-left: 15px;
+  position: relative;
+  /*  top: -43px;*/
   left: 211px;
   outline: 0;
 }
@@ -1329,7 +1359,19 @@ thead a {
 .form-group .help-block {
   color: rgba(171, 100, 24, 0.99);
 }
-
+/* line 109, ../sass/input.scss */
+.zakaz-reminderForm input {
+  width: 55%;
+  margin-left: 15px;
+}
+/* line 113, ../sass/input.scss */
+.zakaz-reminderForm .inputForm {
+  width: 38%;
+}
+/* line 116, ../sass/input.scss */
+.zakaz-reminderForm .help-block {
+  margin-left: 19px;
+}
 /* line 109, ../sass/input.scss */
 .zakaz-shippingForm input {
   width: 55%;
@@ -1569,10 +1611,10 @@ body {
   color: #302927;
   background: transparent;
 }
-/* line 115, ../sass/style.scss */
+/*!* line 115, ../sass/style.scss *!
 .wrap .container {
   padding: 41px 15px 20px;
-}
+}*/
 /* line 118, ../sass/style.scss */
 .wrap .nav-pills > li.active > a {
   background-color: #736a50;
@@ -1762,4 +1804,7 @@ body {
 /* line 273, ../sass/style.scss */
 .zakaz-view .zakaz-view_shipping {
   height: 150px;
+}
+.markerOrder{
+  background: #4a76a8;
 }
