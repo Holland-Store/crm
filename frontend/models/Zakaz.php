@@ -304,7 +304,7 @@ class Zakaz extends ActiveRecord
     public function  getTagsAsString($view)
     {
         if ($view == 'gridview'){
-            $tags = array_slice($this->tags, 0, 2);
+            $tags = array_slice($this->tags, 0, 5);
             $arr = ArrayHelper::map($tags, 'id', 'name');
         } else {
             $arr = ArrayHelper::map($this->tags, 'id', 'name');
@@ -365,7 +365,7 @@ class Zakaz extends ActiveRecord
             self::STATUS_DISAINER_WORK => 'В работе',
             self::STATUS_DISAINER_SOGLAS => 'Согласование',
             self::STATUS_DISAINER_PROCESS => 'На проверке',
-            self::STATUS_DISAINER_DECLINED => 'Отлонен',
+            self::STATUS_DISAINER_DECLINED => 'Отклонен',
         ];
     }
 
