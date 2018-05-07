@@ -6,7 +6,7 @@ use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
 use app\models\User;
 use app\models\Todoist;
-
+use Yii;
 
 
 /**
@@ -251,13 +251,13 @@ class Notification extends ActiveRecord
         }
     }
 
-    public function getByIdNotificationComments($id, $comment, $id_sotrud_put,$zakaz)
+    public function getByIdNotificationComments($id, $comment, $id_sotrud_put, $zakaz)
     {
-
+        $datecomment = Yii::$app->formatter->asDatetime(strtotime($comment->date), 'php: d/m/Y');
         switch ($id) {
-            case '1'://оформление уведомление о новом комментарии к созданной задача
+            case '1'://оформление уведомление о новом комментарии к созданной задачи
                 $this->id_user = $id_sotrud_put->id_sotrud_put;
-                $this->name = substr($comment->date.'Комментарий к задаче '.$id_sotrud_put->comment , 0, 120) . '...' ;
+                $this->name = substr('Комментарий к задаче '.$id_sotrud_put->comment , 0, 120) . '...' ;
                 $this->todoist_id = $comment->id_todoist;
                 $this->category = 2;
                 break;
@@ -281,19 +281,20 @@ class Notification extends ActiveRecord
                 break;
             case '10'://Уведомление, мастеру о новом комментарии в заказе
                 $this->id_user = 4;
-                $this->name = 'Коммент к заказу '.$zakaz->id_zakaz;
+                $this->name =  $comment->id_user = 5 ? 'Админ оставил коммент к заказу '.$zakaz->id_zakaz.$datecomment: 'Дизайнер оставил коммент к заказу '.$zakaz->id_zakaz.$datecomment;
+                    //$comment->id_user.'Коммент к заказу '.$zakaz->id_zakaz;
                 $this->id_zakaz = $zakaz->id_zakaz;
                 $this->category = 2;
                 break;
             case '11'://Уведомление, дизайнеру о новом комментарии в заказе
                 $this->id_user = 3;
-                $this->name = 'Коммент к заказу '.$zakaz->id_zakaz;
+                $this->name =  $this->name =  $comment->id_user = 5 ? 'Админ оставил коммент к заказу '.$zakaz->id_zakaz.$datecomment : 'Мастер оставил коммент к заказу '.$zakaz->id_zakaz.$datecomment;
                 $this->id_zakaz = $zakaz->id_zakaz;
                 $this->category = 2;
                 break;
             case '12'://Уведомление, администратору о новом комментарии в заказе
                 $this->id_user = User::USER_ADMIN;
-                $this->name = 'Коммент к заказу '.$zakaz->id_zakaz;
+                $this->name = $this->name =  $comment->id_user = 4 ? 'Мастер оставил коммент к заказу '.$zakaz->id_zakaz.$datecomment :  'Дизайнер оставил коммент к заказу '.$zakaz->id_zakaz.$datecomment;
                 $this->id_zakaz = $zakaz->id_zakaz;
                 $this->category = 2;
                 break;
@@ -303,7 +304,7 @@ class Notification extends ActiveRecord
     public function getReminder($id)
     {
         $this->id_user = 5;
-        $this->name = 'Создана напоминание';
+        $this->name = 'Создано напоминание';
         $this->id_zakaz = $id;
         $this->category = 4;
         $this->active = true;
