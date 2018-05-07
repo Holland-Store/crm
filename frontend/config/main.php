@@ -27,7 +27,14 @@ return [
                 Module::FORMAT_DATETIME => 'php:Y-m-d H:i:s',
             ],
         ],
-
+        'excel' => [
+            'class'  => 'uranum\excel\Module',
+            'params' => [
+                'uploadPath' => 'uploads', // the path relative to the root
+                'fileName'   => 'export',
+                'extensions' => 'xls, xlsx',
+            ],
+        ],
 	],
     'components' => [
         'request' => [
