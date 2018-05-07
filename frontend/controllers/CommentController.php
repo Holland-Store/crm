@@ -11,6 +11,7 @@ use frontend\models\Telegram;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
+
 class CommentController extends Controller
 {
     /**
@@ -81,11 +82,11 @@ class CommentController extends Controller
                 print_r($commentForm->getErrors());
             } else {
                 if(Yii::$app->user->id != User::USER_SYSTEM){
-                    $notification->getByIdNotificationComments( '4', $commentForm, $id_sotrud_put= null);
+                    $notification->getByIdNotificationComments( '4', $commentForm, $id_sotrud_put= null,$zakaz= null);
                     $notification->getSaveNotification();
                    /* $telegram->message($helpdesk->id_user, 'Поломку '.$commentForm->idHelpdesk->commetnt.' прокомментировали '.$commentForm->comment);*/
                 } else {
-                    $notification->getByIdNotificationComments( '3', $commentForm, $id_sotrud_put= null);
+                    $notification->getByIdNotificationComments( '3', $commentForm, $id_sotrud_put= null,$zakaz= null);
                     $notification->getSaveNotification();
                     /*$telegram->message(User::USER_SYSTEM, 'Поломку '.$commentForm->idHelpdesk->commetnt.' прокомментировали '.$commentForm->comment);*/
                 }
@@ -115,7 +116,6 @@ class CommentController extends Controller
             if (!$comment->save()){
                 print_r($comment->getErrors());
             } else {
-
                 if($zakaz->status == Zakaz::STATUS_MASTER ){
                     if(Yii::$app->user->id != User::USER_ADMIN){
                     $notification->getByIdNotificationComments( '12', $comment, $id_sotrud_put= null,$zakaz);
