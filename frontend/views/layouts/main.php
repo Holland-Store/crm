@@ -39,10 +39,13 @@ AppAsset::register($this);
 <body>
 <?php $this->beginBody() ?>
 <div class="wrap">
+        <div class="container-fixed col-lg-12">
 <?php if (!Yii::$app->user->isGuest): ?>
     <div class="logo"></div>
 <?php echo '<h1 class="titleMain">'.Html::encode($this->title).'</h1>' ?>
+
         <?= Counter::widget() ?>
+
 <?php endif ?>
     <?php $counts = '<span class="glyphicon glyphicon-bell" style="font-size:21px"></span><span class="badge pull-right">'.$this->params['count'].'</span>'; ?>
     <?php
@@ -101,7 +104,7 @@ AppAsset::register($this);
     }
     ?>
     <?= Notifications::widget() ?>
-
+    </div>
 
 <?php if (Yii::$app->user->isGuest): ?>
     <div class="headerLogin">
