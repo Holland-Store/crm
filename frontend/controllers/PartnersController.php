@@ -40,6 +40,7 @@ class PartnersController extends Controller
     {
         $searchModel = new PartnersSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->pagination = false;
 
         return $this->render('index', [
             'searchModel' => $searchModel,
