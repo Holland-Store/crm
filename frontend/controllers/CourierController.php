@@ -21,9 +21,10 @@ use yii\data\ActiveDataProvider;
 class CourierController extends Controller
 {
     /**
+     * $dataProviderI
      * @inheritdoc
      */
-    public function behaviors()
+        public function behaviors()
     {
         return [
             'verbs' => [
@@ -39,6 +40,11 @@ class CourierController extends Controller
                        'actions' => ['index', 'make', 'delivered'],
                        'allow' => true,
                        'roles' => ['courier'],
+                   ],
+                   [
+                        'actions' => ['delivered'],
+                        'allow' => true,
+                        'roles' => ['courier','shop'],
                    ],
                    [
                        'actions' => ['ready'],
