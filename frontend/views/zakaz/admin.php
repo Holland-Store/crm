@@ -160,7 +160,7 @@ $this->registerJsFile('https://api-maps.yandex.ru/2.1/?lang=ru_RU', ['type' => '
                 'hAlign' => GridView::ALIGN_RIGHT,
                 'contentOptions' => function($model) {
                     if ($model->status == Zakaz::STATUS_NEW){
-                        return ['class' => 'tr100 srok'];
+                        return ['class' => 'tr150 srok'];
                     } else {
                         return ['class' => 'textTr tr100 srok'];
                     }
@@ -175,9 +175,9 @@ $this->registerJsFile('https://api-maps.yandex.ru/2.1/?lang=ru_RU', ['type' => '
             [
                 'attribute' => 'tag',
                 'format' => 'raw',
-                'contentOptions' => ['class' => 'tr90'],
+                'contentOptions' => ['class' => 'tr110'],
                 'value' => function($model){
-                    return $model->tags != null ? $model->getTagsAsString('gridview') : false;
+                    return $model->tags != null ?  '<div class="markerOrder">'.$model->getTagsAsString('gridview').'</div>' : false;
                 }
             ],
             [
@@ -306,9 +306,11 @@ $this->registerJsFile('https://api-maps.yandex.ru/2.1/?lang=ru_RU', ['type' => '
             [
                 'attribute' => 'tag',
                 'format' => 'raw',
-                'contentOptions' => ['class' => 'tr90'],
+                'contentOptions' => ['class' => 'tr110'],
                 'value' => function($model){
-                    return $model->tags != null ? $model->getTagsAsString('gridview') : false;
+
+                   /* return $model->tags != null ?  '<div class="markerOrder">'. substr($model->getTagsAsString('gridview') , 0, 10) . '...' .'</div>' : false;*/
+                    return $model->tags != null ?  '<div class="markerOrder">'.$model->getTagsAsString('gridview').'</div>' : false;
                 }
             ],
             [
@@ -432,9 +434,9 @@ $this->registerJsFile('https://api-maps.yandex.ru/2.1/?lang=ru_RU', ['type' => '
             [
                 'attribute' => 'tag',
                 'format' => 'raw',
-                'contentOptions' => ['class' => 'tr90'],
+                'contentOptions' => ['class' => 'tr110'],
                 'value' => function($model){
-                    return $model->tags != null ? $model->getTagsAsString('gridview') : false;
+                    return $model->tags != null ?  '<div class="markerOrder">'.$model->getTagsAsString('gridview').'</div>' : false;
                 }
             ],
             [
