@@ -89,7 +89,9 @@ class NotificationController extends Controller
         $model = $this->findModel($id);
         $model->active = Notification::NOT_ACTIVE;
         $model->save();
-        return $this->redirect(['zakaz/view', 'id' => $model->id_zakaz]);
+        /*return $this->redirect(['zakaz/view', 'id' => $model->id_zakaz]);*/
+        return $this->redirect(['todoist/index', '#' => 'test-' . $model->todoist_id]);
+        /*return $this->redirect(['todoist/index',  '#' => 'custom-order-form']);*/
     }
 
     /**
@@ -137,4 +139,5 @@ class NotificationController extends Controller
         $this->view->params['notifications'] = $notification->all();
         $this->view->params['count'] =  $notifications;
     }
+
 }
