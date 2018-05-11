@@ -240,6 +240,7 @@ use yii\widgets\Pjax;
             <?php endif ?>
         <?php endif; ?>
         <?= Html::a('Полный просмотр', ['view', 'id' => $model->id_zakaz], ['class' => 'btn action']) ?>
+        <?= Html::a('Напоминание', ['#'],['class' => 'btn action modalReminder-button', 'value' => Url::to(['comment/create-reminder', 'id' => $model->id_zakaz]), 'onclick' => 'return false']) ?>
     </div>
 <?php
 $user = Yii::$app->user->id;
