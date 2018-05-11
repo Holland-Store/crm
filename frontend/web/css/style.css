@@ -1124,8 +1124,8 @@ thead a {
   border-radius: 26px;
   color: #736a50;
   background: none;
-  border: 1px solid #3a3331;
-  color: #3a3331;
+  border: 1px solid #fbfbfb;
+  color: #fbfbfb;
   margin-top: 1px;
   float: none;
 }
@@ -1807,4 +1807,10 @@ body {
 }
 .markerOrder{
   background: #4a76a8;
+}
+.partners-index{
+  font-size: 10px;
+}
+.partners-index thead a {
+  color: #ffffff;
 }
