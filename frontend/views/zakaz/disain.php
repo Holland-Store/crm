@@ -27,9 +27,12 @@ $this->title = 'Все заказы';
         'pjax' => true,
         'tableOptions' 	=> ['class' => 'table table-bordered tableSize'],
         'rowOptions' => function($model){
-            if ($model->statusDisain == Zakaz::STATUS_DISAINER_NEW) {
+          /*  if ($model->statusDisain == Zakaz::STATUS_DISAINER_NEW) {
                 return ['class' => 'trTable trNormal trNewDisain'];
-            } else {
+            }*/
+            if ($model->srok < date('Y-m-d H:i:s') && $model->statusDisain == Zakaz::STATUS_DISAINER_NEW ) {
+                return ['class' => 'trTable trTablePass italic trSrok'];
+            }else {
                 return ['class' => 'trTable trNormal'];
             }
         },
