@@ -16,7 +16,7 @@ use kartik\widgets\Select2;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Вce заказы';
-$this->registerJsFile('https://api-maps.yandex.ru/2.1/?lang=ru_RU', ['type' => 'text/javascript']);
+/*$this->registerJsFile('https://api-maps.yandex.ru/2.1/?lang=ru_RU', ['type' => 'text/javascript']);*/
 ?>
 <?php Pjax::begin(['id' => 'pjax-container']); ?>
 
