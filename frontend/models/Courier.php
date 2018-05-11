@@ -35,6 +35,12 @@ class Courier extends ActiveRecord
     const CANCEL = 3;
 
 
+    const VOLGOGRADSKAYA = 'Московский';
+    const PUSHKINA = 'Пушкина';
+    const SIBERIAN = 'Сибирский';
+    const CHETAUEVA = 'Четаева';
+    const MARXA = 'Маркса';
+
     /**
      * @inheritdoc
      */
