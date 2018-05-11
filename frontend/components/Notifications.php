@@ -20,23 +20,25 @@ class Notifications extends Widget
     {
         $notification = Notification::find();
         if (Yii::$app->user->can('admin')){
-            $this->view->params['scoreNotification'] = $notification->andWhere(['active' => 1])->andWhere(['id_user' => 5 ])->count();
+            $this->view->params['scoreNotification'] = $notification->andWhere(['active' => 1])->andWhere(['id_user' => 5 ])->andWhere(['<', 'srok' , date('Y-m-d H:i:s')])->count();
 
          } elseif (Yii::$app->user->can('master')){
-            $this->view->params['scoreNotification'] = $notification->andWhere(['active' => 1])->andWhere(['id_user' => 4 ])->count();
+            $this->view->params['scoreNotification'] = $notification->andWhere(['active' => 1])->andWhere(['id_user' => 4 ])->andWhere(['<', 'srok' , date('Y-m-d H:i:s')])->count();
           } elseif (Yii::$app->user->can('disain')){
-            $this->view->params['scoreNotification'] = $notification->andWhere(['active' => 1])->andWhere(['id_user' => 3 ])->count();
+            $this->view->params['scoreNotification'] = $notification->andWhere(['active' => 1])->andWhere(['id_user' => 3 ])->andWhere(['<', 'srok' , date('Y-m-d H:i:s')])->count();
         }elseif (Yii::$app->user->can('shop')){
-            $this->view->params['scoreNotification'] = $notification->andWhere(['active' => 1])->andWhere(['id_user' => 9 ])->count();
+            $this->view->params['scoreNotification'] = $notification->andWhere(['active' => 1])->andWhere(['id_user' => 9 ])->andWhere(['<', 'srok' , date('Y-m-d H:i:s')])->count();
         }
 
         if (!Yii::$app->user->isGuest){
-            $notifications = Notification::find()->where(['id_user' => Yii::$app->user->id, 'active' => 1])->all();
+            $notifications = Notification::find()->where(['id_user' => Yii::$app->user->id, 'active' => 1])->andWhere(['<', 'srok' , date('Y-m-d H:i:s')])->all();
+
+
 
             echo '<div class="notification">';
 
-            echo $notifications == null ? '<div class="notification-icon">' : '<div class="notification-icon newNotification">'.$this->view->params['scoreNotification']./*Yii::$app->session->addFlash('update', 'Появились новые уведомления');*/'';
-            echo '<span class="glyphicon glyphicon-bell"></span>
+            echo $notifications == null ? '<div class="notification-icon">' : '<div class="notification-icon newNotification">'.$this->view->params['scoreNotification'].'';
+            echo '<span class="glyphicon glyphicon-bell"></span>  
                 </div>
                 <div class="notification-container hidden">
                 <div class="notification-container_message">';
