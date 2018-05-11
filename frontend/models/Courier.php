@@ -35,11 +35,11 @@ class Courier extends ActiveRecord
     const CANCEL = 3;
 
 
-    const VOLGOGRADSKAYA = 'Московский';
-    const PUSHKINA = 'Пушкина';
-    const SIBERIAN = 'Сибирский';
-    const CHETAUEVA = 'Четаева';
-    const MARXA = 'Маркса';
+    const VOLGOGRADSKAYA = '4';
+    const PUSHKINA = '5';
+    const SIBERIAN = '6';
+    const CHETAUEVA = '7';
+    const MARXA = '8';
 
     /**
      * @inheritdoc
@@ -55,9 +55,9 @@ class Courier extends ActiveRecord
     public function rules()
     {
         return [
-            [['toYandexMap', 'fromYandexMap', 'to', 'from', 'date'], 'required'],
+            [[/*'toYandexMap', 'fromYandexMap',*/ 'to', 'from', 'date'], 'required'],
             [['id_zakaz', 'status'], 'integer'],
-            [['data_to', 'data_from', 'date', 'toYandexMap', 'fromYandexMap'], 'safe'],
+            [['data_to', 'data_from', 'date'/*, 'toYandexMap', 'fromYandexMap'*/], 'safe'],
             [['commit'], 'string'],
             ['status', 'default', 'value' => 0],
             [['to', 'from'], 'string', 'max' => 50],
