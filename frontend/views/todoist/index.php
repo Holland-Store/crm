@@ -114,6 +114,13 @@ $this->title = 'Все задачи';
 
             ],
             [
+                'attribute' => 'id',
+                'headerOptions' => ['class' => 'head-id-column'],
+                'contentOptions' => function($model){
+                    return ['id' => 'test-' . $model->id];
+                }
+            ],
+            [
                 'attribute' => 'srok',
                 'format' => ['date', 'php:d M'],
                 'hAlign' => GridView::ALIGN_RIGHT,
