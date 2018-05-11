@@ -37,7 +37,7 @@ $this->registerJsFile('@web/js/yandexMap.js');
 
     <?=
     $f->field($shipping, 'fromYandexMap')->widget(Select2::className(), [
-        'data' => [1 => "Московский", 2 => "Пушкина", 3 => "Маркса", 4 => "Четаева", 5 => "Четаева"],
+        'data' => [1 => "Московский", 2 => "Пушкина", 3 => "Маркса", 4 => "Четаева", 5 => "Сибирский"],
         'options' => ['placeholder' => 'Select a state ...'],
         'pluginOptions' => [
             'allowClear' => true,
