@@ -4,6 +4,14 @@
 
 use yii\bootstrap\Html;
 
+use uranum\excel\ExcelExchanger;
+use app\models\Zakaz;
+
+$reminder = new Zakaz();
+    echo ExcelExchanger::widget([
+        'mainModelName' => \app\models\Otdel::className(),
+    ]);
+
 $this->title = 'Главная страница';
 ?>
 <div class="site-index">
@@ -38,7 +46,6 @@ $this->title = 'Главная страница';
         <?php endif; ?>
         </p>
     </div>
-
     <div class="container">
         <div></div>
     </div>
