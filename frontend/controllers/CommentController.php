@@ -151,4 +151,30 @@ class CommentController extends Controller
         $comment = Comment::find()->where(['id_zakaz' => $id])->orderBy('id DESC')->offset($offset)->limit(6)->asArray()->all();
         return json_encode($comment, JSON_UNESCAPED_UNICODE);
     }
+
+    public function actionCreateReminder($id)
+    {
+        $model = $id;
+        $comment = new Comment();
+        $notification = new Notification();
+
+        if ($comment->load(Yii::$app->request->post()) && $comment->validate()) {
+            $comment->save();//сохранение напоминаниея
+            if (!$comment->save()) {
+                print_r($comment->getErrors());
+            } else {
+                /** @var $model \app\models\Zakaz */
+                Yii::$app->session->addFlash('update', 'Напоминание успешно создано');
+                $notification->getByIdNotificationComments( '13', $comment, $id_sotrud_put= null,$zakaz= null);
+                $notification->getSaveNotification();
+            }
+            return $this->redirect(['zakaz/admin', '#' => $model->id_zakaz]);
+        }
+
+        return $this->renderAjax('create-reminder', [
+            'model' => $model,
+            'comment' => $comment
+        ]);
+    }
+
 }
