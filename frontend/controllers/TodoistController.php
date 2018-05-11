@@ -87,6 +87,7 @@ class TodoistController extends Controller
         $searchModel = new TodoistSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, 'admin-their');
         $dataProviderAlien = $searchModel->search(Yii::$app->request->queryParams, 'admin-alien');
+        $dataProvider->pagination = false;
 
         return $this->render('index', [
             'searchModel' => $searchModel,
