@@ -8,6 +8,8 @@ use yii\bootstrap\Modal;
 use app\models\Zakaz;
 use yii\bootstrap\ButtonDropdown;
 use yii\widgets\Pjax;
+use kartik\widgets\Select2;
+
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\ZakazSearch */
@@ -368,7 +370,7 @@ $this->registerJsFile('https://api-maps.yandex.ru/2.1/?lang=ru_RU', ['type' => '
                 'class'=>'kartik\grid\ExpandRowColumn',
                 'contentOptions' => function($model){
                     return ['id' => $model->id_zakaz, 'class' => 'border-left', 'style' => 'border:none'];
-                }, 
+                },
                 'width'=>'10px',
                 'value' => function () {
                     return GridView::ROW_COLLAPSED;
@@ -468,7 +470,7 @@ $this->registerJsFile('https://api-maps.yandex.ru/2.1/?lang=ru_RU', ['type' => '
                 'contentOptions' => ['class' => 'textTr border-right tr90'],
             ]
         ],
-    ]); ?> 
+    ]); ?>
     <?php Pjax::end(); ?>
     </div>
     <?php Modal::begin([
@@ -490,6 +492,10 @@ $this->registerJsFile('https://api-maps.yandex.ru/2.1/?lang=ru_RU', ['type' => '
     echo '<div class="modalContent"></div>';
     Modal::end() ?>
     <?php Modal::begin([
+        'options' => [
+
+            'tabindex' => false // important for Select2 to work properly
+        ],
         'id' => 'modalShipping',
         'header' => '<h2>Назначить доставку</h2>'
     ]);
