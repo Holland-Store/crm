@@ -216,7 +216,7 @@ $this->title = $model->prefics;
 //            } else {
 //                foreach ($comment as $key=>$com){
 //                    echo '<b>'.Yii::$app->formatter->asDate($key, 'php:j M Y').'</b><br>';
-//                    foreach ($com as $value=>$name){
+//                    foreach ($comment as $value=>$name){
 //                        echo Yii::$app->formatter->asTime(ArrayHelper::getValue($name, 'time'), 'php:H:i').' '.ArrayHelper::getValue($name, 'comment').' '.ArrayHelper::getValue($name, 'idUser.name').'<br>';
 //                    }
 //                }
