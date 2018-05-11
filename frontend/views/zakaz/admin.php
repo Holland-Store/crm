@@ -502,6 +502,14 @@ $this->registerJsFile('https://api-maps.yandex.ru/2.1/?lang=ru_RU', ['type' => '
         'header' => '<h2>Назначить доставку</h2>'
     ]);
     echo '<div class="modalContent"></div>';
+
+
+    Modal::end(); ?>
+    <?php Modal::begin([
+        'id' => 'modalReminder',
+        'header' => '<h2>Поставить напоминание</h2>'
+    ]);
+    echo '<div class="modalContent"></div>';
     Modal::end(); ?>
 </div>
 <div class="footer">
