@@ -206,8 +206,9 @@ use yii\widgets\Pjax;
         <?php if (Yii::$app->user->can('shop')): ?>
             <?php if($model->id_zakaz == $courier->id_zakaz  && $courier->status == Courier::RECEIVE && ($courier->from == Courier::MARXA ||$courier->from ==  Courier::VOLGOGRADSKAYA|| $courier->from ==  Courier::PUSHKINA || $courier->from ==  Courier::SIBERIAN||$courier->from ==  Courier::CHETAUEVA )  ): ?>
                 <?= Html::a('Доставил', ['courier/delivered','id' => $courier->id], ['class' => 'btn btn-xs done']) ?>
-          <!--  --><?/*= Html::a('Доставка', ['#'],['class' => 'btn action modalShipping-button', 'value' => Url::to(['courier/create-zakaz', 'id' => $model->id_zakaz]), 'onclick' => 'return false']) */?>
-        <?php endif ?>
+               <!-- <?/*= Html::a('Доставил', ['zakaz/shop'],['class' => 'btn btn-xs done',  'onclick' => Url::to(['courier/delivered', 'id' => $courier->id]),'return false']) */?>
+
+            <?php endif ?>
         <?php endif ?>
         <?php if (Yii::$app->user->can('seeAdop') && $model->renouncement == null): ?>
             <?php Modal::begin([
