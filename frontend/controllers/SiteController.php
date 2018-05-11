@@ -125,9 +125,24 @@ class SiteController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             $id_user = Yii::$app->user->identity->getId();
+            if (Yii::$app->user->can('admin')){
+                return $this->redirect(['zakaz/admin']);
+            } else  if (Yii::$app->user->can('shop')){
+                return $this->redirect(['zakaz/shop']);
+            } else  if (Yii::$app->user->can('disain')){
+                return $this->redirect(['zakaz/disain']);
+            } else  if (Yii::$app->user->can('master')){
+                return $this->redirect(['zakaz/master']);
+            } else  if (Yii::$app->user->can('system')){
+                return $this->redirect(['helpdesk/index']);
+            } else  if (Yii::$app->user->can('zakup')){
+                return $this->redirect(['custom/index']);
+            } else  if (Yii::$app->user->can('courier')){
+                return $this->redirect(['courier/index']);
+            }else  if (Yii::$app->user->can('manager')){
+                return $this->redirect(['zakaz/index']);
+            }
 
-
-            return $this->redirect(['site/index', 'id' => $id_user]);
         } else {
             return $this->render('login', [
                 'model' => $model,
