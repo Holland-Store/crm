@@ -8,10 +8,17 @@ use yii\widgets\DetailView;
 use yii\helpers\Url;
 use yii\bootstrap\Modal;
 use app\models\Zakaz;
+use app\models\Notification;
+use app\models\Courier;
+use kartik\select2\Select2;
+use yii\helpers\ArrayHelper;
+use app\models\Tag;
+use yii\widgets\Pjax;
 
 /* @var  $comment app\models\Comment */
 /* @var  $model app\models\Zakaz */
 /* @var  $client app\models\Client */
+/* @var  $courier app\models\Courier */
 /** @var string $sotrud */
 ?>
 
@@ -191,10 +198,16 @@ use app\models\Zakaz;
             <?php endif ?>
         <?php endif ?>
             <?= Html::a('Задача', ['todoist/createzakaz', 'id_zakaz' => $model->id_zakaz], ['class' => 'btn btn-xs todoist']) ?>
-        <?php if (Yii::$app->user->can('admin')): ?>
             <?php if (Yii::$app->user->can('admin')): ?>
                 <?= Html::a('Доставка', ['#'],['class' => 'btn action modalShipping-button', 'value' => Url::to(['courier/create-zakaz', 'id' => $model->id_zakaz]), 'onclick' => 'return false']) ?>
             <?php endif ?>
+
+        <?php $courier = \app\models\Courier::find()->where(['id_zakaz' => $model->id_zakaz])->orderBy('id DESC')->one(); ?>
+        <?php if (Yii::$app->user->can('shop')): ?>
+            <?php if($model->id_zakaz == $courier->id_zakaz  && $courier->status == Courier::RECEIVE && ($courier->from == Courier::MARXA ||$courier->from ==  Courier::VOLGOGRADSKAYA|| $courier->from ==  Courier::PUSHKINA || $courier->from ==  Courier::SIBERIAN||$courier->from ==  Courier::CHETAUEVA )  ): ?>
+                <?= Html::a('Доставил', ['courier/delivered','id' => $courier->id], ['class' => 'btn btn-xs done']) ?>
+          <!--  --><?/*= Html::a('Доставка', ['#'],['class' => 'btn action modalShipping-button', 'value' => Url::to(['courier/create-zakaz', 'id' => $model->id_zakaz]), 'onclick' => 'return false']) */?>
+        <?php endif ?>
         <?php endif ?>
         <?php if (Yii::$app->user->can('seeAdop') && $model->renouncement == null): ?>
             <?php Modal::begin([
