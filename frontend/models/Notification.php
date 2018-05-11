@@ -52,6 +52,7 @@ class Notification extends ActiveRecord
             [['id_user', 'category','todoist_id','active'], 'integer'],
             [['name'], 'string', 'max' => 50],
             [['srok'], 'safe'],
+            ['srok', 'default', 'value' => date('Y-m-d H:i:s')],
             [['id_zakaz'], 'exist', 'skipOnError' => true, 'targetClass' => Zakaz::className(), 'targetAttribute' => ['id_zakaz' => 'id_zakaz']],
             [['todoist_id'], 'exist', 'skipOnError' => true, 'targetClass' => Todoist::className(), 'targetAttribute' => ['todoist_id' => 'id']],
             [['id_user'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['id_user' => 'id']],
@@ -102,7 +103,7 @@ class Notification extends ActiveRecord
     }
     public function getSaveNotification()
     {
-        $this->srok = null;
+        /*$this->srok = null;*/
         $this->active = true;
         $this->save();
         if (!$this->save()) {
@@ -288,15 +289,22 @@ class Notification extends ActiveRecord
                 break;
             case '11'://Уведомление, дизайнеру о новом комментарии в заказе
                 $this->id_user = 3;
-                $this->name =  $this->name =  $comment->id_user = 5 ? 'Админ оставил коммент к заказу '.$zakaz->id_zakaz.$datecomment : 'Мастер оставил коммент к заказу '.$zakaz->id_zakaz.$datecomment;
+                $this->name = $comment->id_user = 5 ? 'Админ оставил коммент к заказу '.$zakaz->id_zakaz.$datecomment : 'Мастер оставил коммент к заказу '.$zakaz->id_zakaz.$datecomment;
                 $this->id_zakaz = $zakaz->id_zakaz;
                 $this->category = 2;
                 break;
             case '12'://Уведомление, администратору о новом комментарии в заказе
                 $this->id_user = User::USER_ADMIN;
-                $this->name = $this->name =  $comment->id_user = 4 ? 'Мастер оставил коммент к заказу '.$zakaz->id_zakaz.$datecomment :  'Дизайнер оставил коммент к заказу '.$zakaz->id_zakaz.$datecomment;
+                $this->name = $comment->id_user = 4 ? 'Мастер оставил коммент к заказу '.$zakaz->id_zakaz.$datecomment :  'Дизайнер оставил коммент к заказу '.$zakaz->id_zakaz.$datecomment;
                 $this->id_zakaz = $zakaz->id_zakaz;
                 $this->category = 2;
+                break;
+            case '13'://Уведомление, администратору о напоминание к заказу.
+                $this->id_user = 5;
+                $this->name = $comment->comment.' по заказу:'.$comment->id_zakaz;
+                $this->id_zakaz = $comment->id_zakaz;
+                $this->category = 2;
+                $this->srok = $comment->date ;
                 break;
         }
     }
