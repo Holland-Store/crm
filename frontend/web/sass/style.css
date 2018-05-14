@@ -1104,7 +1104,7 @@ body {
 .notification-index .notification-info a {
   color: #908a89;
   text-decoration: none;
-  cursor: poin; }
+  cursor: pointer; }
 
 .zakaz-form h3 {
   color: #736a50; }
@@ -1167,9 +1167,9 @@ body {
       transform: scale(1.1); }
 
 .zakaz-view .notice-block {
-  background: #736a50;
-  padding: 7px;
-  margin-bottom: 5px; }
+  /*    background: #736a50;
+      padding: 7px;
+      margin-bottom: 5px;*/ }
 .zakaz-view .notice-action {
   font-style: italic; }
 .zakaz-view .zakaz-view_comment {
